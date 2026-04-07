@@ -4,6 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type Lead = Tables<"leads">;
 export type LeadInsert = TablesInsert<"leads">;
+export interface LeadSubmissionPayload {
+  name: string;
+  email: string;
+  phone: string;
+  country: string;
+  interest: string;
+  message: string | null;
+  honeypot: string;
+  startedAt: number;
+}
 
 export async function fetchLeads() {
   const { data, error } = await supabase
@@ -16,16 +26,13 @@ export async function fetchLeads() {
   return data ?? [];
 }
 
-export async function createLead(leadData: LeadInsert) {
-  const { data, error } = await supabase.from("leads").insert(leadData).select().single();
+export async function createLead(leadData: LeadSubmissionPayload) {
+  const { data, error } = await supabase.functions.invoke("submit-lead", {
+    body: leadData,
+  });
 
   if (error) throw error;
+  if (data?.error) throw new Error(data.error);
 
-  try {
-    await supabase.functions.invoke("notify-lead", { body: leadData });
-  } catch (notifyError) {
-    console.error("notify-lead failed:", notifyError);
-  }
-
-  return data;
+  return data?.lead ?? null;
 }

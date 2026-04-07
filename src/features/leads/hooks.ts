@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { createLead, fetchLeads, type LeadInsert } from "./api";
+import { createLead, fetchLeads, type LeadSubmissionPayload } from "./api";
 
 export const leadsQueryKeys = {
   all: ["leads"] as const,
@@ -19,7 +19,7 @@ export function useCreateLeadMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (leadData: LeadInsert) => createLead(leadData),
+    mutationFn: (leadData: LeadSubmissionPayload) => createLead(leadData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: leadsQueryKeys.all });
     },

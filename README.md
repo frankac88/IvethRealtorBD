@@ -31,10 +31,11 @@ El sitio funciona como una landing/site comercial para captación de clientes in
 ### Flujos principales
 
 1. **Navegación pública** con varias páginas de contenido.
-2. **Formulario de contacto** que inserta leads en Supabase.
-3. **Edge Function `notify-lead`** que envía notificaciones por email usando Resend.
-4. **Login administrativo** con Supabase Auth.
-5. **Panel `/admin`** para consultar leads registrados.
+2. **Formulario de contacto** que env?a leads a la Edge Function `submit-lead`.
+3. **Edge Function `submit-lead`** que valida, filtra bots, inserta en Supabase y delega notificaci?n.
+4. **Edge Function `notify-lead`** que env?a notificaciones por email usando Resend.
+5. **Login administrativo** con Supabase Auth.
+6. **Panel `/admin`** para consultar leads registrados.
 
 ## Arquitectura de frontend
 
@@ -85,11 +86,12 @@ src/
   hooks/                   hooks custom
   i18n/                    contexto y namespaces ES/EN
   integrations/supabase/   cliente tipado de Supabase
-  lib/                     utilidades compartidas
+ lib/                     utilidades compartidas
   pages/                   páginas por ruta
   test/                    setup y tests básicos
 supabase/
-  functions/notify-lead/   Edge Function para avisos por email
+  functions/notify-lead/   Edge Function interna para avisos por email
+  functions/submit-lead/   Edge Function segura para crear leads
   migrations/              esquema y políticas RLS
 public/                    assets públicos
 README.md                  contexto operativo del proyecto
@@ -136,8 +138,8 @@ La lógica de datos ya no vive directamente en las páginas principales.
 
 - `src/features/leads/api.ts` y `src/features/leads/hooks.ts`
   - consulta de leads
-  - creación de lead
-  - notificación mediante `notify-lead`
+  - creación de lead vía `submit-lead`
+  - notificación interna mediante `notify-lead`
 
 React Query ahora sí se usa para:
 
@@ -150,10 +152,98 @@ React Query ahora sí se usa para:
 
 Migraciones detectadas en `supabase/migrations/`:
 
-- creación de tabla `public.leads`
+- creaci?n de tabla `public.leads`
 - RLS habilitado
-- inserción pública permitida
-- lectura restringida a usuarios autenticados
+- lectura permitida solo a usuarios autenticados
+- inserci?n p?blica cerrada; ahora la creaci?n pasa por `submit-lead`
+
+### Flujo seguro de contacto
+
+El formulario `/contacto` ya no inserta directo desde el navegador.
+
+Flujo actual:
+
+1. el frontend valida campos requeridos
+2. el frontend env?a a `submit-lead`:
+   - datos del lead
+   - `honeypot`
+   - `startedAt`
+3. `submit-lead` valida:
+   - campos
+   - honeypot vac?o
+   - tiempo m?nimo de llenado
+4. `submit-lead` inserta el lead con `SUPABASE_SERVICE_ROLE_KEY`
+5. `submit-lead` llama internamente a `notify-lead`
+6. `notify-lead` valida autorizaci?n interna y env?a email por Resend
+7. el frontend recibe ?xito o error
+
+### Funcionamiento detallado de las Edge Functions
+
+#### `submit-lead`
+
+Archivo:
+
+- `supabase/functions/submit-lead/index.ts`
+
+Responsabilidades:
+
+- aceptar el request p?blico del formulario
+- validar el payload con Zod
+- aplicar filtros anti-bot
+- insertar el lead en `public.leads` usando service role
+- llamar internamente a `notify-lead`
+
+Controles implementados:
+
+- `honeypot`: si viene lleno, responde ?xito gen?rico y no guarda lead
+- `startedAt`: si el formulario se env?a demasiado r?pido, responde ?xito gen?rico y no guarda lead
+- validaci?n server-side de:
+  - `name`
+  - `email`
+  - `phone`
+  - `country`
+  - `interest`
+  - `message` opcional
+
+Notas operativas:
+
+- est? desplegada como funci?n p?blica (`--no-verify-jwt`) para que el frontend pueda invocarla con la publishable key
+- el navegador ya no tiene permiso para insertar directo en la tabla `leads`
+
+#### `notify-lead`
+
+Archivo:
+
+- `supabase/functions/notify-lead/index.ts`
+
+Responsabilidades:
+
+- recibir internamente los datos ya validados del lead
+- verificar que la llamada venga autorizada con `SUPABASE_SERVICE_ROLE_KEY`
+- validar el body con Zod
+- construir el email HTML
+- enviarlo por Resend
+
+Protecci?n:
+
+- si no recibe credenciales internas v?lidas, responde `401`
+- no debe usarse como endpoint p?blico del formulario
+
+Relaci?n entre ambas:
+
+1. el frontend llama a `submit-lead`
+2. `submit-lead` decide si el request es v?lido
+3. si pasa, guarda el lead
+4. luego invoca `notify-lead`
+5. `notify-lead` manda el correo
+
+Si falla `notify-lead`:
+
+- el lead ya qued? guardado
+- el error se registra en logs
+- la notificaci?n funciona en modo *best effort*
+
+Esto reduce abuso directo del endpoint p?blico de la tabla `leads`.
 
 Campos actuales de `leads`:
 
@@ -166,22 +256,19 @@ Campos actuales de `leads`:
 - `message`
 - `created_at`
 
-### Edge Function
-
-Archivo: `supabase/functions/notify-lead/index.ts`
-
-Responsabilidad:
-
-- valida payload con Zod
-- lee secrets desde Supabase
-- envía email por Resend
-
 Secrets requeridos:
 
 ```bash
 supabase secrets set RESEND_API_KEY=tu_api_key
 supabase secrets set NOTIFY_FROM_EMAIL="Tu Nombre <no-reply@tudominio.com>"
 supabase secrets set NOTIFY_TO_EMAIL="destino1@tudominio.com,destino2@tudominio.com"
+```
+
+Adem?s, `submit-lead` y `notify-lead` requieren que Supabase provea:
+
+```bash
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
 ```
 
 ## Configuración local
