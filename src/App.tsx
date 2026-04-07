@@ -1,6 +1,7 @@
-import { Suspense, lazy } from "react";
+﻿import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/i18n/LanguageContext";
@@ -45,7 +46,14 @@ const App = () => (
               <Route path="/testimonios" element={<TestimonialsPage />} />
               <Route path="/contacto" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/admin" element={<AdminPage />} />
+              <Route
+                path="/admin"
+                element={(
+                  <ProtectedRoute>
+                    <AdminPage />
+                  </ProtectedRoute>
+                )}
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

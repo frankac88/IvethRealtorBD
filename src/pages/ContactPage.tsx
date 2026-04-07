@@ -5,23 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
 import { translations } from "@/i18n/translations";
-import { supabase } from "@/integrations/supabase/client";
 
 const ContactPage = () => {
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
   const [interest, setInterest] = useState("");
+  const createLeadMutation = useCreateLeadMutation();
   const t = useT();
   const c = translations.contact;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
@@ -34,19 +33,14 @@ const ContactPage = () => {
       message: (formData.get("message") as string)?.trim() || null,
     };
 
-    const { error } = await supabase.from("leads").insert(leadData);
-
-    if (!error) {
-      supabase.functions.invoke("notify-lead", { body: leadData }).catch(console.error);
-    }
-
-    setLoading(false);
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      await createLeadMutation.mutateAsync(leadData);
       toast({ title: t(c.toastTitle), description: t(c.toastDesc) });
       form.reset();
       setInterest("");
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "No se pudo enviar el formulario.";
+      toast({ title: "Error", description: errorMessage, variant: "destructive" });
     }
   };
 
@@ -101,8 +95,8 @@ const ContactPage = () => {
                 <label className="text-sm font-medium mb-2 block">{t(c.message)}</label>
                 <Textarea name="message" placeholder={t(c.messagePlaceholder)} rows={5} maxLength={1000} />
               </div>
-              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
-                {loading ? t(c.sending) : t(c.send)}
+              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={createLeadMutation.isPending}>
+                {createLeadMutation.isPending ? t(c.sending) : t(c.send)}
               </Button>
             </form>
 

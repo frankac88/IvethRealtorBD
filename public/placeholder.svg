@@ -1,1 +1,12 @@
-﻿<svg width="900" height="1200" viewBox="0 0 900 1200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="900" height="1200" fill="#F7F4EE"/><rect x="54" y="54" width="792" height="1092" rx="28" fill="#FFFFFF" stroke="#D9C6A5" stroke-width="2"/><circle cx="450" cy="360" r="104" fill="#1F3D2B"/><path d="M410 360C410 337.909 427.909 320 450 320C472.091 320 490 337.909 490 360C490 382.091 472.091 400 450 400C427.909 400 410 382.091 410 360Z" fill="#CDAA64"/><path d="M450 276L478.938 334.625L543.624 344.024L496.812 389.649L507.876 454.076L450 423.65L392.124 454.076L403.188 389.649L356.376 344.024L421.062 334.625L450 276Z" fill="#CDAA64" fill-opacity="0.18"/><text x="450" y="560" text-anchor="middle" fill="#1F3D2B" font-family="Georgia, Times New Roman, serif" font-size="52" font-weight="700" letter-spacing="2">IVETH COLL</text><text x="450" y="615" text-anchor="middle" fill="#8A6A3C" font-family="Arial, Helvetica, sans-serif" font-size="24" letter-spacing="5">MIAMI LUX ADVISOR</text><text x="450" y="700" text-anchor="middle" fill="#6B6B6B" font-family="Arial, Helvetica, sans-serif" font-size="20">Placeholder visual 3:4 propio del proyecto</text></svg>
+<svg width="900" height="1200" viewBox="0 0 900 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="900" height="1200" fill="#F7F4EE"/>
+<rect x="54" y="54" width="792" height="1092" rx="28" fill="#FFFFFF" stroke="#D9C6A5" stroke-width="2"/>
+<g transform="translate(0 110)">
+<circle cx="450" cy="360" r="104" fill="#1F3D2B"/>
+<path d="M410 360C410 337.909 427.909 320 450 320C472.091 320 490 337.909 490 360C490 382.091 472.091 400 450 400C427.909 400 410 382.091 410 360Z" fill="#CDAA64"/>
+<path d="M450 276L478.938 334.625L543.624 344.024L496.812 389.649L507.876 454.076L450 423.65L392.124 454.076L403.188 389.649L356.376 344.024L421.062 334.625L450 276Z" fill="#CDAA64" fill-opacity="0.18"/>
+<text x="450" y="560" text-anchor="middle" fill="#1F3D2B" font-family="Georgia, Times New Roman, serif" font-size="52" font-weight="700" letter-spacing="2">IVETH COLL</text>
+<text x="450" y="615" text-anchor="middle" fill="#8A6A3C" font-family="Arial, Helvetica, sans-serif" font-size="24" letter-spacing="5">MIAMI LUX ADVISOR</text>
+<text x="450" y="700" text-anchor="middle" fill="#6B6B6B" font-family="Arial, Helvetica, sans-serif" font-size="20">Placeholder visual 3:4 propio del proyecto</text>
+</g>
+</svg>

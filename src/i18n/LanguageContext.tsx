@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+﻿import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import { type Language } from "./translations";
 
 interface LanguageContextType {
@@ -7,10 +7,27 @@ interface LanguageContextType {
   toggleLanguage: () => void;
 }
 
+const LANGUAGE_STORAGE_KEY = "miami-lux-advisor:language";
+
+const isLanguage = (value: string | null): value is Language => value === "es" || value === "en";
+
+const getInitialLanguage = (): Language => {
+  if (typeof window === "undefined") {
+    return "es";
+  }
+
+  const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  return isLanguage(storedLanguage) ? storedLanguage : "es";
+};
+
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>("es");
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+
+  useEffect(() => {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  }, [language]);
 
   const toggleLanguage = useCallback(() => {
     setLanguage((prev) => (prev === "es" ? "en" : "es"));

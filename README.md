@@ -81,6 +81,7 @@ src/
   components/              layout, navegación, footer y componentes UI
     ui/                    componentes base de shadcn/ui
   config/                  configuración pública compartida del sitio
+  features/                módulos por dominio (auth, leads)
   hooks/                   hooks custom
   i18n/                    contexto y diccionario ES/EN
   integrations/supabase/   cliente tipado de Supabase
@@ -120,6 +121,28 @@ Archivo: `src/integrations/supabase/client.ts`
 - usa `localStorage`
 - persiste sesión
 - auto refresca tokens
+
+### Capa frontend de dominio
+
+La lógica de datos ya no vive directamente en las páginas principales.
+
+- `src/features/auth/api.ts` y `src/features/auth/hooks.ts`
+  - sesión actual
+  - login
+  - logout
+  - sincronización con cambios de auth
+
+- `src/features/leads/api.ts` y `src/features/leads/hooks.ts`
+  - consulta de leads
+  - creación de lead
+  - notificación mediante `notify-lead`
+
+React Query ahora sí se usa para:
+
+- sesión de auth
+- lectura de leads
+- mutaciones de login
+- mutaciones de creación de leads
 
 ### Base de datos
 
@@ -202,21 +225,22 @@ npm run preview
 - La documentación ahora refleja mejor la arquitectura real del repo.
 - Las rutas ya se cargan de forma diferida (`lazy` + `Suspense`), reduciendo el peso inicial.
 - La configuración pública visible del sitio quedó centralizada en `src/config/site.ts`.
+- La lógica de auth y leads quedó desacoplada de las páginas mediante `features/` + React Query.`r`n- El acceso a `/admin` ya está encapsulado en un `ProtectedRoute` reutilizable.
 
 ### Puntos a revisar luego
 
 - **Lint**: ya quedó limpio tras ajustar ESLint para archivos utilitarios/UI y corregir dependencias del hook `useScrollAnimation`.
-- **React Query**: sigue montado globalmente, pero aún no se usa para queries/mutations reales.
 - **Datos placeholder**: hay enlaces y datos de contacto temporales, por ejemplo `https://wa.me/1234567890` y teléfonos genéricos en componentes/páginas.
 - Hay varios componentes `ui/` generados que no necesariamente están en uso activo; se puede depurar más adelante.
 
 ## Observaciones operativas
 
 - `/login` autentica con email + password vía Supabase Auth.
-- `/admin` consulta `leads` ordenados por fecha.
+- `/admin` consulta `leads` ordenados por fecha usando React Query.
 - Si se cambia el modelo de datos de leads, hay que actualizar:
   - migraciones
   - tipos generados de Supabase
+  - `src/features/leads/api.ts`
   - formulario de contacto
   - panel admin
   - Edge Function `notify-lead`
@@ -235,3 +259,5 @@ Y recordar siempre:
 
 - No agregar branding heredado de constructores externos
 - **No dejar placeholders de contacto en producción**
+
+
