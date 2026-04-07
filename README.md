@@ -1,15 +1,15 @@
-Ôªø# Miami Lux Advisor
+# Miami Lux Advisor
 
-Frontend inmobiliario construido con **Vite + React + TypeScript + Tailwind + shadcn/ui**, conectado a **Supabase** para captaci√≥n y gesti√≥n de leads.
+Frontend inmobiliario construido con **Vite + React + TypeScript + Tailwind + shadcn/ui**, conectado a **Supabase** para captaciÛn y gestiÛn de leads.
 
 ## Estado actual del proyecto
 
-- `npm run build` ‚úÖ
-- `npm run test` ‚úÖ
-- `npm run lint` ‚úÖ
-- B√∫squeda interna de referencias heredadas de constructores externos en el c√≥digo del proyecto (`src`, `supabase`, configs, docs) ‚úÖ sin resultados
+- `npm run build` ?
+- `npm run test` ?
+- `npm run lint` ?
+- B˙squeda interna de referencias heredadas de constructores externos en el cÛdigo del proyecto (`src`, `supabase`, configs, docs) ? sin resultados
 
-> Regla del proyecto: no debe existir branding, copy o configuraci√≥n heredada de constructores externos.
+> Regla del proyecto: no debe existir branding, copy o configuraciÛn heredada de constructores externos.
 
 ## Stack principal
 
@@ -22,15 +22,15 @@ Frontend inmobiliario construido con **Vite + React + TypeScript + Tailwind + sh
 - **TanStack React Query**
 - **Supabase** (Auth, DB y Edge Functions)
 - **Vitest**
-- **Playwright** (configurado, no auditado a fondo en esta revisi√≥n)
+- **Playwright** (configurado, no auditado a fondo en esta revisiÛn)
 
-## Qu√© hace el sitio
+## QuÈ hace el sitio
 
-El sitio funciona como una landing/site comercial para captaci√≥n de clientes interesados en invertir en Florida, especialmente en Miami y Orlando.
+El sitio funciona como una landing/site comercial para captaciÛn de clientes interesados en invertir en Florida, especialmente en Miami y Orlando.
 
 ### Flujos principales
 
-1. **Navegaci√≥n p√∫blica** con varias p√°ginas de contenido.
+1. **NavegaciÛn p˙blica** con varias p·ginas de contenido.
 2. **Formulario de contacto** que env?a leads a la Edge Function `submit-lead`.
 3. **Edge Function `submit-lead`** que valida, filtra bots, inserta en Supabase y delega notificaci?n.
 4. **Edge Function `notify-lead`** que env?a notificaciones por email usando Resend.
@@ -48,7 +48,7 @@ El sitio funciona como una landing/site comercial para captaci√≥n de clientes in
   - `LanguageProvider`
   - `BrowserRouter`
   - `Suspense` para carga diferida de rutas
-  - toast √∫nico (`Toaster`)
+  - toast ˙nico (`Toaster`)
 
 ### Layout compartido
 
@@ -62,7 +62,7 @@ El sitio funciona como una landing/site comercial para captaci√≥n de clientes in
 
 Definidas en `src/App.tsx`:
 
-- `/` ‚Üí Home
+- `/` ? Home
 - `/sobre-iveth`
 - `/equipo`
 - `/proyectos`
@@ -72,34 +72,34 @@ Definidas en `src/App.tsx`:
 - `/contacto`
 - `/login`
 - `/admin`
-- `*` ‚Üí `NotFound`
+- `*` ? `NotFound`
 
 ## Estructura del repositorio
 
 ```text
 src/
-  assets/                  im√°genes del sitio
-  components/              layout, navegaci√≥n, footer y componentes UI
+  assets/                  im·genes del sitio
+  components/              layout, navegaciÛn, footer y componentes UI
     ui/                    componentes base de shadcn/ui
-  config/                  configuraci√≥n p√∫blica compartida del sitio
-  features/                m√≥dulos por dominio (auth, leads)
+  config/                  configuraciÛn p˙blica compartida del sitio
+  features/                mÛdulos por dominio (auth, leads)
   hooks/                   hooks custom
   i18n/                    contexto y namespaces ES/EN
   integrations/supabase/   cliente tipado de Supabase
  lib/                     utilidades compartidas
-  pages/                   p√°ginas por ruta
-  test/                    setup y tests b√°sicos
+  pages/                   p·ginas por ruta
+  test/                    setup y tests b·sicos
 supabase/
   functions/notify-lead/   Edge Function interna para avisos por email
   functions/submit-lead/   Edge Function segura para crear leads
-  migrations/              esquema y pol√≠ticas RLS
-public/                    assets p√∫blicos
+  migrations/              esquema y polÌticas RLS
+public/                    assets p˙blicos
 README.md                  contexto operativo del proyecto
 ```
 
-## Internacionalizaci√≥n
+## InternacionalizaciÛn
 
-El sitio tiene soporte biling√ºe b√°sico:
+El sitio tiene soporte biling¸e b·sico:
 
 - `src/i18n/LanguageContext.tsx` maneja el idioma activo.
 - `src/i18n/translations/` divide el contenido ES/EN por namespace/p?gina.
@@ -107,7 +107,7 @@ El sitio tiene soporte biling√ºe b√°sico:
 - El idioma cambia desde la navbar.
 - El idioma activo se persiste en `localStorage` con la clave `miami-lux-advisor:language`.
 
-## Integraci√≥n con Supabase
+## IntegraciÛn con Supabase
 
 ### Variables de entorno
 
@@ -123,30 +123,30 @@ VITE_SUPABASE_PUBLISHABLE_KEY=
 Archivo: `src/integrations/supabase/client.ts`
 
 - usa `localStorage`
-- persiste sesi√≥n
+- persiste sesiÛn
 - auto refresca tokens
 
 ### Capa frontend de dominio
 
-La l√≥gica de datos ya no vive directamente en las p√°ginas principales.
+La lÛgica de datos ya no vive directamente en las p·ginas principales.
 
 - `src/features/auth/api.ts` y `src/features/auth/hooks.ts`
-  - sesi√≥n actual
+  - sesiÛn actual
   - login
   - logout
-  - sincronizaci√≥n con cambios de auth
+  - sincronizaciÛn con cambios de auth
 
 - `src/features/leads/api.ts` y `src/features/leads/hooks.ts`
   - consulta de leads
-  - creaci√≥n de lead v√≠a `submit-lead`
-  - notificaci√≥n interna mediante `notify-lead`
+  - creaciÛn de lead vÌa `submit-lead`
+  - notificaciÛn interna mediante `notify-lead`
 
-React Query ahora s√≠ se usa para:
+React Query ahora sÌ se usa para:
 
-- sesi√≥n de auth
+- sesiÛn de auth
 - lectura de leads
 - mutaciones de login
-- mutaciones de creaci√≥n de leads
+- mutaciones de creaciÛn de leads
 
 ### Base de datos
 
@@ -271,7 +271,7 @@ SUPABASE_URL
 SUPABASE_SERVICE_ROLE_KEY
 ```
 
-## Configuraci√≥n local
+## ConfiguraciÛn local
 
 1. Instalar dependencias:
 
@@ -293,7 +293,7 @@ SUPABASE_SERVICE_ROLE_KEY
    npm run dev
    ```
 
-## Comandos √∫tiles
+## Comandos ˙tiles
 
 ```bash
 npm run dev
@@ -303,28 +303,28 @@ npm run lint
 npm run preview
 ```
 
-## Hallazgos de auditor√≠a
+## Hallazgos de auditorÌa
 
 ### Bien resuelto
 
 - La estructura general del proyecto es clara y mantenible.
-- Las rutas p√∫blicas est√°n separadas por p√°gina.
-- El flujo de leads est√° bien definido: formulario ‚Üí tabla `leads` ‚Üí notificaci√≥n por Edge Function.
-- El acceso al panel admin depende de sesi√≥n de Supabase.
-- La documentaci√≥n ahora refleja mejor la arquitectura real del repo.
+- Las rutas p˙blicas est·n separadas por p·gina.
+- El flujo de leads est· bien definido: formulario ? tabla `leads` ? notificaciÛn por Edge Function.
+- El acceso al panel admin depende de sesiÛn de Supabase.
+- La documentaciÛn ahora refleja mejor la arquitectura real del repo.
 - Las rutas ya se cargan de forma diferida (`lazy` + `Suspense`), reduciendo el peso inicial.
-- La configuraci√≥n p√∫blica visible del sitio qued√≥ centralizada en `src/config/site.ts`.
-- La l√≥gica de auth y leads qued√≥ desacoplada de las p√°ginas mediante `features/` + React Query.`r`n- El acceso a `/admin` ya est√° encapsulado en un `ProtectedRoute` reutilizable.
+- La configuraciÛn p˙blica visible del sitio quedÛ centralizada en `src/config/site.ts`.
+- La lÛgica de auth y leads quedÛ desacoplada de las p·ginas mediante `features/` + React Query.`r`n- El acceso a `/admin` ya est· encapsulado en un `ProtectedRoute` reutilizable.
 
 ### Puntos a revisar luego
 
-- **Lint**: ya qued√≥ limpio tras ajustar ESLint para archivos utilitarios/UI y corregir dependencias del hook `useScrollAnimation`.
-- **Datos placeholder**: hay enlaces y datos de contacto temporales, por ejemplo `https://wa.me/1234567890` y tel√©fonos gen√©ricos en componentes/p√°ginas.
-- Hay varios componentes `ui/` generados que no necesariamente est√°n en uso activo; se puede depurar m√°s adelante.
+- **Lint**: ya quedÛ limpio tras ajustar ESLint para archivos utilitarios/UI y corregir dependencias del hook `useScrollAnimation`.
+- **Datos de contacto**: quedaron centralizados en `src/config/site.ts` para evitar inconsistencias entre footer, navbar, WhatsApp y la p·gina de contacto.
+- Hay varios componentes `ui/` generados que no necesariamente est·n en uso activo; se puede depurar m·s adelante.
 
 ## Observaciones operativas
 
-- `/login` autentica con email + password v√≠a Supabase Auth.
+- `/login` autentica con email + password vÌa Supabase Auth.
 - `/admin` consulta `leads` ordenados por fecha usando React Query.
 - Si se cambia el modelo de datos de leads, hay que actualizar:
   - migraciones
@@ -334,9 +334,9 @@ npm run preview
   - panel admin
   - Edge Function `notify-lead`
 
-## Pol√≠tica interna de documentaci√≥n
+## PolÌtica interna de documentaciÛn
 
-Si se actualiza este proyecto m√°s adelante, mantener este README alineado con:
+Si se actualiza este proyecto m·s adelante, mantener este README alineado con:
 
 - rutas reales
 - estructura de carpetas
@@ -347,6 +347,7 @@ Si se actualiza este proyecto m√°s adelante, mantener este README alineado con:
 Y recordar siempre:
 
 - No agregar branding heredado de constructores externos
-- **No dejar placeholders de contacto en producci√≥n**
+- **No dejar placeholders de contacto en producciÛn**
+
 
 

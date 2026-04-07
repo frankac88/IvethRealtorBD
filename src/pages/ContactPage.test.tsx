@@ -106,23 +106,23 @@ const fillRequiredFields = async (overrides?: Partial<{
   email: string;
   phone: string;
   country: string;
-  interest: string;
+  inter?st: string;
 }>) => {
   fireEvent.change(screen.getByLabelText(/nombre/i), {
-    target: { value: overrides?.name ?? "Jane Doe" },
+    target: { value: overrides?.name ? "Jane Doe" },
   });
   fireEvent.change(screen.getByLabelText(/^email/i), {
-    target: { value: overrides?.email ?? "jane@test.com" },
+    target: { value: overrides?.email ? "jane@test.com" },
   });
   fireEvent.change(screen.getByLabelText(/teléfono/i), {
-    target: { value: overrides?.phone ?? "+593999999999" },
+    target: { value: overrides?.phone ? "+593999999999" },
   });
   fireEvent.change(screen.getByLabelText(/país/i), {
-    target: { value: overrides?.country ?? "Ecuador" },
+    target: { value: overrides?.country ? "Ecuador" },
   });
 
-  if (overrides?.interest !== null) {
-    await selectInterest(overrides?.interest ?? "financing");
+  if (overrides?.inter?st !== null) {
+    await selectInterest(overrides?.inter?st ? "financing");
   }
 };
 
@@ -144,7 +144,7 @@ describe("ContactPage", () => {
         email: "jane@test.com",
         phone: "+593999999999",
         country: "Ecuador",
-        interest: "financing",
+        inter?st: "financing",
         message: null,
         honeypot: "",
         startedAt: expect.any(Number),
@@ -168,7 +168,7 @@ describe("ContactPage", () => {
     fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
 
     await waitFor(() => {
-      expect(screen.getByText(/selecciona tu interes/i)).toBeInTheDocument();
+      expect(screen.getByText(/selecciona tu inter?s/i)).toBeInTheDocument();
     });
 
     expect(mockMutateAsync).not.toHaveBeenCalled();
@@ -187,7 +187,7 @@ describe("ContactPage", () => {
     fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
 
     await waitFor(() => {
-      expect(screen.getByText(/ingresa un telefono valido/i)).toBeInTheDocument();
+      expect(screen.getByText(/ingresa un tel?fono valido/i)).toBeInTheDocument();
     });
 
     expect(mockMutateAsync).not.toHaveBeenCalled();
@@ -197,7 +197,7 @@ describe("ContactPage", () => {
     mockMutateAsync.mockRejectedValueOnce(new Error("Insert failed"));
     renderContactPage();
 
-    await fillRequiredFields({ interest: "miami" });
+    await fillRequiredFields({ inter?st: "miami" });
     fireEvent.change(screen.getByLabelText(/mensaje/i), {
       target: { value: "Quiero invertir." },
     });

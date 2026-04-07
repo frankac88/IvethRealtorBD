@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
 import { contactTranslations } from "@/i18n/translations/contact";
@@ -26,6 +26,7 @@ const ContactPage = () => {
   const [interest, setInterest] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
   const createLeadMutation = useCreateLeadMutation();
   const t = useT();
   const c = contactTranslations;
@@ -240,23 +241,80 @@ const ContactPage = () => {
               </Button>
             </form>
 
-            <div className="space-y-8">
+            <div className="space-y-10">
               <div>
-                <h2 className="font-serif text-2xl mb-6">{t(c.infoTitle)}</h2>
-                <div className="space-y-4">
-                  {[
-                    { icon: MapPin, text: siteConfig.contact.locationFull },
-                    { icon: Phone, text: siteConfig.contact.phoneDisplay },
-                    { icon: Mail, text: siteConfig.contact.email },
-                  ].map((item) => (
-                    <div key={item.text} className="flex items-center gap-3">
-                      <item.icon size={18} className="text-primary" />
-                      <span className="text-muted-foreground">{item.text}</span>
+                <h2 className="font-serif text-2xl md:text-[2rem] mb-10">{t(c.infoTitle)}</h2>
+                <div className="space-y-8">
+                  <div className="flex items-start gap-4">
+                    <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border/80 bg-background text-primary shadow-sm">
+                      <Mail size={18} />
+                    </span>
+                    <div className="min-w-0 pt-0.5">
+                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Email</p>
+                      <a href={`mailto:${siteConfig.contact.email}`} className="mt-2 block text-xl leading-snug text-foreground transition-colors hover:text-primary">
+                        {siteConfig.contact.email}
+                      </a>
                     </div>
-                  ))}
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border/80 bg-background text-primary shadow-sm">
+                      <Phone size={18} />
+                    </span>
+                    <div className="min-w-0 pt-0.5">
+                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Phone</p>
+                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="mt-2 block text-xl leading-snug text-foreground transition-colors hover:text-primary">
+                        {siteConfig.contact.phoneDisplay}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border/80 bg-background text-primary shadow-sm">
+                      <MapPin size={18} />
+                    </span>
+                    <div className="min-w-0 flex-1 pt-0.5">
+                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">{t(c.locationLabel)}</p>
+                      <p className="mt-2 text-xl leading-snug text-foreground">
+                        {siteConfig.contact.locationFull}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setIsLocationOpen((prev) => !prev)}
+                        aria-expanded={isLocationOpen}
+                        aria-controls="contact-location-map"
+                        className="mt-3 inline-flex items-center gap-1.5 text-[15px] font-medium text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline"
+                      >
+                        {isLocationOpen ? t(c.locationToggleHide) : t(c.locationToggleShow)}
+                      </button>
+
+                      {isLocationOpen && (
+                        <div id="contact-location-map" className="mt-5 overflow-hidden rounded-[24px] border border-border/60 bg-background shadow-[0_12px_40px_-24px_rgba(0,0,0,0.35)]">
+                          <div className="flex items-center justify-between border-b border-border/60 px-4 py-3">
+                            <a
+                              href={siteConfig.contact.locationMapsHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80"
+                            >
+                              {t(c.locationMapOpen)}
+                              <ExternalLink size={14} />
+                            </a>
+                          </div>
+                          <iframe
+                            title={siteConfig.contact.locationFull}
+                            src={siteConfig.contact.locationEmbedSrc}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="h-[300px] w-full border-0"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="bg-muted p-8 rounded-sm">
+              <div className="rounded-[28px] bg-muted/70 p-8 ring-1 ring-border/50">
                 <h3 className="font-serif text-lg mb-3">{t(c.whatsappTitle)}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t(c.whatsappDesc)}</p>
                 <Button variant="default" asChild>
@@ -272,3 +330,4 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+
