@@ -4,17 +4,17 @@ import { MapPin, TrendingUp, Shield, Building2, Star, ArrowRight } from "lucide-
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { homeTranslations } from "@/i18n/translations/home";
 import { siteConfig } from "@/config/site";
-import heroImg from "@/assets/hero-miami.jpg";
-import ivethImg from "@/assets/iveth-portrait.jpg";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
+import heroImg from "@/assets/hero-miami.webp";
+import ivethImg from "@/assets/iveth-portrait.webp";
+import project1 from "@/assets/project-1.webp";
+import project2 from "@/assets/project-2.webp";
+import project3 from "@/assets/project-3.webp";
 
 const Index = () => {
   const t = useT();
-  const h = translations.home;
+  const h = homeTranslations;
 
   const projects = [
     { title: "The Residences at Brickell", location: "Brickell, Miami", price: "$450,000", image: project1, tagKey: "precon" as const },

@@ -2,12 +2,12 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
-import ivethImg from "@/assets/iveth-portrait.jpg";
+import { teamTranslations } from "@/i18n/translations/team";
+import ivethImg from "@/assets/iveth-portrait.webp";
 
 const TeamPage = () => {
   const t = useT();
-  const tm = translations.team;
+  const tm = teamTranslations;
 
   return (
     <Layout>

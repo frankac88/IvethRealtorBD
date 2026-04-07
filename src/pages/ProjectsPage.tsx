@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
+import { homeTranslations } from "@/i18n/translations/home";
+import { projectsTranslations } from "@/i18n/translations/projects";
+import project1 from "@/assets/project-1.webp";
+import project2 from "@/assets/project-2.webp";
+import project3 from "@/assets/project-3.webp";
 
 const allProjects = [
   { title: "The Residences at Brickell", location: "Brickell, Miami", price: "$450,000", image: project1, tagKey: "precon" as const, category: "Miami", beds: "1-3", sqft: "750-1,800" },
@@ -20,9 +21,9 @@ const allProjects = [
 
 const ProjectsPage = () => {
   const t = useT();
-  const p = translations.projects;
-  const tags = translations.home.projectTags;
-  const prefix = translations.home.projectPricePrefix;
+  const p = projectsTranslations;
+  const tags = homeTranslations.projectTags;
+  const prefix = homeTranslations.projectPricePrefix;
 
   return (
     <Layout>

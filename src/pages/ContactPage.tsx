@@ -10,14 +10,14 @@ import { useToast } from "@/hooks/use-toast";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { contactTranslations } from "@/i18n/translations/contact";
 
 const ContactPage = () => {
   const { toast } = useToast();
   const [interest, setInterest] = useState("");
   const createLeadMutation = useCreateLeadMutation();
   const t = useT();
-  const c = translations.contact;
+  const c = contactTranslations;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

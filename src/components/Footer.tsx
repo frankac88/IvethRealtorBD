@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { footerTranslations } from "@/i18n/translations/footer";
 
 const Footer = () => {
   const t = useT();
-  const ft = translations.footer;
+  const ft = footerTranslations;
 
   const links = [
     { label: t(ft.navLinks.home), href: "/" },

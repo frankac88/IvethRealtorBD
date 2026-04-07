@@ -2,11 +2,11 @@ import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Star } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { testimonialsTranslations } from "@/i18n/translations/testimonials";
 
 const TestimonialsPage = () => {
   const t = useT();
-  const tp = translations.testimonials;
+  const tp = testimonialsTranslations;
 
   return (
     <Layout>

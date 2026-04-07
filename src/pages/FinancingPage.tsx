@@ -2,12 +2,12 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { financingTranslations } from "@/i18n/translations/financing";
 
 const FinancingPage = () => {
   const { language } = useLanguage();
   const t = useT();
-  const f = translations.financing;
+  const f = financingTranslations;
 
   return (
     <Layout>

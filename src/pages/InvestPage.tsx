@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Shield, Building2, MapPin, DollarSign, BarChart3 } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { investTranslations } from "@/i18n/translations/invest";
 
 const InvestPage = () => {
   const t = useT();
-  const inv = translations.invest;
+  const inv = investTranslations;
 
   const sections = [
     { icon: TrendingUp, ...inv.sections.why },

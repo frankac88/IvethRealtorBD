@@ -83,7 +83,7 @@ src/
   config/                  configuración pública compartida del sitio
   features/                módulos por dominio (auth, leads)
   hooks/                   hooks custom
-  i18n/                    contexto y diccionario ES/EN
+  i18n/                    contexto y namespaces ES/EN
   integrations/supabase/   cliente tipado de Supabase
   lib/                     utilidades compartidas
   pages/                   páginas por ruta
@@ -100,8 +100,10 @@ README.md                  contexto operativo del proyecto
 El sitio tiene soporte bilingüe básico:
 
 - `src/i18n/LanguageContext.tsx` maneja el idioma activo.
-- `src/i18n/translations.ts` concentra el contenido ES/EN.
+- `src/i18n/translations/` divide el contenido ES/EN por namespace/p?gina.
+- `src/i18n/translations.ts` queda como ?ndice de compatibilidad.
 - El idioma cambia desde la navbar.
+- El idioma activo se persiste en `localStorage` con la clave `miami-lux-advisor:language`.
 
 ## Integración con Supabase
 

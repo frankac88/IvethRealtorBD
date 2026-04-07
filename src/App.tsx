@@ -6,6 +6,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
+const ROUTER_FUTURE_FLAGS = {
+  v7_startTransition: true,
+  v7_relativeSplatPath: true,
+} as const;
+
 const Index = lazy(() => import("./pages/Index.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const TeamPage = lazy(() => import("./pages/TeamPage.tsx"));
@@ -34,7 +39,7 @@ const App = () => (
     <TooltipProvider>
       <LanguageProvider>
         <Toaster />
-        <BrowserRouter>
+        <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />

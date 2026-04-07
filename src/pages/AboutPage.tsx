@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Globe, Building2, Users } from "lucide-react";
 import { useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
-import ivethImg from "@/assets/iveth-portrait.jpg";
+import { aboutTranslations } from "@/i18n/translations/about";
+import ivethImg from "@/assets/iveth-portrait.webp";
 
 const AboutPage = () => {
   const t = useT();
-  const a = translations.about;
+  const a = aboutTranslations;
 
   const values = [
     { icon: Globe, ...a.values.international },

@@ -5,7 +5,7 @@ import logoIvethColl from "@/assets/logo-iveth-coll.png";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
-import { translations } from "@/i18n/translations";
+import { navTranslations } from "@/i18n/translations/nav";
 
 const navLinks = [
   { key: "home" as const, href: "/" },
@@ -48,7 +48,7 @@ const Navbar = () => {
                     : "text-muted-foreground"
                 }`}
               >
-                {t(translations.nav[link.key])}
+                {t(navTranslations[link.key])}
               </Link>
             ))}
             <button
@@ -61,7 +61,7 @@ const Navbar = () => {
             </button>
             <Button size="sm" variant="hero" className="ml-2" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
-                {t(translations.nav.cta)}
+                {t(navTranslations.cta)}
               </a>
             </Button>
           </div>
@@ -101,12 +101,12 @@ const Navbar = () => {
                       : "text-muted-foreground"
                   }`}
                 >
-                  {t(translations.nav[link.key])}
+                  {t(navTranslations[link.key])}
                 </Link>
               ))}
               <Button variant="hero" className="mt-2" asChild>
                 <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
-                  {t(translations.nav.ctaMobile)}
+                  {t(navTranslations.ctaMobile)}
                 </a>
               </Button>
             </div>
