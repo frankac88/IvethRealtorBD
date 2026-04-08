@@ -14,7 +14,7 @@
     en: "Your trusted advisor in Florida's real estate market",
   },
   aboutDesc: {
-    es: "Iveth Coll cuenta con más de 20 años de experiencia en real estate y una sólida base financiera, acompañando a inversionistas locales e internacionales a identificar oportunidades estratégicas y seguras en Florida.",
+    es: "Con más de 20 años de experiencia en real estate y una base financiera sólida, ofrezco una asesoría estratégica y personalizada para quienes buscan crecer su patrimonio en Florida.",
     en: "Iveth Coll brings more than 20 years of real estate experience and a strong financial background, guiding local and international investors toward strategic and secure opportunities in Florida.",
   },
   stats: {
@@ -81,3 +81,4 @@
   ctaButton1: { es: "Agendar Consulta Gratuita", en: "Book Free Consultation" },
   ctaButton2: { es: "WhatsApp Directo", en: "Direct WhatsApp" },
 } as const;
+
