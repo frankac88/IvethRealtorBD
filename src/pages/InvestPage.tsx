@@ -2,10 +2,12 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Shield, Building2, MapPin, DollarSign, BarChart3 } from "lucide-react";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
 import { investTranslations } from "@/i18n/translations/invest";
 
 const InvestPage = () => {
+  const { language } = useLanguage();
   const t = useT();
   const inv = investTranslations;
 
@@ -42,7 +44,7 @@ const InvestPage = () => {
             ))}
           </div>
           <div className="mt-16 text-center">
-            <Button variant="hero" size="lg" asChild><Link to="/contacto">{t(inv.cta)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(inv.cta)}</Link></Button>
           </div>
         </div>
       </section>

@@ -78,6 +78,14 @@ describe("App routing", () => {
     expect(await screen.findByText("Contact route")).toBeInTheDocument();
   });
 
+  it("renders an english localized public route", async () => {
+    setRoute("/contact");
+
+    render(<App />);
+
+    expect(await screen.findByText("Contact route")).toBeInTheDocument();
+  });
+
   it("redirects unauthenticated users from /admin to /login", async () => {
     setRoute("/admin");
 

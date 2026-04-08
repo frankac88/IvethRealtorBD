@@ -125,6 +125,9 @@ const ContactPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              <div>
+                <h2 className="font-serif text-2xl md:text-[2rem]">{t(c.formTitle)}</h2>
+              </div>
               <div
                 className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0 pointer-events-none"
                 aria-hidden="true"

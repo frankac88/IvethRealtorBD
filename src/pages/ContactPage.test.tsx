@@ -3,8 +3,9 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
-import ContactPage from "./ContactPage";
 import { LanguageProvider } from "@/i18n/LanguageContext";
+
+import ContactPage from "./ContactPage";
 
 const mockToast = vi.fn();
 const mockMutateAsync = vi.fn();
@@ -101,28 +102,34 @@ const selectInterest = async (value: string) => {
   });
 };
 
+const getInput = (id: string) => {
+  const input = document.getElementById(id);
+  if (!input) throw new Error(`Missing input #${id}`);
+  return input;
+};
+
 const fillRequiredFields = async (overrides?: Partial<{
   name: string;
   email: string;
   phone: string;
   country: string;
-  inter?st: string;
+  interest: string | null;
 }>) => {
   fireEvent.change(screen.getByLabelText(/nombre/i), {
-    target: { value: overrides?.name ? "Jane Doe" },
+    target: { value: overrides?.name ?? "Jane Doe" },
   });
   fireEvent.change(screen.getByLabelText(/^email/i), {
-    target: { value: overrides?.email ? "jane@test.com" },
+    target: { value: overrides?.email ?? "jane@test.com" },
   });
-  fireEvent.change(screen.getByLabelText(/teléfono/i), {
-    target: { value: overrides?.phone ? "+593999999999" },
+  fireEvent.change(getInput("contact-phone"), {
+    target: { value: overrides?.phone ?? "+593999999999" },
   });
-  fireEvent.change(screen.getByLabelText(/país/i), {
-    target: { value: overrides?.country ? "Ecuador" },
+  fireEvent.change(getInput("contact-country"), {
+    target: { value: overrides?.country ?? "Ecuador" },
   });
 
-  if (overrides?.inter?st !== null) {
-    await selectInterest(overrides?.inter?st ? "financing");
+  if (overrides?.interest !== null) {
+    await selectInterest(overrides?.interest ?? "financing");
   }
 };
 
@@ -144,7 +151,7 @@ describe("ContactPage", () => {
         email: "jane@test.com",
         phone: "+593999999999",
         country: "Ecuador",
-        inter?st: "financing",
+        interest: "financing",
         message: null,
         honeypot: "",
         startedAt: expect.any(Number),
@@ -162,13 +169,13 @@ describe("ContactPage", () => {
 
     fireEvent.change(screen.getByLabelText(/nombre/i), { target: { value: "Jane Doe" } });
     fireEvent.change(screen.getByLabelText(/^email/i), { target: { value: "jane@test.com" } });
-    fireEvent.change(screen.getByLabelText(/teléfono/i), { target: { value: "+593999999999" } });
-    fireEvent.change(screen.getByLabelText(/país/i), { target: { value: "Ecuador" } });
+    fireEvent.change(getInput("contact-phone"), { target: { value: "+593999999999" } });
+    fireEvent.change(getInput("contact-country"), { target: { value: "Ecuador" } });
 
     fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
 
     await waitFor(() => {
-      expect(screen.getByText(/selecciona tu inter?s/i)).toBeInTheDocument();
+      expect(document.getElementById("contact-interest-error")).toHaveTextContent(/selecciona tu inter/i);
     });
 
     expect(mockMutateAsync).not.toHaveBeenCalled();
@@ -187,7 +194,7 @@ describe("ContactPage", () => {
     fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
 
     await waitFor(() => {
-      expect(screen.getByText(/ingresa un tel?fono valido/i)).toBeInTheDocument();
+      expect(screen.getByText(/ingresa un tel/i)).toBeInTheDocument();
     });
 
     expect(mockMutateAsync).not.toHaveBeenCalled();
@@ -197,7 +204,7 @@ describe("ContactPage", () => {
     mockMutateAsync.mockRejectedValueOnce(new Error("Insert failed"));
     renderContactPage();
 
-    await fillRequiredFields({ inter?st: "miami" });
+    await fillRequiredFields({ interest: "miami" });
     fireEvent.change(screen.getByLabelText(/mensaje/i), {
       target: { value: "Quiero invertir." },
     });

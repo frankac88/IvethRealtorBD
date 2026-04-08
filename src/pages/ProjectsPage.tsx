@@ -3,7 +3,8 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
 import { homeTranslations } from "@/i18n/translations/home";
 import { projectsTranslations } from "@/i18n/translations/projects";
 import project1 from "@/assets/project-1.webp";
@@ -20,6 +21,7 @@ const allProjects = [
 ];
 
 const ProjectsPage = () => {
+  const { language } = useLanguage();
   const t = useT();
   const p = projectsTranslations;
   const tags = homeTranslations.projectTags;
@@ -55,7 +57,7 @@ const ProjectsPage = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <p className="text-primary font-semibold text-lg">{t(prefix)} {project.price}</p>
-                    <Button size="sm" variant="outline" asChild><Link to="/contacto">{t(p.info)}</Link></Button>
+                    <Button size="sm" variant="outline" asChild><Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link></Button>
                   </div>
                 </div>
               </AnimatedSection>

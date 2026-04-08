@@ -1,10 +1,12 @@
-﻿import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { LanguageProvider } from "@/i18n/LanguageContext";
+import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
+import { getLanguageForPath, getLocalizedPaths, type LocalizedRouteKey } from "@/i18n/routes";
 
 const ROUTER_FUTURE_FLAGS = {
   v7_startTransition: true,
@@ -34,22 +36,45 @@ const RouteFallback = () => (
   </div>
 );
 
+const publicRoutes: Array<{ key: LocalizedRouteKey; element: JSX.Element }> = [
+  { key: "home", element: <Index /> },
+  { key: "about", element: <AboutPage /> },
+  { key: "team", element: <TeamPage /> },
+  { key: "projects", element: <ProjectsPage /> },
+  { key: "invest", element: <InvestPage /> },
+  { key: "financing", element: <FinancingPage /> },
+  { key: "testimonials", element: <TestimonialsPage /> },
+  { key: "contact", element: <ContactPage /> },
+];
+
+const LanguageRouteSync = () => {
+  const location = useLocation();
+  const { language, setLanguage } = useLanguage();
+
+  useEffect(() => {
+    const routeLanguage = getLanguageForPath(location.pathname);
+    if (routeLanguage && routeLanguage !== language) {
+      setLanguage(routeLanguage);
+    }
+  }, [language, location.pathname, setLanguage]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <LanguageProvider>
-        <Toaster />
-        <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+        <LanguageProvider>
+          <Toaster />
+          <LanguageRouteSync />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/sobre-iveth" element={<AboutPage />} />
-              <Route path="/equipo" element={<TeamPage />} />
-              <Route path="/proyectos" element={<ProjectsPage />} />
-              <Route path="/invertir-en-florida" element={<InvestPage />} />
-              <Route path="/financiamiento" element={<FinancingPage />} />
-              <Route path="/testimonios" element={<TestimonialsPage />} />
-              <Route path="/contacto" element={<ContactPage />} />
+              {publicRoutes.flatMap((route) =>
+                getLocalizedPaths(route.key).map((path) => (
+                  <Route key={`${route.key}-${path}`} path={path} element={route.element} />
+                )),
+              )}
               <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/admin"
@@ -62,8 +87,8 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-        </BrowserRouter>
-      </LanguageProvider>
+        </LanguageProvider>
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );

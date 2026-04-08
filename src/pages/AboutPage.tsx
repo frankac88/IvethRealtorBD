@@ -3,11 +3,13 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Globe, Building2, Users } from "lucide-react";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
 import { aboutTranslations } from "@/i18n/translations/about";
 import ivethImg from "@/assets/iveth-portrait.webp";
 
 const AboutPage = () => {
+  const { language } = useLanguage();
   const t = useT();
   const a = aboutTranslations;
 
@@ -29,7 +31,7 @@ const AboutPage = () => {
               <p className="text-muted-foreground leading-relaxed mb-6">{t(a.desc1)}</p>
               <p className="text-muted-foreground leading-relaxed mb-8">{t(a.desc2)}</p>
               <Button variant="default" asChild>
-                <Link to="/contacto">{t(a.cta)} <ArrowRight size={16} /></Link>
+                <Link to={getLocalizedPath("contact", language)}>{t(a.cta)} <ArrowRight size={16} /></Link>
               </Button>
             </div>
             <img src={ivethImg} alt="Iveth Coll - International Real Estate Advisor" className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm" loading="lazy" width={800} height={1000} />

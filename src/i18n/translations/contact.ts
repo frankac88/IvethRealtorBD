@@ -1,6 +1,7 @@
 export const contactTranslations = {
     label: { es: "Conectemos", en: "Let's Connect" },
     title: { es: "Contacto", en: "Contact" },
+    formTitle: { es: "Solicita Asesoría Personalizada", en: "Request Personalized Advice" },
     subtitle: {
       es: "Agenda tu consulta personalizada y da el primer paso hacia tu inversión en Florida.",
       en: "Schedule your personalized consultation and take the first step toward your Florida investment.",

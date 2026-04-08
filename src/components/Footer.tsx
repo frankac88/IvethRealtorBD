@@ -1,19 +1,21 @@
 import { Link } from "react-router-dom";
 import { siteConfig } from "@/config/site";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath, type LocalizedRouteKey } from "@/i18n/routes";
 import { footerTranslations } from "@/i18n/translations/footer";
 
 const Footer = () => {
+  const { language } = useLanguage();
   const t = useT();
   const ft = footerTranslations;
 
   const links = [
-    { label: t(ft.navLinks.home), href: "/" },
-    { label: t(ft.navLinks.about), href: "/sobre-iveth" },
-    { label: t(ft.navLinks.projects), href: "/proyectos" },
-    { label: t(ft.navLinks.invest), href: "/invertir-en-florida" },
-    { label: t(ft.navLinks.financing), href: "/financiamiento" },
-    { label: t(ft.navLinks.contact), href: "/contacto" },
+    { label: t(ft.navLinks.home), routeKey: "home" as LocalizedRouteKey },
+    { label: t(ft.navLinks.about), routeKey: "about" as LocalizedRouteKey },
+    { label: t(ft.navLinks.projects), routeKey: "projects" as LocalizedRouteKey },
+    { label: t(ft.navLinks.invest), routeKey: "invest" as LocalizedRouteKey },
+    { label: t(ft.navLinks.financing), routeKey: "financing" as LocalizedRouteKey },
+    { label: t(ft.navLinks.contact), routeKey: "contact" as LocalizedRouteKey },
   ];
 
   return (
@@ -35,8 +37,8 @@ const Footer = () => {
             <div className="flex flex-col gap-2">
               {links.map((link) => (
                 <Link
-                  key={link.href}
-                  to={link.href}
+                  key={link.routeKey}
+                  to={getLocalizedPath(link.routeKey, language)}
                   className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
                 >
                   {link.label}

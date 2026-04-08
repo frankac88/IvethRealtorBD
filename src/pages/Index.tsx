@@ -3,16 +3,18 @@ import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, Shield, Building2, Star, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
 import { homeTranslations } from "@/i18n/translations/home";
 import { siteConfig } from "@/config/site";
 import heroImg from "@/assets/hero-miami.webp";
-import ivethImg from "@/assets/iveth-portrait.webp";
+import ivethHomeImg from "@/assets/iveth-home.webp";
 import project1 from "@/assets/project-1.webp";
 import project2 from "@/assets/project-2.webp";
 import project3 from "@/assets/project-3.webp";
 
 const Index = () => {
+  const { language } = useLanguage();
   const t = useT();
   const h = homeTranslations;
 
@@ -42,8 +44,8 @@ const Index = () => {
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/85 font-light mb-10 max-w-2xl mx-auto leading-relaxed">{t(h.heroDesc)}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg" asChild><Link to="/contacto">{t(h.heroCta1)}</Link></Button>
-            <Button variant="heroOutline" size="lg" asChild><Link to="/proyectos">{t(h.heroCta2)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(h.heroCta1)}</Link></Button>
+            <Button variant="heroOutline" size="lg" asChild><Link to={getLocalizedPath("projects", language)}>{t(h.heroCta2)}</Link></Button>
           </div>
         </div>
       </section>
@@ -53,7 +55,7 @@ const Index = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <img src={ivethImg} alt="Iveth Coll" className="w-full max-w-md mx-auto lg:mx-0 object-cover aspect-[3/4] rounded-sm" loading="lazy" width={800} height={1000} />
+              <img src={ivethHomeImg} alt="Iveth Coll" className="w-full max-w-md mx-auto lg:mx-0 object-cover aspect-[3/4] rounded-sm" loading="lazy" width={800} height={1000} />
               
             </div>
             <div>
@@ -74,7 +76,7 @@ const Index = () => {
                 ))}
               </div>
               <Button variant="default" asChild>
-                <Link to="/sobre-iveth">{t(h.learnMore)} <ArrowRight size={16} /></Link>
+                <Link to={getLocalizedPath("about", language)}>{t(h.learnMore)} <ArrowRight size={16} /></Link>
               </Button>
             </div>
           </div>
@@ -108,7 +110,7 @@ const Index = () => {
               <p className="text-xs tracking-[0.3em] uppercase text-gold mb-4">{t(h.portfolioLabel)}</p>
               <h2 className="text-3xl md:text-4xl font-serif">{t(h.portfolioTitle)}</h2>
             </div>
-            <Button variant="outline" asChild><Link to="/proyectos">{t(h.viewAll)}</Link></Button>
+            <Button variant="outline" asChild><Link to={getLocalizedPath("projects", language)}>{t(h.viewAll)}</Link></Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {projects.map((project, i) => (
@@ -161,7 +163,7 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-serif mb-6">{t(h.ctaTitle)}</h2>
           <p className="text-muted-foreground leading-relaxed mb-10">{t(h.ctaDesc)}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="lg" asChild><Link to="/contacto">{t(h.ctaButton1)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(h.ctaButton1)}</Link></Button>
             <Button variant="gold" size="lg" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(h.ctaButton2)}</a>
             </Button>

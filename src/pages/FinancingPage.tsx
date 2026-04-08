@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
 import { financingTranslations } from "@/i18n/translations/financing";
 
 const FinancingPage = () => {
@@ -53,7 +54,7 @@ const FinancingPage = () => {
           </div>
 
           <div className="text-center">
-            <Button variant="hero" size="lg" asChild><Link to="/contacto">{t(f.cta)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(f.cta)}</Link></Button>
           </div>
         </div>
       </section>
