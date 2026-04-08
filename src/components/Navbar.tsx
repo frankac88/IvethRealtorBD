@@ -47,7 +47,7 @@ const Navbar = () => {
             <img
               src={logoIvethColl}
               alt="Iveth Coll - International Real Estate Advisor"
-              className="block h-[112px] md:h-[124px] w-auto object-contain"
+              className="block h-[96px] md:h-[108px] w-auto object-contain"
             />
           </Link>
 
