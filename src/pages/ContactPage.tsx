@@ -254,7 +254,7 @@ const ContactPage = () => {
                     </span>
                     <div className="min-w-0 pt-0.5">
                       <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Email</p>
-                      <a href={`mailto:${siteConfig.contact.email}`} className="mt-2 block text-xl leading-snug text-foreground transition-colors hover:text-primary">
+                      <a href={`mailto:${siteConfig.contact.email}`} className="mt-2 block text-base md:text-lg leading-snug text-foreground transition-colors hover:text-primary">
                         {siteConfig.contact.email}
                       </a>
                     </div>
@@ -266,7 +266,7 @@ const ContactPage = () => {
                     </span>
                     <div className="min-w-0 pt-0.5">
                       <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Phone</p>
-                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="mt-2 block text-xl leading-snug text-foreground transition-colors hover:text-primary">
+                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="mt-2 block text-base md:text-lg leading-snug text-foreground transition-colors hover:text-primary">
                         {siteConfig.contact.phoneDisplay}
                       </a>
                     </div>
@@ -278,7 +278,7 @@ const ContactPage = () => {
                     </span>
                     <div className="min-w-0 flex-1 pt-0.5">
                       <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">{t(c.locationLabel)}</p>
-                      <p className="mt-2 text-xl leading-snug text-foreground">
+                      <p className="mt-2 text-base md:text-lg leading-snug text-foreground">
                         {siteConfig.contact.locationFull}
                       </p>
                       <button
@@ -320,7 +320,7 @@ const ContactPage = () => {
               <div className="rounded-[28px] bg-muted/70 p-8 ring-1 ring-border/50">
                 <h3 className="font-serif text-lg mb-3">{t(c.whatsappTitle)}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t(c.whatsappDesc)}</p>
-                <Button variant="default" asChild>
+                <Button variant="whatsapp" asChild>
                   <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(c.whatsappButton)}</a>
                 </Button>
               </div>

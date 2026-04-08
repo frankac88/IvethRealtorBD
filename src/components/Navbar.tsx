@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
-import logoIvethColl from "@/assets/logo-iveth-cropped.png";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -48,12 +47,15 @@ const Navbar = () => {
           <Link
             to={getLocalizedPath("home", language)}
             className="flex items-center h-full"
+            aria-label="Home"
           >
-            <img
-              src={logoIvethColl}
-              alt="Iveth Coll - International Real Estate Advisor"
-              className="block h-[96px] md:h-[108px] w-auto object-contain"
-            />
+            <div className="flex h-[96px] w-[96px] md:h-[108px] md:w-[108px] items-center justify-center rounded border border-dashed border-border bg-muted/40 p-2 text-center">
+              <span className="max-w-full text-[9px] font-medium uppercase leading-tight tracking-[0.18em] text-muted-foreground md:text-[10px]">
+                Logo
+                <br />
+                próximamente
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}

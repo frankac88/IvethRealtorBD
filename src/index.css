@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 150 10% 15%;
 
-    --primary: 150 33% 26%;
+    --primary: 351 46% 25%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 38 35% 85%;
@@ -32,23 +32,24 @@
 
     --border: 40 20% 88%;
     --input: 40 20% 88%;
-    --ring: 150 33% 26%;
+    --ring: 351 46% 25%;
 
     --radius: 0.25rem;
 
     --gold: 38 45% 66%;
     --gold-light: 40 40% 92%;
     --wine: 345 40% 30%;
-    --green-light: 140 28% 40%;
+    --green-light: 351 32% 38%;
+    --whatsapp-green: 140 28% 40%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 150 10% 15%;
-    --sidebar-primary: 150 33% 26%;
+    --sidebar-primary: 351 46% 25%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 40 20% 95%;
     --sidebar-accent-foreground: 150 10% 15%;
     --sidebar-border: 40 20% 88%;
-    --sidebar-ring: 150 33% 26%;
+    --sidebar-ring: 351 46% 25%;
   }
 }
 
