@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Globe } from "lucide-react";
+import { Globe, Menu, X } from "lucide-react";
 import logoIvethColl from "@/assets/logo-iveth-cropped.png";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
-import { getAlternateLocalizedPath, getLocalizedPath, getRouteKeyForPath, type LocalizedRouteKey } from "@/i18n/routes";
+import {
+  getAlternateLocalizedPath,
+  getLocalizedPath,
+  getRouteKeyForPath,
+  type LocalizedRouteKey,
+} from "@/i18n/routes";
 import { navTranslations } from "@/i18n/translations/nav";
 
 const navLinks = [
@@ -76,7 +81,7 @@ const Navbar = () => {
               aria-label="Toggle language"
             >
               <Globe size={14} />
-              {language === "es" ? "EN" : "ES"}
+              {language.toUpperCase()}
             </button>
             <Button size="sm" variant="hero" className="ml-2" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
@@ -93,7 +98,7 @@ const Navbar = () => {
               aria-label="Toggle language"
             >
               <Globe size={16} />
-              {language === "es" ? "EN" : "ES"}
+              {language.toUpperCase()}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}

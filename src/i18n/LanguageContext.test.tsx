@@ -49,4 +49,18 @@ describe("LanguageContext", () => {
     expect(screen.getByTestId("language-value")).toHaveTextContent("en");
     expect(window.localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("en");
   });
+
+  it("syncs the html lang attribute with the active language", () => {
+    render(
+      <LanguageProvider>
+        <TestConsumer />
+      </LanguageProvider>,
+    );
+
+    expect(document.documentElement.lang).toBe("es");
+
+    fireEvent.click(screen.getByRole("button", { name: /toggle/i }));
+
+    expect(document.documentElement.lang).toBe("en");
+  });
 });
