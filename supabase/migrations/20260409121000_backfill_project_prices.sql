@@ -1,0 +1,34 @@
+update public.projects
+set price_from = case title
+  when 'BLOOM' then 670779
+  when 'EDGE HOUSE' then 500000
+  when 'EDITION RESIDENCES' then 1920000
+  when 'CASSIA' then 773000
+  when 'THE WILLIAM' then 380900
+  when 'MIDTOWN PARK' then 775000
+  when 'FRIDA KAHLO RESIDENCES' then 500000
+  when 'DELANO RESIDENCES' then 800000
+  when 'MANDARIN ORIENTAL RESIDENCES' then 5000000
+  when '3000 WATERSIDE' then 991000
+  when 'REUNION VILLAGE' then 571990
+  when 'CELEBRATION' then 574990
+  when 'WINTER GARDEN' then 442990
+  when 'CLERMONT' then 349900
+  else price_from
+end
+where title in (
+  'BLOOM',
+  'EDGE HOUSE',
+  'EDITION RESIDENCES',
+  'CASSIA',
+  'THE WILLIAM',
+  'MIDTOWN PARK',
+  'FRIDA KAHLO RESIDENCES',
+  'DELANO RESIDENCES',
+  'MANDARIN ORIENTAL RESIDENCES',
+  '3000 WATERSIDE',
+  'REUNION VILLAGE',
+  'CELEBRATION',
+  'WINTER GARDEN',
+  'CLERMONT'
+);

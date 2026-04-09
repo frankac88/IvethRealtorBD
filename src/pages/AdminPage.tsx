@@ -45,6 +45,7 @@ type RequiredProjectField = keyof ProjectFormValues;
 
 const REQUIRED_PROJECT_FIELDS: Array<[RequiredProjectField, string]> = [
   ["title", "Título"],
+  ["priceFrom", "Precio desde"],
   ["residencesEs", "Residencias desde ES"],
   ["residencesEn", "Residences from EN"],
   ["bathsEs", "Baños ES"],
@@ -307,6 +308,18 @@ const AdminPage = () => {
                       />
                     </label>
 
+                    <label className="space-y-2">
+                      <span className="text-sm font-medium">Precio desde (USD)</span>
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1000"
+                        value={formValues.priceFrom}
+                        onChange={(event) => updateField("priceFrom", event.target.value)}
+                        placeholder="Ej. 450000"
+                      />
+                    </label>
+
                     {bilingualFieldRows.map((field) => {
                       const FieldComponent = field.textarea ? Textarea : Input;
 
@@ -435,6 +448,11 @@ const AdminPage = () => {
                               />
                               <div>
                                 <p className="font-medium">{project.title}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {project.priceFrom
+                                    ? `Desde $${project.priceFrom.toLocaleString("en-US")}`
+                                    : "Sin precio"}
+                                </p>
                                 <p className="text-xs text-muted-foreground">
                                   {project.badge.es} / {project.badge.en}
                                 </p>

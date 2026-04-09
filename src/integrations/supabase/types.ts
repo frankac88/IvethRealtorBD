@@ -74,6 +74,7 @@ export type Database = {
           location_es: string
           parking_en: string | null
           parking_es: string | null
+          price_from: number | null
           residences_en: string
           residences_es: string
           sort_order: number
@@ -108,6 +109,7 @@ export type Database = {
           location_es: string
           parking_en?: string | null
           parking_es?: string | null
+          price_from?: number | null
           residences_en: string
           residences_es: string
           sort_order?: number
@@ -142,6 +144,7 @@ export type Database = {
           location_es?: string
           parking_en?: string | null
           parking_es?: string | null
+          price_from?: number | null
           residences_en?: string
           residences_es?: string
           sort_order?: number

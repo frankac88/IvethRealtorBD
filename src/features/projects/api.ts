@@ -31,6 +31,18 @@ function normalizeOptional(value: string) {
   return trimmed.length > 0 ? trimmed : null;
 }
 
+function normalizeOptionalNumber(value: string) {
+  const trimmed = value.trim();
+  if (trimmed.length === 0) return null;
+
+  const numericValue = Number(trimmed.replace(/,/g, ""));
+  if (!Number.isFinite(numericValue) || numericValue < 0) {
+    throw new Error("El precio desde debe ser un número válido en dólares.");
+  }
+
+  return Math.round(numericValue);
+}
+
 function sanitizeFileName(fileName: string) {
   return fileName
     .trim()
@@ -43,6 +55,7 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
   return {
     id: row.id,
     title: row.title,
+    priceFrom: row.price_from,
     badge: { es: row.badge_es, en: row.badge_en },
     location: { es: row.location_es, en: row.location_en },
     residences: { es: row.residences_es, en: row.residences_en },
@@ -130,6 +143,7 @@ function buildProjectPayload(
 
   return {
     title: values.title.trim(),
+    price_from: normalizeOptionalNumber(values.priceFrom),
     badge_es: meta.badge_es,
     badge_en: meta.badge_en,
     location_es: values.locationEs.trim(),

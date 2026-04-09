@@ -35,6 +35,7 @@ const labels = {
   type: { es: "Tipo", en: "Type" },
   strategy: { es: "Estrategia", en: "Strategy" },
   results: { es: "resultados", en: "results" },
+  priceFrom: { es: "Precios desde", en: "Prices from" },
   residences: { es: "Residencias desde", en: "Residences from" },
   baths: { es: "Baños", en: "Bathrooms" },
   delivery: { es: "Entrega", en: "Delivery" },
@@ -62,6 +63,13 @@ const detailIconClassName = "h-[0.95rem] w-[0.95rem] text-primary";
 const detailLabelClassName =
   "text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-foreground/58";
 const detailValueClassName = "mt-0.5 text-[0.92rem] leading-5 text-foreground";
+
+const formatPriceFrom = (value: number, language: "es" | "en") =>
+  new Intl.NumberFormat(language === "es" ? "es-US" : "en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(value);
 
 const dedupeLocalizedOptions = (
   items: ProjectItem[],
@@ -412,9 +420,16 @@ const ProjectsPage = () => {
                   </div>
 
                   <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-serif text-[1.85rem] leading-none tracking-tight text-foreground">
-                      {project.title}
-                    </h3>
+                    <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                      <h3 className="font-serif text-[1.65rem] leading-none tracking-tight text-foreground">
+                        {project.title}
+                      </h3>
+                      {project.priceFrom ? (
+                        <div className="shrink-0 whitespace-nowrap rounded-md border border-[#E7D3B4] bg-[#F6E8D2] px-3 py-1.5 text-sm font-semibold text-foreground">
+                          {t(labels.priceFrom)} {formatPriceFrom(project.priceFrom, language)}
+                        </div>
+                      ) : null}
+                    </div>
                     <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
                       <MapPin className="h-4 w-4 text-primary" />
                       <span>{t(project.location)}</span>
@@ -469,7 +484,11 @@ const ProjectsPage = () => {
                     </div>
 
                     <div className="mt-auto flex justify-end pt-5">
-                      <Button size="sm" variant="outline" asChild>
+                      <Button
+                        size="sm"
+                        asChild
+                        className="border border-[#20402B] bg-[#20402B] px-5 text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#193322] hover:shadow-md"
+                      >
                         <Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link>
                       </Button>
                     </div>

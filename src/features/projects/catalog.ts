@@ -6,6 +6,7 @@ export type LocalizedText = {
 export type ProjectItem = {
   id: string;
   title: string;
+  priceFrom: number | null;
   badge: LocalizedText;
   location: LocalizedText;
   residences: LocalizedText;
@@ -28,6 +29,7 @@ export type ProjectItem = {
 
 export type ProjectFormValues = {
   title: string;
+  priceFrom: string;
   locationEs: string;
   locationEn: string;
   residencesEs: string;
@@ -48,6 +50,7 @@ export type ProjectFormValues = {
 
 export const emptyProjectFormValues: ProjectFormValues = {
   title: "",
+  priceFrom: "",
   locationEs: "",
   locationEn: "",
   residencesEs: "",
@@ -69,6 +72,7 @@ export const emptyProjectFormValues: ProjectFormValues = {
 export function projectToFormValues(project: ProjectItem): ProjectFormValues {
   return {
     title: project.title,
+    priceFrom: project.priceFrom?.toString() ?? "",
     locationEs: project.location.es,
     locationEn: project.location.en,
     residencesEs: project.residences.es,
