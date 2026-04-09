@@ -1,68 +1,82 @@
-# Miami Lux Advisor
+﻿# Iveth Coll Realtor
 
-Frontend inmobiliario construido con **Vite + React + TypeScript + Tailwind + shadcn/ui**, conectado a **Supabase** para captaci�n y gesti�n de leads.
+Sitio inmobiliario bilingüe construido con **Vite + React + TypeScript + Tailwind + shadcn/ui**, conectado a **Supabase** para autenticación, catálogo de proyectos y captación de leads.
 
-## Estado actual del proyecto
+## Estado del proyecto
 
-- `npm run build` ?
-- `npm run test` ?
-- `npm run lint` ?
-- B�squeda interna de referencias heredadas de constructores externos en el c�digo del proyecto (`src`, `supabase`, configs, docs) ? sin resultados
+- Build: `npm run build` ✅
+- Tests: `npm run test`
+- Lint: `npm run lint`
+- Soporte bilingüe ES/EN ✅
+- Panel admin protegido con Supabase Auth ✅
+- Catálogo de proyectos conectado a Supabase ✅
+- Sección Team con compañías aliadas y modal de detalle ✅
 
-> Regla del proyecto: no debe existir branding, copy o configuraci�n heredada de constructores externos.
+## Regla de documentación del proyecto
+
+A partir de este momento, **cada funcionalidad o cambio implementado debe registrarse también en este `README.md`**.
+
+Convención para futuras actualizaciones:
+- actualizar la estructura si cambia el repo
+- documentar nuevas rutas, funciones, integraciones o migraciones
+- añadir una línea en la sección **Bitácora de cambios**
+- mantener el archivo en **UTF-8**
 
 ## Stack principal
 
-- **Vite 5**
-- **React 18**
-- **TypeScript**
-- **Tailwind CSS**
-- **shadcn/ui + Radix UI**
-- **React Router DOM**
-- **TanStack React Query**
-- **Supabase** (Auth, DB y Edge Functions)
-- **Vitest**
-- **Playwright** (configurado, no auditado a fondo en esta revisi�n)
+- Vite 5
+- React 18
+- TypeScript
+- Tailwind CSS
+- shadcn/ui + Radix UI
+- React Router DOM
+- TanStack React Query
+- Supabase
+- Vitest
+- Playwright
 
-## Qu� hace el sitio
+## Scripts útiles
 
-El sitio funciona como una landing/site comercial para captaci�n de clientes interesados en invertir en Florida, especialmente en Miami y Orlando.
+```bash
+npm run dev
+npm run build
+npm run test
+npm run test:watch
+npm run lint
+npm run preview
+```
 
-### Flujos principales
+## Variables de entorno
 
-1. **Navegaci�n p�blica** con varias p�ginas de contenido.
-2. **Formulario de contacto** que env?a leads a la Edge Function `submit-lead`.
-3. **Edge Function `submit-lead`** que valida, filtra bots, inserta en Supabase y delega notificaci?n.
-4. **Edge Function `notify-lead`** que env?a notificaciones por email usando Resend.
-5. **Login administrativo** con Supabase Auth.
-6. **Panel `/admin`** para consultar leads registrados.
+Archivo `.env`:
 
-## Arquitectura de frontend
+```env
+VITE_SUPABASE_URL=
+VITE_SUPABASE_PUBLISHABLE_KEY=
+```
 
-### Entrada principal
+## Arquitectura general
 
-- `src/main.tsx` monta la app.
-- `src/App.tsx` configura:
-  - `QueryClientProvider`
-  - `TooltipProvider`
-  - `LanguageProvider`
-  - `BrowserRouter`
-  - `Suspense` para carga diferida de rutas
-  - toast �nico (`Toaster`)
+### Frontend
 
-### Layout compartido
+- `src/main.tsx` monta la aplicación
+- `src/App.tsx` configura providers, router, lazy loading y rutas
+- `src/components/Layout.tsx` compone navbar, contenido, footer y botón de WhatsApp
+- `src/features/` contiene la lógica por dominio
+- `src/i18n/` centraliza idioma, rutas localizadas y traducciones
 
-- `src/components/Layout.tsx`
-  - `Navbar`
-  - contenido principal
-  - `Footer`
-  - `WhatsAppButton`
+### Backend / Supabase
 
-### Rutas actuales
+- `supabase/functions/submit-lead` recibe leads públicos con validación y anti-bot
+- `supabase/functions/notify-lead` envía notificaciones por email
+- `supabase/functions/delete-project` elimina proyectos y recursos asociados
+- `supabase/migrations/` contiene esquema y cambios de base de datos
 
-Definidas en `src/App.tsx`:
+## Rutas principales
 
-- `/` ? Home
+Rutas públicas localizadas desde `src/App.tsx`:
+
+- `/` / Home
 - `/sobre-iveth`
 - `/equipo`
 - `/proyectos`
@@ -72,282 +86,136 @@ Definidas en `src/App.tsx`:
 - `/contacto`
 - `/login`
 - `/admin`
-- `*` ? `NotFound`
 
-## Estructura del repositorio
+## Estructura del proyecto
 
 ```text
-src/
-  assets/                  im�genes del sitio
-  components/              layout, navegaci�n, footer y componentes UI
-    ui/                    componentes base de shadcn/ui
-  config/                  configuraci�n p�blica compartida del sitio
-  features/                m�dulos por dominio (auth, leads)
-  hooks/                   hooks custom
-  i18n/                    contexto y namespaces ES/EN
-  integrations/supabase/   cliente tipado de Supabase
- lib/                     utilidades compartidas
-  pages/                   p�ginas por ruta
-  test/                    setup y tests b�sicos
-supabase/
-  functions/notify-lead/   Edge Function interna para avisos por email
-  functions/submit-lead/   Edge Function segura para crear leads
-  migrations/              esquema y pol�ticas RLS
-public/                    assets p�blicos
-README.md                  contexto operativo del proyecto
+.
+├─ public/
+├─ src/
+│  ├─ assets/                    # imágenes, logos y recursos visuales
+│  ├─ components/                # layout, navbar, footer y componentes compartidos
+│  │  └─ ui/                     # componentes base de shadcn/ui
+│  ├─ config/                    # configuración pública del sitio
+│  ├─ features/
+│  │  ├─ auth/                   # auth con Supabase
+│  │  ├─ leads/                  # envío y consulta de leads
+│  │  └─ projects/               # catálogo de proyectos
+│  ├─ hooks/                     # hooks custom
+│  ├─ i18n/                      # idioma, rutas localizadas y traducciones
+│  │  └─ translations/           # namespaces ES/EN por sección
+│  ├─ integrations/
+│  │  └─ supabase/               # cliente y tipos de Supabase
+│  ├─ lib/                       # utilidades compartidas
+│  ├─ pages/                     # páginas por ruta
+│  ├─ test/                      # setup y tests base
+│  ├─ App.tsx
+│  ├─ main.tsx
+│  └─ index.css
+├─ supabase/
+│  ├─ functions/
+│  │  ├─ delete-project/
+│  │  ├─ notify-lead/
+│  │  └─ submit-lead/
+│  ├─ migrations/
+│  └─ config.toml
+├─ package.json
+└─ README.md
 ```
 
-## Internacionalizaci�n
+## Módulos importantes
 
-El sitio tiene soporte biling�e b�sico:
+### `src/features/auth`
 
-- `src/i18n/LanguageContext.tsx` maneja el idioma activo.
-- `src/i18n/translations/` divide el contenido ES/EN por namespace/p?gina.
-- `src/i18n/translations.ts` queda como ?ndice de compatibilidad.
-- El idioma cambia desde la navbar.
-- El idioma activo se persiste en `localStorage` con la clave `miami-lux-advisor:language`.
+Maneja:
+- sesión actual
+- login
+- logout
+- sincronización con Supabase Auth
 
-## Integraci�n con Supabase
+### `src/features/leads`
 
-### Variables de entorno
+Maneja:
+- creación de leads desde contacto
+- consulta de leads para admin
+- integración con Edge Functions
 
-Usar `.env` con:
+### `src/features/projects`
 
-```env
-VITE_SUPABASE_URL=
-VITE_SUPABASE_PUBLISHABLE_KEY=
-```
+Maneja:
+- lectura del catálogo de proyectos
+- tipado y hooks del catálogo
+- soporte para campo `price_from`
 
-### Cliente frontend
+## Internacionalización
 
-Archivo: `src/integrations/supabase/client.ts`
+- Idiomas soportados: **español** e **inglés**
+- Contexto principal: `src/i18n/LanguageContext.tsx`
+- Traducciones por sección: `src/i18n/translations/`
+- Rutas localizadas: `src/i18n/routes.ts`
 
-- usa `localStorage`
-- persiste sesi�n
-- auto refresca tokens
+## Integración con Supabase
 
-### Capa frontend de dominio
+### Frontend
 
-La l�gica de datos ya no vive directamente en las p�ginas principales.
+Archivo principal:
+- `src/integrations/supabase/client.ts`
 
-- `src/features/auth/api.ts` y `src/features/auth/hooks.ts`
-  - sesi�n actual
-  - login
-  - logout
-  - sincronizaci�n con cambios de auth
+### Edge Functions activas
 
-- `src/features/leads/api.ts` y `src/features/leads/hooks.ts`
-  - consulta de leads
-  - creaci�n de lead v�a `submit-lead`
-  - notificaci�n interna mediante `notify-lead`
+- `submit-lead`: valida formulario, filtra bots e inserta leads
+- `notify-lead`: envía email interno
+- `delete-project`: elimina proyectos desde flujo administrativo
 
-React Query ahora s� se usa para:
+### Migraciones relevantes
 
-- sesi�n de auth
-- lectura de leads
-- mutaciones de login
-- mutaciones de creaci�n de leads
+- creación y seguridad de leads
+- creación del catálogo de proyectos
+- seed inicial del catálogo
+- campo `price_from` en proyectos
+- backfill de precios
 
-### Base de datos
+## Convenciones de mantenimiento
 
-Migraciones detectadas en `supabase/migrations/`:
-
-- creaci?n de tabla `public.leads`
-- RLS habilitado
-- lectura permitida solo a usuarios autenticados
-- inserci?n p?blica cerrada; ahora la creaci?n pasa por `submit-lead`
-
-### Flujo seguro de contacto
-
-El formulario `/contacto` ya no inserta directo desde el navegador.
-
-Flujo actual:
-
-1. el frontend valida campos requeridos
-2. el frontend env?a a `submit-lead`:
-   - datos del lead
-   - `honeypot`
-   - `startedAt`
-3. `submit-lead` valida:
-   - campos
-   - honeypot vac?o
-   - tiempo m?nimo de llenado
-4. `submit-lead` inserta el lead con `SUPABASE_SERVICE_ROLE_KEY`
-5. `submit-lead` llama internamente a `notify-lead`
-6. `notify-lead` valida autorizaci?n interna y env?a email por Resend
-7. el frontend recibe ?xito o error
-
-### Funcionamiento detallado de las Edge Functions
-
-#### `submit-lead`
-
-Archivo:
-
-- `supabase/functions/submit-lead/index.ts`
-
-Responsabilidades:
-
-- aceptar el request p?blico del formulario
-- validar el payload con Zod
-- aplicar filtros anti-bot
-- insertar el lead en `public.leads` usando service role
-- llamar internamente a `notify-lead`
-
-Controles implementados:
-
-- `honeypot`: si viene lleno, responde ?xito gen?rico y no guarda lead
-- `startedAt`: si el formulario se env?a demasiado r?pido, responde ?xito gen?rico y no guarda lead
-- validaci?n server-side de:
-  - `name`
-  - `email`
-  - `phone`
-  - `country`
-  - `interest`
-  - `message` opcional
-
-Notas operativas:
-
-- est? desplegada como funci?n p?blica (`--no-verify-jwt`) para que el frontend pueda invocarla con la publishable key
-- el navegador ya no tiene permiso para insertar directo en la tabla `leads`
-
-#### `notify-lead`
-
-Archivo:
-
-- `supabase/functions/notify-lead/index.ts`
-
-Responsabilidades:
-
-- recibir internamente los datos ya validados del lead
-- verificar que la llamada venga autorizada con `SUPABASE_SERVICE_ROLE_KEY`
-- validar el body con Zod
-- construir el email HTML
-- enviarlo por Resend
-
-Protecci?n:
-
-- si no recibe credenciales internas v?lidas, responde `401`
-- no debe usarse como endpoint p?blico del formulario
-
-Relaci?n entre ambas:
-
-1. el frontend llama a `submit-lead`
-2. `submit-lead` decide si el request es v?lido
-3. si pasa, guarda el lead
-4. luego invoca `notify-lead`
-5. `notify-lead` manda el correo
-
-Si falla `notify-lead`:
-
-- el lead ya qued? guardado
-- el error se registra en logs
-- la notificaci?n funciona en modo *best effort*
-
-Esto reduce abuso directo del endpoint p?blico de la tabla `leads`.
-
-Campos actuales de `leads`:
-
-- `id`
-- `name`
-- `email`
-- `phone`
-- `country`
-- `interest`
-- `message`
-- `created_at`
-
-Secrets requeridos:
-
-```bash
-supabase secrets set RESEND_API_KEY=tu_api_key
-supabase secrets set NOTIFY_FROM_EMAIL="Tu Nombre <no-reply@tudominio.com>"
-supabase secrets set NOTIFY_TO_EMAIL="destino1@tudominio.com,destino2@tudominio.com"
-```
-
-Adem?s, `submit-lead` y `notify-lead` requieren que Supabase provea:
-
-```bash
-SUPABASE_URL
-SUPABASE_SERVICE_ROLE_KEY
-```
-
-## Configuraci�n local
-
-1. Instalar dependencias:
-
-   ```bash
-   npm install
-   ```
-
-2. Crear entorno local:
-
-   ```bash
-   copy .env.example .env
-   ```
-
-3. Completar variables de Supabase.
-
-4. Levantar frontend:
-
-   ```bash
-   npm run dev
-   ```
-
-## Comandos �tiles
-
-```bash
-npm run dev
-npm run build
-npm run test
-npm run lint
-npm run preview
-```
-
-## Hallazgos de auditor�a
-
-### Bien resuelto
-
-- La estructura general del proyecto es clara y mantenible.
-- Las rutas p�blicas est�n separadas por p�gina.
-- El flujo de leads est� bien definido: formulario ? tabla `leads` ? notificaci�n por Edge Function.
-- El acceso al panel admin depende de sesi�n de Supabase.
-- La documentaci�n ahora refleja mejor la arquitectura real del repo.
-- Las rutas ya se cargan de forma diferida (`lazy` + `Suspense`), reduciendo el peso inicial.
-- La configuraci�n p�blica visible del sitio qued� centralizada en `src/config/site.ts`.
-- La l�gica de auth y leads qued� desacoplada de las p�ginas mediante `features/` + React Query.`r`n- El acceso a `/admin` ya est� encapsulado en un `ProtectedRoute` reutilizable.
-
-### Puntos a revisar luego
-
-- **Lint**: ya qued� limpio tras ajustar ESLint para archivos utilitarios/UI y corregir dependencias del hook `useScrollAnimation`.
-- **Datos de contacto**: quedaron centralizados en `src/config/site.ts` para evitar inconsistencias entre footer, navbar, WhatsApp y la p�gina de contacto.
-- Hay varios componentes `ui/` generados que no necesariamente est�n en uso activo; se puede depurar m�s adelante.
-
-## Observaciones operativas
-
-- `/login` autentica con email + password v�a Supabase Auth.
-- `/admin` consulta `leads` ordenados por fecha usando React Query.
-- Si se cambia el modelo de datos de leads, hay que actualizar:
+- mantener `README.md` actualizado con cada cambio funcional
+- no dejar texto o branding heredado de proyectos externos
+- usar UTF-8 en archivos con contenido ES/EN
+- si cambia el modelo de datos, actualizar también:
   - migraciones
-  - tipos generados de Supabase
-  - `src/features/leads/api.ts`
-  - formulario de contacto
-  - panel admin
-  - Edge Function `notify-lead`
+  - tipos de Supabase
+  - hooks de dominio
+  - páginas afectadas
+  - este README
 
-## Pol�tica interna de documentaci�n
+## Bitácora de cambios
 
-Si se actualiza este proyecto m�s adelante, mantener este README alineado con:
+### 2026-04-09
 
-- rutas reales
-- estructura de carpetas
-- variables de entorno vigentes
-- flujo de Supabase
-- restricciones del proyecto
+- Se agregó el campo `price_from` al catálogo de proyectos y se mostraron precios desde en la UI.
+- Se aplicaron migraciones y backfill para precios de proyectos en Supabase.
+- Se ajustó el logo del header para mejorar presencia visual.
+- Se creó la sección de compañías aliadas en Team.
+- Se agregaron logos y descripciones para:
+  - ACMM Consulting
+  - First Title Group
+  - Fortex Realty
+  - Home Financing Experts
+- Se implementó truncado de descripciones a 3 líneas con modal `View more`.
+- Se alinearon y refinaron badges, logos, títulos y botones de las tarjetas de partners.
+- Se corrigió encoding UTF-8 en textos de Team.
+- Se habilitó división silábica para mejorar la justificación del texto.
+- La grilla de partners se ajustó a 4 columnas en pantallas grandes.
+- Se amplió el ancho útil de la sección de partners para que las tarjetas se vean más anchas sin solaparse.
 
-Y recordar siempre:
+## Próximo criterio de actualización
 
-- No agregar branding heredado de constructores externos
-- **No dejar placeholders de contacto en producci�n**
+Cada vez que se implemente algo nuevo, agregar al menos:
 
+1. **Qué se cambió**
+2. **Qué archivos se tocaron**
+3. **Si hubo migraciones o variables nuevas**
+4. **Una línea en la Bitácora de cambios**
 
+## Nota sobre encoding
 
+Este archivo fue regrabado intencionalmente en **UTF-8** para evitar caracteres corruptos en español e inglés.
