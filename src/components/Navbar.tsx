@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import headerLogo from "@/assets/logo-header-iveth-coll.png";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import {
@@ -41,25 +42,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-32 md:h-36 overflow-visible">
+        <div className="flex h-26 items-center justify-between overflow-hidden md:h-32">
           <Link
             to={getLocalizedPath("home", language)}
-            className="flex items-center h-full"
+            className="flex h-full w-[120px] items-center overflow-visible md:w-[120px]"
             aria-label="Home"
           >
-            <div className="flex h-[96px] w-[96px] md:h-[108px] md:w-[108px] items-center justify-center rounded border border-dashed border-border bg-muted/40 p-2 text-center">
-              <span className="max-w-full text-[9px] font-medium uppercase leading-tight tracking-[0.18em] text-muted-foreground md:text-[10px]">
-                Logo
-                <br />
-                próximamente
-              </span>
-            </div>
+            <img
+              src={headerLogo}
+              alt="Iveth Coll"
+              className="block w-full origin-left scale-[1.55] object-contain md:scale-[1.9]"
+            />
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => {
               const href = getLocalizedPath(link.routeKey, language);
 
@@ -69,7 +67,7 @@ const Navbar = () => {
                   to={href}
                   className={`text-xs tracking-widest uppercase transition-colors hover:text-primary ${
                     activeRouteKey === link.routeKey
-                      ? "text-primary font-semibold"
+                      ? "font-semibold text-primary"
                       : "text-muted-foreground"
                   }`}
                 >
@@ -79,7 +77,7 @@ const Navbar = () => {
             })}
             <button
               onClick={handleToggleLanguage}
-              className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors ml-1"
+              className="ml-1 flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary"
               aria-label="Toggle language"
             >
               <Globe size={14} />
@@ -92,11 +90,10 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile toggle */}
-          <div className="lg:hidden flex items-center gap-3">
+          <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={handleToggleLanguage}
-              className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors"
+              className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary"
               aria-label="Toggle language"
             >
               <Globe size={16} />
@@ -112,18 +109,17 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Nav */}
         {isOpen && (
-          <div className="lg:hidden pb-6 animate-fade-in">
+          <div className="animate-fade-in pb-6 lg:hidden">
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
                   onClick={() => setIsOpen(false)}
-                  className={`text-sm tracking-widest uppercase py-2 transition-colors hover:text-primary ${
+                  className={`py-2 text-sm tracking-widest uppercase transition-colors hover:text-primary ${
                     activeRouteKey === link.routeKey
-                      ? "text-primary font-semibold"
+                      ? "font-semibold text-primary"
                       : "text-muted-foreground"
                   }`}
                 >

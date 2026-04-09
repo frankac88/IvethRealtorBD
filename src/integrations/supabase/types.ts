@@ -47,6 +47,111 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          badge_en: string
+          badge_es: string
+          baths_en: string
+          baths_es: string
+          created_at: string
+          delivery_en: string
+          delivery_es: string
+          filter_location_en: string
+          filter_location_es: string
+          filter_strategy_en: string
+          filter_strategy_es: string
+          filter_type_en: string
+          filter_type_es: string
+          hook_en: string
+          hook_es: string
+          id: string
+          ideal_for_en: string
+          ideal_for_es: string
+          image_path: string | null
+          image_url: string
+          is_published: boolean
+          location_en: string
+          location_es: string
+          parking_en: string | null
+          parking_es: string | null
+          residences_en: string
+          residences_es: string
+          sort_order: number
+          title: string
+          type_en: string
+          type_es: string
+          updated_at: string
+        }
+        Insert: {
+          badge_en: string
+          badge_es: string
+          baths_en: string
+          baths_es: string
+          created_at?: string
+          delivery_en: string
+          delivery_es: string
+          filter_location_en: string
+          filter_location_es: string
+          filter_strategy_en: string
+          filter_strategy_es: string
+          filter_type_en: string
+          filter_type_es: string
+          hook_en: string
+          hook_es: string
+          id?: string
+          ideal_for_en: string
+          ideal_for_es: string
+          image_path?: string | null
+          image_url: string
+          is_published?: boolean
+          location_en: string
+          location_es: string
+          parking_en?: string | null
+          parking_es?: string | null
+          residences_en: string
+          residences_es: string
+          sort_order?: number
+          title: string
+          type_en: string
+          type_es: string
+          updated_at?: string
+        }
+        Update: {
+          badge_en?: string
+          badge_es?: string
+          baths_en?: string
+          baths_es?: string
+          created_at?: string
+          delivery_en?: string
+          delivery_es?: string
+          filter_location_en?: string
+          filter_location_es?: string
+          filter_strategy_en?: string
+          filter_strategy_es?: string
+          filter_type_en?: string
+          filter_type_es?: string
+          hook_en?: string
+          hook_es?: string
+          id?: string
+          ideal_for_en?: string
+          ideal_for_es?: string
+          image_path?: string | null
+          image_url?: string
+          is_published?: boolean
+          location_en?: string
+          location_es?: string
+          parking_en?: string | null
+          parking_es?: string | null
+          residences_en?: string
+          residences_es?: string
+          sort_order?: number
+          title?: string
+          type_en?: string
+          type_es?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

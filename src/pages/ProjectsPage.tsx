@@ -1,68 +1,483 @@
-import Layout from "@/components/Layout";
-import AnimatedSection from "@/components/AnimatedSection";
-import { Button } from "@/components/ui/button";
-import { MapPin } from "lucide-react";
+﻿import { type ReactNode, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  Bath,
+  BedDouble,
+  Building2,
+  CalendarClock,
+  CarFront,
+  MapPin,
+  Search,
+  Sparkles,
+  Target,
+} from "lucide-react";
+
+import AnimatedSection from "@/components/AnimatedSection";
+import Layout from "@/components/Layout";
+import { Button } from "@/components/ui/button";
+import { type ProjectItem } from "@/features/projects/catalog";
+import { usePublishedProjectsQuery } from "@/features/projects/hooks";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
-import { homeTranslations } from "@/i18n/translations/home";
 import { projectsTranslations } from "@/i18n/translations/projects";
-import project1 from "@/assets/project-1.webp";
-import project2 from "@/assets/project-2.webp";
-import project3 from "@/assets/project-3.webp";
 
-const allProjects = [
-  { title: "The Residences at Brickell", location: "Brickell, Miami", price: "$450,000", image: project1, tagKey: "precon" as const, category: "Miami", beds: "1-3", sqft: "750-1,800" },
-  { title: "Ocean Bay Tower", location: "Miami Beach", price: "$680,000", image: project2, tagKey: "waterfront" as const, category: "Miami", beds: "2-4", sqft: "1,200-2,500" },
-  { title: "Palm Villas Orlando", location: "Orlando, FL", price: "$320,000", image: project3, tagKey: "investment" as const, category: "Orlando", beds: "3-5", sqft: "1,500-3,000" },
-  { title: "Skyline Residences", location: "Downtown Miami", price: "$520,000", image: project1, tagKey: "precon" as const, category: "Miami", beds: "1-3", sqft: "850-2,000" },
-  { title: "Marina Point", location: "Aventura, Miami", price: "$750,000", image: project2, tagKey: "waterfront" as const, category: "Miami", beds: "2-4", sqft: "1,400-2,800" },
-  { title: "Lake Nona Estates", location: "Orlando, FL", price: "$400,000", image: project3, tagKey: "investment" as const, category: "Orlando", beds: "3-4", sqft: "1,800-2,500" },
-];
+const labels = {
+  search: { es: "Buscar", en: "Search" },
+  searchPlaceholder: {
+    es: "Buscar por proyecto, zona o característica",
+    en: "Search by project, area, or feature",
+  },
+  filtersTitle: { es: "Filtra oportunidades", en: "Filter opportunities" },
+  allLocations: { es: "Todas las ubicaciones", en: "All locations" },
+  allTypes: { es: "Todos los tipos", en: "All types" },
+  allStrategies: { es: "Todas las estrategias", en: "All strategies" },
+  location: { es: "Ubicación", en: "Location" },
+  type: { es: "Tipo", en: "Type" },
+  strategy: { es: "Estrategia", en: "Strategy" },
+  results: { es: "resultados", en: "results" },
+  residences: { es: "Residencias desde", en: "Residences from" },
+  baths: { es: "Baños", en: "Bathrooms" },
+  delivery: { es: "Entrega", en: "Delivery" },
+  idealFor: { es: "Ideal para", en: "Ideal for" },
+  parking: { es: "Parqueadero", en: "Parking" },
+  hook: { es: "Destacado", en: "Highlight" },
+  notAvailable: { es: "—", en: "—" },
+  clearFilters: { es: "Limpiar filtros", en: "Clear filters" },
+  loading: { es: "Cargando proyectos…", en: "Loading projects…" },
+  unavailable: {
+    es: "No pudimos cargar los proyectos ahora mismo. Intenta nuevamente en unos minutos.",
+    en: "We could not load projects right now. Please try again in a few minutes.",
+  },
+  emptyCatalog: {
+    es: "Aún no hay proyectos publicados en el catálogo.",
+    en: "There are no published projects in the catalog yet.",
+  },
+  noResults: {
+    es: "No encontramos proyectos con esos filtros. Prueba otra ubicación o estrategia.",
+    en: "No projects matched those filters. Try another location or strategy.",
+  },
+} as const;
+
+const detailIconClassName = "h-[0.95rem] w-[0.95rem] text-primary";
+const detailLabelClassName =
+  "text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-foreground/58";
+const detailValueClassName = "mt-0.5 text-[0.92rem] leading-5 text-foreground";
+
+const dedupeLocalizedOptions = (
+  items: ProjectItem[],
+  selector: (item: ProjectItem) => { es: string; en: string },
+) => {
+  const map = new Map<string, { es: string; en: string }>();
+
+  items.forEach((item) => {
+    const option = selector(item);
+    const key = `${option.es}|||${option.en}`;
+
+    if (!map.has(key)) {
+      map.set(key, option);
+    }
+  });
+
+  return Array.from(map.values());
+};
+
+const estimateCardWeight = (
+  project: ProjectItem,
+  t: (value: { es: string; en: string }) => string,
+) => {
+  const values = [
+    project.title,
+    t(project.location),
+    t(project.residences),
+    t(project.baths),
+    t(project.type),
+    t(project.delivery),
+    t(project.idealFor),
+    project.parking ? t(project.parking) : "",
+    t(project.hook),
+  ];
+
+  return values.reduce((total, value) => total + value.length, 0);
+};
+
+const pairProjectsByEstimatedHeight = (
+  items: ProjectItem[],
+  t: (value: { es: string; en: string }) => string,
+) => {
+  const preferredPairs = [["CELEBRATION", "CLERMONT"]] as const;
+  const remaining = [...items];
+  const paired: ProjectItem[] = [];
+
+  preferredPairs.forEach(([firstTitle, secondTitle]) => {
+    const firstIndex = remaining.findIndex((project) => project.title === firstTitle);
+    const secondIndex = remaining.findIndex((project) => project.title === secondTitle);
+
+    if (firstIndex === -1 || secondIndex === -1) return;
+
+    const [firstProject] = remaining.splice(firstIndex, 1);
+    const adjustedSecondIndex = secondIndex > firstIndex ? secondIndex - 1 : secondIndex;
+    const [secondProject] = remaining.splice(adjustedSecondIndex, 1);
+
+    paired.push(firstProject, secondProject);
+  });
+
+  const weighted = remaining
+    .map((project, index) => ({
+      project,
+      index,
+      weight: estimateCardWeight(project, t),
+    }))
+    .sort((a, b) => a.weight - b.weight || a.index - b.index);
+
+  const rows: Array<typeof weighted> = [];
+
+  for (let index = 0; index < weighted.length; index += 2) {
+    rows.push(weighted.slice(index, index + 2));
+  }
+
+  return [
+    ...paired,
+    ...rows.flatMap((row) =>
+      [...row]
+        .sort((a, b) => a.index - b.index)
+        .map((entry) => entry.project),
+    ),
+  ];
+};
+
+const ProjectDetailRow = ({
+  icon,
+  label,
+  value,
+  emphasize = false,
+  compact = false,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  emphasize?: boolean;
+  compact?: boolean;
+}) => (
+  <div
+    className={`grid h-full w-full items-start gap-2 rounded-2xl border transition-colors ${
+      compact ? "grid-cols-[2.1rem_minmax(0,1fr)] px-2.5 py-2.5" : "grid-cols-[2.5rem_minmax(0,1fr)] px-3 py-3"
+    } ${
+      emphasize ? "border-primary/20 bg-primary/5" : "border-border/70 bg-muted/30"
+    }`}
+  >
+    <div
+      className={`flex items-center justify-center rounded-full bg-background shadow-sm ${
+        compact ? "h-8 w-8" : "h-10 w-10"
+      }`}
+    >
+      {icon}
+    </div>
+    <div className="min-w-0">
+      <p className={detailLabelClassName}>{label}</p>
+      <p className={`${detailValueClassName} ${emphasize ? "line-clamp-3 text-foreground/90" : ""}`}>
+        {value}
+      </p>
+    </div>
+  </div>
+);
 
 const ProjectsPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const p = projectsTranslations;
-  const tags = homeTranslations.projectTags;
-  const prefix = homeTranslations.projectPricePrefix;
+  const { data: projects = [], isLoading, error } = usePublishedProjectsQuery();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedStrategy, setSelectedStrategy] = useState("all");
+
+  const locationOptions = useMemo(
+    () => dedupeLocalizedOptions(projects, (project) => project.filterLocation),
+    [projects],
+  );
+  const typeOptions = useMemo(
+    () => dedupeLocalizedOptions(projects, (project) => project.filterType),
+    [projects],
+  );
+  const strategyOptions = useMemo(
+    () => dedupeLocalizedOptions(projects, (project) => project.filterStrategy),
+    [projects],
+  );
+
+  const filteredProjects = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+
+    return projects.filter((project) => {
+      const matchesSearch =
+        term.length === 0 ||
+        project.title.toLowerCase().includes(term) ||
+        project.location.es.toLowerCase().includes(term) ||
+        project.location.en.toLowerCase().includes(term) ||
+        project.type.es.toLowerCase().includes(term) ||
+        project.type.en.toLowerCase().includes(term) ||
+        project.idealFor.es.toLowerCase().includes(term) ||
+        project.idealFor.en.toLowerCase().includes(term) ||
+        project.hook.es.toLowerCase().includes(term) ||
+        project.hook.en.toLowerCase().includes(term) ||
+        project.filterLocation.es.toLowerCase().includes(term) ||
+        project.filterLocation.en.toLowerCase().includes(term) ||
+        project.filterType.es.toLowerCase().includes(term) ||
+        project.filterType.en.toLowerCase().includes(term) ||
+        project.filterStrategy.es.toLowerCase().includes(term) ||
+        project.filterStrategy.en.toLowerCase().includes(term);
+
+      const matchesLocation =
+        selectedLocation === "all" || project.filterLocation.es === selectedLocation;
+      const matchesType = selectedType === "all" || project.filterType.es === selectedType;
+      const matchesStrategy =
+        selectedStrategy === "all" || project.filterStrategy.es === selectedStrategy;
+
+      return matchesSearch && matchesLocation && matchesType && matchesStrategy;
+    });
+  }, [projects, searchTerm, selectedLocation, selectedType, selectedStrategy]);
+
+  const balancedProjects = useMemo(
+    () => pairProjectsByEstimatedHeight(filteredProjects, t),
+    [filteredProjects, t],
+  );
+
+  const showEmptyCatalog = !isLoading && !error && projects.length === 0;
+  const showNoResults = !isLoading && !error && projects.length > 0 && filteredProjects.length === 0;
 
   return (
     <Layout>
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-gold mb-4">{t(p.label)}</p>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(p.title)}</h1>
-          <p className="text-muted-foreground max-w-xl mx-auto">{t(p.subtitle)}</p>
+      <section className="bg-muted py-20">
+        <div className="container mx-auto px-4 text-center lg:px-8">
+          <AnimatedSection as="div" className="mx-auto max-w-3xl">
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(p.label)}</p>
+            <h1 className="mb-4 text-4xl font-serif md:text-5xl">{t(p.title)}</h1>
+            <p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">{t(p.subtitle)}</p>
+          </AnimatedSection>
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-10">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allProjects.map((project, i) => (
-              <AnimatedSection as="div" key={project.title} delay={i * 100} className="group border border-border rounded-sm overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative overflow-hidden">
-                  <img src={project.image} alt={project.title} className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={800} height={600} />
-                  <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs px-3 py-1 tracking-wider uppercase">
-                    {t(tags[project.tagKey])}
-                  </span>
+          <AnimatedSection as="div" className="border border-border bg-background p-5 md:p-6">
+            <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.28em] text-gold">
+                  {t(labels.filtersTitle)}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {filteredProjects.length} {t(labels.results)}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedLocation("all");
+                  setSelectedType("all");
+                  setSelectedStrategy("all");
+                }}
+                className="text-sm text-primary underline-offset-4 hover:underline"
+              >
+                {t(labels.clearFilters)}
+              </button>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <label className="block">
+                <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-foreground/65">
+                  {t(labels.search)}
+                </span>
+                <div className="flex items-center gap-2 border border-border bg-background px-3">
+                  <Search className="h-4 w-4 text-muted-foreground" />
+                  <input
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    placeholder={t(labels.searchPlaceholder)}
+                    className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                  />
                 </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-xl mb-1">{project.title}</h3>
-                  <div className="flex items-center gap-1 text-muted-foreground text-sm mb-3"><MapPin size={14} /> {project.location}</div>
-                  <div className="flex gap-4 text-xs text-muted-foreground mb-4">
-                    <span>{project.beds} {t(p.beds)}</span>
-                    <span>{project.sqft} sqft</span>
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-foreground/65">
+                  {t(labels.location)}
+                </span>
+                <select
+                  value={selectedLocation}
+                  onChange={(event) => setSelectedLocation(event.target.value)}
+                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
+                >
+                  <option value="all">{t(labels.allLocations)}</option>
+                  {locationOptions.map((option) => (
+                    <option key={`${option.es}-${option.en}`} value={option.es}>
+                      {t(option)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-foreground/65">
+                  {t(labels.type)}
+                </span>
+                <select
+                  value={selectedType}
+                  onChange={(event) => setSelectedType(event.target.value)}
+                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
+                >
+                  <option value="all">{t(labels.allTypes)}</option>
+                  {typeOptions.map((option) => (
+                    <option key={`${option.es}-${option.en}`} value={option.es}>
+                      {t(option)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-foreground/65">
+                  {t(labels.strategy)}
+                </span>
+                <select
+                  value={selectedStrategy}
+                  onChange={(event) => setSelectedStrategy(event.target.value)}
+                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
+                >
+                  <option value="all">{t(labels.allStrategies)}</option>
+                  {strategyOptions.map((option) => (
+                    <option key={`${option.es}-${option.en}`} value={option.es}>
+                      {t(option)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="pb-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          {isLoading ? (
+            <AnimatedSection
+              as="div"
+              className="border border-dashed border-border p-10 text-center text-muted-foreground"
+            >
+              {t(labels.loading)}
+            </AnimatedSection>
+          ) : error ? (
+            <AnimatedSection
+              as="div"
+              className="border border-dashed border-border p-10 text-center text-muted-foreground"
+            >
+              {t(labels.unavailable)}
+            </AnimatedSection>
+          ) : showEmptyCatalog ? (
+            <AnimatedSection
+              as="div"
+              className="border border-dashed border-border p-10 text-center text-muted-foreground"
+            >
+              {t(labels.emptyCatalog)}
+            </AnimatedSection>
+          ) : showNoResults ? (
+            <AnimatedSection
+              as="div"
+              className="border border-dashed border-border p-10 text-center text-muted-foreground"
+            >
+              {t(labels.noResults)}
+            </AnimatedSection>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              {balancedProjects.map((project, index) => (
+                <AnimatedSection
+                  as="article"
+                  key={project.id}
+                  delay={index * 70}
+                  className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(15,23,42,0.12)]"
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={project.imageUrl}
+                      alt={`${project.title} — ${t(project.location)}`}
+                      className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      width={900}
+                      height={675}
+                    />
+                    <span className="absolute left-4 top-4 bg-primary px-3 py-1 text-xs uppercase tracking-[0.16em] text-primary-foreground">
+                      {t(project.badge)}
+                    </span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <p className="text-primary font-semibold text-lg">{t(prefix)} {project.price}</p>
-                    <Button size="sm" variant="outline" asChild><Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link></Button>
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-serif text-[1.85rem] leading-none tracking-tight text-foreground">
+                      {project.title}
+                    </h3>
+                    <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <span>{t(project.location)}</span>
+                    </div>
+
+                    <div className="mt-5 grid auto-rows-fr gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-stretch">
+                      <ProjectDetailRow
+                        icon={<BedDouble className={detailIconClassName} />}
+                        label={t(labels.residences)}
+                        value={t(project.residences)}
+                        compact
+                      />
+                      <ProjectDetailRow
+                        icon={<Bath className={detailIconClassName} />}
+                        label={t(labels.baths)}
+                        value={t(project.baths)}
+                        compact
+                      />
+                      <ProjectDetailRow
+                        icon={<Building2 className={detailIconClassName} />}
+                        label={t(labels.type)}
+                        value={t(project.type)}
+                        compact
+                      />
+                      <ProjectDetailRow
+                        icon={<CalendarClock className={detailIconClassName} />}
+                        label={t(labels.delivery)}
+                        value={t(project.delivery)}
+                        compact
+                      />
+                      <ProjectDetailRow
+                        icon={<Target className={detailIconClassName} />}
+                        label={t(labels.idealFor)}
+                        value={t(project.idealFor)}
+                        compact
+                      />
+                      <ProjectDetailRow
+                        icon={<CarFront className={detailIconClassName} />}
+                        label={t(labels.parking)}
+                        value={project.parking ? t(project.parking) : t(labels.notAvailable)}
+                        compact
+                      />
+                    </div>
+
+                    <div className="mt-2">
+                      <ProjectDetailRow
+                        icon={<Sparkles className={detailIconClassName} />}
+                        label={t(labels.hook)}
+                        value={t(project.hook)}
+                        emphasize
+                      />
+                    </div>
+
+                    <div className="mt-auto flex justify-end pt-5">
+                      <Button size="sm" variant="outline" asChild>
+                        <Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </Layout>

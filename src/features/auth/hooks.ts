@@ -45,6 +45,7 @@ export function useLogoutMutation() {
     onSuccess: () => {
       queryClient.setQueryData(authQueryKeys.session, null);
       queryClient.removeQueries({ queryKey: ["leads"] });
+      queryClient.removeQueries({ queryKey: ["projects"] });
     },
   });
 }
