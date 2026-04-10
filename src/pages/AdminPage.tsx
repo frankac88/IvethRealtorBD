@@ -13,6 +13,20 @@ import {
   Trash2,
 } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { useLogoutMutation } from "@/features/auth/hooks";
 import { useLeadsQuery } from "@/features/leads/hooks";
 import {
@@ -28,27 +42,15 @@ import {
   useUpdateProjectMutation,
 } from "@/features/projects/hooks";
 import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
 
-type RequiredProjectField = keyof ProjectFormValues;
+type RequiredProjectField = Exclude<keyof ProjectFormValues, "featured">;
 
 const REQUIRED_PROJECT_FIELDS: Array<[RequiredProjectField, string]> = [
-  ["title", "Título"],
+  ["title", "T\u00EDtulo"],
   ["priceFrom", "Precio desde"],
   ["residencesEs", "Residencias desde ES"],
   ["residencesEn", "Residences from EN"],
-  ["bathsEs", "Baños ES"],
+  ["bathsEs", "Ba\u00F1os ES"],
   ["bathsEn", "Bathrooms EN"],
   ["typeEs", "Tipo ES"],
   ["typeEn", "Type EN"],
@@ -56,14 +58,14 @@ const REQUIRED_PROJECT_FIELDS: Array<[RequiredProjectField, string]> = [
   ["deliveryEn", "Delivery EN"],
   ["idealForEs", "Ideal para ES"],
   ["idealForEn", "Ideal for EN"],
-  ["locationEs", "Ubicación ES"],
+  ["locationEs", "Ubicaci\u00F3n ES"],
   ["locationEn", "Location EN"],
   ["hookEs", "Gancho ES"],
   ["hookEn", "Hook EN"],
 ];
 
 const interestLabels: Record<string, string> = {
-  precon: "Preconstrucción",
+  precon: "Preconstrucci\u00F3n",
   miami: "Miami",
   orlando: "Orlando",
   financing: "Financiamiento",
@@ -79,7 +81,7 @@ const bilingualFieldRows: Array<{
   optional?: boolean;
 }> = [
   { labelEs: "Residencias desde", labelEn: "Residences from", esKey: "residencesEs", enKey: "residencesEn" },
-  { labelEs: "Baños", labelEn: "Bathrooms", esKey: "bathsEs", enKey: "bathsEn" },
+  { labelEs: "Ba\u00F1os", labelEn: "Bathrooms", esKey: "bathsEs", enKey: "bathsEn" },
   { labelEs: "Tipo", labelEn: "Type", esKey: "typeEs", enKey: "typeEn" },
   { labelEs: "Entrega", labelEn: "Delivery", esKey: "deliveryEs", enKey: "deliveryEn" },
   { labelEs: "Ideal para", labelEn: "Ideal for", esKey: "idealForEs", enKey: "idealForEn" },
@@ -90,7 +92,7 @@ const bilingualFieldRows: Array<{
     enKey: "parkingEn",
     optional: true,
   },
-  { labelEs: "Ubicación", labelEn: "Location", esKey: "locationEs", enKey: "locationEn" },
+  { labelEs: "Ubicaci\u00F3n", labelEn: "Location", esKey: "locationEs", enKey: "locationEn" },
   { labelEs: "Gancho", labelEn: "Hook", esKey: "hookEs", enKey: "hookEn", textarea: true },
 ];
 
@@ -156,7 +158,7 @@ const AdminPage = () => {
   const validateProjectForm = () => {
     const missingField = REQUIRED_PROJECT_FIELDS.find(([field]) => formValues[field].trim().length === 0);
     if (missingField) {
-      throw new Error(`El campo "${missingField[1]}" es obligatorio.`);
+      throw new Error(`El campo \"${missingField[1]}\" es obligatorio.`);
     }
 
     if (!editingProject && !imageFile) {
@@ -186,7 +188,7 @@ const AdminPage = () => {
         });
         toast({
           title: "Proyecto actualizado",
-          description: "Se guardaron los cambios y los metadatos automáticos del proyecto.",
+          description: "Se guardaron los cambios y los metadatos autom\u00E1ticos del proyecto.",
         });
       } else {
         await createProjectMutation.mutateAsync({
@@ -216,7 +218,7 @@ const AdminPage = () => {
 
   const handleDeleteProject = async (project: ProjectItem) => {
     const confirmed = window.confirm(
-      `¿Seguro que deseas eliminar "${project.title}"? Esto borrará también su imagen de Supabase.`,
+      `\u00BFSeguro que deseas eliminar \"${project.title}\"? Esto borrar\u00E1 tambi\u00E9n su imagen de Supabase.`,
     );
 
     if (!confirmed) return;
@@ -243,10 +245,8 @@ const AdminPage = () => {
       <header className="sticky top-0 z-10 border-b bg-background">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div>
-            <h1 className="font-serif text-xl">Panel de administración</h1>
-            <p className="text-sm text-muted-foreground">
-              Gestiona leads y proyectos desde un solo lugar
-            </p>
+            <h1 className="text-xl font-serif">Panel de administraci\u00F3n</h1>
+            <p className="text-sm text-muted-foreground">Gestiona leads y proyectos desde un solo lugar</p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -279,18 +279,15 @@ const AdminPage = () => {
               <div className="border-b p-4 md:p-6">
                 <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h2 className="font-serif text-2xl">
-                      {editingProject ? "Editar proyecto" : "Nuevo proyecto"}
-                    </h2>
+                    <h2 className="text-2xl font-serif">{editingProject ? "Editar proyecto" : "Nuevo proyecto"}</h2>
                     <p className="text-sm text-muted-foreground">
-                      Solo completas nombre, contenido en español e inglés, y la foto. El badge,
-                      filtros, orden y publicación se generan automáticamente.
+                      Completa nombre, contenido en espa\u00F1ol e ingl\u00E9s, la foto y decide si el proyecto debe salir en el home marcando Featured. Badge, filtros, orden y publicaci\u00F3n se siguen generando autom\u00E1ticamente.
                     </p>
                   </div>
 
                   {editingProject ? (
                     <Button type="button" variant="outline" onClick={resetProjectForm}>
-                      Cancelar edición
+                      Cancelar edici\u00F3n
                     </Button>
                   ) : null}
                 </div>
@@ -319,6 +316,22 @@ const AdminPage = () => {
                         placeholder="Ej. 450000"
                       />
                     </label>
+
+                    <div className="rounded-lg border border-border/70 bg-muted/30 p-4">
+                      <div className="flex items-start gap-3">
+                        <Checkbox
+                          id="project-featured"
+                          checked={formValues.featured}
+                          onCheckedChange={(checked) => updateField("featured", checked === true)}
+                        />
+                        <div className="space-y-1">
+                          <Label htmlFor="project-featured">Featured</Label>
+                          <p className="text-sm text-muted-foreground">
+                            Cuando est\u00E9 marcado, este proyecto aparecer\u00E1 en la secci\u00F3n Featured Projects del homepage.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
 
                     {bilingualFieldRows.map((field) => {
                       const FieldComponent = field.textarea ? Textarea : Input;
@@ -382,13 +395,16 @@ const AdminPage = () => {
                     </div>
 
                     <div className="rounded-lg border bg-muted/40 p-4 text-sm text-muted-foreground">
-                      <p className="font-medium text-foreground">Se genera automáticamente</p>
+                      <p className="font-medium text-foreground">Se genera autom\u00E1ticamente</p>
                       <ul className="mt-2 space-y-1">
-                        <li>• Badge superior de la tarjeta</li>
-                        <li>• Filtros por ubicación, tipo y estrategia</li>
-                        <li>• Orden al final del catálogo</li>
-                        <li>• Estado publicado</li>
+                        <li>\u2022 Badge superior de la tarjeta</li>
+                        <li>\u2022 Filtros por ubicaci\u00F3n, tipo y estrategia</li>
+                        <li>\u2022 Orden al final del cat\u00E1logo</li>
+                        <li>\u2022 Estado publicado</li>
                       </ul>
+                      <p className="mt-3 text-xs">
+                        El flag Featured lo controlas manualmente para decidir qu\u00E9 tarjetas del home se muestran.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -411,8 +427,7 @@ const AdminPage = () => {
                 </p>
                 {projectsError ? (
                   <p className="mt-2 text-sm text-destructive">
-                    No se pudieron cargar los proyectos de Supabase. Verifica la configuración antes
-                    de usar este panel.
+                    No se pudieron cargar los proyectos de Supabase. Verifica la configuraci\u00F3n antes de usar este panel.
                   </p>
                 ) : null}
               </div>
@@ -420,7 +435,7 @@ const AdminPage = () => {
               {projects.length === 0 && !isLoadingProjects ? (
                 <div className="p-12 text-center text-muted-foreground">
                   <ImagePlus size={40} className="mx-auto mb-3 opacity-40" />
-                  <p>Aún no hay proyectos almacenados en Supabase.</p>
+                  <p>A\u00FAn no hay proyectos almacenados en Supabase.</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -428,9 +443,10 @@ const AdminPage = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Proyecto</TableHead>
-                        <TableHead>Ubicación</TableHead>
+                        <TableHead>Ubicaci\u00F3n</TableHead>
                         <TableHead>Tipo</TableHead>
                         <TableHead>Estado</TableHead>
+                        <TableHead>Home</TableHead>
                         <TableHead>Orden</TableHead>
                         <TableHead>Actualizado</TableHead>
                         <TableHead className="text-right">Acciones</TableHead>
@@ -449,9 +465,7 @@ const AdminPage = () => {
                               <div>
                                 <p className="font-medium">{project.title}</p>
                                 <p className="text-xs text-muted-foreground">
-                                  {project.priceFrom
-                                    ? `Desde $${project.priceFrom.toLocaleString("en-US")}`
-                                    : "Sin precio"}
+                                  {project.priceFrom ? `Desde $${project.priceFrom.toLocaleString("en-US")}` : "Sin precio"}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
                                   {project.badge.es} / {project.badge.en}
@@ -462,9 +476,10 @@ const AdminPage = () => {
                           <TableCell>{project.location.es}</TableCell>
                           <TableCell>{project.type.es}</TableCell>
                           <TableCell>{project.isPublished ? "Publicado" : "Borrador"}</TableCell>
+                          <TableCell>{project.isFeatured ? "Featured" : "\u2014"}</TableCell>
                           <TableCell>{project.sortOrder}</TableCell>
                           <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
-                            {project.updatedAt ? format(new Date(project.updatedAt), "dd/MM/yy HH:mm") : "—"}
+                            {project.updatedAt ? format(new Date(project.updatedAt), "dd/MM/yy HH:mm") : "\u2014"}
                           </TableCell>
                           <TableCell>
                             <div className="flex justify-end gap-2">
@@ -496,15 +511,14 @@ const AdminPage = () => {
             <div className="overflow-hidden rounded-lg bg-background shadow">
               <div className="flex items-center justify-between border-b p-4">
                 <p className="text-sm text-muted-foreground">
-                  {leads.length} lead{leads.length !== 1 ? "s" : ""} recibido
-                  {leads.length !== 1 ? "s" : ""}
+                  {leads.length} lead{leads.length !== 1 ? "s" : ""} recibido{leads.length !== 1 ? "s" : ""}
                 </p>
               </div>
 
               {leads.length === 0 && !isLoadingLeads ? (
                 <div className="p-12 text-center text-muted-foreground">
                   <MessageSquare size={40} className="mx-auto mb-3 opacity-40" />
-                  <p>Aún no hay leads registrados</p>
+                  <p>A\u00FAn no hay leads registrados</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -514,9 +528,9 @@ const AdminPage = () => {
                         <TableHead>Fecha</TableHead>
                         <TableHead>Nombre</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead>Teléfono</TableHead>
-                        <TableHead>País</TableHead>
-                        <TableHead>Interés</TableHead>
+                        <TableHead>Tel\u00E9fono</TableHead>
+                        <TableHead>Pa\u00EDs</TableHead>
+                        <TableHead>Inter\u00E9s</TableHead>
                         <TableHead>Mensaje</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -541,7 +555,7 @@ const AdminPage = () => {
                                 <Phone size={13} /> {lead.phone}
                               </span>
                             ) : (
-                              <span className="text-muted-foreground">—</span>
+                              <span className="text-muted-foreground">\u2014</span>
                             )}
                           </TableCell>
                           <TableCell>
@@ -550,13 +564,11 @@ const AdminPage = () => {
                                 <Globe size={13} /> {lead.country}
                               </span>
                             ) : (
-                              <span className="text-muted-foreground">—</span>
+                              <span className="text-muted-foreground">\u2014</span>
                             )}
                           </TableCell>
-                          <TableCell>{interestLabels[lead.interest || ""] || lead.interest || "—"}</TableCell>
-                          <TableCell className="max-w-[200px] truncate text-sm">
-                            {lead.message || "—"}
-                          </TableCell>
+                          <TableCell>{interestLabels[lead.interest || ""] || lead.interest || "\u2014"}</TableCell>
+                          <TableCell className="max-w-[200px] truncate text-sm">{lead.message || "\u2014"}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

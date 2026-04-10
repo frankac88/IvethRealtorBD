@@ -5,13 +5,22 @@ import { createProject, deleteProject, fetchProjects, updateProject, type SavePr
 export const projectsQueryKeys = {
   all: ["projects"] as const,
   published: ["projects", "published"] as const,
+  featured: ["projects", "featured"] as const,
   admin: ["projects", "admin"] as const,
 };
 
 export function usePublishedProjectsQuery() {
   return useQuery({
     queryKey: projectsQueryKeys.published,
-    queryFn: () => fetchProjects(false),
+    queryFn: () => fetchProjects(),
+    retry: false,
+  });
+}
+
+export function useFeaturedProjectsQuery(limit = 3) {
+  return useQuery({
+    queryKey: [...projectsQueryKeys.featured, limit] as const,
+    queryFn: () => fetchProjects({ featuredOnly: true, limit }),
     retry: false,
   });
 }
@@ -19,7 +28,7 @@ export function usePublishedProjectsQuery() {
 export function useAdminProjectsQuery(enabled = true) {
   return useQuery({
     queryKey: projectsQueryKeys.admin,
-    queryFn: () => fetchProjects(true),
+    queryFn: () => fetchProjects({ includeUnpublished: true }),
     enabled,
     retry: false,
   });

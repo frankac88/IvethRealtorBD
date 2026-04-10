@@ -23,6 +23,7 @@ export type ProjectItem = {
   imagePath: string | null;
   sortOrder: number;
   isPublished: boolean;
+  isFeatured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -30,6 +31,7 @@ export type ProjectItem = {
 export type ProjectFormValues = {
   title: string;
   priceFrom: string;
+  featured: boolean;
   locationEs: string;
   locationEn: string;
   residencesEs: string;
@@ -51,6 +53,7 @@ export type ProjectFormValues = {
 export const emptyProjectFormValues: ProjectFormValues = {
   title: "",
   priceFrom: "",
+  featured: false,
   locationEs: "",
   locationEn: "",
   residencesEs: "",
@@ -73,6 +76,7 @@ export function projectToFormValues(project: ProjectItem): ProjectFormValues {
   return {
     title: project.title,
     priceFrom: project.priceFrom?.toString() ?? "",
+    featured: project.isFeatured,
     locationEs: project.location.es,
     locationEn: project.location.en,
     residencesEs: project.residences.es,

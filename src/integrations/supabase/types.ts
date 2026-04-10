@@ -69,6 +69,7 @@ export type Database = {
           ideal_for_es: string
           image_path: string | null
           image_url: string
+          is_featured: boolean
           is_published: boolean
           location_en: string
           location_es: string
@@ -104,6 +105,7 @@ export type Database = {
           ideal_for_es: string
           image_path?: string | null
           image_url: string
+          is_featured?: boolean
           is_published?: boolean
           location_en: string
           location_es: string
@@ -139,6 +141,7 @@ export type Database = {
           ideal_for_es?: string
           image_path?: string | null
           image_url?: string
+          is_featured?: boolean
           is_published?: boolean
           location_en?: string
           location_es?: string

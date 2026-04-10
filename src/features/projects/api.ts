@@ -72,6 +72,7 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
     imagePath: row.image_path,
     sortOrder: row.sort_order,
     isPublished: row.is_published,
+    isFeatured: row.is_featured,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -144,6 +145,7 @@ function buildProjectPayload(
   return {
     title: values.title.trim(),
     price_from: normalizeOptionalNumber(values.priceFrom),
+    is_featured: values.featured,
     badge_es: meta.badge_es,
     badge_en: meta.badge_en,
     location_es: values.locationEs.trim(),
@@ -213,7 +215,15 @@ async function removeProjectImage(path: string) {
   if (error) throw error;
 }
 
-export async function fetchProjects(includeUnpublished = false) {
+export async function fetchProjects({
+  includeUnpublished = false,
+  featuredOnly = false,
+  limit,
+}: {
+  includeUnpublished?: boolean;
+  featuredOnly?: boolean;
+  limit?: number;
+} = {}) {
   let query = supabase
     .from("projects")
     .select("*")
@@ -222,6 +232,14 @@ export async function fetchProjects(includeUnpublished = false) {
 
   if (!includeUnpublished) {
     query = query.eq("is_published", true);
+  }
+
+  if (featuredOnly) {
+    query = query.eq("is_featured", true);
+  }
+
+  if (typeof limit === "number") {
+    query = query.limit(limit);
   }
 
   const { data, error } = await query;
