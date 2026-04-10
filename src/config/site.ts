@@ -1,5 +1,5 @@
-const whatsappNumber = "17868677180";
-const whatsappDefaultMessage = "Hola Iveth, me interesa invertir en Miami";
+﻿const whatsappNumber = "17868677180";
+const whatsappDefaultMessage = "Hola Iveth, quiero conocer oportunidades para invertir en Miami. \u00bfPodemos conversar?";
 const locationQuery = "7791 NW 46 St Suite 308, Doral, FL 33166";
 
 export const siteConfig = {

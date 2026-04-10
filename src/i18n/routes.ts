@@ -7,6 +7,7 @@ export type LocalizedRouteKey =
   | "projects"
   | "invest"
   | "financing"
+  | "guides"
   | "testimonials"
   | "contact";
 
@@ -19,6 +20,7 @@ export const localizedRoutes: LocalizedRouteMap = {
   projects: { es: "/proyectos", en: "/projects" },
   invest: { es: "/invertir-en-florida", en: "/invest-in-florida" },
   financing: { es: "/financiamiento", en: "/financing" },
+  guides: { es: "/guias", en: "/guides" },
   testimonials: { es: "/testimonios", en: "/testimonials" },
   contact: { es: "/contacto", en: "/contact" },
 };

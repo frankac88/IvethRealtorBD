@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import headerLogo from "@/assets/logo-header-iveth-coll.png";
+import headerLogo from "@/assets/logo-header-iveth-current.png";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import {
@@ -20,6 +20,7 @@ const navLinks = [
   { key: "projects" as const, routeKey: "projects" as LocalizedRouteKey },
   { key: "invest" as const, routeKey: "invest" as LocalizedRouteKey },
   { key: "financing" as const, routeKey: "financing" as LocalizedRouteKey },
+  { key: "guides" as const, routeKey: "guides" as LocalizedRouteKey },
   { key: "testimonials" as const, routeKey: "testimonials" as LocalizedRouteKey },
   { key: "contact" as const, routeKey: "contact" as LocalizedRouteKey },
 ];
@@ -47,13 +48,17 @@ const Navbar = () => {
         <div className="flex h-26 items-center justify-between overflow-hidden md:h-32">
           <Link
             to={getLocalizedPath("home", language)}
-            className="flex h-full w-[120px] items-center overflow-visible md:w-[120px]"
+            className="group relative flex h-full w-[120px] items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[120px]"
             aria-label="Home"
           >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-4 top-1/2 h-10 -translate-y-1/2 rounded-full bg-primary/10 opacity-0 blur-xl transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
+            />
             <img
               src={headerLogo}
               alt="Iveth Coll"
-              className="block w-full origin-left scale-[1.55] object-contain md:scale-[1.9]"
+              className="relative block w-full origin-left scale-[1.55] object-contain transition duration-300 ease-out group-hover:scale-[1.62] group-hover:drop-shadow-[0_10px_18px_rgba(95,34,43,0.22)] group-focus-visible:scale-[1.62] group-focus-visible:drop-shadow-[0_10px_18px_rgba(95,34,43,0.22)] md:scale-[1.9] md:group-hover:scale-[1.98] md:group-focus-visible:scale-[1.98]"
             />
           </Link>
 
@@ -140,3 +145,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+

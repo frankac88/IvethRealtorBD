@@ -19,6 +19,7 @@ const TeamPage = lazy(() => import("./pages/TeamPage.tsx"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage.tsx"));
 const InvestPage = lazy(() => import("./pages/InvestPage.tsx"));
 const FinancingPage = lazy(() => import("./pages/FinancingPage.tsx"));
+const GuidesPage = lazy(() => import("./pages/GuidesPage.tsx"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage.tsx"));
 const ContactPage = lazy(() => import("./pages/ContactPage.tsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage.tsx"));
@@ -43,6 +44,7 @@ const publicRoutes: Array<{ key: LocalizedRouteKey; element: JSX.Element }> = [
   { key: "projects", element: <ProjectsPage /> },
   { key: "invest", element: <InvestPage /> },
   { key: "financing", element: <FinancingPage /> },
+  { key: "guides", element: <GuidesPage /> },
   { key: "testimonials", element: <TestimonialsPage /> },
   { key: "contact", element: <ContactPage /> },
 ];

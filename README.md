@@ -82,6 +82,7 @@ Rutas públicas localizadas desde `src/App.tsx`:
 - `/proyectos`
 - `/invertir-en-florida`
 - `/financiamiento`
+- `/guias`
 - `/testimonios`
 - `/contacto`
 - `/login`
@@ -206,6 +207,18 @@ Archivo principal:
 - Se habilitó división silábica para mejorar la justificación del texto.
 - La grilla de partners se ajustó a 4 columnas en pantallas grandes.
 - Se amplió el ancho útil de la sección de partners para que las tarjetas se vean más anchas sin solaparse.
+- Se creó la nueva página pública `Guías` con ruta localizada (`/guias` / `/guides`).
+- Se integró `Guías` en navbar y footer.
+- La nueva sección resume contenido editorial basado en fuentes oficiales del IRS, CFPB, HUD, DBPR y herramientas públicas de property appraisers.
+- Se corrigió el encoding visible del footer al tocar esa navegación.
+- Se refinó el hero de `Guías` para mover la nota editorial a una tarjeta horizontal debajo del texto principal.
+- Se expandió el hero de `Guías` para que el bloque principal y la tarjeta editorial ocupen todo el ancho útil de la página.
+- Se apiló la tarjeta editorial de `Guías` con el título arriba y la descripción debajo.
+- Se transformó el hero de `Guías` en una sección visual con una nueva imagen licenciable de Miami, overlay editorial y mejor legibilidad.
+- Se reforzó el contraste del hero de `Guías` con overlays más oscuros y tipografía blanca para asegurar legibilidad sobre la imagen.
+- Se dejó el subtítulo principal del hero de `Guías` explícitamente en blanco para mejorar la lectura sobre la imagen.
+- Se mejoró la calidad visual del hero de `Guías` aumentando la calidad del asset y reduciendo la opacidad del overlay para recuperar detalle.
+- Se corrigió el encoding de textos en español en traducciones de Invertir, Financiamiento, Testimonios y Contacto.
 
 ## Próximo criterio de actualización
 
@@ -219,3 +232,10 @@ Cada vez que se implemente algo nuevo, agregar al menos:
 ## Nota sobre encoding
 
 Este archivo fue regrabado intencionalmente en **UTF-8** para evitar caracteres corruptos en español e inglés.
+
+
+
+
+
+
+

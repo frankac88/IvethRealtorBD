@@ -7,6 +7,7 @@ export { teamTranslations } from "./team";
 export { projectsTranslations } from "./projects";
 export { investTranslations } from "./invest";
 export { financingTranslations } from "./financing";
+export { guidesTranslations } from "./guides";
 export { testimonialsTranslations } from "./testimonials";
 export { contactTranslations } from "./contact";
 
@@ -18,6 +19,7 @@ import { teamTranslations } from "./team";
 import { projectsTranslations } from "./projects";
 import { investTranslations } from "./invest";
 import { financingTranslations } from "./financing";
+import { guidesTranslations } from "./guides";
 import { testimonialsTranslations } from "./testimonials";
 import { contactTranslations } from "./contact";
 
@@ -30,6 +32,7 @@ export const translations = {
   projects: projectsTranslations,
   invest: investTranslations,
   financing: financingTranslations,
+  guides: guidesTranslations,
   testimonials: testimonialsTranslations,
   contact: contactTranslations,
 } as const;
