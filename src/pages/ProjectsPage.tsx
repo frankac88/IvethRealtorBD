@@ -30,10 +30,10 @@ const labels = {
   filtersTitle: { es: "Filtra oportunidades", en: "Filter opportunities" },
   allLocations: { es: "Todas las ubicaciones", en: "All locations" },
   allTypes: { es: "Todos los tipos", en: "All types" },
-  allStrategies: { es: "Todas las estrategias", en: "All strategies" },
+  allPrices: { es: "Todos los precios", en: "All prices" },
   location: { es: "Ubicación", en: "Location" },
   type: { es: "Tipo", en: "Type" },
-  strategy: { es: "Estrategia", en: "Strategy" },
+  price: { es: "Precio", en: "Price" },
   results: { es: "resultados", en: "results" },
   priceFrom: { es: "Precios desde", en: "Prices from" },
   residences: { es: "Residencias desde", en: "Residences from" },
@@ -70,6 +70,20 @@ const formatPriceFrom = (value: number, language: "es" | "en") =>
     currency: "USD",
     maximumFractionDigits: 0,
   }).format(value);
+
+const priceRanges = [
+  { value: "under-500k", min: null, max: 500000 },
+  { value: "500k-1m", min: 500000, max: 1000000 },
+  { value: "1m-2m", min: 1000000, max: 2000000 },
+  { value: "2m-plus", min: 2000000, max: null },
+] as const;
+
+const priceRangeLabels: Record<(typeof priceRanges)[number]["value"], { es: string; en: string }> = {
+  "under-500k": { es: "Hasta $500K", en: "Up to $500K" },
+  "500k-1m": { es: "$500K - $1M", en: "$500K - $1M" },
+  "1m-2m": { es: "$1M - $2M", en: "$1M - $2M" },
+  "2m-plus": { es: "$2M+", en: "$2M+" },
+};
 
 const dedupeLocalizedOptions = (
   items: ProjectItem[],
@@ -198,7 +212,7 @@ const ProjectsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
-  const [selectedStrategy, setSelectedStrategy] = useState("all");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("all");
 
   const locationOptions = useMemo(
     () => dedupeLocalizedOptions(projects, (project) => project.filterLocation),
@@ -208,11 +222,6 @@ const ProjectsPage = () => {
     () => dedupeLocalizedOptions(projects, (project) => project.filterType),
     [projects],
   );
-  const strategyOptions = useMemo(
-    () => dedupeLocalizedOptions(projects, (project) => project.filterStrategy),
-    [projects],
-  );
-
   const filteredProjects = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
 
@@ -231,19 +240,21 @@ const ProjectsPage = () => {
         project.filterLocation.es.toLowerCase().includes(term) ||
         project.filterLocation.en.toLowerCase().includes(term) ||
         project.filterType.es.toLowerCase().includes(term) ||
-        project.filterType.en.toLowerCase().includes(term) ||
-        project.filterStrategy.es.toLowerCase().includes(term) ||
-        project.filterStrategy.en.toLowerCase().includes(term);
+        project.filterType.en.toLowerCase().includes(term);
 
       const matchesLocation =
         selectedLocation === "all" || project.filterLocation.es === selectedLocation;
       const matchesType = selectedType === "all" || project.filterType.es === selectedType;
-      const matchesStrategy =
-        selectedStrategy === "all" || project.filterStrategy.es === selectedStrategy;
+      const selectedRange = priceRanges.find((range) => range.value === selectedPriceRange);
+      const matchesPrice =
+        !selectedRange ||
+        (project.priceFrom !== null &&
+          (selectedRange.min === null || project.priceFrom >= selectedRange.min) &&
+          (selectedRange.max === null || project.priceFrom < selectedRange.max));
 
-      return matchesSearch && matchesLocation && matchesType && matchesStrategy;
+      return matchesSearch && matchesLocation && matchesType && matchesPrice;
     });
-  }, [projects, searchTerm, selectedLocation, selectedType, selectedStrategy]);
+  }, [projects, searchTerm, selectedLocation, selectedType, selectedPriceRange]);
 
   const balancedProjects = useMemo(
     () => pairProjectsByEstimatedHeight(filteredProjects, t),
@@ -284,7 +295,7 @@ const ProjectsPage = () => {
                   setSearchTerm("");
                   setSelectedLocation("all");
                   setSelectedType("all");
-                  setSelectedStrategy("all");
+                  setSelectedPriceRange("all");
                 }}
                 className="text-sm text-primary underline-offset-4 hover:underline"
               >
@@ -346,17 +357,17 @@ const ProjectsPage = () => {
 
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-foreground/65">
-                  {t(labels.strategy)}
+                  {t(labels.price)}
                 </span>
                 <select
-                  value={selectedStrategy}
-                  onChange={(event) => setSelectedStrategy(event.target.value)}
+                  value={selectedPriceRange}
+                  onChange={(event) => setSelectedPriceRange(event.target.value)}
                   className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
                 >
-                  <option value="all">{t(labels.allStrategies)}</option>
-                  {strategyOptions.map((option) => (
-                    <option key={`${option.es}-${option.en}`} value={option.es}>
-                      {t(option)}
+                  <option value="all">{t(labels.allPrices)}</option>
+                  {priceRanges.map((range) => (
+                    <option key={range.value} value={range.value}>
+                      {t(priceRangeLabels[range.value])}
                     </option>
                   ))}
                 </select>
