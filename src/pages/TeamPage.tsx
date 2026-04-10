@@ -13,7 +13,7 @@ import acmmLogo from "@/assets/acmm-logo.png";
 import fortexLogo from "@/assets/fortex-logo.png";
 import ftgLogo from "@/assets/ftg-logo.png";
 import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.jpg";
-import ivethImg from "@/assets/iveth-portrait.webp";
+import ivethImg from "@/assets/veth-team.webp";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { teamTranslations } from "@/i18n/translations/team";
