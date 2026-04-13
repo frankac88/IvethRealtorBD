@@ -186,7 +186,7 @@ const GuidesPage = () => {
                 <p className="mx-auto mt-6 max-w-xl text-[15px] leading-8 text-muted-foreground">{t(g.finalBody)}</p>
               </div>
               <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
-                <Button variant="gold" size="lg" asChild className="min-w-[240px] shadow-[0_12px_30px_rgba(155,107,138,0.18)] hover:shadow-[0_16px_36px_rgba(155,107,138,0.24)]">
+                <Button variant="hero" size="lg" asChild className="min-w-[240px] shadow-[0_12px_30px_rgba(42,123,136,0.18)] hover:shadow-[0_16px_36px_rgba(42,123,136,0.24)]">
                   <Link to={getLocalizedPath("contact", language)}>{t(g.finalPrimary)}</Link>
                 </Button>
                 <Button variant="whatsapp" size="lg" asChild className="min-w-[240px]">
