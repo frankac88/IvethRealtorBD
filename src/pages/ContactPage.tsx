@@ -115,7 +115,7 @@ const ContactPage = () => {
     <Layout>
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-gold mb-4">{t(c.label)}</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(c.label)}</p>
           <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(c.title)}</h1>
           <p className="text-muted-foreground max-w-xl mx-auto">{t(c.subtitle)}</p>
         </div>
@@ -292,7 +292,7 @@ const ContactPage = () => {
                       </button>
 
                       {isLocationOpen && (
-                        <div id="contact-location-map" className="mt-5 overflow-hidden rounded-[24px] border border-border/60 bg-background shadow-[0_12px_40px_-24px_rgba(0,0,0,0.35)]">
+                        <div id="contact-location-map" className="mt-5 overflow-hidden rounded-[24px] border border-border/60 bg-background shadow-[0_12px_40px_-24px_rgba(26,31,46,0.2)]">
                           <div className="flex items-center justify-between border-b border-border/60 px-4 py-3">
                             <a
                               href={siteConfig.contact.locationMapsHref}
@@ -317,7 +317,7 @@ const ContactPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="rounded-[28px] bg-muted/70 p-8 ring-1 ring-border/50">
+              <div className="rounded-[28px] bg-card/80 p-8 ring-1 ring-border/50">
                 <h3 className="font-serif text-lg mb-3">{t(c.whatsappTitle)}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{t(c.whatsappDesc)}</p>
                 <Button variant="whatsapp" asChild>

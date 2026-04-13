@@ -26,10 +26,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div>
             <h3 className="mb-2 font-serif text-2xl uppercase">{siteConfig.brand.name}</h3>
-            <p className="mb-6 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
+            <p className="mb-6 text-xs uppercase tracking-[0.2em] text-primary-foreground/72">
               {t(ft.subtitle)}
             </p>
-            <p className="text-sm leading-relaxed text-primary-foreground/70">{t(ft.description)}</p>
+            <p className="text-sm leading-relaxed text-primary-foreground/82">{t(ft.description)}</p>
           </div>
 
           <div>
@@ -39,7 +39,7 @@ const Footer = () => {
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
-                  className="text-sm text-primary-foreground/60 transition-colors hover:text-primary-foreground"
+                  className="text-sm text-primary-foreground/72 transition-colors hover:text-primary-foreground"
                 >
                   {link.label}
                 </Link>
@@ -49,7 +49,7 @@ const Footer = () => {
 
           <div>
             <h4 className="mb-4 font-serif text-lg">{t(ft.contact)}</h4>
-            <div className="flex flex-col gap-3 text-sm text-primary-foreground/70">
+            <div className="flex flex-col gap-3 text-sm text-primary-foreground/82">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
                 className="transition-colors hover:text-primary-foreground"
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-primary-foreground/10 pt-8 text-center">
-          <p className="text-xs text-primary-foreground/40">
+          <p className="text-xs text-primary-foreground/55">
             {"\u00a9"} {new Date().getFullYear()} Iveth Coll {"\u2014"} International Real Estate Advisor. {t(ft.rights)}
           </p>
         </div>

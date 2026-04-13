@@ -14,7 +14,7 @@ const FinancingPage = () => {
     <Layout>
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-gold mb-4">{t(f.label)}</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(f.label)}</p>
           <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(f.title)}</h1>
           <p className="text-muted-foreground max-w-xl mx-auto">{t(f.subtitle)}</p>
         </div>
@@ -23,7 +23,7 @@ const FinancingPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div className="bg-muted p-8 rounded-sm">
+            <div className="bg-card p-8 rounded-sm ring-1 ring-border/50">
               <h2 className="font-serif text-2xl mb-4">{t(f.foreigners)}</h2>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 {f.foreignerItems[language].map((item) => (
@@ -31,7 +31,7 @@ const FinancingPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-muted p-8 rounded-sm">
+            <div className="bg-card p-8 rounded-sm ring-1 ring-border/50">
               <h2 className="font-serif text-2xl mb-4">{t(f.residents)}</h2>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 {f.residentItems[language].map((item) => (

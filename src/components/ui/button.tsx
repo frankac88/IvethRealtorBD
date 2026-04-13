@@ -17,7 +17,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline shadow-none hover:shadow-none",
         hero: "bg-primary text-primary-foreground hover:bg-green-light text-base tracking-wide uppercase hover:scale-[1.03] shadow-md hover:shadow-lg",
         heroOutline: "border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 text-base tracking-wide uppercase hover:scale-[1.03]",
-        gold: "bg-gold text-foreground hover:bg-gold/80 tracking-wide uppercase hover:scale-[1.03] shadow-md hover:shadow-lg",
+        gold: "bg-accent text-accent-foreground hover:bg-accent/90 tracking-wide uppercase hover:scale-[1.03] shadow-md hover:shadow-lg",
         wine: "bg-wine text-primary-foreground hover:bg-wine/90 tracking-wide uppercase hover:scale-[1.03] shadow-md hover:shadow-lg",
         whatsapp: "bg-[hsl(var(--whatsapp-green))] text-primary-foreground hover:bg-[hsl(var(--whatsapp-green))]/90 tracking-wide uppercase hover:scale-[1.03] shadow-md hover:shadow-lg",
       },

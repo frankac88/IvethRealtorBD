@@ -58,7 +58,7 @@ const Navbar = () => {
             <img
               src={headerLogo}
               alt="Iveth Coll"
-              className="relative block w-full origin-left scale-[1.55] object-contain transition duration-300 ease-out group-hover:scale-[1.62] group-hover:drop-shadow-[0_10px_18px_rgba(95,34,43,0.22)] group-focus-visible:scale-[1.62] group-focus-visible:drop-shadow-[0_10px_18px_rgba(95,34,43,0.22)] md:scale-[1.9] md:group-hover:scale-[1.98] md:group-focus-visible:scale-[1.98]"
+              className="relative block w-full origin-left scale-[1.55] object-contain transition duration-300 ease-out group-hover:scale-[1.62] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.62] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] md:scale-[1.9] md:group-hover:scale-[1.98] md:group-focus-visible:scale-[1.98]"
             />
           </Link>
 

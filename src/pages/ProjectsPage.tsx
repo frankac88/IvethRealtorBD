@@ -269,7 +269,7 @@ const ProjectsPage = () => {
       <section className="bg-muted py-20">
         <div className="container mx-auto px-4 text-center lg:px-8">
           <AnimatedSection as="div" className="mx-auto max-w-3xl">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(p.label)}</p>
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(p.label)}</p>
             <h1 className="mb-4 text-4xl font-serif md:text-5xl">{t(p.title)}</h1>
             <p className="mx-auto max-w-2xl text-muted-foreground md:text-lg">{t(p.subtitle)}</p>
           </AnimatedSection>
@@ -281,7 +281,7 @@ const ProjectsPage = () => {
           <AnimatedSection as="div" className="border border-border bg-background p-5 md:p-6">
             <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-gold">
+                <p className="text-xs uppercase tracking-[0.28em] text-accent">
                   {t(labels.filtersTitle)}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
@@ -414,7 +414,7 @@ const ProjectsPage = () => {
                   as="article"
                   key={project.id}
                   delay={index * 70}
-                  className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(15,23,42,0.12)]"
+                  className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(26,31,46,0.12)]"
                 >
                   <div className="relative overflow-hidden">
                     <img
@@ -436,7 +436,7 @@ const ProjectsPage = () => {
                         {project.title}
                       </h3>
                       {project.priceFrom ? (
-                        <div className="shrink-0 whitespace-nowrap rounded-md border border-[#E7D3B4] bg-[#F6E8D2] px-3 py-1.5 text-sm font-semibold text-foreground">
+                        <div className="shrink-0 whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-sm font-semibold text-foreground">
                           {t(labels.priceFrom)} {formatPriceFrom(project.priceFrom, language)}
                         </div>
                       ) : null}
@@ -498,7 +498,7 @@ const ProjectsPage = () => {
                       <Button
                         size="sm"
                         asChild
-                        className="border border-[#20402B] bg-[#20402B] px-5 text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#193322] hover:shadow-md"
+                        className="border border-primary bg-primary px-5 text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-green-light hover:shadow-md"
                       >
                         <Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link>
                       </Button>

@@ -63,7 +63,7 @@ const TeamPage = () => {
     <Layout>
       <section className="bg-muted py-20">
         <div className="container mx-auto px-4 text-center lg:px-8">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(tm.label)}</p>
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(tm.label)}</p>
           <h1 className="mb-4 text-4xl font-serif md:text-5xl">{t(tm.title)}</h1>
           <p className="mx-auto max-w-xl text-muted-foreground">{t(tm.subtitle)}</p>
         </div>
@@ -75,16 +75,16 @@ const TeamPage = () => {
             <div className="text-center">
               <img src={ivethImg} alt="Iveth Coll" className="mx-auto mb-6 h-64 w-64 rounded-sm object-cover" loading="lazy" />
               <h2 className="mb-1 font-serif text-2xl">Iveth Coll</h2>
-              <p className="mb-4 text-xs uppercase tracking-[0.2em] text-gold">{t(tm.ivethRole)}</p>
+              <p className="mb-4 text-xs uppercase tracking-[0.2em] text-accent">{t(tm.ivethRole)}</p>
               <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{t(tm.ivethDesc)}</p>
               <Button variant="default" size="sm" asChild><Link to={getLocalizedPath("about", language)}>{t(tm.learnMore)}</Link></Button>
             </div>
             <div className="text-center">
-              <div className="mx-auto mb-6 flex h-64 w-64 items-center justify-center rounded-sm bg-muted">
+              <div className="mx-auto mb-6 flex h-64 w-64 items-center justify-center rounded-sm bg-card ring-1 ring-border/50">
                 <span className="font-serif text-4xl text-muted-foreground">RS</span>
               </div>
               <h2 className="mb-1 font-serif text-2xl">Ricardo Suarez</h2>
-              <p className="mb-4 text-xs uppercase tracking-[0.2em] text-gold">{t(tm.ricardoRole)}</p>
+              <p className="mb-4 text-xs uppercase tracking-[0.2em] text-accent">{t(tm.ricardoRole)}</p>
               <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{t(tm.ricardoDesc)}</p>
               <Button variant="default" size="sm" asChild><Link to={getLocalizedPath("financing", language)}>{t(tm.viewOptions)}</Link></Button>
             </div>
@@ -92,10 +92,10 @@ const TeamPage = () => {
         </div>
       </section>
 
-      <AnimatedSection className="bg-[#f6efe3] py-20">
+      <AnimatedSection className="bg-muted py-20">
         <div className="mx-auto w-full max-w-[1600px] px-4 lg:px-8">
           <div className="max-w-3xl">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(tm.partnersLabel)}</p>
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(tm.partnersLabel)}</p>
             <h2 className="mb-4 font-serif text-3xl text-primary md:text-4xl">{t(tm.partnersTitle)}</h2>
             <p className="max-w-2xl leading-relaxed text-muted-foreground">{t(tm.partnersSubtitle)}</p>
           </div>
@@ -106,7 +106,7 @@ const TeamPage = () => {
                 as="div"
                 key={company.name}
                 delay={index * 120}
-                className="group flex h-full flex-col rounded-[28px] border border-black/5 bg-white/90 p-7 shadow-[0_18px_45px_rgba(32,64,43,0.08)] transition-transform duration-300 hover:-translate-y-1"
+                className="group flex h-full flex-col rounded-[28px] border border-border/60 bg-background/90 p-7 shadow-[0_18px_45px_rgba(26,31,46,0.08)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="flex h-full flex-col">
                   <div className="mx-auto inline-flex w-fit rounded-full border border-primary/10 bg-primary/5 px-4 py-1 text-[0.68rem] font-medium uppercase tracking-[0.24em] text-primary/80">

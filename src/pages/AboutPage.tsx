@@ -26,7 +26,7 @@ const AboutPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-xs tracking-[0.3em] uppercase text-gold mb-4">{t(a.label)}</p>
+              <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(a.label)}</p>
               <h1 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">{t(a.title)}</h1>
               <p className="text-muted-foreground leading-relaxed mb-6">{t(a.desc1)}</p>
               <p className="text-muted-foreground leading-relaxed mb-8">{t(a.desc2)}</p>

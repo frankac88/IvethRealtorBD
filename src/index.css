@@ -6,50 +6,50 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 150 10% 15%;
+    --background: 30 29% 93%;
+    --foreground: 225 28% 14%;
 
-    --card: 40 30% 97%;
-    --card-foreground: 150 10% 15%;
+    --card: 30 33% 95%;
+    --card-foreground: 225 28% 14%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 150 10% 15%;
+    --popover: 30 33% 95%;
+    --popover-foreground: 225 28% 14%;
 
-    --primary: 351 46% 25%;
+    --primary: 188 53% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 35% 85%;
-    --secondary-foreground: 150 10% 15%;
+    --secondary: 321 28% 88%;
+    --secondary-foreground: 225 28% 14%;
 
-    --muted: 40 20% 95%;
-    --muted-foreground: 150 5% 45%;
+    --muted: 30 24% 90%;
+    --muted-foreground: 225 18% 30%;
 
-    --accent: 345 40% 30%;
+    --accent: 321 21% 51%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 351 46% 25%;
+    --border: 30 17% 82%;
+    --input: 30 17% 82%;
+    --ring: 188 53% 35%;
 
     --radius: 0.25rem;
 
-    --gold: 38 45% 66%;
-    --gold-light: 40 40% 92%;
-    --wine: 345 40% 30%;
-    --green-light: 351 32% 38%;
+    --gold: 321 21% 51%;
+    --gold-light: 321 26% 88%;
+    --wine: 321 24% 40%;
+    --green-light: 188 48% 29%;
     --whatsapp-green: 140 28% 40%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 150 10% 15%;
-    --sidebar-primary: 351 46% 25%;
+    --sidebar-background: 30 33% 95%;
+    --sidebar-foreground: 225 28% 14%;
+    --sidebar-primary: 188 53% 35%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 20% 95%;
-    --sidebar-accent-foreground: 150 10% 15%;
-    --sidebar-border: 40 20% 88%;
-    --sidebar-ring: 351 46% 25%;
+    --sidebar-accent: 30 24% 90%;
+    --sidebar-accent-foreground: 225 28% 14%;
+    --sidebar-border: 30 17% 82%;
+    --sidebar-ring: 188 53% 35%;
   }
 }
 
@@ -69,6 +69,6 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-light;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
   }
 }

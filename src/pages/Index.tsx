@@ -58,7 +58,7 @@ const Index = () => {
               <img src={ivethHomeImg} alt="Iveth Coll" className="mx-auto aspect-[3/4] w-full max-w-md rounded-sm object-cover lg:mx-0" loading="lazy" width={800} height={1000} />
             </div>
             <div>
-              <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(h.aboutLabel)}</p>
+              <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(h.aboutLabel)}</p>
               <h2 className="mb-6 text-3xl font-serif leading-tight md:text-4xl">{t(h.aboutTitle)}</h2>
               <p className="mb-6 leading-relaxed text-muted-foreground">{t(h.aboutDesc)}</p>
               <div className="mb-8 grid grid-cols-2 gap-6">
@@ -86,7 +86,7 @@ const Index = () => {
       <AnimatedSection className="bg-muted py-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-16 text-center">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(h.whyFloridaLabel)}</p>
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(h.whyFloridaLabel)}</p>
             <h2 className="mx-auto max-w-2xl text-3xl font-serif md:text-4xl">{t(h.whyFloridaTitle)}</h2>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -106,7 +106,7 @@ const Index = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-16 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(h.portfolioLabel)}</p>
+              <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(h.portfolioLabel)}</p>
               <h2 className="text-3xl font-serif md:text-4xl">{t(h.portfolioTitle)}</h2>
             </div>
             <Button variant="outline" asChild><Link to={getLocalizedPath("projects", language)}>{t(h.viewAll)}</Link></Button>
@@ -151,7 +151,7 @@ const Index = () => {
       <AnimatedSection className="bg-foreground py-20 text-primary-foreground">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-16 text-center">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(h.testimonialsLabel)}</p>
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(h.testimonialsLabel)}</p>
             <h2 className="text-3xl font-serif md:text-4xl">{t(h.testimonialsTitle)}</h2>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -159,13 +159,13 @@ const Index = () => {
               <AnimatedSection as="div" key={item.name} delay={i * 150} className="rounded-sm border border-primary-foreground/10 p-8">
                 <div className="mb-4 flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} className="fill-gold text-gold" />
+                    <Star key={i} size={16} className="fill-accent text-accent" />
                   ))}
                 </div>
-                <p className="mb-6 leading-relaxed text-primary-foreground/80 italic">&quot;{t(item.text)}&quot;</p>
+                <p className="mb-6 leading-relaxed text-primary-foreground/88 italic">&quot;{t(item.text)}&quot;</p>
                 <div>
                   <p className="font-semibold">{item.name}</p>
-                  <p className="text-sm text-primary-foreground/50">{t(item.country)}</p>
+                  <p className="text-sm text-primary-foreground/65">{t(item.country)}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -176,12 +176,12 @@ const Index = () => {
       {/* Contact CTA */}
       <AnimatedSection className="py-20 lg:py-28">
         <div className="container mx-auto max-w-2xl px-4 text-center lg:px-8">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">{t(h.ctaLabel)}</p>
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-accent">{t(h.ctaLabel)}</p>
           <h2 className="mb-6 text-3xl font-serif md:text-4xl">{t(h.ctaTitle)}</h2>
           <p className="mb-10 leading-relaxed text-muted-foreground">{t(h.ctaDesc)}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(h.ctaButton1)}</Link></Button>
-            <Button variant="gold" size="lg" asChild>
+            <Button variant="whatsapp" size="lg" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(h.ctaButton2)}</a>
             </Button>
           </div>

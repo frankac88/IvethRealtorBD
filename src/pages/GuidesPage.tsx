@@ -13,19 +13,19 @@ import { guidesTranslations } from "@/i18n/translations/guides";
 const guideVisuals = {
   investor: {
     icon: Landmark,
-    accentClassName: "from-[#183226] via-[#20402B] to-[#7D8A69]",
+    accentClassName: "from-foreground via-primary to-accent",
   },
   preconstruction: {
     icon: Building2,
-    accentClassName: "from-[#4E3826] via-[#6B4B34] to-[#C59A67]",
+    accentClassName: "from-foreground via-accent to-primary",
   },
   financing: {
     icon: ShieldCheck,
-    accentClassName: "from-[#152A40] via-[#21466A] to-[#88A6C6]",
+    accentClassName: "from-primary via-foreground to-accent",
   },
   buyer: {
     icon: BookOpen,
-    accentClassName: "from-[#322416] via-[#5D4330] to-[#BFA78D]",
+    accentClassName: "from-accent via-foreground to-primary",
   },
 } as const;
 
@@ -38,7 +38,7 @@ const GuidesPage = () => {
 
   return (
     <Layout>
-      <section className="relative isolate overflow-hidden bg-[#0f1d17]">
+      <section className="relative isolate overflow-hidden bg-foreground">
         <div className="absolute inset-0">
           <img
             src={guidesHeroMiami}
@@ -48,18 +48,18 @@ const GuidesPage = () => {
             fetchPriority="high"
             className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,14,12,0.78)_0%,rgba(8,14,12,0.62)_38%,rgba(8,14,12,0.34)_65%,rgba(8,14,12,0.5)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(197,154,103,0.24),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(24,50,38,0.32),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,31,46,0.84)_0%,rgba(26,31,46,0.7)_38%,rgba(26,31,46,0.38)_65%,rgba(26,31,46,0.56)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(155,107,138,0.28),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(42,123,136,0.3),transparent_34%)]" />
         </div>
 
         <div className="container relative mx-auto flex min-h-[72svh] items-end px-4 py-20 lg:px-8 lg:py-24">
           <div className="w-full">
             <AnimatedSection as="div" className="w-full max-w-4xl">
-              <p className="mb-4 text-xs uppercase tracking-[0.32em] text-gold">{t(g.label)}</p>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.32em] text-white">{t(g.label)}</p>
               <h1 className="w-full text-4xl font-serif leading-tight text-white md:text-5xl lg:text-6xl">
                 {t(g.title)}
               </h1>
-              <p className="mt-6 w-full max-w-3xl text-base leading-8 text-white/95 md:text-lg [text-shadow:0_2px_18px_rgba(0,0,0,0.42)]">
+              <p className="mt-6 w-full max-w-3xl text-base leading-8 text-white/95 md:text-lg [text-shadow:0_2px_18px_rgba(26,31,46,0.42)]">
                 {t(g.subtitle)}
               </p>
             </AnimatedSection>
@@ -67,13 +67,13 @@ const GuidesPage = () => {
             <AnimatedSection
               as="aside"
               delay={120}
-              className="mt-10 w-full overflow-hidden border border-white/15 bg-[rgba(7,12,10,0.42)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur-sm"
+              className="mt-10 w-full overflow-hidden border border-white/15 bg-[rgba(26,31,46,0.44)] shadow-[0_24px_80px_rgba(26,31,46,0.28)] backdrop-blur-sm"
             >
               <div className="flex flex-col gap-5 p-6 md:gap-6 md:p-8">
-                <div className="border-l-2 border-gold pl-4 md:pl-5">
-                  <p className="text-xs uppercase tracking-[0.24em] text-white">{t(g.editorialNoteTitle)}</p>
+                <div className="border-l-2 border-accent pl-4 md:pl-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white">{t(g.editorialNoteTitle)}</p>
                 </div>
-                <p className="max-w-5xl text-sm leading-7 text-white md:text-[15px] [text-shadow:0_2px_18px_rgba(0,0,0,0.4)]">{t(g.editorialNoteBody)}</p>
+                <p className="max-w-5xl text-sm leading-7 text-white md:text-[15px] [text-shadow:0_2px_18px_rgba(26,31,46,0.4)]">{t(g.editorialNoteBody)}</p>
               </div>
             </AnimatedSection>
           </div>
@@ -114,7 +114,7 @@ const GuidesPage = () => {
                   id={guideKey}
                   key={guideKey}
                   delay={index * 90}
-                  className="overflow-hidden border border-border/70 bg-background shadow-[0_24px_70px_rgba(15,23,42,0.05)]"
+                  className="overflow-hidden border border-border/70 bg-background shadow-[0_24px_70px_rgba(26,31,46,0.08)]"
                 >
                   <div className="grid lg:grid-cols-[minmax(280px,0.8fr)_minmax(0,1.2fr)]">
                     <div className={`flex min-h-[260px] flex-col justify-between bg-gradient-to-br ${visual.accentClassName} p-8 text-white lg:p-10`}>
@@ -137,7 +137,7 @@ const GuidesPage = () => {
                     <div className="p-8 lg:p-10">
                       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(260px,0.7fr)]">
                         <div>
-                          <p className="text-xs uppercase tracking-[0.24em] text-gold">{t(g.detailLabel)}</p>
+                          <p className="text-xs uppercase tracking-[0.24em] text-accent">{t(g.detailLabel)}</p>
                           <ul className="mt-5 space-y-4">
                             {guide.bullets[language].map((bullet) => (
                               <li key={bullet} className="flex gap-3 text-sm leading-7 text-muted-foreground">
@@ -148,8 +148,8 @@ const GuidesPage = () => {
                           </ul>
                         </div>
 
-                        <div className="border border-border/70 bg-muted/30 p-6">
-                          <p className="text-xs uppercase tracking-[0.24em] text-foreground/60">{t(g.resourceLabel)}</p>
+                        <div className="border border-border/70 bg-card/70 p-6">
+                          <p className="text-xs uppercase tracking-[0.24em] text-white">{t(g.resourceLabel)}</p>
                           <div className="mt-5 flex flex-col gap-3">
                             {guide.resources.map((resource) => (
                               <a
@@ -175,21 +175,26 @@ const GuidesPage = () => {
         </div>
       </section>
 
-      <section className="bg-[#183226] py-20 text-primary-foreground">
+      <section className="bg-background pb-20 pt-0 text-foreground lg:pb-24">
         <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection as="div" className="mx-auto max-w-3xl text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">{t(g.label)}</p>
-            <h2 className="mt-5 font-serif text-3xl md:text-4xl">{t(g.finalTitle)}</h2>
-            <p className="mt-6 text-base leading-8 text-primary-foreground/78">{t(g.finalBody)}</p>
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button variant="gold" size="lg" asChild>
-                <Link to={getLocalizedPath("contact", language)}>{t(g.finalPrimary)}</Link>
-              </Button>
-              <Button variant="heroOutline" size="lg" asChild>
-                <a href={siteConfig.whatsapp.hrefWithMessage} target="_blank" rel="noopener noreferrer">
-                  {t(g.finalSecondary)}
-                </a>
-              </Button>
+          <AnimatedSection as="div" className="mx-auto max-w-4xl">
+            <div className="relative overflow-hidden rounded-[36px] bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.38)_100%)] px-8 py-14 text-center shadow-[0_30px_90px_rgba(26,31,46,0.08)] ring-1 ring-border/50 backdrop-blur-md md:px-16 md:py-20">
+              <div className="absolute inset-x-0 top-0 mx-auto h-px w-40 bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
+              <div className="mx-auto max-w-3xl">
+                <p className="text-[11px] font-medium uppercase tracking-[0.42em] text-accent/90">{t(g.label)}</p>
+                <h2 className="mx-auto mt-6 max-w-2xl font-serif text-3xl leading-[1.08] md:text-4xl">{t(g.finalTitle)}</h2>
+                <p className="mx-auto mt-6 max-w-xl text-[15px] leading-8 text-muted-foreground">{t(g.finalBody)}</p>
+              </div>
+              <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
+                <Button variant="gold" size="lg" asChild className="min-w-[240px] shadow-[0_12px_30px_rgba(155,107,138,0.18)] hover:shadow-[0_16px_36px_rgba(155,107,138,0.24)]">
+                  <Link to={getLocalizedPath("contact", language)}>{t(g.finalPrimary)}</Link>
+                </Button>
+                <Button variant="whatsapp" size="lg" asChild className="min-w-[240px]">
+                  <a href={siteConfig.whatsapp.hrefWithMessage} target="_blank" rel="noopener noreferrer">
+                    {t(g.finalSecondary)}
+                  </a>
+                </Button>
+              </div>
             </div>
           </AnimatedSection>
         </div>
