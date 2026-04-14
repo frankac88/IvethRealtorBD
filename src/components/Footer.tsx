@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { brandAssets } from "@/config/brandAssets";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath, type LocalizedRouteKey } from "@/i18n/routes";
@@ -26,11 +27,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div>
             <img
-              src="/iveth-footer-logo-cropped.png"
+              src={brandAssets.footerLogo}
               alt="Iveth Coll logo"
               className="mb-6 h-auto w-52 object-contain md:w-60"
             />
-            <h3 className="mb-2 font-serif text-2xl uppercase">{siteConfig.brand.name}</h3>
             <p className="mb-6 text-xs uppercase tracking-[0.2em] text-primary-foreground/72">
               {t(ft.subtitle)}
             </p>

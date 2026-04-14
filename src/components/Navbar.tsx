@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import headerLogo from "@/assets/logo-header-iveth-current.png";
+import { brandAssets } from "@/config/brandAssets";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import {
@@ -45,10 +45,10 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-26 items-center justify-between overflow-hidden md:h-32">
+        <div className="flex h-32 items-center justify-between overflow-hidden md:h-40">
           <Link
             to={getLocalizedPath("home", language)}
-            className="group relative flex h-full w-[120px] items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[120px]"
+            className="group relative flex h-full w-[220px] items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[300px]"
             aria-label="Home"
           >
             <span
@@ -56,9 +56,9 @@ const Navbar = () => {
               className="pointer-events-none absolute inset-x-4 top-1/2 h-10 -translate-y-1/2 rounded-full bg-primary/10 opacity-0 blur-xl transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
             />
             <img
-              src={headerLogo}
+              src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block w-full origin-left scale-[1.55] object-contain transition duration-300 ease-out group-hover:scale-[1.62] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.62] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] md:scale-[1.9] md:group-hover:scale-[1.98] md:group-focus-visible:scale-[1.98]"
+              className="relative block h-auto w-full object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)]"
             />
           </Link>
 
