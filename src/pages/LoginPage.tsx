@@ -32,7 +32,7 @@ const LoginPage = () => {
           <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
             <Lock className="text-primary" size={22} />
           </div>
-          <h1 className="font-serif text-2xl">Admin</h1>
+          <h2 className="font-serif text-2xl">Admin</h2>
           <p className="text-sm text-muted-foreground">Ingresa tus credenciales</p>
         </div>
         <form onSubmit={handleLogin} className="space-y-4">
@@ -60,3 +60,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

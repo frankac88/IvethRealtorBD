@@ -14,9 +14,9 @@ const FinancingPage = () => {
     <Layout>
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(f.label)}</p>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(f.title)}</h1>
-          <p className="text-muted-foreground max-w-xl mx-auto">{t(f.subtitle)}</p>
+          <p className="type-caption mb-4">{t(f.label)}</p>
+          <h1 className="type-h1 mb-4">{t(f.title)}</h1>
+          <p className="type-body mx-auto max-w-xl">{t(f.subtitle)}</p>
         </div>
       </section>
 
@@ -24,16 +24,16 @@ const FinancingPage = () => {
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div className="bg-card p-8 rounded-sm ring-1 ring-border/50">
-              <h2 className="font-serif text-2xl mb-4">{t(f.foreigners)}</h2>
-              <ul className="space-y-3 text-sm text-muted-foreground">
+              <h2 className="type-h3 mb-4 text-primary">{t(f.foreigners)}</h2>
+              <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.foreignerItems[language].map((item) => (
                   <li key={item}>• {item}</li>
                 ))}
               </ul>
             </div>
             <div className="bg-card p-8 rounded-sm ring-1 ring-border/50">
-              <h2 className="font-serif text-2xl mb-4">{t(f.residents)}</h2>
-              <ul className="space-y-3 text-sm text-muted-foreground">
+              <h2 className="type-h3 mb-4 text-primary">{t(f.residents)}</h2>
+              <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.residentItems[language].map((item) => (
                   <li key={item}>• {item}</li>
                 ))}
@@ -41,14 +41,14 @@ const FinancingPage = () => {
             </div>
           </div>
 
-          <h2 className="font-serif text-3xl text-center mb-12">{t(f.stepsTitle)}</h2>
+          <h2 className="type-h2 mb-12 text-center">{t(f.stepsTitle)}</h2>
           <div className="space-y-6 max-w-lg mx-auto mb-16">
             {f.steps[language].map((step, i) => (
               <div key={step} className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold shrink-0">
                   {i + 1}
                 </div>
-                <p className="text-foreground">{step}</p>
+                <p className="type-body text-foreground">{step}</p>
               </div>
             ))}
           </div>
@@ -63,3 +63,7 @@ const FinancingPage = () => {
 };
 
 export default FinancingPage;
+
+
+
+

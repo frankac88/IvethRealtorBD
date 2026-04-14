@@ -12,9 +12,9 @@ const TestimonialsPage = () => {
     <Layout>
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(tp.label)}</p>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(tp.title)}</h1>
-          <p className="text-muted-foreground max-w-xl mx-auto">{t(tp.subtitle)}</p>
+          <p className="type-caption mb-4">{t(tp.label)}</p>
+          <h1 className="type-h1 mb-4">{t(tp.title)}</h1>
+          <p className="type-body mx-auto max-w-xl">{t(tp.subtitle)}</p>
         </div>
       </section>
 
@@ -28,10 +28,10 @@ const TestimonialsPage = () => {
                     <Star key={i} size={16} className="fill-accent text-accent" />
                   ))}
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-6 italic">"{t(item.text)}"</p>
+                <p className="type-body mb-6 italic text-muted-foreground">"{t(item.text)}"</p>
                 <div>
                   <p className="font-semibold">{item.name}</p>
-                  <p className="text-sm text-muted-foreground">{t(item.country)}</p>
+                  <p className="type-body-sm text-muted-foreground">{t(item.country)}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -43,3 +43,7 @@ const TestimonialsPage = () => {
 };
 
 export default TestimonialsPage;
+
+
+
+

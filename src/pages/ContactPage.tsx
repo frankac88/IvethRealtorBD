@@ -94,6 +94,14 @@ const ContactPage = () => {
         description: Object.values(nextErrors)[0],
         variant: "destructive",
       });
+
+      setTimeout(() => {
+        const firstInvalidField = form.querySelector('[aria-invalid="true"]');
+        if (firstInvalidField instanceof HTMLElement) {
+          firstInvalidField.focus();
+        }
+      }, 0);
+
       return;
     }
 
@@ -115,9 +123,9 @@ const ContactPage = () => {
     <Layout>
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(c.label)}</p>
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">{t(c.title)}</h1>
-          <p className="text-muted-foreground max-w-xl mx-auto">{t(c.subtitle)}</p>
+          <p className="type-caption mb-4">{t(c.label)}</p>
+          <h1 className="type-h1 mb-4">{t(c.title)}</h1>
+          <p className="type-body mx-auto max-w-xl">{t(c.subtitle)}</p>
         </div>
       </section>
 
@@ -126,7 +134,7 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div>
-                <h2 className="font-serif text-2xl md:text-[2rem]">{t(c.formTitle)}</h2>
+                <h2 className="font-serif text-[2rem] leading-tight tracking-[-0.02em]">{t(c.formTitle)}</h2>
               </div>
               <div
                 className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0 pointer-events-none"
@@ -144,7 +152,7 @@ const ContactPage = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="contact-name" className="text-sm font-medium mb-2 block">{t(c.name)} *</label>
+                  <label htmlFor="contact-name" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.name)} *</label>
                   <Input
                     id="contact-name"
                     name="name"
@@ -155,42 +163,42 @@ const ContactPage = () => {
                     aria-describedby={errors.name ? "contact-name-error" : undefined}
                     onChange={() => clearFieldError("name")}
                   />
-                  {errors.name && <p id="contact-name-error" className="mt-2 text-sm text-destructive">{errors.name}</p>}
+                  {errors.name && <p id="contact-name-error" className="type-body-sm mt-2 text-destructive">{errors.name}</p>}
                 </div>
                 <div>
-                  <label htmlFor="contact-email" className="text-sm font-medium mb-2 block">{t(c.email)} *</label>
+                  <label htmlFor="contact-email" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.email)} *</label>
                   <Input
                     id="contact-email"
                     name="email"
                     type="email"
-                    placeholder="tu@email.com"
+                    placeholder="tu@email.com..."
                     required
                     maxLength={255}
                     aria-invalid={Boolean(errors.email)}
                     aria-describedby={errors.email ? "contact-email-error" : undefined}
                     onChange={() => clearFieldError("email")}
                   />
-                  {errors.email && <p id="contact-email-error" className="mt-2 text-sm text-destructive">{errors.email}</p>}
+                  {errors.email && <p id="contact-email-error" className="type-body-sm mt-2 text-destructive">{errors.email}</p>}
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="contact-phone" className="text-sm font-medium mb-2 block">{t(c.phone)} *</label>
+                  <label htmlFor="contact-phone" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.phone)} *</label>
                   <Input
                     id="contact-phone"
                     name="phone"
                     type="tel"
-                    placeholder="+1 234 567 890"
+                    placeholder="+1 234 567 890..."
                     required
                     maxLength={20}
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={errors.phone ? "contact-phone-error" : undefined}
                     onChange={() => clearFieldError("phone")}
                   />
-                  {errors.phone && <p id="contact-phone-error" className="mt-2 text-sm text-destructive">{errors.phone}</p>}
+                  {errors.phone && <p id="contact-phone-error" className="type-body-sm mt-2 text-destructive">{errors.phone}</p>}
                 </div>
                 <div>
-                  <label htmlFor="contact-country" className="text-sm font-medium mb-2 block">{t(c.country)} *</label>
+                  <label htmlFor="contact-country" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.country)} *</label>
                   <Input
                     id="contact-country"
                     name="country"
@@ -201,11 +209,11 @@ const ContactPage = () => {
                     aria-describedby={errors.country ? "contact-country-error" : undefined}
                     onChange={() => clearFieldError("country")}
                   />
-                  {errors.country && <p id="contact-country-error" className="mt-2 text-sm text-destructive">{errors.country}</p>}
+                  {errors.country && <p id="contact-country-error" className="type-body-sm mt-2 text-destructive">{errors.country}</p>}
                 </div>
               </div>
               <div>
-                <label htmlFor="contact-interest" className="text-sm font-medium mb-2 block">{t(c.interest)} *</label>
+                <label htmlFor="contact-interest" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.interest)} *</label>
                 <Select
                   value={interest}
                   onValueChange={(value) => {
@@ -228,10 +236,10 @@ const ContactPage = () => {
                     <SelectItem value="other">{t(c.interestOptions.other)}</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.interest && <p id="contact-interest-error" className="mt-2 text-sm text-destructive">{errors.interest}</p>}
+                {errors.interest && <p id="contact-interest-error" className="type-body-sm mt-2 text-destructive">{errors.interest}</p>}
               </div>
               <div>
-                <label htmlFor="contact-message" className="text-sm font-medium mb-2 block">{t(c.message)}</label>
+                <label htmlFor="contact-message" className="type-body-sm mb-2 block font-medium text-foreground">{t(c.message)}</label>
                 <Textarea
                   id="contact-message"
                   name="message"
@@ -246,15 +254,15 @@ const ContactPage = () => {
 
             <div className="space-y-10">
               <div>
-                <h2 className="font-serif text-2xl md:text-[2rem] mb-10">{t(c.infoTitle)}</h2>
+                <h2 className="mb-10 font-serif text-[2rem] leading-tight tracking-[-0.02em]">{t(c.infoTitle)}</h2>
                 <div className="space-y-8">
                   <div className="flex items-start gap-4">
                     <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border/80 bg-background text-primary shadow-sm">
                       <Mail size={18} />
                     </span>
                     <div className="min-w-0 pt-0.5">
-                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Email</p>
-                      <a href={`mailto:${siteConfig.contact.email}`} className="mt-2 block text-base md:text-lg leading-snug text-foreground transition-colors hover:text-primary">
+                      <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">Email</p>
+                      <a href={`mailto:${siteConfig.contact.email}`} className="type-body mt-2 block leading-snug text-foreground transition-colors hover:text-primary">
                         {siteConfig.contact.email}
                       </a>
                     </div>
@@ -265,8 +273,8 @@ const ContactPage = () => {
                       <Phone size={18} />
                     </span>
                     <div className="min-w-0 pt-0.5">
-                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">Phone</p>
-                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="mt-2 block text-base md:text-lg leading-snug text-foreground transition-colors hover:text-primary">
+                      <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">Phone</p>
+                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="type-body mt-2 block leading-snug text-foreground transition-colors hover:text-primary">
                         {siteConfig.contact.phoneDisplay}
                       </a>
                     </div>
@@ -277,8 +285,8 @@ const ContactPage = () => {
                       <MapPin size={18} />
                     </span>
                     <div className="min-w-0 flex-1 pt-0.5">
-                      <p className="text-sm leading-none tracking-[0.01em] text-muted-foreground">{t(c.locationLabel)}</p>
-                      <p className="mt-2 text-base md:text-lg leading-snug text-foreground">
+                      <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">{t(c.locationLabel)}</p>
+                      <p className="type-body mt-2 leading-snug text-foreground">
                         {siteConfig.contact.locationFull}
                       </p>
                       <button
@@ -286,7 +294,7 @@ const ContactPage = () => {
                         onClick={() => setIsLocationOpen((prev) => !prev)}
                         aria-expanded={isLocationOpen}
                         aria-controls="contact-location-map"
-                        className="mt-3 inline-flex items-center gap-1.5 text-[15px] font-medium text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline"
+                        className="type-body-sm mt-3 inline-flex items-center gap-1.5 font-medium text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline"
                       >
                         {isLocationOpen ? t(c.locationToggleHide) : t(c.locationToggleShow)}
                       </button>
@@ -298,7 +306,7 @@ const ContactPage = () => {
                               href={siteConfig.contact.locationMapsHref}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80"
+                              className="type-body-sm inline-flex items-center gap-1.5 font-medium text-primary hover:text-primary/80"
                             >
                               {t(c.locationMapOpen)}
                               <ExternalLink size={14} />
@@ -318,8 +326,8 @@ const ContactPage = () => {
                 </div>
               </div>
               <div className="rounded-[28px] bg-card/80 p-8 ring-1 ring-border/50">
-                <h3 className="font-serif text-lg mb-3">{t(c.whatsappTitle)}</h3>
-                <p className="text-sm text-muted-foreground mb-4">{t(c.whatsappDesc)}</p>
+                <h3 className="type-h3 mb-3 text-primary">{t(c.whatsappTitle)}</h3>
+                <p className="type-body-sm mb-4 text-muted-foreground">{t(c.whatsappDesc)}</p>
                 <Button variant="whatsapp" asChild>
                   <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(c.whatsappButton)}</a>
                 </Button>
@@ -333,4 +341,9 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+
+
+
+
+
 

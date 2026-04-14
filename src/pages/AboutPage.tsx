@@ -26,10 +26,10 @@ const AboutPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-xs tracking-[0.3em] uppercase text-accent mb-4">{t(a.label)}</p>
-              <h1 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">{t(a.title)}</h1>
-              <p className="text-muted-foreground leading-relaxed mb-6">{t(a.desc1)}</p>
-              <p className="text-muted-foreground leading-relaxed mb-8">{t(a.desc2)}</p>
+              <p className="type-caption mb-4">{t(a.label)}</p>
+              <h1 className="type-h1 mb-6">{t(a.title)}</h1>
+              <p className="type-body mb-6">{t(a.desc1)}</p>
+              <p className="type-body mb-8">{t(a.desc2)}</p>
               <Button variant="default" asChild>
                 <Link to={getLocalizedPath("contact", language)}>{t(a.cta)} <ArrowRight size={16} /></Link>
               </Button>
@@ -41,13 +41,13 @@ const AboutPage = () => {
 
       <AnimatedSection className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="text-3xl font-serif text-center mb-16">{t(a.whyTitle)}</h2>
+          <h2 className="type-h2 mb-16 text-center">{t(a.whyTitle)}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((item, i) => (
               <AnimatedSection as="div" key={t(item.title)} delay={i * 100} className="text-center p-6">
                 <item.icon size={32} className="text-primary mx-auto mb-4" />
-                <h3 className="font-serif text-lg mb-3">{t(item.title)}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t(item.desc)}</p>
+                <h3 className="type-h3 mb-3 text-primary">{t(item.title)}</h3>
+                <p className="type-body-sm text-muted-foreground">{t(item.desc)}</p>
               </AnimatedSection>
             ))}
           </div>
@@ -58,3 +58,7 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
+
+
+
+

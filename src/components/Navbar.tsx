@@ -70,7 +70,7 @@ const Navbar = () => {
                 <Link
                   key={link.routeKey}
                   to={href}
-                  className={`whitespace-nowrap text-[0.8rem] tracking-[0.13em] uppercase transition-colors hover:text-primary ${
+                  className={`type-nav whitespace-nowrap transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                     activeRouteKey === link.routeKey
                       ? "font-semibold text-primary"
                       : "text-muted-foreground"
@@ -82,13 +82,13 @@ const Navbar = () => {
             })}
             <button
               onClick={handleToggleLanguage}
-              className="ml-1 flex items-center gap-1 text-[0.8rem] tracking-[0.11em] uppercase text-muted-foreground transition-colors hover:text-primary"
+              className="type-nav ml-1 flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Toggle language"
             >
               <Globe size={14} />
               {language.toUpperCase()}
             </button>
-            <Button size="sm" variant="hero" className="ml-2 px-5 text-[0.8rem] tracking-[0.05em]" asChild>
+            <Button size="sm" variant="hero" className="ml-2 px-5 text-[0.8rem] tracking-[0.08em]" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
                 {t(navTranslations.cta)}
               </a>
@@ -98,7 +98,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={handleToggleLanguage}
-              className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary"
+              className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Toggle language"
             >
               <Globe size={16} />
@@ -106,7 +106,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground"
+              className="text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -145,5 +145,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 

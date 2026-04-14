@@ -33,20 +33,20 @@ const Footer = () => {
                 className="mb-6 h-auto w-[150px] object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] group-focus-within:scale-[1.04] group-focus-within:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] md:w-[205px]"
               />
             </div>
-            <p className="mb-6 text-xs uppercase tracking-[0.2em] text-primary-foreground/72">
+            <p className="type-body-sm mb-6 text-primary-foreground">
               {t(ft.subtitle)}
             </p>
-            <p className="text-sm leading-relaxed text-primary-foreground/82">{t(ft.description)}</p>
+            <p className="type-body-sm text-primary-foreground">{t(ft.description)}</p>
           </div>
 
           <div>
-            <h4 className="mb-4 font-serif text-lg">{t(ft.navigation)}</h4>
+            <h4 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.navigation)}</h4>
             <div className="flex flex-col gap-2">
               {links.map((link) => (
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
-                  className="text-sm text-primary-foreground/72 transition-colors hover:text-primary-foreground"
+                  className="type-body-sm text-primary-foreground transition-colors hover:text-primary-foreground"
                 >
                   {link.label}
                 </Link>
@@ -55,8 +55,8 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="mb-4 font-serif text-lg">{t(ft.contact)}</h4>
-            <div className="flex flex-col gap-3 text-sm text-primary-foreground/82">
+            <h4 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.contact)}</h4>
+            <div className="flex flex-col gap-3 text-primary-foreground">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
                 className="transition-colors hover:text-primary-foreground"
@@ -75,7 +75,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-primary-foreground/10 pt-8 text-center">
-          <p className="text-xs text-primary-foreground/55">
+          <p className="type-body-sm text-primary-foreground">
             {"\u00a9"} {new Date().getFullYear()} Iveth Coll {"\u2014"} International Real Estate Advisor. {t(ft.rights)}
           </p>
         </div>
@@ -85,3 +85,8 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
+

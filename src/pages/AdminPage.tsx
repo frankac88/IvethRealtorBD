@@ -245,7 +245,7 @@ const AdminPage = () => {
       <header className="sticky top-0 z-10 border-b bg-background">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div>
-            <h1 className="text-xl font-serif">Panel de administraci\u00F3n</h1>
+            <h2 className="text-xl font-serif">Panel de administraci\u00F3n</h2>
             <p className="text-sm text-muted-foreground">Gestiona leads y proyectos desde un solo lugar</p>
           </div>
 
@@ -584,3 +584,4 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+

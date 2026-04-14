@@ -13,18 +13,18 @@ const ROUTER_FUTURE_FLAGS = {
   v7_relativeSplatPath: true,
 } as const;
 
-const Index = lazy(() => import("./pages/Index.tsx"));
-const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
-const TeamPage = lazy(() => import("./pages/TeamPage.tsx"));
-const ProjectsPage = lazy(() => import("./pages/ProjectsPage.tsx"));
-const InvestPage = lazy(() => import("./pages/InvestPage.tsx"));
-const FinancingPage = lazy(() => import("./pages/FinancingPage.tsx"));
-const GuidesPage = lazy(() => import("./pages/GuidesPage.tsx"));
-const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage.tsx"));
-const ContactPage = lazy(() => import("./pages/ContactPage.tsx"));
-const LoginPage = lazy(() => import("./pages/LoginPage.tsx"));
-const AdminPage = lazy(() => import("./pages/AdminPage.tsx"));
-const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const Index = lazy(() => import("./pages/Index"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const TeamPage = lazy(() => import("./pages/TeamPage"));
+const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
+const InvestPage = lazy(() => import("./pages/InvestPage"));
+const FinancingPage = lazy(() => import("./pages/FinancingPage"));
+const GuidesPage = lazy(() => import("./pages/GuidesPage"));
+const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -96,3 +96,4 @@ const App = () => (
 );
 
 export default App;
+

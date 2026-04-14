@@ -35,9 +35,9 @@ const InvestPage = () => {
         <div className="absolute inset-0 bg-foreground/70" />
 
         <div className="container relative mx-auto px-4 text-center lg:px-8">
-          <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.label)}</p>
-          <h1 className="mb-6 text-4xl font-serif font-medium leading-tight md:text-6xl lg:text-7xl">{t(inv.title)}</h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg font-light leading-relaxed text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)] md:text-xl">{t(inv.subtitle)}</p>
+          <p className="type-h3 mb-4 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.label)}</p>
+          <h1 className="type-h1 mb-6 text-white">{t(inv.title)}</h1>
+          <p className="type-body mx-auto mb-10 max-w-2xl font-light text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.subtitle)}</p>
         </div>
       </section>
 
@@ -48,8 +48,8 @@ const InvestPage = () => {
               <div key={t(section.title)} className="flex gap-6">
                 <section.icon size={32} className="mt-1 shrink-0 text-primary" />
                 <div>
-                  <h2 className="mb-3 font-serif text-2xl">{t(section.title)}</h2>
-                  <p className="leading-relaxed text-muted-foreground">{t(section.content)}</p>
+                  <h2 className="mb-3 font-serif text-[2rem] leading-tight tracking-[-0.02em]">{t(section.title)}</h2>
+                  <p className="type-body text-muted-foreground">{t(section.content)}</p>
                 </div>
               </div>
             ))}
@@ -66,3 +66,4 @@ const InvestPage = () => {
 };
 
 export default InvestPage;
+

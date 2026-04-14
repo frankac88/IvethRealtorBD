@@ -1,4 +1,4 @@
-﻿import { ArrowRight, BookOpen, Building2, ExternalLink, Landmark, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Building2, ExternalLink, Landmark, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import guidesHeroMiami from "@/assets/guides-hero-miami.webp";
@@ -45,7 +45,7 @@ const GuidesPage = () => {
             alt=""
             aria-hidden="true"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             className="h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,31,46,0.84)_0%,rgba(26,31,46,0.7)_38%,rgba(26,31,46,0.38)_65%,rgba(26,31,46,0.56)_100%)]" />
@@ -55,11 +55,11 @@ const GuidesPage = () => {
         <div className="container relative mx-auto flex min-h-[72svh] items-end px-4 py-20 lg:px-8 lg:py-24">
           <div className="w-full">
             <AnimatedSection as="div" className="w-full max-w-4xl">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.32em] text-white">{t(g.label)}</p>
-              <h1 className="w-full text-4xl font-serif leading-tight text-white md:text-5xl lg:text-6xl">
+              <p className="type-h3 mb-4 text-white">{t(g.label)}</p>
+              <h1 className="type-h1 w-full text-white">
                 {t(g.title)}
               </h1>
-              <p className="mt-6 w-full max-w-3xl text-base leading-8 text-white/95 md:text-lg [text-shadow:0_2px_18px_rgba(26,31,46,0.42)]">
+              <p className="type-body mt-6 w-full max-w-3xl text-white/95 [text-shadow:0_2px_18px_rgba(26,31,46,0.42)]">
                 {t(g.subtitle)}
               </p>
             </AnimatedSection>
@@ -71,9 +71,9 @@ const GuidesPage = () => {
             >
               <div className="flex flex-col gap-5 p-6 md:gap-6 md:p-8">
                 <div className="border-l-2 border-accent pl-4 md:pl-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white">{t(g.editorialNoteTitle)}</p>
+                  <p className="type-caption text-white">{t(g.editorialNoteTitle)}</p>
                 </div>
-                <p className="max-w-5xl text-sm leading-7 text-white md:text-[15px] [text-shadow:0_2px_18px_rgba(26,31,46,0.4)]">{t(g.editorialNoteBody)}</p>
+                <p className="type-body-sm max-w-5xl text-white [text-shadow:0_2px_18px_rgba(26,31,46,0.4)]">{t(g.editorialNoteBody)}</p>
               </div>
             </AnimatedSection>
           </div>
@@ -83,7 +83,7 @@ const GuidesPage = () => {
       <section className="border-y border-border/70 bg-background py-8">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <p className="text-xs uppercase tracking-[0.26em] text-foreground/60">{t(g.quickNavLabel)}</p>
+            <p className="type-caption text-foreground/60">{t(g.quickNavLabel)}</p>
             <div className="flex flex-wrap gap-3">
               {guideOrder.map((guideKey) => (
                 <a
@@ -119,12 +119,12 @@ const GuidesPage = () => {
                   <div className="grid lg:grid-cols-[minmax(280px,0.8fr)_minmax(0,1.2fr)]">
                     <div className={`flex min-h-[260px] flex-col justify-between bg-gradient-to-br ${visual.accentClassName} p-8 text-white lg:p-10`}>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.28em] text-white/70">{t(guide.eyebrow)}</p>
+                        <p className="type-caption text-white/70">{t(guide.eyebrow)}</p>
                         <div className="mt-8 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10">
                           <Icon className="h-6 w-6" />
                         </div>
-                        <h2 className="mt-8 max-w-sm font-serif text-3xl leading-tight">{t(guide.title)}</h2>
-                        <p className="mt-4 max-w-md text-sm leading-7 text-white/80">{t(guide.summary)}</p>
+                        <h2 className="mt-8 max-w-sm font-serif text-[2.25rem] leading-[1.05] tracking-[-0.03em]">{t(guide.title)}</h2>
+                        <p className="type-body-sm mt-4 max-w-md text-white/80">{t(guide.summary)}</p>
                       </div>
 
                       <div className="mt-8">
@@ -137,10 +137,10 @@ const GuidesPage = () => {
                     <div className="p-8 lg:p-10">
                       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(260px,0.7fr)]">
                         <div>
-                          <p className="text-xs uppercase tracking-[0.24em] text-accent">{t(g.detailLabel)}</p>
+                          <p className="type-caption text-accent">{t(g.detailLabel)}</p>
                           <ul className="mt-5 space-y-4">
                             {guide.bullets[language].map((bullet) => (
-                              <li key={bullet} className="flex gap-3 text-sm leading-7 text-muted-foreground">
+                              <li key={bullet} className="type-body-sm flex gap-3 text-muted-foreground">
                                 <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
                                 <span>{bullet}</span>
                               </li>
@@ -149,7 +149,7 @@ const GuidesPage = () => {
                         </div>
 
                         <div className="border border-border/70 bg-card/70 p-6">
-                          <p className="text-xs uppercase tracking-[0.24em] text-white">{t(g.resourceLabel)}</p>
+                          <p className="type-caption text-foreground/72">{t(g.resourceLabel)}</p>
                           <div className="mt-5 flex flex-col gap-3">
                             {guide.resources.map((resource) => (
                               <a
@@ -181,9 +181,9 @@ const GuidesPage = () => {
             <div className="relative overflow-hidden rounded-[36px] bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.38)_100%)] px-8 py-14 text-center shadow-[0_30px_90px_rgba(26,31,46,0.08)] ring-1 ring-border/50 backdrop-blur-md md:px-16 md:py-20">
               <div className="absolute inset-x-0 top-0 mx-auto h-px w-40 bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
               <div className="mx-auto max-w-3xl">
-                <p className="text-[11px] font-medium uppercase tracking-[0.42em] text-accent/90">{t(g.label)}</p>
-                <h2 className="mx-auto mt-6 max-w-2xl font-serif text-3xl leading-[1.08] md:text-4xl">{t(g.finalTitle)}</h2>
-                <p className="mx-auto mt-6 max-w-xl text-[15px] leading-8 text-muted-foreground">{t(g.finalBody)}</p>
+                <p className="type-caption text-accent/90">{t(g.label)}</p>
+                <h2 className="type-h2 mx-auto mt-6 max-w-2xl">{t(g.finalTitle)}</h2>
+                <p className="type-body mx-auto mt-6 max-w-xl">{t(g.finalBody)}</p>
               </div>
               <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
                 <Button variant="hero" size="lg" asChild className="min-w-[240px] shadow-[0_12px_30px_rgba(42,123,136,0.18)] hover:shadow-[0_16px_36px_rgba(42,123,136,0.24)]">
@@ -204,6 +204,8 @@ const GuidesPage = () => {
 };
 
 export default GuidesPage;
+
+
 
 
 
