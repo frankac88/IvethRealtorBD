@@ -7,7 +7,7 @@ import { getLocalizedPath } from "@/i18n/routes";
 import { investTranslations } from "@/i18n/translations/invest";
 import investHeroFlorida from "@/assets/invest-hero-florida.jpg";
 
-const HERO_IMAGE_POSITION_Y = "58%";
+const HERO_IMAGE_POSITION_Y = "40%";
 
 const InvestPage = () => {
   const { language } = useLanguage();
@@ -25,7 +25,7 @@ const InvestPage = () => {
 
   return (
     <Layout>
-      <section className="relative isolate overflow-hidden bg-muted py-20 text-primary-foreground md:py-24">
+      <section className="relative isolate overflow-hidden bg-muted text-primary-foreground">
         <img
           src={investHeroFlorida}
           alt="Miami waterfront skyline at golden hour"
@@ -34,10 +34,12 @@ const InvestPage = () => {
         />
         <div className="absolute inset-0 bg-foreground/70" />
 
-        <div className="container relative mx-auto px-4 text-center lg:px-8">
-          <p className="type-h3 mb-4 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.label)}</p>
-          <h1 className="type-h1 mb-6 text-white">{t(inv.title)}</h1>
-          <p className="type-body mx-auto mb-10 max-w-2xl font-light text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.subtitle)}</p>
+        <div className="container relative mx-auto flex min-h-[60svh] items-end px-4 py-20 text-center lg:px-8 lg:py-24">
+          <div className="w-full">
+            <p className="type-h3 mb-4 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.label)}</p>
+            <h1 className="type-h1 mb-6 text-white">{t(inv.title)}</h1>
+            <p className="type-body mx-auto mb-10 max-w-2xl font-light text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(inv.subtitle)}</p>
+          </div>
         </div>
       </section>
 
@@ -66,4 +68,3 @@ const InvestPage = () => {
 };
 
 export default InvestPage;
-

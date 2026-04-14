@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="flex h-32 items-center justify-between md:h-40">
           <Link
             to={getLocalizedPath("home", language)}
-            className="group relative flex h-full w-[220px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[300px]"
+            className="group relative flex h-full w-[220px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[260px] xl:w-[290px]"
             aria-label="Home"
           >
             <span
@@ -62,37 +62,42 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="hidden items-center gap-6 lg:flex">
-            {navLinks.map((link) => {
-              const href = getLocalizedPath(link.routeKey, language);
+          <div className="hidden flex-1 items-center justify-end lg:flex">
+            <div className="flex items-center gap-2 xl:gap-3">
+              {navLinks.map((link) => {
+                const href = getLocalizedPath(link.routeKey, language);
 
-              return (
-                <Link
-                  key={link.routeKey}
-                  to={href}
-                  className={`type-nav whitespace-nowrap rounded-full px-2.5 py-1.5 transition-colors hover:bg-primary/6 hover:text-primary focus-visible:bg-primary/6 focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                    activeRouteKey === link.routeKey
-                      ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {t(navTranslations[link.key])}
-                </Link>
-              );
-            })}
-            <button
-              onClick={handleToggleLanguage}
-              className="type-nav ml-1 flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              aria-label="Toggle language"
-            >
-              <Globe size={14} />
-              {language.toUpperCase()}
-            </button>
-            <Button size="sm" variant="hero" className="ml-2 px-5 text-[0.8rem] tracking-[0.08em]" asChild>
-              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
-                {t(navTranslations.cta)}
-              </a>
-            </Button>
+                return (
+                  <Link
+                    key={link.routeKey}
+                    to={href}
+                    className={`type-nav whitespace-nowrap rounded-full px-2 py-1.5 transition-colors hover:bg-primary/6 hover:text-primary focus-visible:bg-primary/6 focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background xl:px-2.5 ${
+                      activeRouteKey === link.routeKey
+                        ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {t(navTranslations[link.key])}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="ml-10 flex items-center gap-3 xl:ml-12 xl:gap-4">
+              <button
+                onClick={handleToggleLanguage}
+                className="type-nav flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="Toggle language"
+              >
+                <Globe size={14} />
+                {language.toUpperCase()}
+              </button>
+              <Button size="sm" variant="hero" className="px-4 text-[0.8rem] tracking-[0.08em] xl:px-5" asChild>
+                <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+                  {t(navTranslations.cta)}
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="flex items-center gap-3 lg:hidden">

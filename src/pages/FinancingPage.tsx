@@ -1,9 +1,11 @@
+import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import finHeroImage from "@/assets/fin-hero.webp";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { financingTranslations } from "@/i18n/translations/financing";
+import { Link } from "react-router-dom";
 
 const FinancingPage = () => {
   const { language } = useLanguage();
@@ -12,11 +14,30 @@ const FinancingPage = () => {
 
   return (
     <Layout>
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <p className="type-caption mb-4">{t(f.label)}</p>
-          <h1 className="type-h1 mb-4">{t(f.title)}</h1>
-          <p className="type-body mx-auto max-w-xl">{t(f.subtitle)}</p>
+      <section className="relative isolate overflow-hidden bg-foreground">
+        <div className="absolute inset-0">
+          <img
+            src={finHeroImage}
+            alt=""
+            aria-hidden="true"
+            loading="eager"
+            fetchpriority="high"
+            className="h-full w-full object-cover object-[center_80%]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,31,46,0.84)_0%,rgba(26,31,46,0.7)_38%,rgba(26,31,46,0.42)_65%,rgba(26,31,46,0.56)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(155,107,138,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(42,123,136,0.24),transparent_34%)]" />
+        </div>
+
+        <div className="container relative mx-auto flex min-h-[60svh] items-end px-4 py-20 lg:px-8 lg:py-24">
+          <div className="w-full">
+            <AnimatedSection as="div" className="w-full max-w-4xl text-white">
+              <p className="type-h3 mb-4 text-white">{t(f.label)}</p>
+              <h1 className="type-h1 w-full text-white">{t(f.title)}</h1>
+              <p className="type-body mt-6 w-full max-w-3xl text-white/95 [text-shadow:0_2px_18px_rgba(26,31,46,0.42)]">
+                {t(f.subtitle)}
+              </p>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
@@ -63,7 +84,5 @@ const FinancingPage = () => {
 };
 
 export default FinancingPage;
-
-
 
 
