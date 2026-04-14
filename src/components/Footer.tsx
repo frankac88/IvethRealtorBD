@@ -26,11 +26,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div>
-            <img
-              src={brandAssets.footerLogo}
-              alt="Iveth Coll logo"
-              className="mb-6 h-auto w-52 object-contain md:w-60"
-            />
+            <div className="group inline-block">
+              <img
+                src={brandAssets.footerLogo}
+                alt="Iveth Coll logo"
+                className="mb-6 h-auto w-[150px] object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] group-focus-within:scale-[1.04] group-focus-within:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] md:w-[205px]"
+              />
+            </div>
             <p className="mb-6 text-xs uppercase tracking-[0.2em] text-primary-foreground/72">
               {t(ft.subtitle)}
             </p>
