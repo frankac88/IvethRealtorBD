@@ -45,10 +45,10 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-32 items-center justify-between overflow-hidden md:h-40">
+        <div className="flex h-32 items-center justify-between md:h-40">
           <Link
             to={getLocalizedPath("home", language)}
-            className="group relative flex h-full w-[220px] items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[300px]"
+            className="group relative flex h-full w-[220px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[300px]"
             aria-label="Home"
           >
             <span
@@ -58,7 +58,7 @@ const Navbar = () => {
             <img
               src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block h-auto w-full object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)]"
+              className="relative block h-auto w-full -translate-x-[2.75rem] object-contain transition duration-300 ease-out group-hover:-translate-x-[2.75rem] group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:-translate-x-[2.75rem] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] md:-translate-x-[3.25rem] md:group-hover:-translate-x-[3.25rem] md:group-focus-visible:-translate-x-[3.25rem]"
             />
           </Link>
 
@@ -70,7 +70,7 @@ const Navbar = () => {
                 <Link
                   key={link.routeKey}
                   to={href}
-                  className={`text-xs tracking-widest uppercase transition-colors hover:text-primary ${
+                  className={`whitespace-nowrap text-[0.8rem] tracking-[0.13em] uppercase transition-colors hover:text-primary ${
                     activeRouteKey === link.routeKey
                       ? "font-semibold text-primary"
                       : "text-muted-foreground"
@@ -82,13 +82,13 @@ const Navbar = () => {
             })}
             <button
               onClick={handleToggleLanguage}
-              className="ml-1 flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary"
+              className="ml-1 flex items-center gap-1 text-[0.8rem] tracking-[0.11em] uppercase text-muted-foreground transition-colors hover:text-primary"
               aria-label="Toggle language"
             >
               <Globe size={14} />
               {language.toUpperCase()}
             </button>
-            <Button size="sm" variant="hero" className="ml-2" asChild>
+            <Button size="sm" variant="hero" className="ml-2 px-5 text-[0.8rem] tracking-[0.05em]" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
                 {t(navTranslations.cta)}
               </a>

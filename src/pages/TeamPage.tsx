@@ -18,6 +18,7 @@ import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { teamTranslations } from "@/i18n/translations/team";
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 const TeamPage = () => {
   const { language } = useLanguage();
@@ -54,7 +55,8 @@ const TeamPage = () => {
       logo: homeFinancingExpertsLogo,
       badge: tm.hfeBadge,
       description: tm.hfeDesc,
-      logoClassName: "h-24 sm:h-28 w-auto rounded-md",
+      logoClassName: "h-28 sm:h-32 w-auto rounded-md object-contain",
+      titleClassName: "mt-6 md:mt-8",
       alt: "Logo de Home Financing Experts",
     },
   ] as const;
@@ -120,9 +122,9 @@ const TeamPage = () => {
                       loading="lazy"
                     />
                   </div>
-                  <h3 className="mt-6 font-serif text-2xl text-primary">{company.name}</h3>
+                  <h3 className={cn("mt-6 min-h-[2.75rem] font-serif text-2xl leading-tight text-primary", company.titleClassName)}>{company.name}</h3>
                   <p
-                    className="mt-4 text-sm leading-7 text-muted-foreground"
+                    className="mt-1 text-sm leading-7 text-muted-foreground"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,
