@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { brandAssets } from "@/config/brandAssets";
 import { siteConfig } from "@/config/site";
@@ -19,6 +20,13 @@ const Footer = () => {
     { label: t(ft.navLinks.financing), routeKey: "financing" as LocalizedRouteKey },
     { label: t(ft.navLinks.guides), routeKey: "guides" as LocalizedRouteKey },
     { label: t(ft.navLinks.contact), routeKey: "contact" as LocalizedRouteKey },
+  ];
+
+  const socialLinks = [
+    { label: "Facebook", href: siteConfig.social.facebook, icon: Facebook },
+    { label: "Instagram", href: siteConfig.social.instagram, icon: Instagram },
+    { label: "YouTube", href: siteConfig.social.youtube, icon: Youtube },
+    { label: "LinkedIn", href: siteConfig.social.linkedin, icon: Linkedin },
   ];
 
   return (
@@ -70,6 +78,24 @@ const Footer = () => {
                 {siteConfig.contact.phoneDisplay}
               </a>
               <p>{siteConfig.contact.location}</p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                {socialLinks.map((socialLink) => {
+                  const Icon = socialLink.icon;
+
+                  return (
+                    <a
+                      key={socialLink.label}
+                      href={socialLink.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={socialLink.label}
+                      className="transition-opacity hover:opacity-80"
+                    >
+                      <Icon size={20} />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -85,8 +111,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
-
-
-
