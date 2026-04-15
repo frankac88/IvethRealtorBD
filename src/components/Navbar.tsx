@@ -62,7 +62,7 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="hidden flex-1 items-center justify-end lg:flex">
+          <div className="hidden flex-1 items-center justify-end xl:flex">
             <div className="flex items-center gap-2 xl:gap-3">
               {navLinks.map((link) => {
                 const href = getLocalizedPath(link.routeKey, language);
@@ -100,7 +100,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 lg:hidden">
+          <div className="flex items-center gap-3 xl:hidden">
             <button
               onClick={handleToggleLanguage}
               className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -111,47 +111,67 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className={`flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                isOpen ? "bg-primary/10 text-primary" : "bg-transparent"
+              }`}
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <span className="relative block h-6 w-6">
+                <Menu
+                  size={24}
+                  className={`absolute inset-0 transition-all duration-300 ease-out ${
+                    isOpen ? "rotate-90 scale-75 opacity-0" : "rotate-0 scale-100 opacity-100"
+                  }`}
+                />
+                <X
+                  size={24}
+                  className={`absolute inset-0 transition-all duration-300 ease-out ${
+                    isOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-75 opacity-0"
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </div>
 
-        {isOpen && (
-          <div className="animate-fade-in pb-6 lg:hidden">
-            <div className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.routeKey}
-                  to={getLocalizedPath(link.routeKey, language)}
-                  onClick={() => setIsOpen(false)}
-                  className={`py-2 text-sm tracking-widest uppercase transition-colors hover:text-primary ${
-                    activeRouteKey === link.routeKey
-                      ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {t(navTranslations[link.key])}
-                </Link>
-              ))}
-              <Button variant="hero" className="mt-2" asChild>
-                <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
-                  {t(navTranslations.ctaMobile)}
-                </a>
-              </Button>
-            </div>
+        <div
+          id="mobile-navigation"
+          className={`overflow-hidden transition-[max-height,opacity,padding] duration-300 ease-out xl:hidden ${
+            isOpen ? "max-h-[800px] pb-6 opacity-100" : "max-h-0 pb-0 opacity-0"
+          }`}
+          aria-hidden={!isOpen}
+        >
+          <div
+            className={`flex flex-col gap-3 border-t border-border/60 pt-4 transition-transform duration-300 ease-out ${
+              isOpen ? "translate-y-0" : "-translate-y-2"
+            }`}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.routeKey}
+                to={getLocalizedPath(link.routeKey, language)}
+                onClick={() => setIsOpen(false)}
+                className={`rounded-full px-3 py-2 text-sm tracking-widest uppercase transition-all hover:bg-primary/6 hover:text-primary ${
+                  activeRouteKey === link.routeKey
+                    ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {t(navTranslations[link.key])}
+              </Link>
+            ))}
+            <Button variant="hero" className="mt-2" asChild>
+              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+                {t(navTranslations.ctaMobile)}
+              </a>
+            </Button>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
 };
 
 export default Navbar;
-
-
-
-
-
