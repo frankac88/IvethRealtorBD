@@ -35,7 +35,22 @@ const Index = () => {
     <Layout>
       {/* Hero */}
       <section className="relative flex h-[90vh] min-h-[600px] items-center justify-center overflow-hidden">
-        <img src={heroImg} alt="Miami luxury skyline" className="absolute inset-0 h-full w-full object-cover" width={1920} height={1080} />
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={heroImg}
+          aria-hidden="true"
+          onLoadedMetadata={(event) => {
+            event.currentTarget.defaultPlaybackRate = 0.5;
+            event.currentTarget.playbackRate = 0.5;
+          }}
+        >
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-foreground/50" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center text-primary-foreground">
           <p className="type-h3 mb-4 text-primary-foreground/80">{t(h.heroSubtitle)}</p>
@@ -126,7 +141,7 @@ const Index = () => {
                     <div className="relative mb-4 overflow-hidden rounded-sm">
                       <img
                         src={project.imageUrl}
-                        alt={`${project.title} � ${t(project.location)}`}
+                        alt={`${project.title} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${t(project.location)}`}
                         className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                         width={800}
