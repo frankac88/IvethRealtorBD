@@ -1,18 +1,24 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { TrendingUp, Shield, Building2, MapPin, DollarSign, BarChart3 } from "lucide-react";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
-import { getLocalizedPath } from "@/i18n/routes";
 import { investTranslations } from "@/i18n/translations/invest";
-import investHeroFlorida from "@/assets/invest-hero-florida.jpg";
+import investHeroFlorida from "@/assets/invest-hero-florida.webp";
+import { siteConfig } from "@/config/site";
 
-const HERO_IMAGE_POSITION_Y = "40%";
+const HERO_IMAGE_POSITION_Y = "5%";
+const investWhatsappMessage = {
+  es: "Hola Iveth, quiero recibir una asesoría personalizada para invertir en Florida. ¿Podemos conversar?",
+  en: "Hi Iveth, I would like to receive personalized guidance to invest in Florida. Can we talk?",
+} as const;
 
 const InvestPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const inv = investTranslations;
+  const whatsappHref = `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(
+    t(investWhatsappMessage),
+  )}`;
 
   const sections = [
     { icon: TrendingUp, ...inv.sections.why },
@@ -58,7 +64,9 @@ const InvestPage = () => {
           </div>
           <div className="mt-16 text-center">
             <Button variant="hero" size="lg" asChild>
-              <Link to={getLocalizedPath("contact", language)}>{t(inv.cta)}</Link>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                {t(inv.cta)}
+              </a>
             </Button>
           </div>
         </div>

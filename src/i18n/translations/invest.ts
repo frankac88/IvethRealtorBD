@@ -1,4 +1,4 @@
-﻿export const investTranslations = {
+export const investTranslations = {
   label: { es: "Gu\u00eda de Inversi\u00f3n", en: "Investment Guide" },
   title: { es: "Invertir en Florida", en: "Invest in Florida" },
   subtitle: {
@@ -16,8 +16,8 @@
     tax: {
       title: { es: "Beneficios Fiscales", en: "Tax Benefits" },
       content: {
-        es: "Florida no tiene impuesto estatal sobre la renta, lo que la convierte en un destino atractivo para inversionistas. Adem\u00e1s, la estructura fiscal permite optimizar los retornos de inversi\u00f3n mediante deducciones y beneficios espec\u00edficos para propietarios de bienes ra\u00edces.",
-        en: "Florida has no state income tax, making it an attractive destination for investors. Additionally, the tax structure allows optimizing investment returns through deductions and specific benefits for real estate owners.",
+        es: "Florida ofrece un entorno fiscal atractivo para inversionistas. Nuestro equipo, junto con profesionales especializados como Contadores Publicos Especializados, puede orientarte para estructurar tu inversión de forma eficiente según tu situación.",
+        en: "Florida offers an attractive tax environment for investors. Our team, together with specialized professionals such as Certified Public Accountants, can guide you in structuring your investment efficiently according to your situation.",
       },
     },
     precon: {
@@ -37,17 +37,20 @@
     roi: {
       title: { es: "Retorno de Inversi\u00f3n", en: "Return on Investment" },
       content: {
-        es: "El mercado de Miami ha mostrado una apreciaci\u00f3n promedio del 5-8% anual en los \u00faltimos a\u00f1os. Combinado con ingresos por renta, los inversionistas pueden esperar retornos totales de 8-15% anual dependiendo del tipo de propiedad y ubicaci\u00f3n.",
-        en: "The Miami market has shown an average appreciation of 5-8% annually in recent years. Combined with rental income, investors can expect total returns of 8-15% annually depending on property type and location.",
+        es: "Florida ha mostrado crecimiento sostenido en mercados clave. Dependiendo de la propiedad, ubicación y estrategia de renta, una inversión inmobiliaria puede generar apreciación de valor e ingresos a largo plazo.",
+        en: "Florida has shown sustained growth across key markets. Depending on the property, location, and rental strategy, a real estate investment can generate value appreciation and long-term income.",
       },
     },
     markets: {
       title: { es: "Mercados Clave", en: "Key Markets" },
       content: {
-        es: "Miami, Fort Lauderdale y Orlando son los tres mercados principales para inversionistas internacionales. Cada uno ofrece ventajas \u00fanicas: Miami por su conexi\u00f3n internacional, Fort Lauderdale por su crecimiento y Orlando por su mercado tur\u00edstico.",
-        en: "Miami, Fort Lauderdale, and Orlando are the three main markets for international investors. Each offers unique advantages: Miami for its international connection, Fort Lauderdale for its growth, and Orlando for its tourism market.",
+        es: "Miami, Fort Lauderdale y Orlando ofrecen oportunidades distintas según cada inversionista. Te ayudamos a elegir el mercado ideal de acuerdo con tu presupuesto, estrategia y objetivos. Te ayudamos a identificar la ciudad ideal según tu presupuesto, estrategia de renta y objetivos de crecimiento.",
+        en: "Miami, Fort Lauderdale, and Orlando offer different opportunities depending on each investor. We help you choose the ideal market based on your budget, strategy, and goals. We help you identify the ideal city according to your budget, rental strategy, and growth objectives.",
       },
     },
   },
   cta: { es: "Consulta Personalizada", en: "Personalized Consultation" },
 } as const;
+
+
+

@@ -128,6 +128,9 @@ const Index = () => {
               </AnimatedSection>
             ))}
           </div>
+          <p className="mx-auto mt-12 max-w-full text-center font-serif text-lg italic leading-relaxed text-primary whitespace-nowrap md:text-[1.5rem]">
+            &quot;{t(h.whyQuote)}&quot;
+          </p>
         </div>
       </AnimatedSection>
 
