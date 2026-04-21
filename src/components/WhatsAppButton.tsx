@@ -21,16 +21,18 @@ const WhatsAppButton = () => {
   )}`;
 
   return (
-    <a
-      href={whatsappHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[hsl(var(--whatsapp-green))] text-primary-foreground px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105"
-      aria-label={t(whatsappButtonTranslations.ariaLabel)}
-    >
-      <MessageCircle size={22} />
-      <span className="hidden sm:inline text-sm font-medium">{t(whatsappButtonTranslations.label)}</span>
-    </a>
+    <div className="pointer-events-none fixed bottom-6 left-0 z-50 flex w-[100dvw] max-w-[100dvw] justify-end px-6">
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="pointer-events-auto flex items-center gap-2 rounded-full bg-[hsl(var(--whatsapp-green))] px-5 py-3 text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+        aria-label={t(whatsappButtonTranslations.ariaLabel)}
+      >
+        <MessageCircle size={22} />
+        <span className="hidden text-sm font-medium sm:inline">{t(whatsappButtonTranslations.label)}</span>
+      </a>
+    </div>
   );
 };
 

@@ -43,12 +43,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+    <nav className="fixed top-0 left-0 z-50 w-[100dvw] max-w-[100dvw] border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-32 items-center justify-between md:h-40">
+        <div className="flex h-32 items-center justify-between gap-2 md:h-40">
           <Link
             to={getLocalizedPath("home", language)}
-            className="group relative flex h-full w-[220px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 md:w-[260px] xl:w-[290px]"
+            className="group relative flex h-full w-[148px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 min-[380px]:w-[168px] sm:w-[190px] md:w-[260px] xl:w-[290px]"
             aria-label="Home"
           >
             <span
@@ -58,7 +58,7 @@ const Navbar = () => {
             <img
               src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block h-auto w-full -translate-x-[2.75rem] object-contain transition duration-300 ease-out group-hover:-translate-x-[2.75rem] group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:-translate-x-[2.75rem] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] md:-translate-x-[3.25rem] md:group-hover:-translate-x-[3.25rem] md:group-focus-visible:-translate-x-[3.25rem]"
+              className="relative block h-auto w-full origin-left object-left object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)]"
             />
           </Link>
 
@@ -100,14 +100,14 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 xl:hidden">
+          <div className="flex shrink-0 items-center gap-1.5 xl:hidden">
             <button
               onClick={handleToggleLanguage}
               className="flex items-center gap-1 text-xs tracking-wider uppercase text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Toggle language"
             >
               <Globe size={16} />
-              {language.toUpperCase()}
+              <span className="hidden min-[360px]:inline">{language.toUpperCase()}</span>
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}

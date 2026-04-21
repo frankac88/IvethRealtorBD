@@ -159,7 +159,7 @@ const Index = () => {
                     <div className="relative mb-4 overflow-hidden rounded-sm">
                       <img
                         src={project.imageUrl}
-                        alt={`${project.title} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ${t(project.location)}`}
+                        alt={`${project.title} — ${t(project.location)}`}
                         className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                         width={800}

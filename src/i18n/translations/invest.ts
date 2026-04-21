@@ -16,7 +16,7 @@ export const investTranslations = {
     tax: {
       title: { es: "Beneficios Fiscales", en: "Tax Benefits" },
       content: {
-        es: "Florida ofrece un entorno fiscal atractivo para inversionistas. Nuestro equipo, junto con profesionales especializados como Contadores Publicos Especializados, puede orientarte para estructurar tu inversión de forma eficiente según tu situación.",
+        es: "Florida ofrece un entorno fiscal atractivo para inversionistas. Nuestro equipo, junto con profesionales especializados como Contadores Públicos Especializados, puede orientarte para estructurar tu inversión de forma eficiente según tu situación.",
         en: "Florida offers an attractive tax environment for investors. Our team, together with specialized professionals such as Certified Public Accountants, can guide you in structuring your investment efficiently according to your situation.",
       },
     },

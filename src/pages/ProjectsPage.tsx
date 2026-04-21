@@ -24,37 +24,37 @@ import { projectsTranslations } from "@/i18n/translations/projects";
 const labels = {
   search: { es: "Buscar", en: "Search" },
   searchPlaceholder: {
-    es: "Buscar por proyecto, zona o característica",
+    es: "Buscar por proyecto, zona o caracterÃ­stica",
     en: "Search by project, area, or feature",
   },
   filtersTitle: { es: "Filtra oportunidades", en: "Filter opportunities" },
   allLocations: { es: "Todas las ubicaciones", en: "All locations" },
   allTypes: { es: "Todos los tipos", en: "All types" },
   allPrices: { es: "Todos los precios", en: "All prices" },
-  location: { es: "Ubicación", en: "Location" },
+  location: { es: "UbicaciÃ³n", en: "Location" },
   type: { es: "Tipo", en: "Type" },
   price: { es: "Precio", en: "Price" },
   results: { es: "resultados", en: "results" },
   priceFrom: { es: "Precios desde", en: "Prices from" },
   residences: { es: "Residencias desde", en: "Residences from" },
-  baths: { es: "Baños", en: "Bathrooms" },
+  baths: { es: "BaÃ±os", en: "Bathrooms" },
   delivery: { es: "Entrega", en: "Delivery" },
   idealFor: { es: "Ideal para", en: "Ideal for" },
   parking: { es: "Parqueadero", en: "Parking" },
   hook: { es: "Destacado", en: "Highlight" },
-  notAvailable: { es: "—", en: "—" },
+  notAvailable: { es: "â€”", en: "â€”" },
   clearFilters: { es: "Limpiar filtros", en: "Clear filters" },
-  loading: { es: "Cargando proyectos…", en: "Loading projects…" },
+  loading: { es: "Cargando proyectosâ€¦", en: "Loading projectsâ€¦" },
   unavailable: {
     es: "No pudimos cargar los proyectos ahora mismo. Intenta nuevamente en unos minutos.",
     en: "We could not load projects right now. Please try again in a few minutes.",
   },
   emptyCatalog: {
-    es: "Aún no hay proyectos publicados en el catálogo.",
+    es: "AÃºn no hay proyectos publicados en el catÃ¡logo.",
     en: "There are no published projects in the catalog yet.",
   },
   noResults: {
-    es: "No encontramos proyectos con esos filtros. Prueba otra ubicación o estrategia.",
+    es: "No encontramos proyectos con esos filtros. Prueba otra ubicaciÃ³n o estrategia.",
     en: "No projects matched those filters. Try another location or strategy.",
   },
 } as const;
@@ -442,7 +442,7 @@ const ProjectsPage = () => {
                   <div className="relative overflow-hidden">
                     <img
                       src={project.imageUrl}
-                      alt={`${project.title} — ${t(project.location)}`}
+                      alt={`${project.title} â€” ${t(project.location)}`}
                       className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                       width={900}
