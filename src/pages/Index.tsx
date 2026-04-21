@@ -75,19 +75,34 @@ const Index = () => {
             <div>
               <p className="type-caption mb-4">{t(h.aboutLabel)}</p>
               <h2 className="type-h2 mb-6">{t(h.aboutTitle)}</h2>
-              <p className="type-body mb-6">{t(h.aboutDesc)}</p>
-              <div className="mb-8 grid grid-cols-2 gap-6">
-                {[
-                  { number: "100+", label: t(h.stats.transactions) },
-                  { number: "15+", label: t(h.stats.countries) },
-                  { number: "$50M+", label: t(h.stats.volume) },
-                  { number: "10+", label: t(h.stats.experience) },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <p className="font-serif text-2xl font-semibold text-primary md:text-[2rem]">{stat.number}</p>
-                    <p className="type-body-sm text-muted-foreground">{stat.label}</p>
+              <p className="type-body mb-6 text-justify">{t(h.aboutDesc)}</p>
+              <div className="mb-8">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+                  {[
+                    { number: "20+", label: t(h.stats.transactions) },
+                    { number: "15+", label: t(h.stats.countries) },
+                    { number: "15+", label: t(h.stats.volume) },
+                  ].map((stat) => (
+                    <div key={stat.label} className="grid min-w-0 grid-cols-[1px_minmax(0,1fr)] items-start gap-4 sm:gap-5">
+                      <span className="block h-full w-px bg-primary/20" aria-hidden="true" />
+                      <div className="min-w-0">
+                        <p className="font-serif text-3xl font-semibold leading-none text-primary md:text-[2.4rem]">{stat.number}</p>
+                        <p className="mt-2 text-sm leading-snug text-muted-foreground lg:text-[0.9rem]">{stat.label}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 border-t border-border/70 pt-5">
+                  <div className="grid grid-cols-1 gap-3">
+                    {[t(h.highlights.preconstruction), t(h.highlights.team)].map((highlight) => (
+                      <div key={highlight} className="flex items-start gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                        <p className="type-body-sm text-muted-foreground">{highlight}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
               <Button variant="default" asChild>
                 <Link to={getLocalizedPath("about", language)}>{t(h.learnMore)} <ArrowRight size={16} /></Link>

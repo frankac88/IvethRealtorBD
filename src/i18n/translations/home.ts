@@ -10,18 +10,21 @@
   heroCta2: { es: "Ver Oportunidades", en: "View Opportunities" },
   aboutLabel: { es: "Sobre Iveth Coll", en: "About Iveth Coll" },
   aboutTitle: {
-    es: "Tu asesora de confianza en el mercado inmobiliario de Florida",
-    en: "Your trusted advisor in Florida's real estate market",
+    es: "Ayudo a inversionistas latinoamericanos a construir patrimonio en Florida con estrategia y seguridad",
+    en: "I help Latin American investors build wealth in Florida with strategy and confidence",
   },
   aboutDesc: {
     es: "Con más de 20 años de experiencia en real estate y una base financiera sólida, ofrezco una asesoría estratégica y personalizada para quienes buscan crecer su patrimonio en Florida.",
     en: "Iveth Coll brings more than 20 years of real estate experience and a strong financial background, guiding local and international investors toward strategic and secure opportunities in Florida.",
   },
   stats: {
-    transactions: { es: "Transacciones cerradas", en: "Closed transactions" },
+    transactions: { es: "Años de experiencia comercial", en: "Years of commercial experience" },
     countries: { es: "Países atendidos", en: "Countries served" },
-    volume: { es: "En volumen de ventas", en: "In sales volume" },
-    experience: { es: "Años de experiencia", en: "Years of experience" },
+    volume: { es: "Años de experiencia financiera", en: "Years of financial experience" },
+  },
+  highlights: {
+    preconstruction: { es: "Acceso a oportunidades de pre-construcción", en: "Access to pre-construction opportunities" },
+    team: { es: "Equipo integral: Real Estate + Finance Guidance", en: "Integrated team: Real Estate + Finance Guidance" },
   },
   learnMore: { es: "Conocer más", en: "Learn more" },
   whyFloridaLabel: { es: "¿Por Qué Florida?", en: "Why Florida?" },
