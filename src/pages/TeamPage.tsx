@@ -14,6 +14,7 @@ import fortexLogo from "@/assets/fortex-logo.png";
 import ftgLogo from "@/assets/ftg-logo.png";
 import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.jpg";
 import ivethImg from "@/assets/veth-team.webp";
+import ricardoImg from "@/assets/ricardo-team.webp";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { teamTranslations } from "@/i18n/translations/team";
@@ -24,6 +25,27 @@ const TeamPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const tm = teamTranslations;
+
+  const teamMembers = [
+    {
+      name: "Iveth Coll",
+      image: ivethImg,
+      role: tm.ivethRole,
+      description: tm.ivethDesc,
+      ctaLabel: tm.learnMore,
+      ctaPath: getLocalizedPath("about", language),
+      imageAlt: "Iveth Coll",
+    },
+    {
+      name: "Ricardo Suarez",
+      image: ricardoImg,
+      role: tm.ricardoRole,
+      description: tm.ricardoDesc,
+      ctaLabel: tm.viewOptions,
+      ctaPath: getLocalizedPath("financing", language),
+      imageAlt: "Ricardo Suarez",
+    },
+  ] as const;
 
   const partnerCompanies = [
     {
@@ -73,23 +95,61 @@ const TeamPage = () => {
 
       <section className="py-20">
         <div className="mx-auto w-full max-w-[1600px] px-4 lg:px-8">
-          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-16 md:grid-cols-2">
-            <div className="text-center">
-              <img src={ivethImg} alt="Iveth Coll" className="mx-auto mb-6 h-64 w-64 rounded-sm object-cover" loading="lazy" />
-              <h2 className="mb-1 font-serif text-[2rem] leading-tight">Iveth Coll</h2>
-              <p className="type-caption mb-4">{t(tm.ivethRole)}</p>
-              <p className="type-body-sm mb-6 text-muted-foreground">{t(tm.ivethDesc)}</p>
-              <Button variant="default" size="sm" asChild><Link to={getLocalizedPath("about", language)}>{t(tm.learnMore)}</Link></Button>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto mb-6 flex h-64 w-64 items-center justify-center rounded-sm bg-card ring-1 ring-border/50">
-                <span className="font-serif text-4xl text-muted-foreground">RS</span>
-              </div>
-              <h2 className="mb-1 font-serif text-[2rem] leading-tight">Ricardo Suarez</h2>
-              <p className="type-caption mb-4">{t(tm.ricardoRole)}</p>
-              <p className="type-body-sm mb-6 text-muted-foreground">{t(tm.ricardoDesc)}</p>
-              <Button variant="default" size="sm" asChild><Link to={getLocalizedPath("financing", language)}>{t(tm.viewOptions)}</Link></Button>
-            </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
+            {teamMembers.map((member, index) => (
+              <AnimatedSection
+                as="article"
+                key={member.name}
+                data-testid="team-profile-card"
+                delay={index * 120}
+                className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-primary/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(248,245,239,0.98)_100%)] p-6 text-center shadow-[0_20px_60px_rgba(31,41,55,0.08)] ring-1 ring-[rgba(194,168,120,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(31,41,55,0.12)] md:p-8"
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(194,168,120,0.18),transparent_72%)]" />
+                <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(194,168,120,0.8)] to-transparent" />
+
+                <div className="relative flex h-full flex-col">
+                  <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-primary/10 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur">
+                    <span className="h-2 w-2 rounded-full bg-[rgba(194,168,120,0.95)]" />
+                    <span className="text-[0.68rem] font-medium uppercase tracking-[0.28em] text-primary/80">
+                      {t(member.role)}
+                    </span>
+                  </div>
+
+                  <div className="mx-auto mb-7 rounded-[26px] border border-white/70 bg-white/75 p-3 shadow-[0_14px_35px_rgba(15,23,42,0.08)]">
+                    <div className="overflow-hidden rounded-[20px]">
+                      <img
+                        src={member.image}
+                        alt={member.imageAlt}
+                        className="h-72 w-72 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <h2 className="mb-2 font-serif text-[2.15rem] leading-tight tracking-[-0.03em] text-primary">
+                    {member.name}
+                  </h2>
+                  <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-[rgba(194,168,120,0.95)] to-transparent" />
+                  <p
+                    className="type-body-sm mx-auto max-w-md text-justify text-pretty text-muted-foreground"
+                    style={{ hyphens: "auto", overflowWrap: "break-word" }}
+                  >
+                    {t(member.description)}
+                  </p>
+
+                  <div className="mt-auto pt-8">
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="min-w-[150px] rounded-full bg-primary px-6 shadow-[0_12px_24px_rgba(42,123,136,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
+                      asChild
+                    >
+                      <Link to={member.ctaPath}>{t(member.ctaLabel)}</Link>
+                    </Button>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>

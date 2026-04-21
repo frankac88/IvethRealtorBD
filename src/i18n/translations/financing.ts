@@ -2,8 +2,8 @@
   label: { es: "Ricardo Suarez \u00b7 Mortgage Loan Officer", en: "Ricardo Suarez \u00b7 Mortgage Loan Officer" },
   title: { es: "Financiamiento", en: "Financing" },
   subtitle: {
-    es: "Opciones de financiamiento hipotecario para extranjeros y residentes. Hacemos tu inversi\u00f3n accesible.",
-    en: "Mortgage financing options for foreigners and residents. We make your investment accessible.",
+    es: "Opciones hipotecarias para residentes e inversionistas extranjeros. Te ayudamos a estructurar una compra clara, viable y estrategica.",
+    en: "Mortgage options for residents and foreign investors. We help you structure a clear, viable, and strategic purchase.",
   },
   foreigners: { es: "Para Extranjeros", en: "For Foreigners" },
   foreignerItems: {

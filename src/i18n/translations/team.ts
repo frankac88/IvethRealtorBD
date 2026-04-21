@@ -13,8 +13,8 @@
   learnMore: { es: "Conocer más", en: "Learn more" },
   ricardoRole: { es: "Mortgage Loan Officer", en: "Mortgage Loan Officer" },
   ricardoDesc: {
-    es: "Experto en financiamiento hipotecario para extranjeros y residentes. Ofrece soluciones de préstamo personalizadas para hacer tu inversión accesible.",
-    en: "Expert in mortgage financing for foreigners and residents. Offers personalized loan solutions to make your investment accessible.",
+    es: "Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida. Opciones estratégicas adaptadas a cada perfil financiero.",
+    en: "Mortgage specialist for residents and international investors in Florida. Strategic options tailored to each financial profile.",
   },
   viewOptions: { es: "Ver opciones", en: "View options" },
   partnersLabel: { es: "Compañías Aliadas", en: "Partner Companies" },
