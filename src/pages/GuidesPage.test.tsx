@@ -58,7 +58,7 @@ describe("GuidesPage", () => {
     vi.clearAllMocks();
   });
 
-  it("renders the exact Spanish conversion copy and editorial guide cards without images", () => {
+  it("renders the exact Spanish conversion copy and redesigned editorial guide cards without inline images", () => {
     renderGuidesPage();
 
     expect(
@@ -76,6 +76,11 @@ describe("GuidesPage", () => {
       ),
     ).toBeInTheDocument();
 
+    expect(screen.getAllByText(/^Guía/)).not.toHaveLength(0);
+    expect(screen.getByRole("heading", { name: "Inversionistas Internacionales" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Preconstrucción en Florida" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Financiamiento Inteligente" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Comprador Estratégico" })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Descargar Guía" })).toHaveLength(4);
     expect(screen.getAllByRole("link", { name: "WhatsApp Directo" })).toHaveLength(4);
     expect(document.querySelectorAll("article img")).toHaveLength(0);

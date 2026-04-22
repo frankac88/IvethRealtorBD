@@ -9,11 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import acmmLogo from "@/assets/acmm-logo.png";
-import fortexLogo from "@/assets/fortex-logo.png";
-import ftgLogo from "@/assets/ftg-logo.png";
-import hostLogo from "@/assets/host-logo.jpeg";
-import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.jpg";
+import acmmLogo from "@/assets/acmm-logo.webp";
+import fortexLogo from "@/assets/fortex-logo.webp";
+import ftgLogo from "@/assets/ftg-logo.webp";
+import hostLogo from "@/assets/host-logo.webp";
+import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.webp";
 import ivethImg from "@/assets/veth-team.webp";
 import ricardoImg from "@/assets/ricardo-team.webp";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
