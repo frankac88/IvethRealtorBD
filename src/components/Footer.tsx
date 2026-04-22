@@ -69,7 +69,7 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-primary-foreground">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="transition-colors hover:text-primary-foreground"
+                className="break-all transition-colors hover:text-primary-foreground"
               >
                 {siteConfig.contact.email}
               </a>
@@ -119,7 +119,7 @@ const Footer = () => {
               />
             </div>
           </div>
-          <p className="mb-3 text-center text-xs uppercase tracking-[0.22em] text-primary-foreground/70">
+          <p className="mb-3 text-center text-xs uppercase tracking-[0.12em] text-primary-foreground/70 md:tracking-[0.22em]">
             National Association of REALTORS® · Equal Housing Opportunity
           </p>
           <p className="type-body-sm mx-auto text-center text-primary-foreground">

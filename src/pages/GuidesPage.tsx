@@ -17,10 +17,12 @@ const guideVisuals = {
   investor: {
     Icon: Landmark,
     cardClassName: "bg-[linear-gradient(180deg,#14384c_0%,#18384a_58%,#0f2f44_100%)]",
+    iconClassName: undefined,
   },
   preconstruction: {
     Icon: Building2,
     cardClassName: "bg-[linear-gradient(180deg,#1f463d_0%,#20463d_54%,#173930_100%)]",
+    iconClassName: undefined,
   },
   financing: {
     Icon: BadgeDollarSign,
@@ -30,6 +32,7 @@ const guideVisuals = {
   buyer: {
     Icon: FileSearch,
     cardClassName: "bg-[linear-gradient(180deg,#2d2d2d_0%,#252525_55%,#1f1f1f_100%)]",
+    iconClassName: undefined,
   },
 } as const;
 
@@ -113,7 +116,7 @@ const GuidesPage = () => {
             src={guidesHeroMiami}
             alt=""
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(248,242,234,0.92)_0%,rgba(248,242,234,0.78)_30%,rgba(248,242,234,0.94)_100%)]" />

@@ -78,27 +78,31 @@
 
 @layer components {
   .type-h1 {
-    @apply font-serif text-[2.5rem] font-medium leading-[1.02] tracking-[-0.03em] md:text-[3.5rem] lg:text-[4.25rem];
+    @apply font-serif text-[2.35rem] font-medium leading-[1.02] tracking-[-0.03em] md:text-[3.5rem] lg:text-[4.25rem];
+    text-wrap: balance;
   }
 
   .type-h2 {
     @apply font-serif text-[1.75rem] font-semibold leading-[1.08] tracking-[-0.022em] md:text-[2.4rem] lg:text-[2.9rem];
+    text-wrap: balance;
   }
 
   .type-h3 {
-    @apply text-[0.82rem] font-medium uppercase leading-[1.35] tracking-[0.36em] text-foreground md:text-[0.9rem];
+    @apply text-[0.8rem] font-medium uppercase leading-[1.35] tracking-[0.22em] text-foreground md:text-[0.9rem] md:tracking-[0.36em];
   }
 
   .type-body {
     @apply text-[1.02rem] leading-[1.85] text-muted-foreground md:text-[1.08rem];
+    overflow-wrap: anywhere;
   }
 
   .type-body-sm {
     @apply text-sm leading-[1.85] text-muted-foreground md:text-[0.98rem];
+    overflow-wrap: anywhere;
   }
 
   .type-caption {
-    @apply text-[0.72rem] font-medium uppercase leading-[1.4] tracking-[0.28em] text-accent md:text-[0.76rem];
+    @apply text-[0.72rem] font-medium uppercase leading-[1.4] tracking-[0.18em] text-accent md:text-[0.76rem] md:tracking-[0.28em];
   }
 
   .type-nav {

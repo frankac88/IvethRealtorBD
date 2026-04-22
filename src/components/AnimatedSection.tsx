@@ -3,7 +3,7 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps extends React.HTMLAttributes<HTMLElement> {
-  as?: "section" | "div";
+  as?: "section" | "div" | "article";
   delay?: number;
   children: React.ReactNode;
   className?: string;

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 interface GuideCardProps {
   title: string;
   description: string;
-  bullets: string[];
+  bullets: readonly string[];
   Icon: LucideIcon;
   cardClassName?: string;
   iconClassName?: string;

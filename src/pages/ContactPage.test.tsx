@@ -57,7 +57,9 @@ vi.mock("@/components/ui/select", () => {
 
       const options = React.isValidElement(content)
         ? React.Children.toArray(content.props.children)
-            .filter(React.isValidElement)
+            .filter((item): item is React.ReactElement<{ value?: string; children?: React.ReactNode }> =>
+              React.isValidElement(item),
+            )
             .map((item) => ({
               value: item.props.value as string,
               label: item.props.children,

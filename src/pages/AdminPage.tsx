@@ -44,6 +44,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 type RequiredProjectField = Exclude<keyof ProjectFormValues, "featured">;
+type BilingualProjectFieldKey = Exclude<keyof ProjectFormValues, "title" | "priceFrom" | "featured">;
 
 const REQUIRED_PROJECT_FIELDS: Array<[RequiredProjectField, string]> = [
   ["title", "T\u00EDtulo"],
@@ -75,8 +76,8 @@ const interestLabels: Record<string, string> = {
 const bilingualFieldRows: Array<{
   labelEs: string;
   labelEn: string;
-  esKey: keyof ProjectFormValues;
-  enKey: keyof ProjectFormValues;
+  esKey: BilingualProjectFieldKey;
+  enKey: BilingualProjectFieldKey;
   textarea?: boolean;
   optional?: boolean;
 }> = [
@@ -158,7 +159,7 @@ const AdminPage = () => {
   const validateProjectForm = () => {
     const missingField = REQUIRED_PROJECT_FIELDS.find(([field]) => formValues[field].trim().length === 0);
     if (missingField) {
-      throw new Error(`El campo \"${missingField[1]}\" es obligatorio.`);
+      throw new Error(`El campo "${missingField[1]}" es obligatorio.`);
     }
 
     if (!editingProject && !imageFile) {
@@ -218,7 +219,7 @@ const AdminPage = () => {
 
   const handleDeleteProject = async (project: ProjectItem) => {
     const confirmed = window.confirm(
-      `\u00BFSeguro que deseas eliminar \"${project.title}\"? Esto borrar\u00E1 tambi\u00E9n su imagen de Supabase.`,
+      `\u00BFSeguro que deseas eliminar "${project.title}"? Esto borrar\u00E1 tambi\u00E9n su imagen de Supabase.`,
     );
 
     if (!confirmed) return;

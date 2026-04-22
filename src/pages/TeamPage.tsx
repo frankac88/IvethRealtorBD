@@ -48,7 +48,15 @@ const TeamPage = () => {
     },
   ] as const;
 
-  const partnerCompanies = [
+  const partnerCompanies: ReadonlyArray<{
+    name: string;
+    logo: string;
+    badge: { es: string; en: string };
+    description: { es: string; en: string };
+    logoClassName: string;
+    titleClassName?: string;
+    alt: string;
+  }> = [
     {
       name: "ACMM Consulting",
       logo: acmmLogo,
@@ -124,12 +132,12 @@ const TeamPage = () => {
                     </span>
                   </div>
 
-                  <div className="mx-auto mb-7 rounded-[26px] border border-white/70 bg-white/75 p-3 shadow-[0_14px_35px_rgba(15,23,42,0.08)]">
+                  <div className="mx-auto mb-7 w-full max-w-[19.5rem] rounded-[26px] border border-white/70 bg-white/75 p-3 shadow-[0_14px_35px_rgba(15,23,42,0.08)]">
                     <div className="overflow-hidden rounded-[20px]">
                       <img
                         src={member.image}
                         alt={member.imageAlt}
-                        className="h-72 w-72 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="aspect-square h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                         loading="lazy"
                       />
                     </div>
