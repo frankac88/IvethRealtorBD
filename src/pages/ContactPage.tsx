@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
 import { contactTranslations } from "@/i18n/translations/contact";
+import { useLocation } from "react-router-dom";
 
 const VALID_INTERESTS = new Set(["precon", "miami", "orlando", "financing", "other"]);
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,6 +23,7 @@ type FormField = "name" | "email" | "phone" | "country" | "interest";
 type FormErrors = Partial<Record<FormField, string>>;
 
 const ContactPage = () => {
+  const location = useLocation();
   const { toast } = useToast();
   const [interest, setInterest] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -30,6 +32,18 @@ const ContactPage = () => {
   const createLeadMutation = useCreateLeadMutation();
   const t = useT();
   const c = contactTranslations;
+
+  useEffect(() => {
+    if (location.hash !== "#contact-form-view") return;
+
+    requestAnimationFrame(() => {
+      const target = document.getElementById("contact-form-view");
+      if (!target) return;
+
+      const top = target.getBoundingClientRect().top + window.scrollY - 240;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  }, [location.hash]);
 
   const clearFieldError = (field: FormField) => {
     setErrors((prev) => {
@@ -131,7 +145,7 @@ const ContactPage = () => {
 
       <AnimatedSection className="py-20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+          <div id="contact-form-view" className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto scroll-mt-8">
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               <div>
                 <h2 className="font-serif text-[2rem] leading-tight tracking-[-0.02em]">{t(c.formTitle)}</h2>

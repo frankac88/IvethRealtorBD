@@ -207,6 +207,7 @@ const ProjectsPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const p = projectsTranslations;
+  const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
   const { data: projects = [], isLoading, error } = usePublishedProjectsQuery();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -523,7 +524,7 @@ const ProjectsPage = () => {
                         asChild
                         className="border border-primary bg-primary px-5 text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-green-light hover:shadow-md"
                       >
-                        <Link to={getLocalizedPath("contact", language)}>{t(p.info)}</Link>
+                        <Link to={contactFormHref}>{t(p.info)}</Link>
                       </Button>
                     </div>
                   </div>

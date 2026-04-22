@@ -48,7 +48,10 @@ const FinancingPage = () => {
               <h2 className="type-h3 mb-4 text-primary">{t(f.foreigners)}</h2>
               <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.foreignerItems[language].map((item) => (
-                  <li key={item}>• {item}</li>
+                  <li key={item} className="flex items-start gap-3">
+                    <span aria-hidden="true" className="mt-[0.2em] shrink-0 text-[0.95em] leading-none">•</span>
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -56,7 +59,10 @@ const FinancingPage = () => {
               <h2 className="type-h3 mb-4 text-primary">{t(f.residents)}</h2>
               <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.residentItems[language].map((item) => (
-                  <li key={item}>• {item}</li>
+                  <li key={item} className="flex items-start gap-3">
+                    <span aria-hidden="true" className="mt-[0.2em] shrink-0 text-[0.95em] leading-none">•</span>
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -75,7 +81,9 @@ const FinancingPage = () => {
           </div>
 
           <div className="text-center">
-            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(f.cta)}</Link></Button>
+            <Button variant="hero" size="lg" asChild>
+              <Link to={`${getLocalizedPath("contact", language)}#contact-form-view`}>{t(f.cta)}</Link>
+            </Button>
           </div>
         </div>
       </section>

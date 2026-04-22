@@ -23,6 +23,7 @@ const Index = () => {
   const t = useT();
   const h = homeTranslations;
   const { data: featuredProjects = [], isLoading: isLoadingFeaturedProjects } = useFeaturedProjectsQuery(3);
+  const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
   const whyItems = [
     { icon: TrendingUp, ...h.whyItems.appreciation },
@@ -59,7 +60,7 @@ const Index = () => {
           </h1>
           <p className="type-body mx-auto mb-10 max-w-2xl font-light text-primary-foreground/85">{t(h.heroDesc)}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(h.heroCta1)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={contactFormHref}>{t(h.heroCta1)}</Link></Button>
             <Button variant="heroOutline" size="lg" asChild><Link to={getLocalizedPath("projects", language)}>{t(h.heroCta2)}</Link></Button>
           </div>
         </div>
@@ -213,7 +214,7 @@ const Index = () => {
           <h2 className="mb-6 text-3xl font-serif md:text-4xl">{t(h.ctaTitle)}</h2>
           <p className="type-body mb-10">{t(h.ctaDesc)}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button variant="hero" size="lg" asChild><Link to={getLocalizedPath("contact", language)}>{t(h.ctaButton1)}</Link></Button>
+            <Button variant="hero" size="lg" asChild><Link to={contactFormHref}>{t(h.ctaButton1)}</Link></Button>
             <Button variant="whatsapp" size="lg" asChild>
               <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(h.ctaButton2)}</a>
             </Button>

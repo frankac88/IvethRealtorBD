@@ -54,7 +54,7 @@ describe("TeamPage", () => {
   it("renders team member descriptions justified", () => {
     renderTeamPage();
 
-    const ivethDescription = screen.getByText(/Especialista en inversiones inmobiliarias para clientes internacionales\./i);
+    const ivethDescription = screen.getByText(/Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida/i);
     const ricardoDescription = screen.getByText(/Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida\./i);
 
     expect(ivethDescription).toHaveClass("text-justify");
@@ -64,10 +64,45 @@ describe("TeamPage", () => {
   it("renders team member descriptions with hyphenation enabled", () => {
     renderTeamPage();
 
-    const ivethDescription = screen.getByText(/Especialista en inversiones inmobiliarias para clientes internacionales\./i);
+    const ivethDescription = screen.getByText(/Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida/i);
     const ricardoDescription = screen.getByText(/Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida\./i);
 
     expect(ivethDescription).toHaveStyle({ hyphens: "auto" });
     expect(ricardoDescription).toHaveStyle({ hyphens: "auto" });
+  });
+
+  it("sets the current language on team member descriptions for proper hyphenation", () => {
+    renderTeamPage();
+
+    const ricardoDescription = screen.getByText(/Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida\./i);
+    expect(ricardoDescription).toHaveAttribute("lang", "es");
+  });
+
+  it("renders the updated Iveth description in Spanish", () => {
+    renderTeamPage();
+
+    expect(screen.getByText(/Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida/i)).toBeInTheDocument();
+    expect(screen.getByText(/con enfoque en crecimiento patrimonial, diversificación y oportunidades de alta proyección en Miami y Orlando\./i)).toBeInTheDocument();
+  });
+
+  it("renders the updated Iveth description in English", () => {
+    renderTeamPage("en");
+
+    expect(screen.getByText(/Advises international investors on acquiring strategic properties in Florida/i)).toBeInTheDocument();
+    expect(screen.getByText(/with a focus on wealth growth, diversification, and high-potential opportunities in Miami and Orlando\./i)).toBeInTheDocument();
+  });
+
+  it("renders the updated CTA labels in Spanish", () => {
+    renderTeamPage();
+
+    expect(screen.getByRole("link", { name: /solicitar asesoría/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /precalificar ahora/i })).toBeInTheDocument();
+  });
+
+  it("renders the updated CTA labels in English", () => {
+    renderTeamPage("en");
+
+    expect(screen.getByRole("link", { name: /request advice/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /prequalify now/i })).toBeInTheDocument();
   });
 });

@@ -33,7 +33,7 @@ const TeamPage = () => {
       role: tm.ivethRole,
       description: tm.ivethDesc,
       ctaLabel: tm.learnMore,
-      ctaPath: getLocalizedPath("about", language),
+      ctaPath: `${getLocalizedPath("contact", language)}#contact-form-view`,
       imageAlt: "Iveth Coll",
     },
     {
@@ -131,7 +131,8 @@ const TeamPage = () => {
                   </h2>
                   <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-[rgba(194,168,120,0.95)] to-transparent" />
                   <p
-                    className="type-body-sm mx-auto max-w-md text-justify text-pretty text-muted-foreground"
+                    lang={language}
+                    className="type-body-sm mx-auto max-w-md text-justify text-muted-foreground"
                     style={{ hyphens: "auto", overflowWrap: "break-word" }}
                   >
                     {t(member.description)}

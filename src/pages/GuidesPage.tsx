@@ -50,7 +50,7 @@ const GuidesPage = () => {
   const activeGuide = activeGuideKey ? g.guides[activeGuideKey] : null;
 
   const consultationHref = useMemo(
-    () => getLocalizedPath("contact", language),
+    () => `${getLocalizedPath("contact", language)}#contact-form-view`,
     [language],
   );
 

@@ -12,6 +12,7 @@ const AboutPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const a = aboutTranslations;
+  const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
   const values = [
     { icon: Globe, ...a.values.international },
@@ -30,7 +31,7 @@ const AboutPage = () => {
               <h1 className="type-h1 mb-6">{t(a.title)}</h1>
               <p className="type-body mb-8 text-justify">{t(a.desc1)}</p>
               <Button variant="default" asChild>
-                <Link to={getLocalizedPath("contact", language)}>{t(a.cta)} <ArrowRight size={16} /></Link>
+                <Link to={contactFormHref}>{t(a.cta)} <ArrowRight size={16} /></Link>
               </Button>
             </div>
             <img src={ivethImg} alt="Iveth Coll - International Real Estate Advisor" className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm" loading="lazy" width={800} height={1000} />

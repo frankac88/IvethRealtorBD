@@ -7,16 +7,16 @@
   },
   ivethRole: { es: "International Real Estate Advisor", en: "International Real Estate Advisor" },
   ivethDesc: {
-    es: "Especialista en inversiones inmobiliarias para clientes internacionales. Asesora a inversionistas de Latinoamérica en oportunidades de preconstrucción en Miami y Orlando.",
-    en: "Specialist in real estate investments for international clients. Advises Latin American investors on pre-construction opportunities in Miami and Orlando.",
+    es: "Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida, con enfoque en crecimiento patrimonial, diversificación y oportunidades de alta proyección en Miami y Orlando.",
+    en: "Advises international investors on acquiring strategic properties in Florida, with a focus on wealth growth, diversification, and high-potential opportunities in Miami and Orlando.",
   },
-  learnMore: { es: "Conocer más", en: "Learn more" },
+  learnMore: { es: "SOLICITAR ASESORÍA", en: "REQUEST ADVICE" },
   ricardoRole: { es: "Mortgage Loan Officer", en: "Mortgage Loan Officer" },
   ricardoDesc: {
     es: "Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida. Opciones estratégicas adaptadas a cada perfil financiero.",
     en: "Mortgage specialist for residents and international investors in Florida. Strategic options tailored to each financial profile.",
   },
-  viewOptions: { es: "Ver opciones", en: "View options" },
+  viewOptions: { es: "PRECALIFICAR AHORA", en: "PREQUALIFY NOW" },
   partnersLabel: { es: "Compañías Aliadas", en: "Partner Companies" },
   partnersTitle: { es: "Aliados que fortalecen cada operación", en: "Partners that strengthen every transaction" },
   partnersSubtitle: {
