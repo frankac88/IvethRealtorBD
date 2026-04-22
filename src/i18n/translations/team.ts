@@ -43,6 +43,11 @@
     es: "Home Financing Experts es una firma nacional de préstamos hipotecarios reconocida por su servicio al cliente. Ofrece acompañamiento personalizado para compra o refinanciamiento, supervisando todo el proceso desde la solicitud hasta el cierre con orientación experta, opciones competitivas y soluciones adaptadas a cada caso.",
     en: "Home Financing Experts is a national mortgage lending firm known for its exceptional customer service. Whether you're in the market to purchase a new home or refinance your existing one, we offer personalized assistance from a seasoned team of mortgage professionals. To guarantee top-notch service, we oversee every aspect of the mortgage process, starting from the application all the way to closing. Our committed team of experts will be there with you at every stage. Our Mortgage Loan Officers are dedicated to establishing strong connections with both consumers and real estate agents, ensuring they find the ideal solution for your unique situation. Home Financing Experts provides a range of mortgage options, competitive pricing, and valuable guidance.",
   },
+  hostBadge: { es: "Gestión de alquiler vacacional", en: "Vacation rental management" },
+  hostDesc: {
+    es: "Con más de 10 años de experiencia en Miami, nuestro equipo se especializa en la gestión de propiedades de alquiler vacacional, siempre enfocados en proteger los intereses de cada propietario. Brindamos una administración clara, estratégica y eficiente para maximizar la ocupación y la rentabilidad de su propiedad, ofreciéndole tranquilidad y resultados sin que tenga que ocuparse de la operación diaria.",
+    en: "With more than 10 years of experience in Miami, our team specializes in vacation rental property management, always focused on protecting each owner's interests. We provide clear, strategic, and efficient management to maximize occupancy and profitability, giving you peace of mind and results without having to handle the day-to-day operation.",
+  },
   viewMore: { es: "Ver más", en: "View more" },
   partnerDetails: { es: "Detalle de la compañía", en: "Company details" },
 } as const;

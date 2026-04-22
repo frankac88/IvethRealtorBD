@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
+import equalHousingLogo from "@/assets/equal-housing-logo.webp";
+import realtorLogo from "@/assets/realtor-logo.webp";
 import { brandAssets } from "@/config/brandAssets";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -100,8 +102,27 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-primary-foreground/10 pt-8 text-center">
-          <p className="type-body-sm text-primary-foreground">
+        <div className="mt-12 border-t border-primary-foreground/10 pt-8">
+          <div className="mb-5 flex flex-wrap items-center justify-center gap-5">
+            <img
+              src={realtorLogo}
+              alt="National Association of REALTORS logo"
+              className="h-12 w-auto object-contain md:h-14"
+              loading="lazy"
+            />
+            <div className="rounded-md bg-white px-2 py-1">
+              <img
+                src={equalHousingLogo}
+                alt="Equal Housing Opportunity logo"
+                className="h-12 w-auto object-contain md:h-14"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <p className="mb-3 text-center text-xs uppercase tracking-[0.22em] text-primary-foreground/70">
+            National Association of REALTORS® · Equal Housing Opportunity
+          </p>
+          <p className="type-body-sm mx-auto text-center text-primary-foreground">
             {"\u00a9"} {new Date().getFullYear()} Iveth Coll {"\u2014"} International Real Estate Advisor. {t(ft.rights)}
           </p>
         </div>

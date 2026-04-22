@@ -12,6 +12,7 @@ import {
 import acmmLogo from "@/assets/acmm-logo.png";
 import fortexLogo from "@/assets/fortex-logo.png";
 import ftgLogo from "@/assets/ftg-logo.png";
+import hostLogo from "@/assets/host-logo.jpeg";
 import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.jpg";
 import ivethImg from "@/assets/veth-team.webp";
 import ricardoImg from "@/assets/ricardo-team.webp";
@@ -80,6 +81,14 @@ const TeamPage = () => {
       logoClassName: "h-28 sm:h-32 w-auto rounded-md object-contain",
       titleClassName: "mt-6 md:mt-8",
       alt: "Logo de Home Financing Experts",
+    },
+    {
+      name: "HOST",
+      logo: hostLogo,
+      badge: tm.hostBadge,
+      description: tm.hostDesc,
+      logoClassName: "h-24 sm:h-28 w-auto rounded-md object-contain",
+      alt: "Logo de HOST",
     },
   ] as const;
 
@@ -163,13 +172,13 @@ const TeamPage = () => {
             <p className="type-body max-w-2xl">{t(tm.partnersSubtitle)}</p>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {partnerCompanies.map((company, index) => (
               <AnimatedSection
                 as="div"
                 key={company.name}
                 delay={index * 120}
-                className="group flex h-full flex-col rounded-[28px] border border-border/60 bg-background/90 p-7 shadow-[0_18px_45px_rgba(26,31,46,0.08)] transition-transform duration-300 hover:-translate-y-1"
+                className="group flex h-full w-full flex-col rounded-[28px] border border-border/60 bg-background/90 p-7 shadow-[0_18px_45px_rgba(26,31,46,0.08)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="flex h-full flex-col">
                   <div className="mx-auto inline-flex w-fit rounded-full border border-primary/10 bg-primary/5 px-4 py-1 text-[0.68rem] font-medium uppercase tracking-[0.24em] text-primary/80">

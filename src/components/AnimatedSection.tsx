@@ -6,6 +6,7 @@ interface AnimatedSectionProps extends React.HTMLAttributes<HTMLElement> {
   as?: "section" | "div";
   delay?: number;
   children: React.ReactNode;
+  className?: string;
 }
 
 const usePrefersReducedMotion = () => {
