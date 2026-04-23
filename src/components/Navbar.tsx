@@ -45,10 +45,10 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 z-50 w-[100dvw] max-w-[100dvw] border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-32 items-center justify-between gap-2 md:h-40">
+        <div className="flex h-40 items-center justify-between gap-2 md:h-44 xl:grid xl:grid-cols-[280px_minmax(0,1fr)_auto] xl:items-center xl:gap-8 2xl:grid-cols-[380px_minmax(0,1fr)_auto] 2xl:items-center 2xl:gap-10">
           <Link
             to={getLocalizedPath("home", language)}
-            className="group relative flex h-full w-[148px] shrink-0 items-center overflow-visible transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 min-[380px]:w-[168px] sm:w-[190px] md:w-[260px] xl:w-[290px]"
+            className="group relative flex h-full w-[148px] shrink-0 items-center overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-0.5 focus-visible:-translate-y-0.5 min-[380px]:w-[168px] sm:w-[190px] md:w-[260px] xl:w-[220px] 2xl:w-[340px]"
             aria-label="Home"
           >
             <span
@@ -58,12 +58,16 @@ const Navbar = () => {
             <img
               src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block h-auto w-full origin-left object-left object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:scale-[1.04] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)]"
+              className="relative block h-[72%] max-h-full w-auto max-w-full origin-left object-left object-contain transition duration-300 ease-out xl:-translate-x-10 xl:scale-[1.3] 2xl:-translate-x-6 2xl:scale-[1.7] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] xl:group-hover:scale-[1.34] xl:group-focus-visible:scale-[1.34] 2xl:group-hover:scale-[1.74] 2xl:group-focus-visible:scale-[1.74]"
             />
           </Link>
 
-          <div className="hidden flex-1 items-center justify-end xl:flex">
-            <div className="flex items-center gap-2 xl:gap-3">
+          <div
+            className={`hidden min-w-0 items-center justify-end xl:flex xl:translate-x-10 xl:pl-8 ${
+              language === "es" ? "2xl:translate-x-44 2xl:pl-32" : "2xl:translate-x-44 2xl:pl-32"
+            }`}
+          >
+            <div className="flex min-w-0 items-center justify-end gap-1 xl:gap-1 2xl:gap-3">
               {navLinks.map((link) => {
                 const href = getLocalizedPath(link.routeKey, language);
 
@@ -71,7 +75,7 @@ const Navbar = () => {
                   <Link
                     key={link.routeKey}
                     to={href}
-                    className={`type-nav whitespace-nowrap rounded-full px-2 py-1.5 transition-colors hover:bg-primary/6 hover:text-primary focus-visible:bg-primary/6 focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background xl:px-2.5 ${
+                    className={`type-nav whitespace-nowrap rounded-full px-1.5 py-1.5 text-[0.76rem] transition-colors hover:bg-primary/6 hover:text-primary focus-visible:bg-primary/6 focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background 2xl:px-2.5 2xl:text-[0.8rem] ${
                       activeRouteKey === link.routeKey
                         ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
                         : "text-muted-foreground"
@@ -82,22 +86,33 @@ const Navbar = () => {
                 );
               })}
             </div>
+          </div>
 
-            <div className="ml-10 flex items-center gap-3 xl:ml-12 xl:gap-4">
-              <button
-                onClick={handleToggleLanguage}
-                className="type-nav flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                aria-label="Toggle language"
-              >
-                <Globe size={14} />
-                {language.toUpperCase()}
-              </button>
-              <Button size="sm" variant="hero" className="px-4 text-[0.8rem] tracking-[0.08em] xl:px-5" asChild>
-                <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
-                  {t(navTranslations.cta)}
-                </a>
-              </Button>
-            </div>
+          <div
+            className={`hidden shrink-0 items-center gap-2 xl:flex xl:ml-8 xl:translate-x-10 ${
+              language === "es"
+                ? "2xl:ml-4 2xl:translate-x-40 2xl:gap-1"
+                : "2xl:ml-4 2xl:translate-x-40 2xl:gap-1"
+            }`}
+          >
+            <button
+              onClick={handleToggleLanguage}
+              className="type-nav flex w-[4.25rem] shrink-0 items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background 2xl:w-[4.5rem]"
+              aria-label="Toggle language"
+            >
+              <Globe size={14} />
+              {language.toUpperCase()}
+            </button>
+            <Button
+              size="sm"
+              variant="hero"
+              className="w-[9.25rem] shrink-0 justify-center px-3 text-[0.76rem] tracking-[0.08em] 2xl:w-[10.25rem] 2xl:px-5 2xl:text-[0.8rem]"
+              asChild
+            >
+              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+                {t(navTranslations.cta)}
+              </a>
+            </Button>
           </div>
 
           <div className="flex shrink-0 items-center gap-1.5 xl:hidden">
