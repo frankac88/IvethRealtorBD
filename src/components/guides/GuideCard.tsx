@@ -44,7 +44,7 @@ const GuideCard = ({
     <article
       className={cn(
         "group relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-[12px] border p-7 shadow-[0_20px_45px_rgba(45,31,18,0.14)] transition-transform duration-300 hover:-translate-y-1 md:min-h-[470px] md:p-8",
-        isLight ? "border-[#1A1F2E]/10 text-[#1A1F2E]" : "border-white/10 text-[#F2EDE8]",
+        isLight ? "border-[#1A1F2E]/10 text-[#1A1F2E]" : "border-white/10 text-[#1A1F2E]",
         cardClassName,
       )}
     >
@@ -112,7 +112,7 @@ const GuideCard = ({
                   <p
                     className={cn(
                       "font-serif text-[1.05rem] leading-none tracking-[-0.02em] drop-shadow-[0_1px_1px_rgba(255,255,255,0.5)] md:text-[1.15rem]",
-                      isLight ? "text-[#1A1F2E]" : "text-[#F2EDE8]",
+                      "text-[#1A1F2E]",
                     )}
                   >
                     {titleLead}
@@ -121,7 +121,7 @@ const GuideCard = ({
                 <h3
                   className={cn(
                     "font-serif text-[1.45rem] leading-[1.02] tracking-[-0.025em] [text-wrap:balance] drop-shadow-[0_1px_1px_rgba(255,255,255,0.56)] sm:text-[1.6rem] md:text-[1.9rem]",
-                    isLight ? "text-[#1A1F2E]" : "text-[#F2EDE8]",
+                    "text-[#1A1F2E]",
                   )}
                 >
                   {displayTitle ?? title}
@@ -132,7 +132,7 @@ const GuideCard = ({
             <p
               className={cn(
                 "mt-7 max-w-[33ch] text-[1.02rem] leading-[1.42] drop-shadow-[0_1px_1px_rgba(255,255,255,0.34)] md:text-[1.08rem]",
-                isLight ? "text-[#1A1F2E]" : "text-[#F2EDE8]",
+                "text-[#1A1F2E]",
               )}
             >
               {description}
@@ -141,7 +141,7 @@ const GuideCard = ({
             <ul
               className={cn(
                 "mt-7 space-y-2.5 text-[1rem] leading-[1.35] drop-shadow-[0_1px_1px_rgba(255,255,255,0.3)] md:text-[1.06rem]",
-                isLight ? "text-[#1A1F2E]" : "text-[#F2EDE8]",
+                "text-[#1A1F2E]",
               )}
             >
               {bullets.map((bullet) => (
