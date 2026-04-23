@@ -14,6 +14,7 @@ import fortexLogo from "@/assets/fortex-logo.webp";
 import ftgLogo from "@/assets/ftg-logo.webp";
 import hostLogo from "@/assets/host-logo.webp";
 import homeFinancingExpertsLogo from "@/assets/home-financing-experts-logo.webp";
+import nextayLogo from "@/assets/nextay-logo.png";
 import ivethImg from "@/assets/veth-team.webp";
 import ricardoImg from "@/assets/ricardo-team.webp";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -91,12 +92,20 @@ const TeamPage = () => {
       alt: "Logo de Home Financing Experts",
     },
     {
-      name: "HOST",
+      name: "Host",
       logo: hostLogo,
       badge: tm.hostBadge,
       description: tm.hostDesc,
       logoClassName: "h-24 sm:h-28 w-auto rounded-md object-contain",
-      alt: "Logo de HOST",
+      alt: "Logo de Host",
+    },
+    {
+      name: "Nextay",
+      logo: nextayLogo,
+      badge: tm.nextayBadge,
+      description: tm.nextayDesc,
+      logoClassName: "h-24 sm:h-28 w-auto rounded-md object-contain",
+      alt: "Logo de Nextay",
     },
   ] as const;
 

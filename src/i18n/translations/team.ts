@@ -48,6 +48,11 @@
     es: "Con más de 10 años de experiencia en Miami, nuestro equipo se especializa en la gestión de propiedades de alquiler vacacional, siempre enfocados en proteger los intereses de cada propietario. Brindamos una administración clara, estratégica y eficiente para maximizar la ocupación y la rentabilidad de su propiedad, ofreciéndole tranquilidad y resultados sin que tenga que ocuparse de la operación diaria.",
     en: "With more than 10 years of experience in Miami, our team specializes in vacation rental property management, always focused on protecting each owner's interests. We provide clear, strategic, and efficient management to maximize occupancy and profitability, giving you peace of mind and results without having to handle the day-to-day operation.",
   },
+  nextayBadge: { es: "Gestión de propiedades y short-term rentals", en: "Property management and short-term rentals" },
+  nextayDesc: {
+    es: "Nextay es una empresa de gestión de propiedades enfocada en alquileres a corto plazo, diseñada para maximizar el rendimiento de cada hogar mientras ofrece experiencias memorables a los huéspedes. Nos encargamos de todo: desde la optimización de anuncios y precios hasta la limpieza profesional, inspecciones y atención al cliente. Nuestro enfoque combina hospitalidad, diseño y eficiencia operativa para que cada propiedad destaque y funcione sin preocupaciones para el propietario. Con Nextay, tu hogar no solo se renta, se convierte en una experiencia cuidada, rentable y consistente.",
+    en: "Nextay is a property management company focused on short-term rentals, designed to maximize each home's performance while delivering memorable guest experiences. We handle everything, from listing and pricing optimization to professional cleaning, inspections, and guest support. Our approach combines hospitality, design, and operational efficiency so every property stands out and runs smoothly for the owner. With Nextay, your home does not just get rented, it becomes a curated, profitable, and consistent experience.",
+  },
   viewMore: { es: "Ver más", en: "View more" },
   partnerDetails: { es: "Detalle de la compañía", en: "Company details" },
 } as const;

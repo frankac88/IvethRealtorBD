@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
-import equalHousingLogo from "@/assets/equal-housing-logo.webp";
-import realtorLogo from "@/assets/realtor-logo.webp";
+import equalHousingLogo from "@/assets/equal-housing-logo-light.png";
+import realtorLogo from "@/assets/realtor-logo-light.png";
 import { brandAssets } from "@/config/brandAssets";
 import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -91,7 +91,7 @@ const Footer = () => {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={socialLink.label}
-                      className="transition-opacity hover:opacity-80"
+                      className="flex h-11 w-11 items-center justify-center rounded-full border border-primary-foreground/22 bg-primary-foreground/[0.03] text-primary-foreground/92 shadow-[0_10px_24px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[hsl(var(--accent))]/55 hover:bg-[hsl(var(--accent))]/10 hover:text-[hsl(var(--gold-light))] hover:shadow-[0_14px_32px_rgba(0,0,0,0.3)]"
                     >
                       <Icon size={20} />
                     </a>
@@ -107,17 +107,15 @@ const Footer = () => {
             <img
               src={realtorLogo}
               alt="National Association of REALTORS logo"
-              className="h-12 w-auto object-contain md:h-14"
+              className="h-16 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-20"
               loading="lazy"
             />
-            <div className="rounded-md bg-white px-2 py-1">
-              <img
-                src={equalHousingLogo}
-                alt="Equal Housing Opportunity logo"
-                className="h-12 w-auto object-contain md:h-14"
-                loading="lazy"
-              />
-            </div>
+            <img
+              src={equalHousingLogo}
+              alt="Equal Housing Opportunity logo"
+              className="h-16 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-20"
+              loading="lazy"
+            />
           </div>
           <p className="mb-3 text-center text-xs uppercase tracking-[0.12em] text-primary-foreground/70 md:tracking-[0.22em]">
             National Association of REALTORS® · Equal Housing Opportunity
