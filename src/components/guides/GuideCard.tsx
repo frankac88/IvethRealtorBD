@@ -161,7 +161,7 @@ const GuideCard = ({
             type="button"
             variant="gold"
             size="lg"
-            className="h-11 w-full rounded-[4px] border border-[#1A1F2E]/85 bg-[#1A1F2E] px-5 font-serif text-[1.05rem] font-normal normal-case tracking-[-0.01em] text-[#F2EDE8] shadow-[0_6px_16px_rgba(26,31,46,0.26)] hover:scale-100 hover:bg-[#141926] hover:shadow-[0_8px_18px_rgba(26,31,46,0.32)] sm:flex-1"
+            className="h-11 w-full rounded-[4px] border border-[#9B6B8A]/85 bg-[#9B6B8A] px-5 font-serif text-[1.05rem] font-normal normal-case tracking-[-0.01em] text-[#F2EDE8] shadow-[0_6px_16px_rgba(155,107,138,0.26)] hover:scale-100 hover:bg-[#875C78] hover:shadow-[0_8px_18px_rgba(155,107,138,0.32)] sm:flex-1"
             onClick={onDownload}
           >
             <Download className="h-4 w-4" />
@@ -172,7 +172,7 @@ const GuideCard = ({
             variant="whatsapp"
             size="lg"
             asChild
-            className="h-11 w-full rounded-[4px] border border-white/10 bg-[#2d5b53] px-5 font-serif text-[1.03rem] font-normal normal-case tracking-[-0.01em] text-[#f7f3e6] shadow-[0_6px_16px_rgba(21,42,37,0.24)] hover:scale-100 hover:bg-[#244d46] hover:shadow-[0_8px_18px_rgba(21,42,37,0.3)] sm:flex-1"
+            className="h-11 w-full rounded-[4px] border border-[#2A7B88]/85 bg-[#2A7B88] px-5 font-serif text-[1.03rem] font-normal normal-case tracking-[-0.01em] text-[#F2EDE8] shadow-[0_6px_16px_rgba(42,123,136,0.24)] hover:scale-100 hover:bg-[#256E79] hover:shadow-[0_8px_18px_rgba(42,123,136,0.3)] sm:flex-1"
           >
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4" />

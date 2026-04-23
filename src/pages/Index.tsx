@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MapPin, TrendingUp, Shield, Building2, Star, ArrowRight } from "lucide-react";
+import { MapPin, TrendingUp, Shield, Building2, ArrowRight, ExternalLink } from "lucide-react";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
+import HomeTestimonialsCarousel from "@/components/home/HomeTestimonialsCarousel";
+import { googleReviewsContent } from "@/content/googleReviews";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { homeTranslations } from "@/i18n/translations/home";
@@ -185,24 +187,24 @@ const Index = () => {
       <AnimatedSection className="bg-foreground py-20 text-primary-foreground">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-16 text-center">
-            <p className="type-caption mb-4">{t(h.testimonialsLabel)}</p>
+            <p className="type-caption mb-4">{t(googleReviewsContent.labels.homeEyebrow)}</p>
             <h2 className="type-h2">{t(h.testimonialsTitle)}</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-primary-foreground/72 md:text-base">
+              {t(googleReviewsContent.labels.source)}
+            </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {h.testimonials.map((item, i) => (
-              <AnimatedSection as="div" key={item.name} delay={i * 150} className="rounded-sm border border-primary-foreground/10 p-8">
-                <div className="mb-4 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} className="fill-accent text-accent" />
-                  ))}
-                </div>
-                <p className="type-body mb-6 italic text-primary-foreground/88">&quot;{t(item.text)}&quot;</p>
-                <div>
-                  <p className="font-semibold">{item.name}</p>
-                  <p className="type-body-sm text-primary-foreground/65">{t(item.country)}</p>
-                </div>
-              </AnimatedSection>
-            ))}
+          <HomeTestimonialsCarousel reviews={googleReviewsContent.reviews} />
+          <div className="mt-10 flex justify-center">
+            <Button
+              variant="outline"
+              className="border-[#9B6B8A] bg-[#9B6B8A] text-[#F2EDE8] hover:bg-[#875C78] hover:text-[#F2EDE8]"
+              asChild
+            >
+              <a href={googleReviewsContent.googleBusinessUrl} target="_blank" rel="noopener noreferrer">
+                {t(googleReviewsContent.labels.homeCta)}
+                <ExternalLink size={16} />
+              </a>
+            </Button>
           </div>
         </div>
       </AnimatedSection>
