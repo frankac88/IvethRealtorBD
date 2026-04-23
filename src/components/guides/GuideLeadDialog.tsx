@@ -137,9 +137,9 @@ const GuideLeadDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden border-white/70 bg-[#f8f2ea] p-0 text-foreground shadow-[0_30px_90px_rgba(79,61,44,0.18)] sm:max-w-xl">
+      <DialogContent className="overflow-hidden border-white/70 bg-[#F2EDE8] p-0 text-foreground shadow-[0_30px_90px_rgba(26,31,46,0.18)] sm:max-w-xl">
         <div className="relative">
-          <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top_left,rgba(212,176,104,0.4),transparent_58%),radial-gradient(circle_at_top_right,rgba(42,123,136,0.24),transparent_40%)]" />
+          <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top_left,rgba(155,107,138,0.3),transparent_58%),radial-gradient(circle_at_top_right,rgba(42,123,136,0.24),transparent_40%)]" />
           <div className="relative p-6 sm:p-8">
             {isSubmitted ? (
               <div className="space-y-6">

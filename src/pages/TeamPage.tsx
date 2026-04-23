@@ -119,14 +119,14 @@ const TeamPage = () => {
                 key={member.name}
                 data-testid="team-profile-card"
                 delay={index * 120}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-primary/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(248,245,239,0.98)_100%)] p-6 text-center shadow-[0_20px_60px_rgba(31,41,55,0.08)] ring-1 ring-[rgba(194,168,120,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(31,41,55,0.12)] md:p-8"
+                className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-primary/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(242,237,232,0.98)_100%)] p-6 text-center shadow-[0_20px_60px_rgba(31,41,55,0.08)] ring-1 ring-[rgba(155,107,138,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(31,41,55,0.12)] md:p-8"
               >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(194,168,120,0.18),transparent_72%)]" />
-                <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(194,168,120,0.8)] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_top,rgba(155,107,138,0.16),transparent_72%)]" />
+                <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(155,107,138,0.76)] to-transparent" />
 
                 <div className="relative flex h-full flex-col">
                   <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-primary/10 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur">
-                    <span className="h-2 w-2 rounded-full bg-[rgba(194,168,120,0.95)]" />
+                    <span className="h-2 w-2 rounded-full bg-[rgba(155,107,138,0.95)]" />
                     <span className="text-[0.68rem] font-medium uppercase tracking-[0.28em] text-primary/80">
                       {t(member.role)}
                     </span>
@@ -146,7 +146,7 @@ const TeamPage = () => {
                   <h2 className="mb-2 font-serif text-[2.15rem] leading-tight tracking-[-0.03em] text-primary">
                     {member.name}
                   </h2>
-                  <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-[rgba(194,168,120,0.95)] to-transparent" />
+                  <div className="mx-auto mb-5 h-px w-20 bg-gradient-to-r from-transparent via-[rgba(155,107,138,0.95)] to-transparent" />
                   <p
                     lang={language}
                     className="type-body-sm mx-auto max-w-md text-justify text-muted-foreground"
