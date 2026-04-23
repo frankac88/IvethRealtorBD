@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,10 @@ const Navbar = () => {
   const { language, setLanguage } = useLanguage();
   const t = useT();
   const activeRouteKey = getRouteKeyForPath(location.pathname);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   const handleToggleLanguage = () => {
     const nextLanguage = language === "es" ? "en" : "es";
