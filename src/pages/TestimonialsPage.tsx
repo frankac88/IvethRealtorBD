@@ -63,6 +63,7 @@ const TestimonialsPage = () => {
               </AnimatedSection>
             ))}
           </div>
+
           <div className="mt-12 flex justify-center">
             <Button variant="hero" asChild>
               <a href={googleReviewsContent.googleBusinessUrl} target="_blank" rel="noopener noreferrer">
@@ -78,7 +79,3 @@ const TestimonialsPage = () => {
 };
 
 export default TestimonialsPage;
-
-
-
-
