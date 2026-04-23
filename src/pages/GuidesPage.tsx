@@ -175,7 +175,7 @@ const GuidesPage = () => {
             <AnimatedSection as="div">
               <div className="inline-block rounded-[32px] border border-white/40 bg-[linear-gradient(180deg,rgba(242,237,232,0.64)_0%,rgba(242,237,232,0.4)_100%)] px-6 py-6 shadow-[0_24px_70px_rgba(26,31,46,0.12)] backdrop-blur-[4px] md:px-8 md:py-7">
                 <div className="mb-5 h-px w-24 bg-[linear-gradient(90deg,rgba(155,107,138,0.95)_0%,rgba(155,107,138,0.18)_100%)]" />
-                <h1 className="font-serif text-[2.45rem] leading-[0.96] tracking-[-0.04em] text-[#1A1F2E] md:text-[3.8rem] lg:text-[4.6rem]">
+                <h1 className="type-h2 text-[#1A1F2E]">
                   {t(g.title)}
                 </h1>
                 <p className="mt-6 max-w-[560px] text-[1.02rem] leading-[1.8] text-[#1A1F2E]/82 md:text-[1.1rem]">
