@@ -53,12 +53,12 @@ const Navbar = () => {
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-4 top-1/2 h-10 -translate-y-1/2 rounded-full bg-primary/10 opacity-0 blur-xl transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 opacity-0 blur-2xl transition-all duration-500 ease-out group-hover:h-24 group-hover:w-[92%] group-hover:opacity-100 group-hover:blur-3xl group-focus-visible:h-24 group-focus-visible:w-[92%] group-focus-visible:opacity-100 group-focus-visible:blur-3xl"
             />
             <img
               src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block h-[72%] max-h-full w-auto max-w-full origin-left object-left object-contain transition duration-300 ease-out xl:-translate-x-10 xl:scale-[1.3] 2xl:-translate-x-6 2xl:scale-[1.7] group-hover:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] group-focus-visible:drop-shadow-[0_10px_18px_rgba(42,123,136,0.22)] xl:group-hover:scale-[1.34] xl:group-focus-visible:scale-[1.34] 2xl:group-hover:scale-[1.74] 2xl:group-focus-visible:scale-[1.74]"
+              className="relative block h-[72%] max-h-full w-auto max-w-full origin-left object-left object-contain saturate-[1.02] transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] xl:-translate-x-10 xl:scale-[1.3] 2xl:-translate-x-6 2xl:scale-[1.7] group-hover:-translate-y-1 group-hover:rotate-[-1.5deg] group-hover:brightness-110 group-hover:saturate-[1.15] group-hover:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)] group-focus-visible:-translate-y-1 group-focus-visible:rotate-[-1.5deg] group-focus-visible:brightness-110 group-focus-visible:saturate-[1.15] group-focus-visible:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)] xl:group-hover:scale-[1.38] xl:group-focus-visible:scale-[1.38] 2xl:group-hover:scale-[1.8] 2xl:group-focus-visible:scale-[1.8]"
             />
           </Link>
 
