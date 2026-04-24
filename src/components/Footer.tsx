@@ -107,13 +107,13 @@ const Footer = () => {
             <img
               src={realtorLogo}
               alt="National Association of REALTORS logo"
-              className="h-12 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-14"
+              className="h-9 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-10"
               loading="lazy"
             />
             <img
               src={equalHousingLogo}
               alt="Equal Housing Opportunity logo"
-              className="h-12 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-14"
+              className="h-9 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-10"
               loading="lazy"
             />
           </div>
