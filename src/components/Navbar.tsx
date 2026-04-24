@@ -57,7 +57,7 @@ const Navbar = () => {
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 opacity-0 blur-2xl transition-all duration-500 ease-out group-hover:h-24 group-hover:w-[92%] group-hover:opacity-100 group-hover:blur-3xl group-focus-visible:h-24 group-focus-visible:w-[92%] group-focus-visible:opacity-100 group-focus-visible:blur-3xl"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-all duration-500 ease-out"
             />
             <img
               src={brandAssets.headerLogo}
