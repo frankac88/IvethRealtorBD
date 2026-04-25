@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
 import { LanguageProvider } from "@/i18n/LanguageContext";
@@ -22,9 +23,11 @@ const renderInvestPage = () => {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <InvestPage />
-      </LanguageProvider>
+      <MemoryRouter>
+        <LanguageProvider>
+          <InvestPage />
+        </LanguageProvider>
+      </MemoryRouter>
     </QueryClientProvider>,
   );
 };
@@ -40,5 +43,11 @@ describe("InvestPage", () => {
     expect(screen.getByRole("heading", { level: 3, name: "Davenport" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3, name: "Kissimmee" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3, name: "Clermont / Four Corners" })).toBeInTheDocument();
+  });
+
+  it("renders Orlando tags on each Orlando zone image", () => {
+    renderInvestPage();
+
+    expect(screen.getAllByText(/^Orlando$/)).toHaveLength(3);
   });
 });

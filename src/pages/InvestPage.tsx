@@ -510,13 +510,16 @@ const InvestPage = () => {
                     <p className="type-caption mb-3">Orlando market</p>
                     <h3 className="mb-4 font-serif text-4xl font-medium tracking-[-0.035em]">{t(zoneItem.title)}</h3>
                     <p className="type-body-sm text-foreground/78">{t(zoneItem.subtitle)}</p>
-                    <div className="mt-8 overflow-hidden rounded-[24px] border border-white/50 bg-background/70 shadow-[0_18px_50px_-34px_rgba(26,31,46,0.55)]">
+                    <div className="relative mt-8 overflow-hidden rounded-[24px] border border-white/50 bg-background/70 shadow-[0_18px_50px_-34px_rgba(26,31,46,0.55)]">
                       <img
                         src={zoneItem.image}
                         alt={t(zoneItem.imageAlt)}
                         className="h-56 w-full object-cover"
                         loading="lazy"
                       />
+                      <div className="absolute bottom-5 left-5 rounded-full border border-white/35 bg-white/20 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur">
+                        Orlando
+                      </div>
                     </div>
                   </div>
                   <div className="p-7 lg:p-9">

@@ -9,7 +9,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run",
+    "clean:test-artifacts": "node scripts/cleanup-test-artifacts.mjs",
+    "test": "node scripts/run-tests.mjs",
     "test:watch": "vitest"
   },
   "dependencies": {

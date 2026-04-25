@@ -15,6 +15,12 @@ dist-ssr
 .env.*
 !.env.example
 
+# Generated test artifacts
+.codex*
+playwright-report/
+test-results/
+coverage/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
