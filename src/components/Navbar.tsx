@@ -62,7 +62,7 @@ const Navbar = () => {
             <img
               src={brandAssets.headerLogo}
               alt="Iveth Coll"
-              className="relative block h-48 max-h-none w-auto max-w-none -translate-x-8 object-contain object-center saturate-[1.02] transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] min-[1080px]:h-60 min-[1080px]:-translate-x-12 group-hover:-translate-y-1 group-hover:rotate-[-1.5deg] group-hover:brightness-110 group-hover:saturate-[1.15] group-hover:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)] group-focus-visible:-translate-y-1 group-focus-visible:rotate-[-1.5deg] group-focus-visible:brightness-110 group-focus-visible:saturate-[1.15] group-focus-visible:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)]"
+              className="relative block h-48 max-h-none w-auto max-w-none -translate-x-8 object-contain object-center saturate-[1.02] transition duration-500 ease-luxury min-[1080px]:h-60 min-[1080px]:-translate-x-12 group-hover:-translate-y-1 group-hover:rotate-[-1.5deg] group-hover:brightness-110 group-hover:saturate-[1.15] group-hover:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)] group-focus-visible:-translate-y-1 group-focus-visible:rotate-[-1.5deg] group-focus-visible:brightness-110 group-focus-visible:saturate-[1.15] group-focus-visible:drop-shadow-[0_18px_30px_rgba(42,123,136,0.30)]"
             />
           </Link>
 
