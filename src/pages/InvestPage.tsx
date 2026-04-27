@@ -51,7 +51,7 @@ interface OrlandoZone {
 }
 
 const copy = {
-  eyebrow: { es: "Real estate investment strategy", en: "Real estate investment strategy" },
+  eyebrow: { es: "Estrategia de inversión inmobiliaria", en: "Real estate investment strategy" },
   heroTitle: { es: "Invertir en Florida", en: "Invest in Florida" },
   heroText: {
     es: "Invertir en Florida requiere más que elegir una ciudad: requiere una estrategia clara desde el inicio. Te acompaño a entender las diferencias entre Miami y Orlando, y a tomar decisiones informadas antes de invertir.",
@@ -76,7 +76,7 @@ const copy = {
     en: "Orlando is one of the most recognized markets for investors seeking rental income, especially near the tourism corridor. The most common mistake is thinking that any property in Orlando works for short-term rental.",
   },
   orlandoComplement: {
-    es: "Aquí la clave está en analizar ubicación, permisos, comunidad, amenities, demanda y costos de operación.",
+    es: "Aquí la clave está en analizar ubicación, permisos, comunidad, amenidades, demanda y costos de operación.",
     en: "The key is analyzing location, permits, community rules, amenities, demand, and operating costs.",
   },
   formTitle: { es: "Asesoría personalizada", en: "Personalized consultation" },
@@ -112,7 +112,7 @@ const miamiZones: MiamiZone[] = [
     },
     accent: "from-primary/90 via-primary/70 to-accent/70",
     image: "https://images.unsplash.com/photo-1748380868276-6faae7e27b94?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: { es: "Vista waterfront de Brickell Key y el skyline de Miami", en: "Waterfront view of Brickell Key and the Miami skyline" },
+    imageAlt: { es: "Vista frente al agua de Brickell Key y el panorama urbano de Miami", en: "Waterfront view of Brickell Key and the Miami skyline" },
   },
   {
     value: "miami-beach",
@@ -134,7 +134,7 @@ const miamiZones: MiamiZone[] = [
     },
     accent: "from-green-light/90 via-primary/70 to-gold-light/80",
     image: "https://images.unsplash.com/photo-1766373165231-8807829cd12b?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: { es: "Canales y skyline de Downtown Fort Lauderdale", en: "Downtown Fort Lauderdale canals and skyline" },
+    imageAlt: { es: "Canales y panorama urbano del centro de Fort Lauderdale", en: "Downtown Fort Lauderdale canals and skyline" },
   },
 ];
 
@@ -148,17 +148,17 @@ const orlandoZones: OrlandoZone[] = [
     value: "davenport",
     title: { es: "Davenport", en: "Davenport" },
     subtitle: {
-      es: "Resorts, nuevas comunidades y atractivo para renta vacacional",
+      es: "Complejos turísticos, nuevas comunidades y atractivo para renta vacacional",
       en: "Resorts, new communities, and vacation rental appeal",
     },
     body: {
-      es: "Davenport se ha convertido en una de las zonas más buscadas por inversionistas que quieren entrar al mercado vacacional con propiedades tipo resort, casas con piscina y comunidades preparadas para recibir familias y grupos.",
+      es: "Davenport se ha convertido en una de las zonas más buscadas por inversionistas que quieren entrar al mercado vacacional con propiedades tipo complejo turístico, casas con piscina y comunidades preparadas para recibir familias y grupos.",
       en: "Davenport has become one of the most sought-after areas for investors entering the vacation market with resort-style properties, pool homes, and communities prepared to host families and groups.",
     },
     highlights: [
       { es: "Puede ofrecer precios de entrada más competitivos que zonas más cercanas a Disney.", en: "It may offer more competitive entry prices than areas closer to Disney." },
       { es: "Fuerte presencia de comunidades diseñadas para rentas cortas.", en: "Strong presence of communities designed for short-term rentals." },
-      { es: "Ideal para analizar cash flow, ocupación, amenities y administración profesional.", en: "Ideal for analyzing cash flow, occupancy, amenities, and professional management." },
+      { es: "Ideal para analizar flujo de caja, ocupación, amenidades y administración profesional.", en: "Ideal for analyzing cash flow, occupancy, amenities, and professional management." },
       { es: "No todas las comunidades tienen el mismo potencial ni las mismas reglas.", en: "Not all communities have the same potential or rules." },
     ],
     microZones: { es: "ChampionsGate, Solterra Resort, Providence y áreas cercanas a la I-4.", en: "ChampionsGate, Solterra Resort, Providence, and areas near I-4." },
@@ -181,7 +181,7 @@ const orlandoZones: OrlandoZone[] = [
     },
     highlights: [
       { es: "Alta demanda por cercanía a parques y atracciones.", en: "High demand due to proximity to parks and attractions." },
-      { es: "Inventario amplio de casas vacacionales y townhomes.", en: "Broad inventory of vacation homes and townhomes." },
+      { es: "Inventario amplio de casas vacacionales y casas adosadas.", en: "Broad inventory of vacation homes and townhomes." },
       { es: "Buen encaje para inversionistas que buscan renta corta.", en: "Strong fit for investors seeking short-term rental." },
       { es: "La diferencia está en elegir bien la comunidad, el HOA y las restricciones.", en: "The difference is choosing the right community, HOA, and restrictions." },
     ],
@@ -196,7 +196,7 @@ const orlandoZones: OrlandoZone[] = [
     value: "clermont-four-corners",
     title: { es: "Clermont / Four Corners", en: "Clermont / Four Corners" },
     subtitle: {
-      es: "Crecimiento, lifestyle y oportunidades selectivas",
+      es: "Crecimiento, estilo de vida y oportunidades selectivas",
       en: "Growth, lifestyle, and selective opportunities",
     },
     body: {
@@ -209,7 +209,7 @@ const orlandoZones: OrlandoZone[] = [
       { es: "Interesante para segunda vivienda, renta tradicional o estrategias mixtas según ubicación.", en: "Interesting for a second home, traditional rental, or mixed strategies depending on location." },
       { es: "Es obligatorio validar permisos, HOA y reglas antes de comprar.", en: "It is mandatory to validate permits, HOA, and rules before buying." },
     ],
-    microZones: { es: "Four Corners, áreas cercanas a Disney corridor, Clermont y comunidades con permisos claros.", en: "Four Corners, areas near the Disney corridor, Clermont, and communities with clear permits." },
+    microZones: { es: "Four Corners, áreas cercanas al corredor de Disney, Clermont y comunidades con permisos claros.", en: "Four Corners, areas near the Disney corridor, Clermont, and communities with clear permits." },
     quote: sharedOrlandoQuote,
     cta: { es: "Explora si esta zona se ajusta a tu perfil", en: "Explore whether this area fits your profile" },
     image: "https://images.unsplash.com/photo-1647579350413-a6ada4e480ed?auto=format&fit=crop&w=1200&q=80",
@@ -272,7 +272,7 @@ const InvestPage = () => {
   const whatsappHref = createWhatsappHref(generalWhatsappMessage);
 
   useEffect(() => {
-    document.title = "Invertir en Florida | Miami y Orlando Real Estate Investment";
+    document.title = "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando";
 
     const description =
       "Descubre cómo invertir estratégicamente en Florida. Compara oportunidades en Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee y Clermont con asesoría personalizada.";
@@ -367,7 +367,10 @@ const InvestPage = () => {
       <section className="relative isolate overflow-hidden bg-background">
         <img
           src={investHeroFlorida}
-          alt="Florida real estate skyline and waterfront"
+          alt={t({
+            es: "Panorama urbano y frente al agua inmobiliario de Florida",
+            en: "Florida real estate skyline and waterfront",
+          })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 8%" }}
         />
@@ -403,14 +406,14 @@ const InvestPage = () => {
           <article className="mx-auto mb-12 max-w-6xl overflow-hidden rounded-[28px] border border-border/70 bg-card shadow-[0_18px_60px_-42px_rgba(26,31,46,0.45)]">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               <div className="p-7 md:p-9 lg:p-10">
-                <p className="type-caption mb-4">Miami strategy</p>
+                <p className="type-caption mb-4">{t({ es: "Estrategia Miami", en: "Miami strategy" })}</p>
                 <h2 className="type-h2 mb-5 text-foreground">{t(copy.miamiTitle)}</h2>
                 <p className="type-body max-w-2xl">{t(copy.miamiText)}</p>
               </div>
               <div className="relative min-h-[260px] overflow-hidden bg-gradient-to-br from-primary/90 via-primary/70 to-accent/70 lg:min-h-full">
                 <img
                   src={heroMiami}
-                  alt="Miami skyline"
+                  alt={t({ es: "Panorama urbano de Miami", en: "Miami skyline" })}
                   className="absolute inset-0 h-full w-full object-cover opacity-82 mix-blend-overlay"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-foreground/20 via-transparent to-primary/30" />
@@ -472,7 +475,7 @@ const InvestPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto mb-12 grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
-              <p className="type-caption mb-4">Orlando strategy</p>
+              <p className="type-caption mb-4">{t({ es: "Estrategia Orlando", en: "Orlando strategy" })}</p>
               <h2 className="type-h2 mb-5">{t(copy.orlandoTitle)}</h2>
               <p className="type-body mb-5">{t(copy.orlandoMain)}</p>
               <p className="type-body-sm text-foreground/80">{t(copy.orlandoComplement)}</p>
@@ -507,7 +510,7 @@ const InvestPage = () => {
                     <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-full bg-background text-primary shadow-sm ring-1 ring-border/80">
                       <Icon size={24} />
                     </div>
-                    <p className="type-caption mb-3">Orlando market</p>
+                    <p className="type-caption mb-3">{t({ es: "Mercado de Orlando", en: "Orlando market" })}</p>
                     <h3 className="mb-4 font-serif text-4xl font-medium tracking-[-0.035em]">{t(zoneItem.title)}</h3>
                     <p className="type-body-sm text-foreground/78">{t(zoneItem.subtitle)}</p>
                     <div className="relative mt-8 overflow-hidden rounded-[24px] border border-white/50 bg-background/70 shadow-[0_18px_50px_-34px_rgba(26,31,46,0.55)]">
