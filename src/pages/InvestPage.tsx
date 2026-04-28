@@ -255,6 +255,13 @@ const createWhatsappHref = (message: string) =>
 const isOrlandoZone = (zone: ZoneValue | "") =>
   zone === "davenport" || zone === "kissimmee" || zone === "clermont-four-corners";
 
+const WhatsappChatIcon = ({ size = 16 }: { size?: number }) => (
+  <MessageCircle
+    size={size}
+    className="fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white"
+  />
+);
+
 const InvestPage = () => {
   const t = useT();
   const { language } = useLanguage();
@@ -390,9 +397,9 @@ const InvestPage = () => {
                   {t(copy.primaryCta)}
                 </Link>
               </Button>
-              <Button variant="heroOutline" size="lg" asChild>
+              <Button variant="heroOutline" size="lg" className="group" asChild>
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle size={18} />
+                  <WhatsappChatIcon size={18} />
                   {t(copy.whatsappCta)}
                 </a>
               </Button>
@@ -455,11 +462,11 @@ const InvestPage = () => {
                     </Button>
                     <Button
                       variant="outline"
-                      className="h-auto min-h-11 flex-1 whitespace-normal px-3 py-2 text-center text-[0.72rem] leading-tight min-[380px]:text-[0.78rem]"
+                      className="group h-auto min-h-11 flex-1 whitespace-normal px-3 py-2 text-center text-[0.72rem] leading-tight min-[380px]:text-[0.78rem]"
                       asChild
                     >
                       <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                        <MessageCircle size={16} />
+                        <WhatsappChatIcon />
                         {t(copy.whatsappDirect)}
                       </a>
                     </Button>
@@ -546,9 +553,9 @@ const InvestPage = () => {
                       <Button type="button" variant="hero" onClick={() => openForm(zoneItem.value)}>
                         {t(zoneItem.cta)}
                       </Button>
-                      <Button variant="outline" asChild>
+                      <Button variant="outline" className="group" asChild>
                         <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                          <MessageCircle size={16} />
+                          <WhatsappChatIcon />
                           {t(copy.whatsappDirect)}
                         </a>
                       </Button>
@@ -575,9 +582,9 @@ const InvestPage = () => {
                   {t(copy.primaryCta)}
                 </Link>
               </Button>
-              <Button variant="whatsapp" size="lg" asChild>
+              <Button variant="whatsapp" size="lg" className="group" asChild>
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle size={18} />
+                  <WhatsappChatIcon size={18} />
                   {t(copy.whatsappCta)}
                 </a>
               </Button>
