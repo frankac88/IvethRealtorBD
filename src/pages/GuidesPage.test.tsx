@@ -9,6 +9,7 @@ import GuidesPage from "./GuidesPage";
 const mockMutateAsync = vi.fn();
 const mockToast = vi.fn();
 const mockLocationAssign = vi.fn();
+const mockFetch = vi.fn();
 const ROUTER_FUTURE_FLAGS = {
   v7_startTransition: true,
   v7_relativeSplatPath: true,
@@ -56,6 +57,7 @@ const renderGuidesPage = () => {
 
 describe("GuidesPage", () => {
   const originalLocation = window.location;
+  const originalFetch = window.fetch;
 
   beforeAll(() => {
     Object.defineProperty(window, "location", {
@@ -65,6 +67,10 @@ describe("GuidesPage", () => {
         assign: mockLocationAssign,
       },
     });
+    Object.defineProperty(window, "fetch", {
+      configurable: true,
+      value: mockFetch,
+    });
   });
 
   afterAll(() => {
@@ -72,10 +78,15 @@ describe("GuidesPage", () => {
       configurable: true,
       value: originalLocation,
     });
+    Object.defineProperty(window, "fetch", {
+      configurable: true,
+      value: originalFetch,
+    });
   });
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockFetch.mockResolvedValue({ ok: true });
   });
 
   it("renders the exact Spanish conversion copy and redesigned editorial guide cards without inline images", () => {
@@ -144,9 +155,34 @@ describe("GuidesPage", () => {
       });
     });
 
+    expect(mockToast).toHaveBeenCalledWith({
+      title: "Tu guía está lista",
+      description: "La descarga comenzará automáticamente en unos segundos.",
+    });
+    expect(mockLocationAssign).not.toHaveBeenCalled();
+
     await waitFor(() => {
       expect(mockLocationAssign).toHaveBeenCalledWith(guideDownloadUrl);
-    });
+    }, { timeout: 1500 });
+  });
+
+  it("shows a fallback modal when the automatic download cannot be validated", async () => {
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
+    mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
+    mockFetch.mockResolvedValueOnce({ ok: false });
+    renderGuidesPage();
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
+    fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Jane Doe" } });
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "jane@test.com" } });
+
+    const dialog = screen.getByRole("dialog");
+    fireEvent.submit(within(dialog).getByRole("button", { name: "Descargar Guía" }).closest("form")!);
+
+    expect(await screen.findByText("No pudimos iniciar la descarga automáticamente")).toBeInTheDocument();
+    expect(screen.getByText("Si la descarga no inicia automáticamente, usa este botón.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Descargar guía" })).toHaveAttribute("href", guideDownloadUrl);
+    expect(mockLocationAssign).not.toHaveBeenCalled();
   });
 
   it("uses a guide-specific WhatsApp message", () => {

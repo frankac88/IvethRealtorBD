@@ -1,6 +1,6 @@
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
@@ -79,7 +79,7 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    if (request.method !== "GET") {
+    if (request.method !== "GET" && request.method !== "HEAD") {
       return jsonResponse({ error: "Method not allowed" }, 405);
     }
 
@@ -113,6 +113,23 @@ export default {
     const objectKey = await resolveObjectKey(env, guide);
     if (!objectKey) {
       return jsonResponse({ error: "Guide file not found" }, 404);
+    }
+
+    if (request.method === "HEAD") {
+      const object = await env.GUIAS_BUCKET.head(objectKey);
+
+      if (!object) {
+        return new Response(null, { status: 404, headers: corsHeaders });
+      }
+
+      return new Response(null, {
+        status: 200,
+        headers: {
+          ...corsHeaders,
+          "Content-Type": object.httpMetadata?.contentType || getContentType(objectKey),
+          "Cache-Control": "private, no-store",
+        },
+      });
     }
 
     const object = await env.GUIAS_BUCKET.get(objectKey);

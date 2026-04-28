@@ -10,6 +10,14 @@ import AnimatedSection from "@/components/AnimatedSection";
 import GuideCard from "@/components/guides/GuideCard";
 import GuideLeadDialog, { type GuideLeadFormValues } from "@/components/guides/GuideLeadDialog";
 import Layout from "@/components/Layout";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { siteConfig } from "@/config/site";
 import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { useToast } from "@/hooks/use-toast";
@@ -83,6 +91,20 @@ const guideVisuals = {
 
 const guideOrder = ["investor", "preconstruction", "financing", "buyer"] as const;
 type GuideKey = typeof guideOrder[number];
+const DOWNLOAD_REDIRECT_DELAY_MS = 900;
+
+async function canStartDownload(downloadUrl: string) {
+  try {
+    const response = await fetch(downloadUrl, {
+      method: "HEAD",
+      cache: "no-store",
+    });
+
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
 
 const GuidesPage = () => {
   const { language } = useLanguage();
@@ -93,6 +115,7 @@ const GuidesPage = () => {
   const [activeGuideKey, setActiveGuideKey] = useState<GuideKey | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fallbackDownloadHref, setFallbackDownloadHref] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
 
   const activeGuide = activeGuideKey ? g.guides[activeGuideKey] : null;
@@ -139,8 +162,23 @@ const GuidesPage = () => {
         throw new Error(t(g.form.fallbackErrorDescription));
       }
 
-      window.location.assign(response.guideDownloadUrl);
+      toast({
+        title: t(g.form.downloadReadyTitle),
+        description: t(g.form.downloadReadyDescription),
+      });
+
       setIsDialogOpen(false);
+
+      window.setTimeout(async () => {
+        const isDownloadReady = await canStartDownload(response.guideDownloadUrl);
+
+        if (!isDownloadReady) {
+          setFallbackDownloadHref(response.guideDownloadUrl);
+          return;
+        }
+
+        window.location.assign(response.guideDownloadUrl);
+      }, DOWNLOAD_REDIRECT_DELAY_MS);
     } catch (error) {
       const description = error instanceof Error ? error.message : t(g.form.fallbackErrorDescription);
 
@@ -276,6 +314,27 @@ const GuidesPage = () => {
           }}
         />
       ) : null}
+
+      <Dialog open={Boolean(fallbackDownloadHref)} onOpenChange={(open) => !open && setFallbackDownloadHref(null)}>
+        <DialogContent className="border-white/70 bg-[#F2EDE8] text-foreground shadow-[0_30px_90px_rgba(26,31,46,0.18)] sm:max-w-md">
+          <DialogHeader className="text-left">
+            <DialogTitle className="font-serif text-3xl tracking-[-0.03em]">
+              {t(g.form.downloadFallbackTitle)}
+            </DialogTitle>
+            <DialogDescription className="text-sm leading-6 text-muted-foreground">
+              {t(g.form.downloadFallbackDescription)}
+            </DialogDescription>
+          </DialogHeader>
+
+          {fallbackDownloadHref ? (
+            <Button variant="gold" size="lg" asChild className="mt-2 w-full">
+              <a href={fallbackDownloadHref} onClick={() => setFallbackDownloadHref(null)}>
+                {t(g.form.downloadFallbackButton)}
+              </a>
+            </Button>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };

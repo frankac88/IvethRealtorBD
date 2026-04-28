@@ -37,7 +37,7 @@ export const guidesTranslations = {
     emailLabel: { es: "Email", en: "Email" },
     whatsappLabel: { es: "WhatsApp (opcional)", en: "WhatsApp (optional)" },
     submitLabel: { es: "Descargar Guía", en: "Download Guide" },
-    submittingLabel: { es: "Enviando...", en: "Sending..." },
+    submittingLabel: { es: "Preparando descarga...", en: "Preparing download..." },
     privacyNote: {
       es: "Tus datos se usarán para compartir la guía solicitada y coordinar seguimiento comercial si lo deseas.",
       en: "Your information will be used to share the requested guide and coordinate follow-up if you want it.",
@@ -50,6 +50,20 @@ export const guidesTranslations = {
     consultationLabel: { es: "Agendar consulta", en: "Book consultation" },
     closeLabel: { es: "Cerrar", en: "Close" },
     errorTitle: { es: "Error", en: "Error" },
+    downloadReadyTitle: { es: "Tu guía está lista", en: "Your guide is ready" },
+    downloadReadyDescription: {
+      es: "La descarga comenzará automáticamente en unos segundos.",
+      en: "The download will start automatically in a few seconds.",
+    },
+    downloadFallbackTitle: {
+      es: "No pudimos iniciar la descarga automáticamente",
+      en: "We could not start the download automatically",
+    },
+    downloadFallbackDescription: {
+      es: "Si la descarga no inicia automáticamente, usa este botón.",
+      en: "If the download does not start automatically, use this button.",
+    },
+    downloadFallbackButton: { es: "Descargar guía", en: "Download guide" },
     fallbackErrorDescription: {
       es: "No se pudo registrar tu solicitud en este momento.",
       en: "We could not register your request at this time.",
