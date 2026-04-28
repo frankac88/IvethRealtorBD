@@ -6,7 +6,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const MIN_FORM_FILL_MS = 4000;
+const MIN_FORM_FILL_MS = 750;
+const GUIDE_MIN_FORM_FILL_MS = 150;
 const GUIDE_DOWNLOAD_LINK_TTL_SECONDS = 15 * 60;
 const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
 const PHONE_REGEX = /^\+?[0-9\s().-]{7,20}$/;
@@ -104,7 +105,10 @@ Deno.serve(async (req) => {
       return suspiciousSuccessResponse();
     }
 
-    if (Date.now() - startedAt < MIN_FORM_FILL_MS) {
+    const minFormFillMs = guideKey ? GUIDE_MIN_FORM_FILL_MS : MIN_FORM_FILL_MS;
+    const elapsedMs = Date.now() - startedAt;
+
+    if (minFormFillMs > 0 && elapsedMs >= 0 && elapsedMs < minFormFillMs) {
       return suspiciousSuccessResponse();
     }
 
