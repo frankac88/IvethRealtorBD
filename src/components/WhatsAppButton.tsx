@@ -25,7 +25,7 @@ const WhatsAppButton = () => {
         href={whatsappHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="whatsapp-luxury-float pointer-events-auto relative block h-14 w-14 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--gold))]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:h-16 sm:w-16"
+        className="whatsapp-luxury-float pointer-events-auto relative block h-14 w-14 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--gold))]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         aria-label={t(whatsappButtonTranslations.ariaLabel)}
       >
         <span className="relative z-10 block h-full w-full overflow-hidden rounded-full">
