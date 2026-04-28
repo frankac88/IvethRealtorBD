@@ -255,10 +255,12 @@ const createWhatsappHref = (message: string) =>
 const isOrlandoZone = (zone: ZoneValue | "") =>
   zone === "davenport" || zone === "kissimmee" || zone === "clermont-four-corners";
 
-const WhatsappChatIcon = ({ size = 16 }: { size?: number }) => (
+const WhatsappChatIcon = ({ size = 16, tone = "green" }: { size?: number; tone?: "green" | "white" }) => (
   <MessageCircle
     size={size}
-    className="fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white"
+    className={tone === "white"
+      ? "fill-none text-white"
+      : "fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white"}
   />
 );
 
@@ -399,7 +401,7 @@ const InvestPage = () => {
               </Button>
               <Button variant="heroOutline" size="lg" className="group" asChild>
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  <WhatsappChatIcon size={18} />
+                  <WhatsappChatIcon size={18} tone="white" />
                   {t(copy.whatsappCta)}
                 </a>
               </Button>
@@ -492,16 +494,11 @@ const InvestPage = () => {
                 <BarChart3 size={22} />
               </div>
               <p className="type-body">{t(copy.orlandoIntro)}</p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button variant="hero" asChild>
                   <Link to={`${getLocalizedPath("contact", language)}#contact-form-view`}>
                     {t(copy.primaryCta)}
                   </Link>
-                </Button>
-                <Button variant="whatsapp" asChild>
-                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                    {t(copy.whatsappCta)}
-                  </a>
                 </Button>
               </div>
             </div>
@@ -576,17 +573,11 @@ const InvestPage = () => {
             </div>
             <h2 className="type-h2 mb-5">{t(copy.finalTitle)}</h2>
             <p className="type-body mx-auto mb-8 max-w-2xl">{t(copy.finalText)}</p>
-            <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button variant="hero" size="lg" asChild>
                 <Link to={`${getLocalizedPath("contact", language)}#contact-form-view`}>
                   {t(copy.primaryCta)}
                 </Link>
-              </Button>
-              <Button variant="whatsapp" size="lg" className="group" asChild>
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  <WhatsappChatIcon size={18} />
-                  {t(copy.whatsappCta)}
-                </a>
               </Button>
             </div>
           </div>
