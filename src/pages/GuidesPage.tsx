@@ -93,6 +93,7 @@ const GuidesPage = () => {
   const [activeGuideKey, setActiveGuideKey] = useState<GuideKey | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [downloadHref, setDownloadHref] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
 
   const activeGuide = activeGuideKey ? g.guides[activeGuideKey] : null;
@@ -105,6 +106,7 @@ const GuidesPage = () => {
   const openGuideDialog = (guideKey: GuideKey) => {
     setActiveGuideKey(guideKey);
     setIsSubmitted(false);
+    setDownloadHref(null);
     setStartedAt(Date.now());
     setIsDialogOpen(true);
   };
@@ -114,16 +116,17 @@ const GuidesPage = () => {
 
     if (!open) {
       setIsSubmitted(false);
+      setDownloadHref(null);
     }
   };
 
   const handleLeadSubmit = async (values: GuideLeadFormValues) => {
-    if (!activeGuide) return;
+    if (!activeGuide || !activeGuideKey) return;
 
     const guideTitle = t(activeGuide.title);
 
     try {
-      await createLeadMutation.mutateAsync({
+      const response = await createLeadMutation.mutateAsync({
         name: values.name,
         email: values.email,
         phone: values.whatsapp || "",
@@ -132,8 +135,10 @@ const GuidesPage = () => {
         message: `${t(g.leadMessagePrefix)}${guideTitle} | ${t(g.leadAutomationTag)}`,
         honeypot: "",
         startedAt,
+        guideKey: activeGuideKey,
       });
 
+      setDownloadHref(response?.guideDownloadUrl ?? null);
       setIsSubmitted(true);
     } catch (error) {
       const description = error instanceof Error ? error.message : t(g.form.fallbackErrorDescription);
@@ -247,6 +252,7 @@ const GuidesPage = () => {
           consultationHref={consultationHref}
           isSubmitting={createLeadMutation.isPending}
           isSubmitted={isSubmitted}
+          downloadHref={downloadHref}
           onSubmit={handleLeadSubmit}
           texts={{
             modalTitle: t(g.form.modalTitle),
@@ -259,6 +265,7 @@ const GuidesPage = () => {
             privacyNote: t(g.form.privacyNote),
             successTitle: t(g.form.successTitle),
             successDescription: t(g.form.successDescription),
+            downloadReadyLabel: t(g.form.downloadReadyLabel),
             consultationLabel: t(g.form.consultationLabel),
             closeLabel: t(g.form.closeLabel),
             errors: {

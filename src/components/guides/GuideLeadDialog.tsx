@@ -28,6 +28,7 @@ interface GuideLeadDialogProps {
   consultationHref: string;
   isSubmitting: boolean;
   isSubmitted: boolean;
+  downloadHref: string | null;
   onSubmit: (values: GuideLeadFormValues) => Promise<void>;
   texts: {
     modalTitle: string;
@@ -40,6 +41,7 @@ interface GuideLeadDialogProps {
     privacyNote: string;
     successTitle: string;
     successDescription: string;
+    downloadReadyLabel: string;
     consultationLabel: string;
     closeLabel: string;
     errors: {
@@ -64,6 +66,7 @@ const GuideLeadDialog = ({
   consultationHref,
   isSubmitting,
   isSubmitted,
+  downloadHref,
   onSubmit,
   texts,
 }: GuideLeadDialogProps) => {
@@ -157,6 +160,13 @@ const GuideLeadDialog = ({
                 </DialogHeader>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
+                  {downloadHref ? (
+                    <Button variant="gold" size="lg" asChild className="w-full sm:flex-1">
+                      <a href={downloadHref} target="_blank" rel="noopener noreferrer">
+                        {texts.downloadReadyLabel}
+                      </a>
+                    </Button>
+                  ) : null}
                   <Button variant="hero" size="lg" asChild className="w-full sm:flex-1">
                     <Link to={consultationHref} onClick={() => onOpenChange(false)}>
                       {texts.consultationLabel}

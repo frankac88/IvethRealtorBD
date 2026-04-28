@@ -387,19 +387,19 @@ const InvestPage = () => {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
         <div className="container relative mx-auto grid min-h-[72svh] items-end px-4 py-16 lg:px-8 lg:py-20">
-          <div className="max-w-3xl pb-6 text-white">
-            <p className="mb-4 inline-flex rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[0.72rem] font-medium uppercase tracking-[0.24em] backdrop-blur">
+          <div className="min-w-0 max-w-3xl pb-6 text-white">
+            <p className="mb-4 inline-flex max-w-full rounded-full border border-white/30 bg-white/10 px-4 py-2 text-center text-[0.68rem] font-medium uppercase leading-relaxed tracking-[0.18em] backdrop-blur sm:text-[0.72rem] sm:tracking-[0.24em]">
               {t(copy.eyebrow)}
             </p>
             <h1 className="type-h1 mb-6 text-white">{t(copy.heroTitle)}</h1>
-            <p className="type-body mb-8 max-w-2xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{t(copy.heroText)}</p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button variant="hero" size="lg" asChild>
+            <p className="type-body mb-8 max-w-full text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)] sm:max-w-2xl">{t(copy.heroText)}</p>
+            <div className="flex w-full min-w-0 flex-col gap-3 sm:w-auto sm:flex-row">
+              <Button variant="hero" size="lg" className="h-auto min-h-12 w-full whitespace-normal px-5 py-3 text-center text-sm leading-snug sm:w-auto sm:px-10 sm:text-base" asChild>
                 <Link to={`${getLocalizedPath("contact", language)}#contact-form-view`}>
                   {t(copy.primaryCta)}
                 </Link>
               </Button>
-              <Button variant="heroOutline" size="lg" className="group" asChild>
+              <Button variant="heroOutline" size="lg" className="group h-auto min-h-12 w-full whitespace-normal px-5 py-3 text-center text-sm leading-snug sm:w-auto sm:px-10 sm:text-base" asChild>
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
                   <WhatsappChatIcon size={18} tone="white" />
                   {t(copy.whatsappCta)}

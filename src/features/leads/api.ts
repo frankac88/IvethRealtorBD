@@ -13,6 +13,7 @@ export interface LeadSubmissionPayload {
   message: string | null;
   honeypot: string;
   startedAt: number;
+  guideKey?: string;
 }
 
 export async function fetchLeads() {
@@ -34,5 +35,5 @@ export async function createLead(leadData: LeadSubmissionPayload) {
   if (error) throw error;
   if (data?.error) throw new Error(data.error);
 
-  return data?.lead ?? null;
+  return data ?? null;
 }
