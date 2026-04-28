@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
-import whatsappFloatingButton from "@/assets/whatsapp-floating.png";
+import whatsappFloatingButton from "@/assets/whatsapp-floating.webp";
 
 const whatsappButtonTranslations = {
   ariaLabel: {
