@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
-import whatsappLuxuryButton from "@/assets/whatsapp-luxury-button.png";
+import whatsappFloatingButton from "@/assets/whatsapp-floating.png";
 
 const whatsappButtonTranslations = {
   ariaLabel: {
@@ -28,9 +28,9 @@ const WhatsAppButton = () => {
         className="whatsapp-luxury-float pointer-events-auto relative block h-14 w-14 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--gold))]/70 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         aria-label={t(whatsappButtonTranslations.ariaLabel)}
       >
-        <span className="relative z-10 block h-full w-full overflow-hidden rounded-full">
+        <span className="relative z-10 block h-full w-full overflow-hidden rounded-full border border-white">
           <img
-            src={whatsappLuxuryButton}
+            src={whatsappFloatingButton}
             alt=""
             className="h-full w-full scale-[1.62] rounded-full object-cover brightness-[1.42] contrast-[0.92] saturate-[1.22] drop-shadow-[0_18px_24px_rgba(26,31,46,0.28)]"
           />
