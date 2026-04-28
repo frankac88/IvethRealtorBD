@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MapPin, TrendingUp, Shield, Building2, ArrowRight, ExternalLink } from "lucide-react";
+import { MapPin, TrendingUp, Shield, Building2, ArrowRight, ExternalLink, MessageCircle } from "lucide-react";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import HomeTestimonialsCarousel from "@/components/home/HomeTestimonialsCarousel";
@@ -19,6 +19,10 @@ const formatProjectPrice = (value: number, language: "es" | "en") =>
     currency: "USD",
     maximumFractionDigits: 0,
   }).format(value);
+
+const WhatsappChatIcon = () => (
+  <MessageCircle className="fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white" />
+);
 
 const Index = () => {
   const { language } = useLanguage();
@@ -217,8 +221,11 @@ const Index = () => {
           <p className="type-body mb-10">{t(h.ctaDesc)}</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="hero" size="lg" asChild><Link to={contactFormHref}>{t(h.ctaButton1)}</Link></Button>
-            <Button variant="whatsapp" size="lg" asChild>
-              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(h.ctaButton2)}</a>
+            <Button variant="outline" size="lg" className="group" asChild>
+              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+                <WhatsappChatIcon />
+                {t(h.ctaButton2)}
+              </a>
             </Button>
           </div>
         </div>
