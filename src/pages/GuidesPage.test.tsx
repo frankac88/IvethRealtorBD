@@ -8,6 +8,7 @@ import GuidesPage from "./GuidesPage";
 
 const mockMutateAsync = vi.fn();
 const mockToast = vi.fn();
+const mockLocationAssign = vi.fn();
 const ROUTER_FUTURE_FLAGS = {
   v7_startTransition: true,
   v7_relativeSplatPath: true,
@@ -54,6 +55,25 @@ const renderGuidesPage = () => {
 };
 
 describe("GuidesPage", () => {
+  const originalLocation = window.location;
+
+  beforeAll(() => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: {
+        ...originalLocation,
+        assign: mockLocationAssign,
+      },
+    });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -90,8 +110,9 @@ describe("GuidesPage", () => {
     expect(screen.getByText("HOA e insurance")).toBeInTheDocument();
   });
 
-  it("captures a lead from the selected guide and shows the thank-you CTA", async () => {
-    mockMutateAsync.mockResolvedValueOnce({});
+  it("captures a lead from the selected guide and redirects to the temporary download link", async () => {
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
+    mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
     renderGuidesPage();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
@@ -123,29 +144,9 @@ describe("GuidesPage", () => {
       });
     });
 
-    expect(screen.getByText("Gracias")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Agendar consulta" })).toBeInTheDocument();
-  });
-
-  it("shows the temporary guide download link after a successful request", async () => {
-    mockMutateAsync.mockResolvedValueOnce({
-      guideDownloadUrl: "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor",
+    await waitFor(() => {
+      expect(mockLocationAssign).toHaveBeenCalledWith(guideDownloadUrl);
     });
-    renderGuidesPage();
-
-    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
-    fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Jane Doe" } });
-    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "jane@test.com" } });
-
-    const dialog = screen.getByRole("dialog");
-    fireEvent.submit(within(dialog).getByRole("button", { name: "Descargar Guía" }).closest("form")!);
-
-    const downloadLink = await screen.findByRole("link", { name: "Descargar ahora" });
-
-    expect(downloadLink).toHaveAttribute(
-      "href",
-      "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor",
-    );
   });
 
   it("uses a guide-specific WhatsApp message", () => {

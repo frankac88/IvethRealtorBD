@@ -47,7 +47,6 @@ export const guidesTranslations = {
       es: "Recibimos tu solicitud y dejamos lista la siguiente acción para ayudarte con",
       en: "We received your request and prepared the next action to help you with",
     },
-    downloadReadyLabel: { es: "Descargar ahora", en: "Download now" },
     consultationLabel: { es: "Agendar consulta", en: "Book consultation" },
     closeLabel: { es: "Cerrar", en: "Close" },
     errorTitle: { es: "Error", en: "Error" },
