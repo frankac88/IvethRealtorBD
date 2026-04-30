@@ -121,7 +121,7 @@ const ContactPage = () => {
               <div className="rounded-[28px] bg-card/80 p-8 ring-1 ring-border/50">
                 <h3 className="type-h3 mb-3 text-primary">{t(c.whatsappTitle)}</h3>
                 <p className="type-body-sm mb-4 text-muted-foreground">{t(c.whatsappDesc)}</p>
-                <Button variant="whatsapp" asChild>
+                <Button variant="biscayne" asChild>
                   <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(c.whatsappButton)}</a>
                 </Button>
               </div>

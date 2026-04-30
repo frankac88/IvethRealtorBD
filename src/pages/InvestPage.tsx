@@ -119,7 +119,7 @@ const miamiZones: MiamiZone[] = [
     title: { es: "Miami Beach", en: "Miami Beach" },
     body: {
       es: "Zona turística con propiedades frente al mar y regulaciones específicas. La elección del edificio es clave.",
-      en: "Tourism-driven area with oceanfront properties and specific regulations. Building selection is key.",
+      en: "Tourism-driven area featuring prime oceanfront properties and specific local regulations. Careful building selection is key.",
     },
     accent: "from-accent/85 via-wine/70 to-primary/70",
     image: "https://images.unsplash.com/photo-1718644526868-76adfc840dbc?auto=format&fit=crop&w=1400&q=80",

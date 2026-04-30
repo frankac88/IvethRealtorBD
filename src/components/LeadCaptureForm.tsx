@@ -303,7 +303,7 @@ const LeadCaptureForm = ({
           />
         </div>
       )}
-      <Button type="submit" variant="hero" size="lg" className="w-full" disabled={createLeadMutation.isPending}>
+      <Button type="submit" variant="orquidea" size="lg" className="w-full" disabled={createLeadMutation.isPending}>
         {createLeadMutation.isPending ? (sendingLabel ?? t(c.sending)) : (submitLabel ?? t(c.send))}
       </Button>
     </form>
