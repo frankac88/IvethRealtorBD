@@ -69,13 +69,13 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-primary-foreground">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="break-all transition-colors hover:text-primary-foreground"
+                className="self-start break-all transition-colors hover:text-primary-foreground"
               >
                 {siteConfig.contact.email}
               </a>
               <a
                 href={`tel:${siteConfig.contact.phoneHref}`}
-                className="transition-colors hover:text-primary-foreground"
+                className="self-start transition-colors hover:text-primary-foreground"
               >
                 {siteConfig.contact.phoneDisplay}
               </a>

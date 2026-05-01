@@ -8,7 +8,7 @@ export const siteConfig = {
     descriptor: "International Real Estate Advisor",
   },
   contact: {
-    email: "ivethcoll@gmail.com",
+    email: "iveth@ivethcollrealtor.com",
     phoneDisplay: "+1 786-867-7180",
     phoneHref: "+17868677180",
     location: "7791 NW 46 ST SUITE 308, Doral, FL 33166",

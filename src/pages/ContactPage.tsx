@@ -54,7 +54,7 @@ const ContactPage = () => {
                       <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">Email</p>
                       <a
                         href={`mailto:${siteConfig.contact.email}`}
-                        className="type-body mt-2 block break-all leading-snug text-foreground transition-colors hover:text-primary"
+                        className="type-body mt-2 inline-block break-all leading-snug text-foreground transition-colors hover:text-primary"
                       >
                         {siteConfig.contact.email}
                       </a>
@@ -67,7 +67,7 @@ const ContactPage = () => {
                     </span>
                     <div className="min-w-0 pt-0.5">
                       <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">Phone</p>
-                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="type-body mt-2 block leading-snug text-foreground transition-colors hover:text-primary">
+                      <a href={`tel:${siteConfig.contact.phoneHref}`} className="type-body mt-2 inline-block leading-snug text-foreground transition-colors hover:text-primary">
                         {siteConfig.contact.phoneDisplay}
                       </a>
                     </div>
