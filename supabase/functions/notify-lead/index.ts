@@ -14,6 +14,14 @@ const BodySchema = z.object({
   message: z.string().max(1000).nullable().optional(),
 });
 
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -56,17 +64,64 @@ Deno.serve(async (req) => {
     }
 
     const { name, email, phone, country, interest, message } = parsed.data;
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = escapeHtml(phone || "—");
+    const safeCountry = escapeHtml(country || "—");
+    const safeInterest = escapeHtml(interest || "—");
+    const safeMessage = escapeHtml(message || "—").replaceAll("\n", "<br>");
 
     const html = `
-      <h2>Nuevo lead recibido</h2>
-      <table style="border-collapse:collapse;width:100%;max-width:600px;font-family:Arial,sans-serif;">
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Nombre</td><td style="padding:8px;border:1px solid #ddd;">${name}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Email</td><td style="padding:8px;border:1px solid #ddd;">${email}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Teléfono</td><td style="padding:8px;border:1px solid #ddd;">${phone || "—"}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">País</td><td style="padding:8px;border:1px solid #ddd;">${country || "—"}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Interés</td><td style="padding:8px;border:1px solid #ddd;">${interest || "—"}</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Mensaje</td><td style="padding:8px;border:1px solid #ddd;">${message || "—"}</td></tr>
-      </table>
+      <div style="display:none;max-height:0;overflow:hidden;color:transparent;">
+        Nuevo mensaje recibido desde el formulario de ivethcollrealtor.com.
+      </div>
+      <div style="margin:0;padding:24px;background:#f6f1ea;font-family:Arial,sans-serif;color:#1f2937;">
+        <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #eadfce;border-radius:18px;overflow:hidden;">
+          <div style="padding:24px;background:#141827;color:#ffffff;">
+            <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#d9b56d;">Iveth Coll Realtor</p>
+            <h1 style="margin:0;font-size:24px;line-height:1.25;">Nuevo contacto desde ivethcollrealtor.com</h1>
+          </div>
+
+          <div style="padding:24px;">
+            <p style="margin:0 0 20px;font-size:16px;line-height:1.6;">
+              Se recibió una nueva solicitud desde el formulario del sitio web.
+            </p>
+
+            <table style="border-collapse:collapse;width:100%;font-size:15px;">
+              <tr>
+                <td style="width:140px;padding:12px;border-bottom:1px solid #eee7dc;font-weight:bold;color:#6b5b43;">Nombre</td>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;">${safeName}</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;font-weight:bold;color:#6b5b43;">Email</td>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;"><a href="mailto:${safeEmail}" style="color:#9b6a1f;">${safeEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;font-weight:bold;color:#6b5b43;">Teléfono</td>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;">${safePhone}</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;font-weight:bold;color:#6b5b43;">País</td>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;">${safeCountry}</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;font-weight:bold;color:#6b5b43;">Interés</td>
+                <td style="padding:12px;border-bottom:1px solid #eee7dc;">${safeInterest}</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;font-weight:bold;color:#6b5b43;vertical-align:top;">Mensaje</td>
+                <td style="padding:12px;line-height:1.6;">${safeMessage}</td>
+              </tr>
+            </table>
+
+            <div style="margin-top:24px;">
+              <a href="mailto:${safeEmail}" style="display:inline-block;padding:12px 18px;background:#141827;color:#ffffff;text-decoration:none;border-radius:999px;font-weight:bold;">
+                Responder a ${safeName}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     const response = await fetch("https://api.resend.com/emails", {
@@ -78,7 +133,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: NOTIFY_FROM_EMAIL,
         to: NOTIFY_TO_EMAIL.split(",").map((value) => value.trim()).filter(Boolean),
-        subject: `Nuevo lead: ${name}`,
+        subject: `Nuevo contacto desde la web: ${name}`,
         html,
       }),
     });
