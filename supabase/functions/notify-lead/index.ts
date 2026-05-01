@@ -20,18 +20,18 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-    if (!SUPABASE_SERVICE_ROLE_KEY) {
-      throw new Error("SUPABASE_SERVICE_ROLE_KEY is not configured");
+    const NOTIFY_LEAD_SECRET = Deno.env.get("NOTIFY_LEAD_SECRET");
+    if (!NOTIFY_LEAD_SECRET) {
+      throw new Error("NOTIFY_LEAD_SECRET is not configured");
     }
 
     const authorization = req.headers.get("Authorization");
-    const apikey = req.headers.get("apikey");
+    const notifySecret = req.headers.get("x-notify-secret");
     const bearerToken = authorization?.startsWith("Bearer ")
       ? authorization.slice("Bearer ".length)
       : null;
 
-    if (bearerToken !== SUPABASE_SERVICE_ROLE_KEY && apikey !== SUPABASE_SERVICE_ROLE_KEY) {
+    if (bearerToken !== NOTIFY_LEAD_SECRET && notifySecret !== NOTIFY_LEAD_SECRET) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

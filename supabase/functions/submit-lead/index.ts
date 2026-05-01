@@ -86,6 +86,7 @@ Deno.serve(async (req) => {
   try {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const NOTIFY_LEAD_SECRET = Deno.env.get("NOTIFY_LEAD_SECRET");
 
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       throw new Error("Supabase server credentials are not configured");
@@ -134,8 +135,8 @@ Deno.serve(async (req) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${NOTIFY_LEAD_SECRET || SUPABASE_SERVICE_ROLE_KEY}`,
+          ...(NOTIFY_LEAD_SECRET ? { "x-notify-secret": NOTIFY_LEAD_SECRET } : { apikey: SUPABASE_SERVICE_ROLE_KEY }),
         },
         body: JSON.stringify(leadData),
       });

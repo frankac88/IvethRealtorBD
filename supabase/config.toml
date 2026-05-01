@@ -2,3 +2,6 @@ project_id = "velgoadpmhssqptkcjam"
 
 [functions.submit-lead]
 verify_jwt = false
+
+[functions.notify-lead]
+verify_jwt = false
