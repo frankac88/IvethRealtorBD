@@ -13,8 +13,8 @@
   learnMore: { es: "SOLICITAR ASESORÍA", en: "REQUEST ADVICE" },
   ricardoRole: { es: "Mortgage Loan Officer", en: "Mortgage Loan Officer" },
   ricardoDesc: {
-    es: "Especialista en financiamiento hipotecario para residentes e inversionistas internacionales en la Florida. Opciones estratégicas adaptadas a cada perfil financiero.",
-    en: "Mortgage specialist for residents and international investors in Florida. Strategic options tailored to each financial profile.",
+    es: "Como Mortgage Loan Officer, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida a explorar opciones hipotecarias estratégicas adaptadas a cada perfil financiero.",
+    en: "As a Mortgage Loan Officer, NMLS 1958473, Ricardo helps residents and international investors in Florida explore strategic mortgage options tailored to each financial profile.",
   },
   viewOptions: { es: "PRECALIFICAR AHORA", en: "PREQUALIFY NOW" },
   partnersLabel: { es: "Compañías Aliadas", en: "Partner Companies" },
