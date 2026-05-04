@@ -34,7 +34,7 @@ describe("TeamPage", () => {
   it("renders the updated Ricardo description", () => {
     renderTeamPage();
 
-    expect(screen.getByText(/Como Mortgage Loan Officer, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i)).toBeInTheDocument();
+    expect(screen.getByText(/Como Asesor de Préstamos Hipotecarios, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i)).toBeInTheDocument();
     expect(screen.getByText(/opciones hipotecarias estratégicas adaptadas a cada perfil financiero\./i)).toBeInTheDocument();
   });
 
@@ -55,7 +55,7 @@ describe("TeamPage", () => {
     renderTeamPage();
 
     const ivethDescription = screen.getByText(/Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida/i);
-    const ricardoDescription = screen.getByText(/Como Mortgage Loan Officer, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
+    const ricardoDescription = screen.getByText(/Como Asesor de Préstamos Hipotecarios, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
 
     expect(ivethDescription).toHaveClass("text-justify");
     expect(ricardoDescription).toHaveClass("text-justify");
@@ -65,7 +65,7 @@ describe("TeamPage", () => {
     renderTeamPage();
 
     const ivethDescription = screen.getByText(/Asesora a inversionistas internacionales en la adquisición de propiedades estratégicas en Florida/i);
-    const ricardoDescription = screen.getByText(/Como Mortgage Loan Officer, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
+    const ricardoDescription = screen.getByText(/Como Asesor de Préstamos Hipotecarios, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
 
     expect(ivethDescription).toHaveStyle({ hyphens: "auto" });
     expect(ricardoDescription).toHaveStyle({ hyphens: "auto" });
@@ -74,7 +74,7 @@ describe("TeamPage", () => {
   it("sets the current language on team member descriptions for proper hyphenation", () => {
     renderTeamPage();
 
-    const ricardoDescription = screen.getByText(/Como Mortgage Loan Officer, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
+    const ricardoDescription = screen.getByText(/Como Asesor de Préstamos Hipotecarios, NMLS 1958473, Ricardo ayuda a residentes e inversionistas internacionales en la Florida/i);
     expect(ricardoDescription).toHaveAttribute("lang", "es");
   });
 
