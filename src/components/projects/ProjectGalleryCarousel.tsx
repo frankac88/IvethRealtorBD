@@ -12,10 +12,6 @@ import { ProjectImagePlaceholder } from "./ProjectImagePlaceholder";
 
 const labels = {
   title: { es: "Galería privada", en: "Private gallery" },
-  subtitle: {
-    es: "Fachada, amenidades, interiores y vistas se reemplazarán por fotos reales.",
-    en: "Facade, amenities, interiors, and views will be replaced with real photos.",
-  },
 } as const;
 
 export function ProjectGalleryCarousel({ project }: { project: LuxuryProject }) {
@@ -23,12 +19,17 @@ export function ProjectGalleryCarousel({ project }: { project: LuxuryProject }) 
 
   return (
     <section className="py-16">
-      <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="type-caption text-primary">{t(labels.title)}</p>
           <h2 className="type-h2 mt-2 text-wine">{project.title}</h2>
         </div>
-        <p className="max-w-md text-sm leading-6 text-muted-foreground">{t(labels.subtitle)}</p>
+        <div className="flex flex-col items-start gap-1 md:items-end">
+          <p className="type-caption text-primary">{t(project.location)}</p>
+          <p className="text-sm font-medium text-wine/80">
+            {t(project.priceLabel)} <span className="mx-2 text-muted-foreground/40">•</span> {t(project.deliveryLabel)}
+          </p>
+        </div>
       </div>
 
       <Carousel opts={{ align: "start", loop: true }} className="px-10">
