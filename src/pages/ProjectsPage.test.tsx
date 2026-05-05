@@ -138,4 +138,14 @@ describe("ProjectsPage flagship redesign", () => {
       inline: "nearest",
     });
   });
+
+  it("opens project WhatsApp CTAs directly with a project-page source message", () => {
+    renderProjectsPage();
+
+    const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
+      "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
+    )}`;
+
+    expect(screen.getAllByRole("link", { name: /^whatsapp$/i })[0]).toHaveAttribute("href", expectedHref);
+  });
 });

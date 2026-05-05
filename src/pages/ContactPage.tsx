@@ -4,7 +4,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref, siteConfig } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
 import { contactTranslations } from "@/i18n/translations/contact";
 import { useLocation } from "react-router-dom";
@@ -14,6 +14,9 @@ const ContactPage = () => {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const t = useT();
   const c = contactTranslations;
+  const whatsappHref = createWhatsAppHref(
+    "Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.",
+  );
 
   useEffect(() => {
     if (location.hash !== "#contact-form-view") return;
@@ -122,7 +125,7 @@ const ContactPage = () => {
                 <h3 className="type-h3 mb-3 text-primary">{t(c.whatsappTitle)}</h3>
                 <p className="type-body-sm mb-4 text-muted-foreground">{t(c.whatsappDesc)}</p>
                 <Button variant="biscayne" asChild>
-                  <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">{t(c.whatsappButton)}</a>
+                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer">{t(c.whatsappButton)}</a>
                 </Button>
               </div>
             </div>

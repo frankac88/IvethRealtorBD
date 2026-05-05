@@ -9,6 +9,7 @@ import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlace
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
 import heroProjectsImage from "@/assets/hero-projects.webp";
+import { createWhatsAppHref } from "@/config/site";
 import {
   defaultProjectFilters,
   filterLuxuryProjects,
@@ -124,6 +125,9 @@ const ProjectsPage = () => {
     return getSelectionFromProject(selectedProject);
   });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
+  const projectsWhatsappHref = createWhatsAppHref(
+    "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
+  );
 
   useEffect(() => {
     setFilters(getFiltersFromParams(searchParams));
@@ -180,17 +184,17 @@ const ProjectsPage = () => {
             </h1>
             <p className="type-body mt-6 max-w-2xl text-foreground/70">{t(copy.heroSubtitle)}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="bg-primary text-primary-foreground shadow-[0_18px_44px_rgba(42,123,137,0.22)] hover:bg-green-light">
+              <Button asChild className="bg-wine text-white shadow-[0_18px_44px_rgba(124,63,99,0.22)] hover:bg-accent">
                 <a href="#project-selection">
                   {t(copy.explore)}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button asChild className="bg-wine text-white shadow-[0_18px_44px_rgba(124,63,99,0.22)] hover:bg-accent">
-                <Link to={contactPath}>
+              <Button asChild className="bg-primary text-primary-foreground shadow-[0_18px_44px_rgba(42,123,137,0.22)] hover:bg-green-light">
+                <a href={projectsWhatsappHref} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-2 h-4 w-4" />
                   {t(copy.whatsapp)}
-                </Link>
+                </a>
               </Button>
             </div>
           </AnimatedSection>
@@ -312,11 +316,11 @@ const ProjectsPage = () => {
             <h2 className="type-h2 mt-3 text-wine">{t(copy.differentiatorTitle)}</h2>
             <p className="type-body mt-5 max-w-2xl text-foreground/72">{t(copy.differentiatorBody)}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="bg-wine text-white hover:bg-accent">
+              <Button asChild className="bg-primary text-primary-foreground hover:bg-green-light">
                 <Link to={contactPath}>{t(copy.agenda)}</Link>
               </Button>
-              <Button asChild className="bg-primary text-primary-foreground hover:bg-green-light">
-                <Link to={contactPath}>{t(copy.whatsapp)}</Link>
+              <Button asChild className="bg-wine text-white hover:bg-accent">
+                <a href={projectsWhatsappHref} target="_blank" rel="noopener noreferrer">{t(copy.whatsapp)}</a>
               </Button>
             </div>
           </AnimatedSection>

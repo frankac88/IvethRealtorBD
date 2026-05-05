@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref } from "@/config/site";
 import { useT } from "@/i18n/LanguageContext";
 import whatsappFloatingButton from "@/assets/whatsapp-floating.webp";
 
@@ -15,9 +15,7 @@ const whatsappButtonTranslations = {
 
 const WhatsAppButton = () => {
   const t = useT();
-  const whatsappHref = `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(
-    t(whatsappButtonTranslations.message),
-  )}`;
+  const whatsappHref = createWhatsAppHref("Hola Iveth, vengo desde el botón flotante de WhatsApp y quiero conversar.");
 
   return (
     <div className="pointer-events-none fixed bottom-8 left-0 z-50 flex w-[100dvw] max-w-[100dvw] justify-end px-8 sm:bottom-10 sm:px-10">

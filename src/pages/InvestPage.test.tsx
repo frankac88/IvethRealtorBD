@@ -50,4 +50,15 @@ describe("InvestPage", () => {
 
     expect(screen.getAllByText(/^Orlando$/)).toHaveLength(3);
   });
+
+  it("uses a Spanish source message on direct WhatsApp CTAs", () => {
+    renderInvestPage();
+
+    expect(screen.getAllByRole("link", { name: /whatsapp directo/i })[0]).toHaveAttribute(
+      "href",
+      `https://wa.me/17868677180?text=${encodeURIComponent(
+        "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
+      )}`,
+    );
+  });
 });

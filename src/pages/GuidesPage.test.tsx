@@ -192,7 +192,11 @@ describe("GuidesPage", () => {
 
     expect(whatsappLinks[0]).toHaveAttribute(
       "href",
-      expect.stringContaining(encodeURIComponent("INVERSIONISTAS INTERNACIONALES")),
+      expect.stringContaining(
+        encodeURIComponent(
+          "Hola Iveth, vengo desde la guía INVERSIONISTAS INTERNACIONALES y quiero recibir orientación.",
+        ),
+      ),
     );
     expect(whatsappLinks[0]).toHaveAttribute("href", expect.stringContaining("wa.me/17868677180"));
   });
