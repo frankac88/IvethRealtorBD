@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,8 +32,14 @@ const Navbar = () => {
   const { language, setLanguage } = useLanguage();
   const t = useT();
   const activeRouteKey = getRouteKeyForPath(location.pathname);
+  const preserveScrollOnNextPathChange = useRef(false);
 
   useEffect(() => {
+    if (preserveScrollOnNextPathChange.current) {
+      preserveScrollOnNextPathChange.current = false;
+      return;
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname]);
 
@@ -43,6 +49,7 @@ const Navbar = () => {
 
     setLanguage(nextLanguage);
     setIsOpen(false);
+    preserveScrollOnNextPathChange.current = true;
     navigate({ pathname: nextPath, search: location.search, hash: location.hash });
   };
 
