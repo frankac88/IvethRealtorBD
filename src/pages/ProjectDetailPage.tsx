@@ -92,6 +92,7 @@ const ProjectDetailPage = () => {
                 tone="teal"
                 imageUrl={project.detailImageUrl ?? project.imageUrl}
                 className="h-full min-h-[22rem] md:min-h-[31rem]"
+                interactive
               />
             </AnimatedSection>
 
@@ -142,34 +143,48 @@ const ProjectDetailPage = () => {
         </div>
       </section>
 
-      <section className="bg-background py-16 md:py-20">
-        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:px-8">
-          <AnimatedSection as="div">
-            <p className="type-caption text-primary">{t(labels.formTitle)}</p>
-            <h2 className="type-h2 mt-3 text-wine">{project.title}</h2>
-            <p className="type-body mt-4 max-w-xl">{t(labels.formBody)}</p>
+      <section className="relative overflow-hidden bg-background py-16 md:py-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(138,85,121,0.11),transparent_30%),radial-gradient(circle_at_88%_20%,rgba(42,123,137,0.10),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-8 h-px bg-gradient-to-r from-transparent via-gold/35 to-transparent" />
+
+        <div className="container relative mx-auto grid gap-10 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
+          <AnimatedSection as="div" className="relative">
+            <div className="relative border-l border-gold/45 pl-6">
+              <p className="type-caption text-primary">{t(labels.formTitle)}</p>
+              <h2 className="mt-4 font-serif text-[2.55rem] font-semibold leading-[0.94] tracking-[-0.055em] text-wine md:text-[3.75rem]">
+                {project.title}
+              </h2>
+              <p className="type-body mt-5 max-w-xl text-foreground/72">{t(labels.formBody)}</p>
+            </div>
           </AnimatedSection>
 
           <AnimatedSection
             as="form"
             delay={120}
             onSubmit={(event) => event.preventDefault()}
-            className="border border-gold/30 bg-card/95 p-5 shadow-[0_24px_70px_rgba(26,31,46,0.10)] md:p-7"
+            className="relative overflow-hidden rounded-[1.75rem] border border-gold/30 bg-card/80 p-5 shadow-[0_28px_90px_rgba(26,31,46,0.12)] backdrop-blur md:p-7"
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/55 to-transparent" />
+            <div className="absolute -right-14 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
+            <div className="absolute -bottom-16 -left-12 h-36 w-36 rounded-full bg-wine/10 blur-3xl" />
+
+            <div className="relative grid gap-4 sm:grid-cols-2">
               {[labels.name, labels.email, labels.phone, labels.country].map((label) => (
                 <label key={t(label)} className="block">
                   <span className="mb-2 block text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-foreground/55">
                     {t(label)}
                   </span>
                   <input
-                    className="h-12 w-full border border-border bg-background px-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
+                    className="h-12 w-full rounded-sm border border-border/90 bg-background/70 px-3 text-sm outline-none transition focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/15"
                     type={label === labels.email ? "email" : "text"}
                   />
                 </label>
               ))}
             </div>
-            <Button type="submit" className="mt-5 w-full bg-primary text-primary-foreground hover:bg-green-light">
+            <Button
+              type="submit"
+              className="relative mt-5 h-12 w-full rounded-full bg-primary text-primary-foreground shadow-[0_16px_36px_rgba(42,123,137,0.22)] hover:bg-green-light"
+            >
               {t(labels.submit)}
             </Button>
           </AnimatedSection>
