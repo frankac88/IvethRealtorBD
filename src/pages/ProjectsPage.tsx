@@ -41,8 +41,8 @@ const copy = {
     en: "Rental · 2029–2030 delivery · From $500K",
   },
   maxProjectsDescription: {
-    es: "La selección mantiene 6 oportunidades en Miami y 4 en Orlando. Los proyectos con data real publicados hoy combinan Airbnb o renta mínima de 90 días, entregas 2029–2030 y entrada desde $500K.",
-    en: "The selection keeps 6 Miami opportunities and 4 Orlando opportunities. Currently published real-data projects combine Airbnb or 90-day minimum rentals, 2029–2030 delivery, and entry from $500K.",
+    es: "Top 10 inversiones: 6 en Miami y 4 en Orlando. Proyectos ideales para Airbnb o renta flexible, entregas 2029-2030 desde $500K.",
+    en: "Top 10 investments: 6 in Miami and 4 in Orlando. Ideal projects for Airbnb or flexible rentals, 2029-2030 delivery from $500K.",
   },
   noResultsTitle: {
     es: "No encontramos una coincidencia exacta.",
