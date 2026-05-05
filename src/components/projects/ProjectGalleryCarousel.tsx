@@ -41,6 +41,7 @@ export function ProjectGalleryCarousel({ project }: { project: LuxuryProject }) 
                 tone={item.tone}
                 imageUrl={item.imageUrl}
                 className="min-h-[17rem] md:min-h-[24rem]"
+                interactive
               />
             </CarouselItem>
           ))}
