@@ -93,6 +93,14 @@ const edgeHouseImages = {
   aerialNight: `${projectImagesBaseUrl}/edge-house-aerial-night.webp`,
 } as const;
 
+const bloomImages = {
+  building: `${projectImagesBaseUrl}/bloom-building.webp`,
+  apartment: `${projectImagesBaseUrl}/bloom-apartment.webp`,
+  lobby: `${projectImagesBaseUrl}/bloom-lobby.webp`,
+  rooftopBbq: `${projectImagesBaseUrl}/bloom-rooftop-bbq.webp`,
+  projectView: `${projectImagesBaseUrl}/bloom-project-view.webp`,
+} as const;
+
 export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "edge-house",
@@ -130,27 +138,35 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "bloom-north-miami",
     city: "miami",
-    title: "BLOOM",
+    title: "BLOOM NORTH MIAMI",
     location: { es: "North Miami", en: "North Miami" },
-    eyebrow: { es: "Zona en crecimiento", en: "Growth corridor" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Preconstrucción", en: "Pre-construction" },
+    eyebrow: { es: "Boutique growth corridor", en: "Boutique growth corridor" },
+    priceLabel: { es: "Desde $500K+", en: "From $500K+" },
+    deliveryLabel: { es: "Entrega 2029", en: "Delivery 2029" },
     rentalLabel: { es: "Mínimo 90 días", en: "90-day minimum" },
-    unitsLabel: { es: "1–3 habitaciones", en: "1–3 bedrooms" },
+    unitsLabel: { es: "2 habitaciones + den", en: "2 bedrooms + den" },
     shortDescription: {
-      es: "Entrada temprana en una zona con proyección y demanda de renta a mediano plazo.",
-      en: "Early entry in an area with growth projection and medium-term rental demand.",
+      es: "Donde el crecimiento de North Miami se convierte en oportunidad para construir patrimonio.",
+      en: "Where North Miami's growth becomes an opportunity to build long-term wealth.",
     },
     strategicSummary: {
-      es: "Oportunidad para quien prioriza crecimiento de zona y un ticket de entrada competitivo.",
-      en: "Opportunity for buyers prioritizing area growth and a competitive entry point.",
+      es: "Proyecto boutique de 35 unidades y 9 pisos en North Miami, ubicado en una zona en plena transformación urbana con alto potencial de valorización. Su precio de entrada accesible frente a otras áreas de Miami, combinado con rentas mínimas flexibles de 90 días, lo convierte en una opción ideal para inversionistas que buscan generar ingresos y posicionarse temprano en un mercado en crecimiento.",
+      en: "A 35-unit, 9-story boutique project in North Miami, located in an area undergoing urban transformation with strong appreciation potential. Its accessible entry price compared with other Miami areas, combined with flexible 90-day minimum rentals, makes it ideal for investors seeking income and early positioning in a growing market.",
     },
     cardCta: { es: "Ver si Bloom es para ti", en: "See if Bloom fits" },
-    imageHint: { es: "Render exterior limpio", en: "Clean exterior render" },
+    imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
+    imageUrl: bloomImages.building,
+    detailImageUrl: bloomImages.building,
     goal: "investment",
     rentalType: "30-90-days",
-    budgetRange: "under-500k",
-    gallery: baseGallery,
+    budgetRange: "500k-1m",
+    gallery: [
+      { label: { es: "Fachada", en: "Facade" }, tone: "sand", imageUrl: bloomImages.building },
+      { label: { es: "Interior", en: "Interior" }, tone: "teal", imageUrl: bloomImages.apartment },
+      { label: { es: "Lobby", en: "Lobby" }, tone: "sage", imageUrl: bloomImages.lobby },
+      { label: { es: "Rooftop", en: "Rooftop" }, tone: "wine", imageUrl: bloomImages.rooftopBbq },
+      { label: { es: "Vista del proyecto", en: "Project view" }, tone: "teal", imageUrl: bloomImages.projectView },
+    ],
   },
   {
     slug: "flow-house",

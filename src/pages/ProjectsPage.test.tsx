@@ -64,7 +64,7 @@ describe("ProjectsPage flagship redesign", () => {
     expect(screen.getByLabelText(/objetivo/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/tipo de renta/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/presupuesto/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /miami/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /^miami\b/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /orlando/i })).toBeInTheDocument();
     expect(screen.getByText(/no todos los proyectos merecen tu atención/i)).toBeInTheDocument();
   });
