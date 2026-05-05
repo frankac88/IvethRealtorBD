@@ -34,20 +34,16 @@ export type ProjectFormValues = {
   featured: boolean;
   locationEs: string;
   locationEn: string;
-  residencesEs: string;
-  residencesEn: string;
-  bathsEs: string;
-  bathsEn: string;
-  typeEs: string;
-  typeEn: string;
+  unitsEs: string;
+  unitsEn: string;
+  rentalEs: string;
+  rentalEn: string;
   deliveryEs: string;
   deliveryEn: string;
-  idealForEs: string;
-  idealForEn: string;
-  parkingEs: string;
-  parkingEn: string;
-  hookEs: string;
-  hookEn: string;
+  shortDescriptionEs: string;
+  shortDescriptionEn: string;
+  strategicSummaryEs: string;
+  strategicSummaryEn: string;
 };
 
 export const emptyProjectFormValues: ProjectFormValues = {
@@ -56,20 +52,16 @@ export const emptyProjectFormValues: ProjectFormValues = {
   featured: false,
   locationEs: "",
   locationEn: "",
-  residencesEs: "",
-  residencesEn: "",
-  bathsEs: "",
-  bathsEn: "",
-  typeEs: "",
-  typeEn: "",
+  unitsEs: "",
+  unitsEn: "",
+  rentalEs: "",
+  rentalEn: "",
   deliveryEs: "",
   deliveryEn: "",
-  idealForEs: "",
-  idealForEn: "",
-  parkingEs: "",
-  parkingEn: "",
-  hookEs: "",
-  hookEn: "",
+  shortDescriptionEs: "",
+  shortDescriptionEn: "",
+  strategicSummaryEs: "",
+  strategicSummaryEn: "",
 };
 
 export function projectToFormValues(project: ProjectItem): ProjectFormValues {
@@ -79,19 +71,15 @@ export function projectToFormValues(project: ProjectItem): ProjectFormValues {
     featured: project.isFeatured,
     locationEs: project.location.es,
     locationEn: project.location.en,
-    residencesEs: project.residences.es,
-    residencesEn: project.residences.en,
-    bathsEs: project.baths.es,
-    bathsEn: project.baths.en,
-    typeEs: project.type.es,
-    typeEn: project.type.en,
+    unitsEs: project.residences.es,
+    unitsEn: project.residences.en,
+    rentalEs: project.type.es,
+    rentalEn: project.type.en,
     deliveryEs: project.delivery.es,
     deliveryEn: project.delivery.en,
-    idealForEs: project.idealFor.es,
-    idealForEn: project.idealFor.en,
-    parkingEs: project.parking?.es ?? "",
-    parkingEn: project.parking?.en ?? "",
-    hookEs: project.hook.es,
-    hookEn: project.hook.en,
+    shortDescriptionEs: project.hook.es,
+    shortDescriptionEn: project.hook.en,
+    strategicSummaryEs: project.idealFor.es,
+    strategicSummaryEn: project.idealFor.en,
   };
 }

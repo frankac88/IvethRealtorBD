@@ -13,11 +13,13 @@ export function ProjectImagePlaceholder({
   tone = "sand",
   className,
   compact = false,
+  imageUrl,
 }: {
   label: string;
   tone?: LuxuryProject["gallery"][number]["tone"];
   className?: string;
   compact?: boolean;
+  imageUrl?: string;
 }) {
   return (
     <div
@@ -27,6 +29,14 @@ export function ProjectImagePlaceholder({
         className,
       )}
     >
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={label}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+      ) : null}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_22%,rgba(255,255,255,0.34),transparent_28%),linear-gradient(135deg,transparent,rgba(26,31,46,0.18))]" />
       <div className="absolute inset-3 border border-white/45" />
       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">

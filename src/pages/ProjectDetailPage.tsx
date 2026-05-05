@@ -92,6 +92,7 @@ const ProjectDetailPage = () => {
               <ProjectImagePlaceholder
                 label={t(project.imageHint)}
                 tone="teal"
+                imageUrl={project.detailImageUrl ?? project.imageUrl}
                 className="min-h-[22rem] md:min-h-[31rem]"
               />
             </AnimatedSection>

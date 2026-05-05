@@ -26,11 +26,6 @@ type DerivedProjectMeta = {
   filter_strategy_en: string;
 };
 
-function normalizeOptional(value: string) {
-  const trimmed = value.trim();
-  return trimmed.length > 0 ? trimmed : null;
-}
-
 function normalizeOptionalNumber(value: string) {
   const trimmed = value.trim();
   if (trimmed.length === 0) return null;
@@ -80,33 +75,28 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
 
 function deriveBadgeText(
   locale: "es" | "en",
-  values: Pick<ProjectFormValues, "deliveryEs" | "deliveryEn" | "typeEs" | "typeEn" | "idealForEs" | "idealForEn">,
+  values: Pick<ProjectFormValues, "deliveryEs" | "deliveryEn" | "rentalEs" | "rentalEn" | "strategicSummaryEs" | "strategicSummaryEn">,
 ) {
   const delivery = (locale === "es" ? values.deliveryEs : values.deliveryEn).toLowerCase();
-  const type = (locale === "es" ? values.typeEs : values.typeEn).toLowerCase();
-  const idealFor = (locale === "es" ? values.idealForEs : values.idealForEn).toLowerCase();
+  const rental = (locale === "es" ? values.rentalEs : values.rentalEn).toLowerCase();
+  const strategicSummary = (locale === "es" ? values.strategicSummaryEs : values.strategicSummaryEn).toLowerCase();
 
   if (delivery.includes("precon")) return locale === "es" ? "Preconstrucción" : "Pre-construction";
   if (delivery.includes("constru")) return locale === "es" ? "En construcción" : "Under construction";
   if (delivery.includes("fase")) return locale === "es" ? "En fases" : "Phased";
   if (delivery.includes("nueva")) return locale === "es" ? "Nueva construcción" : "New construction";
 
-  if (type.includes("waterfront")) return "Waterfront";
-  if (type.includes("branded")) return locale === "es" ? "Branded" : "Branded";
-  if (type.includes("boutique")) return locale === "es" ? "Boutique" : "Boutique";
-  if (type.includes("single family")) return locale === "es" ? "Residencial" : "Residential";
-  if (type.includes("condo hotel")) return locale === "es" ? "Rentas cortas" : "Short-term";
-
-  if (idealFor.includes("short") || idealFor.includes("corta")) {
+  if (rental.includes("airbnb")) return locale === "es" ? "Airbnb" : "Airbnb";
+  if (rental.includes("short") || rental.includes("corta")) {
     return locale === "es" ? "Rentas cortas" : "Short-term";
   }
-  if (idealFor.includes("long") || idealFor.includes("largo")) {
+  if (rental.includes("long") || rental.includes("largo")) {
     return locale === "es" ? "Largo plazo" : "Long-term";
   }
-  if (idealFor.includes("lujo") || idealFor.includes("luxury")) {
+  if (strategicSummary.includes("lujo") || strategicSummary.includes("luxury")) {
     return "Luxury";
   }
-  if (idealFor.includes("invers")) {
+  if (strategicSummary.includes("invers") || strategicSummary.includes("invest")) {
     return locale === "es" ? "Inversión" : "Investment";
   }
 
@@ -119,10 +109,10 @@ function deriveProjectMeta(values: ProjectFormValues): DerivedProjectMeta {
     badge_en: deriveBadgeText("en", values),
     filter_location_es: values.locationEs.trim(),
     filter_location_en: values.locationEn.trim(),
-    filter_type_es: values.typeEs.trim(),
-    filter_type_en: values.typeEn.trim(),
-    filter_strategy_es: values.idealForEs.trim(),
-    filter_strategy_en: values.idealForEn.trim(),
+    filter_type_es: values.rentalEs.trim(),
+    filter_type_en: values.rentalEn.trim(),
+    filter_strategy_es: values.strategicSummaryEs.trim(),
+    filter_strategy_en: values.strategicSummaryEn.trim(),
   };
 }
 
@@ -150,20 +140,20 @@ function buildProjectPayload(
     badge_en: meta.badge_en,
     location_es: values.locationEs.trim(),
     location_en: values.locationEn.trim(),
-    residences_es: values.residencesEs.trim(),
-    residences_en: values.residencesEn.trim(),
-    baths_es: values.bathsEs.trim(),
-    baths_en: values.bathsEn.trim(),
-    type_es: values.typeEs.trim(),
-    type_en: values.typeEn.trim(),
+    residences_es: values.unitsEs.trim(),
+    residences_en: values.unitsEn.trim(),
+    baths_es: "—",
+    baths_en: "—",
+    type_es: values.rentalEs.trim(),
+    type_en: values.rentalEn.trim(),
     delivery_es: values.deliveryEs.trim(),
     delivery_en: values.deliveryEn.trim(),
-    ideal_for_es: values.idealForEs.trim(),
-    ideal_for_en: values.idealForEn.trim(),
-    parking_es: normalizeOptional(values.parkingEs),
-    parking_en: normalizeOptional(values.parkingEn),
-    hook_es: values.hookEs.trim(),
-    hook_en: values.hookEn.trim(),
+    ideal_for_es: values.strategicSummaryEs.trim(),
+    ideal_for_en: values.strategicSummaryEn.trim(),
+    parking_es: null,
+    parking_en: null,
+    hook_es: values.shortDescriptionEs.trim(),
+    hook_en: values.shortDescriptionEn.trim(),
     filter_location_es: meta.filter_location_es,
     filter_location_en: meta.filter_location_en,
     filter_type_es: meta.filter_type_es,

@@ -19,6 +19,8 @@ export type LuxuryProject = {
   strategicSummary: LocalizedText;
   cardCta: LocalizedText;
   imageHint: LocalizedText;
+  imageUrl?: string;
+  detailImageUrl?: string;
   goal: ProjectGoal;
   rentalType: ProjectRentalType;
   budgetRange: ProjectBudgetRange;
@@ -26,6 +28,7 @@ export type LuxuryProject = {
   gallery: Array<{
     label: LocalizedText;
     tone: "sand" | "teal" | "wine" | "sage";
+    imageUrl?: string;
   }>;
 };
 
@@ -80,32 +83,49 @@ const baseGallery: LuxuryProject["gallery"] = [
   { label: { es: "Vista", en: "View" }, tone: "wine" },
 ];
 
+const projectImagesBaseUrl =
+  "https://velgoadpmhssqptkcjam.supabase.co/storage/v1/object/public/project-images/projects";
+
+const edgeHouseImages = {
+  hero: `${projectImagesBaseUrl}/edge-house-hero.webp`,
+  poolDeck: `${projectImagesBaseUrl}/edge-house-pool-deck.webp`,
+  livingRoom: `${projectImagesBaseUrl}/edge-house-living-room.webp`,
+  aerialNight: `${projectImagesBaseUrl}/edge-house-aerial-night.webp`,
+} as const;
+
 export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "edge-house",
     city: "miami",
     title: "EDGE HOUSE",
-    location: { es: "Edgewater / área Brickell", en: "Edgewater / Brickell area" },
+    location: { es: "Edgewater, Miami", en: "Edgewater, Miami" },
     eyebrow: { es: "Inversión urbana premium", en: "Premium urban investment" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
-    rentalLabel: { es: "Renta flexible", en: "Flexible rental" },
-    unitsLabel: { es: "Studios – 2BR", en: "Studios – 2BR" },
+    priceLabel: { es: "Desde $540,000", en: "From $540,000" },
+    deliveryLabel: { es: "Entrega 2030", en: "Delivery 2030" },
+    rentalLabel: { es: "Airbnb permitido", en: "Airbnb allowed" },
+    unitsLabel: { es: "Studios – 3 habitaciones", en: "Studios – 3 bedrooms" },
     shortDescription: {
-      es: "Ubicación estratégica con alta demanda por conectividad, estilo de vida y potencial de renta.",
-      en: "Strategic location with high demand driven by connectivity, lifestyle, and rental potential.",
+      es: "Invierte en Airbnb en el corazón de Edgewater, una de las zonas con mayor crecimiento y demanda.",
+      en: "Invest in Airbnb in the heart of Edgewater, one of Miami's highest-growth, high-demand areas.",
     },
     strategicSummary: {
-      es: "Pensado para compradores que buscan exposición a una zona urbana dinámica, con una propuesta flexible y aspiracional.",
-      en: "Designed for buyers seeking exposure to a dynamic urban area with a flexible, aspirational investment profile.",
+      es: "Edge House está ubicado en Edgewater, con una posición estratégica entre Downtown Miami y Design District, cerca de la bahía de Biscayne y con potencial de renta y apreciación a largo plazo.",
+      en: "Edge House is located in Edgewater, strategically positioned between Downtown Miami and the Design District, near Biscayne Bay, with rental potential and long-term appreciation.",
     },
     cardCta: { es: "Descubre Edge House", en: "Discover Edge House" },
     imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
+    imageUrl: edgeHouseImages.hero,
+    detailImageUrl: edgeHouseImages.hero,
     goal: "investment",
     rentalType: "flexible",
     budgetRange: "500k-1m",
     featured: true,
-    gallery: baseGallery,
+    gallery: [
+      { label: { es: "Fachada", en: "Facade" }, tone: "sand", imageUrl: edgeHouseImages.hero },
+      { label: { es: "Amenidad", en: "Amenity" }, tone: "sage", imageUrl: edgeHouseImages.poolDeck },
+      { label: { es: "Interior", en: "Interior" }, tone: "teal", imageUrl: edgeHouseImages.livingRoom },
+      { label: { es: "Vista", en: "View" }, tone: "wine", imageUrl: edgeHouseImages.aerialNight },
+    ],
   },
   {
     slug: "bloom-north-miami",

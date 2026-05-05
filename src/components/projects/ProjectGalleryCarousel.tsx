@@ -38,6 +38,7 @@ export function ProjectGalleryCarousel({ project }: { project: LuxuryProject }) 
               <ProjectImagePlaceholder
                 label={t(item.label)}
                 tone={item.tone}
+                imageUrl={item.imageUrl}
                 className="min-h-[17rem] md:min-h-[24rem]"
               />
             </CarouselItem>
