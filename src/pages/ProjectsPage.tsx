@@ -37,12 +37,12 @@ const copy = {
   whatsapp: { es: "WhatsApp", en: "WhatsApp" },
   privateAdvisory: { es: "Criterios de selección", en: "Selection criteria" },
   maxProjects: {
-    es: "Renta · Entrega 2029–2030 · Desde $500K",
-    en: "Rental · 2029–2030 delivery · From $500K",
+    es: "Renta · Entrega 2029–2030 · Desde $380K",
+    en: "Rental · 2029–2030 delivery · From $380K",
   },
   maxProjectsDescription: {
-    es: "Top 10 inversiones: 6 en Miami y 4 en Orlando. Proyectos ideales para Airbnb o renta flexible, entregas 2029-2030 desde $500K.",
-    en: "Top 10 investments: 6 in Miami and 4 in Orlando. Ideal projects for Airbnb or flexible rentals, 2029-2030 delivery from $500K.",
+    es: "Entrada curada a Florida: ubicaciones con demanda, renta flexible y potencial de valorización desde $380K.",
+    en: "Curated entry into Florida: demand-driven locations, flexible rental options, and appreciation potential from $380K.",
   },
   noResultsTitle: {
     es: "No encontramos una coincidencia exacta.",
@@ -223,7 +223,7 @@ const ProjectsPage = () => {
                   {[
                     { value: "MIAMI", label: "6" },
                     { value: "ORLANDO", label: "4" },
-                    { value: "2029–2030", label: "$500K+" },
+                    { value: "2029–2030", label: "$380K+" },
                   ].map((item) => (
                     <div
                       key={item.value}

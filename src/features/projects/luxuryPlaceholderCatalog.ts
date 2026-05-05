@@ -101,6 +101,15 @@ const bloomImages = {
   projectView: `${projectImagesBaseUrl}/bloom-project-view.webp`,
 } as const;
 
+const theWilliamImages = {
+  hero: `${projectImagesBaseUrl}/the-william-hero.webp`,
+  exterior: `${projectImagesBaseUrl}/the-william-exterior.webp`,
+  livingRoom: `${projectImagesBaseUrl}/the-william-living-room.webp`,
+  lobby: `${projectImagesBaseUrl}/the-william-lobby.webp`,
+  pool: `${projectImagesBaseUrl}/the-william-pool.webp`,
+  terrace: `${projectImagesBaseUrl}/the-william-terrace.webp`,
+} as const;
+
 export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "edge-house",
@@ -221,27 +230,36 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "the-william",
     city: "miami",
-    title: "THE WILLIAM",
+    title: "THE WILLIAM RESIDENCES",
     location: { es: "North Miami Beach", en: "North Miami Beach" },
-    eyebrow: { es: "Entrada competitiva", en: "Competitive entry" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
-    rentalLabel: { es: "Renta flexible", en: "Flexible rental" },
-    unitsLabel: { es: "1–3 habitaciones", en: "1–3 bedrooms" },
+    eyebrow: { es: "Entrada temprana NMB", en: "Early NMB entry" },
+    priceLabel: { es: "Desde $380,000", en: "From $380,000" },
+    deliveryLabel: { es: "Entrega 2029", en: "Delivery 2029" },
+    rentalLabel: { es: "Mínimo 90 días", en: "90-day minimum" },
+    unitsLabel: { es: "Studios – 3 habitaciones", en: "Studios – 3 bedrooms" },
     shortDescription: {
-      es: "Conectado con Aventura, playas y corredores de crecimiento del norte de Miami.",
-      en: "Connected to Aventura, beaches, and North Miami growth corridors.",
+      es: "Una entrada estratégica para posicionarte temprano en North Miami Beach.",
+      en: "A strategic entry point to position early in North Miami Beach.",
     },
     strategicSummary: {
-      es: "Una opción para entrar en el mercado con ubicación conectada y potencial de demanda amplia.",
-      en: "An option to enter the market with a connected location and broad demand potential.",
+      es: "The William Residences es una torre refinada de 26 pisos y 374 residencias en North Miami Beach, cerca de playas, tiendas, restaurantes, aeropuertos, centros de negocios y espacios culturales. Su ubicación conectada y renta mínima de 90 días lo posicionan como una alternativa para diversificar capital en una zona con proyección real.",
+      en: "The William Residences is a refined 26-story tower with 374 residences in North Miami Beach, close to beaches, shopping, restaurants, airports, business centers, and cultural venues. Its connected location and 90-day minimum rental policy position it as an alternative for diversifying capital in an area with real growth potential.",
     },
     cardCta: { es: "Ver The William", en: "View The William" },
-    imageHint: { es: "Render elegante", en: "Elegant render" },
+    imageHint: { es: "Fachada / lifestyle", en: "Facade / lifestyle" },
+    imageUrl: theWilliamImages.hero,
+    detailImageUrl: theWilliamImages.hero,
     goal: "investment",
-    rentalType: "flexible",
+    rentalType: "30-90-days",
     budgetRange: "under-500k",
-    gallery: baseGallery,
+    gallery: [
+      { label: { es: "Fachada", en: "Facade" }, tone: "sand", imageUrl: theWilliamImages.hero },
+      { label: { es: "Exterior", en: "Exterior" }, tone: "teal", imageUrl: theWilliamImages.exterior },
+      { label: { es: "Interior", en: "Interior" }, tone: "sage", imageUrl: theWilliamImages.livingRoom },
+      { label: { es: "Lobby", en: "Lobby" }, tone: "wine", imageUrl: theWilliamImages.lobby },
+      { label: { es: "Piscina", en: "Pool" }, tone: "teal", imageUrl: theWilliamImages.pool },
+      { label: { es: "Terraza", en: "Terrace" }, tone: "sand", imageUrl: theWilliamImages.terrace },
+    ],
   },
   {
     slug: "cassia",
