@@ -3,7 +3,7 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps extends React.HTMLAttributes<HTMLElement> {
-  as?: "section" | "div" | "article";
+  as?: "section" | "div" | "article" | "aside" | "form";
   delay?: number;
   children: React.ReactNode;
   className?: string;
@@ -39,7 +39,7 @@ const AnimatedSection = ({
   ...props
 }: AnimatedSectionProps) => {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const { ref, isVisible } = useScrollAnimation({ disabled: prefersReducedMotion });
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>({ disabled: prefersReducedMotion });
 
   return (
     <Tag

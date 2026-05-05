@@ -17,7 +17,7 @@ const labels = {
     es: "¿Buscas invertir en una zona con alta demanda y una tesis clara?",
     en: "Are you looking to invest in an area with high demand and a clear thesis?",
   },
-  summary: { es: "Resumen estratégico", en: "Strategic summary" },
+  summary: { es: "Visión y potencial", en: "Vision and potential" },
   keyData: { es: "Datos clave", en: "Key data" },
   price: { es: "Precio desde", en: "Price from" },
   delivery: { es: "Entrega", en: "Delivery" },

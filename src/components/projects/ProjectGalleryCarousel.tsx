@@ -11,7 +11,7 @@ import { useT } from "@/i18n/LanguageContext";
 import { ProjectImagePlaceholder } from "./ProjectImagePlaceholder";
 
 const labels = {
-  title: { es: "Galería privada", en: "Private gallery" },
+  title: { es: "Detalles exclusivos", en: "Exclusive details" },
 } as const;
 
 export function ProjectGalleryCarousel({ project }: { project: LuxuryProject }) {
