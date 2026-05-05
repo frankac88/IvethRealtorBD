@@ -47,7 +47,13 @@ export const getRouteKeyForPath = (path: string): LocalizedRouteKey | null => {
   for (const [routeKey, route] of Object.entries(localizedRoutes) as Array<
     [LocalizedRouteKey, LocalizedRouteMap[LocalizedRouteKey]]
   >) {
-    if (normalizePath(route.es) === normalizedPath || normalizePath(route.en) === normalizedPath) {
+    const esPath = normalizePath(route.es);
+    const enPath = normalizePath(route.en);
+    if (
+      esPath === normalizedPath ||
+      enPath === normalizedPath ||
+      (routeKey === "projects" && (normalizedPath.startsWith(`${esPath}/`) || normalizedPath.startsWith(`${enPath}/`)))
+    ) {
       return routeKey;
     }
   }
@@ -72,10 +78,30 @@ export const getLanguageForPath = (path: string): Language | null => {
     }
   }
 
+  const projectsEsPath = normalizePath(localizedRoutes.projects.es);
+  const projectsEnPath = normalizePath(localizedRoutes.projects.en);
+
+  if (normalizedPath.startsWith(`${projectsEsPath}/`)) {
+    return "es";
+  }
+
+  if (normalizedPath.startsWith(`${projectsEnPath}/`)) {
+    return "en";
+  }
+
   return null;
 };
 
 export const getAlternateLocalizedPath = (path: string, language: Language) => {
-  const routeKey = getRouteKeyForPath(path);
+  const normalizedPath = normalizePath(path);
+  const projectsEsPath = normalizePath(localizedRoutes.projects.es);
+  const projectsEnPath = normalizePath(localizedRoutes.projects.en);
+
+  if (normalizedPath.startsWith(`${projectsEsPath}/`) || normalizedPath.startsWith(`${projectsEnPath}/`)) {
+    const slug = normalizedPath.split("/").filter(Boolean).at(-1);
+    return slug ? `${getLocalizedPath("projects", language)}/${slug}` : getLocalizedPath("projects", language);
+  }
+
+  const routeKey = getRouteKeyForPath(normalizedPath);
   return routeKey ? getLocalizedPath(routeKey, language) : null;
 };

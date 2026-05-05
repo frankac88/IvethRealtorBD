@@ -1,537 +1,263 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import {
-  Bath,
-  BedDouble,
-  Building2,
-  CalendarClock,
-  CarFront,
-  MapPin,
-  Search,
-  Sparkles,
-  Target,
-} from "lucide-react";
+import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 
 import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
+import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
+import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
+import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
-import { type ProjectItem } from "@/features/projects/catalog";
-import { usePublishedProjectsQuery } from "@/features/projects/hooks";
+import {
+  defaultProjectFilters,
+  filterLuxuryProjects,
+  luxuryPlaceholderProjects,
+  type LuxuryProjectFilters,
+  type ProjectBudgetRange,
+  type ProjectCity,
+  type ProjectGoal,
+  type ProjectRentalType,
+} from "@/features/projects/luxuryPlaceholderCatalog";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
-import { projectsTranslations } from "@/i18n/translations/projects";
 
-const labels = {
-  search: { es: "Buscar", en: "Search" },
-  searchPlaceholder: {
-    es: "Buscar por proyecto, zona o característica",
-    en: "Search by project, area, or feature",
+const copy = {
+  heroEyebrow: { es: "Selección privada · Florida", en: "Private selection · Florida" },
+  heroTitle: {
+    es: "Oportunidades que no se eligen por catálogo.",
+    en: "Opportunities you do not choose from a catalog.",
   },
-  filtersTitle: { es: "Filtra oportunidades", en: "Filter opportunities" },
-  allLocations: { es: "Todas las ubicaciones", en: "All locations" },
-  allTypes: { es: "Todos los tipos", en: "All types" },
-  allPrices: { es: "Todos los precios", en: "All prices" },
-  location: { es: "Ubicación", en: "Location" },
-  type: { es: "Tipo", en: "Type" },
-  price: { es: "Precio", en: "Price" },
-  results: { es: "resultados", en: "results" },
-  priceFrom: { es: "Precios desde", en: "Prices from" },
-  residences: { es: "Residencias desde", en: "Residences from" },
-  baths: { es: "Baños", en: "Bathrooms" },
-  delivery: { es: "Entrega", en: "Delivery" },
-  idealFor: { es: "Ideal para", en: "Ideal for" },
-  parking: { es: "Parqueadero", en: "Parking" },
-  hook: { es: "Destacado", en: "Highlight" },
-  notAvailable: { es: "—", en: "—" },
-  clearFilters: { es: "Limpiar filtros", en: "Clear filters" },
-  loading: { es: "Cargando proyectos…", en: "Loading projects…" },
-  unavailable: {
-    es: "No pudimos cargar los proyectos ahora mismo. Intenta nuevamente en unos minutos.",
-    en: "We could not load projects right now. Please try again in a few minutes.",
+  heroSubtitle: {
+    es: "Una curaduría de proyectos en Miami y Orlando filtrada por ubicación, renta, valorización y perfil del comprador.",
+    en: "A curated selection of Miami and Orlando projects filtered by location, rental demand, appreciation, and buyer profile.",
   },
-  emptyCatalog: {
-    es: "Aún no hay proyectos publicados en el catálogo.",
-    en: "There are no published projects in the catalog yet.",
+  explore: { es: "Explorar selección", en: "Explore selection" },
+  whatsapp: { es: "WhatsApp", en: "WhatsApp" },
+  privateAdvisory: { es: "Private advisory", en: "Private advisory" },
+  maxProjects: { es: "10 proyectos máximo", en: "10 projects maximum" },
+  maxProjectsDescription: {
+    es: "Menos ruido, más criterio: 6 Miami + 4 Orlando.",
+    en: "Less noise, more judgment: 6 Miami + 4 Orlando.",
   },
-  noResults: {
-    es: "No encontramos proyectos con esos filtros. Prueba otra ubicación o estrategia.",
-    en: "No projects matched those filters. Try another location or strategy.",
+  noResultsTitle: {
+    es: "No encontramos una coincidencia exacta.",
+    en: "We did not find an exact match.",
   },
+  noResultsBody: {
+    es: "Puedo ayudarte a filtrar oportunidades privadas según presupuesto, renta esperada y objetivo.",
+    en: "I can help you filter private opportunities by budget, expected rental profile, and goal.",
+  },
+  differentiatorEyebrow: { es: "Diferencial Iveth Coll", en: "Iveth Coll difference" },
+  differentiatorTitle: {
+    es: "No todos los proyectos merecen tu atención.",
+    en: "Not every project deserves your attention.",
+  },
+  differentiatorBody: {
+    es: "Selecciono oportunidades considerando ubicación, demanda de renta, perfil del comprador y potencial de valorización. Mi trabajo no es mostrarte todo: es ayudarte a filtrar mejor.",
+    en: "I select opportunities by weighing location, rental demand, buyer profile, and appreciation potential. My job is not to show everything; it is to help you filter better.",
+  },
+  finalTitle: {
+    es: "¿Cuál proyecto encaja con tu estrategia?",
+    en: "Which project fits your strategy?",
+  },
+  finalBody: {
+    es: "Hablemos de presupuesto, objetivo y horizonte de inversión antes de pedir disponibilidad actualizada.",
+    en: "Let us talk budget, goal, and investment horizon before requesting updated availability.",
+  },
+  agenda: { es: "Agenda asesoría", en: "Schedule advisory" },
 } as const;
 
-const detailIconClassName = "h-[0.95rem] w-[0.95rem] text-primary";
-const detailLabelClassName =
-  "text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-foreground/58";
-const detailValueClassName = "mt-0.5 text-[0.92rem] leading-5 text-foreground";
+const isProjectCity = (value: string | null): value is ProjectCity => value === "miami" || value === "orlando";
+const isProjectGoal = (value: string | null): value is ProjectGoal =>
+  value === "investment" || value === "vacation-rental" || value === "primary-home" || value === "long-term";
+const isRentalType = (value: string | null): value is ProjectRentalType =>
+  value === "flexible" || value === "short-term" || value === "30-90-days" || value === "long-term";
+const isBudgetRange = (value: string | null): value is ProjectBudgetRange =>
+  value === "under-500k" || value === "500k-1m" || value === "1m-2m" || value === "2m-plus";
 
-const formatPriceFrom = (value: number, language: "es" | "en") =>
-  new Intl.NumberFormat(language === "es" ? "es-US" : "en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
+const getFiltersFromParams = (searchParams: URLSearchParams): LuxuryProjectFilters => ({
+  city: isProjectCity(searchParams.get("city")) ? searchParams.get("city") as ProjectCity : "all",
+  goal: isProjectGoal(searchParams.get("goal")) ? searchParams.get("goal") as ProjectGoal : "all",
+  rentalType: isRentalType(searchParams.get("rental")) ? searchParams.get("rental") as ProjectRentalType : "all",
+  budgetRange: isBudgetRange(searchParams.get("budget")) ? searchParams.get("budget") as ProjectBudgetRange : "all",
+});
 
-const priceRanges = [
-  { value: "under-500k", min: null, max: 500000 },
-  { value: "500k-1m", min: 500000, max: 1000000 },
-  { value: "1m-2m", min: 1000000, max: 2000000 },
-  { value: "2m-plus", min: 2000000, max: null },
-] as const;
+const updateParamsFromFilters = (filters: LuxuryProjectFilters) => {
+  const params = new URLSearchParams();
 
-const priceRangeLabels: Record<(typeof priceRanges)[number]["value"], { es: string; en: string }> = {
-  "under-500k": { es: "Hasta $500K", en: "Up to $500K" },
-  "500k-1m": { es: "$500K - $1M", en: "$500K - $1M" },
-  "1m-2m": { es: "$1M - $2M", en: "$1M - $2M" },
-  "2m-plus": { es: "$2M+", en: "$2M+" },
+  if (filters.city !== "all") params.set("city", filters.city);
+  if (filters.goal !== "all") params.set("goal", filters.goal);
+  if (filters.rentalType !== "all") params.set("rental", filters.rentalType);
+  if (filters.budgetRange !== "all") params.set("budget", filters.budgetRange);
+
+  return params;
 };
 
-const dedupeLocalizedOptions = (
-  items: ProjectItem[],
-  selector: (item: ProjectItem) => { es: string; en: string },
-) => {
-  const map = new Map<string, { es: string; en: string }>();
-
-  items.forEach((item) => {
-    const option = selector(item);
-    const key = `${option.es}|||${option.en}`;
-
-    if (!map.has(key)) {
-      map.set(key, option);
-    }
-  });
-
-  return Array.from(map.values());
-};
-
-const estimateCardWeight = (
-  project: ProjectItem,
-  t: (value: { es: string; en: string }) => string,
-) => {
-  const values = [
-    project.title,
-    t(project.location),
-    t(project.residences),
-    t(project.baths),
-    t(project.type),
-    t(project.delivery),
-    t(project.idealFor),
-    project.parking ? t(project.parking) : "",
-    t(project.hook),
-  ];
-
-  return values.reduce((total, value) => total + value.length, 0);
-};
-
-const pairProjectsByEstimatedHeight = (
-  items: ProjectItem[],
-  t: (value: { es: string; en: string }) => string,
-) => {
-  const preferredPairs = [["CELEBRATION", "CLERMONT"]] as const;
-  const remaining = [...items];
-  const paired: ProjectItem[] = [];
-
-  preferredPairs.forEach(([firstTitle, secondTitle]) => {
-    const firstIndex = remaining.findIndex((project) => project.title === firstTitle);
-    const secondIndex = remaining.findIndex((project) => project.title === secondTitle);
-
-    if (firstIndex === -1 || secondIndex === -1) return;
-
-    const [firstProject] = remaining.splice(firstIndex, 1);
-    const adjustedSecondIndex = secondIndex > firstIndex ? secondIndex - 1 : secondIndex;
-    const [secondProject] = remaining.splice(adjustedSecondIndex, 1);
-
-    paired.push(firstProject, secondProject);
-  });
-
-  const weighted = remaining
-    .map((project, index) => ({
-      project,
-      index,
-      weight: estimateCardWeight(project, t),
-    }))
-    .sort((a, b) => a.weight - b.weight || a.index - b.index);
-
-  const rows: Array<typeof weighted> = [];
-
-  for (let index = 0; index < weighted.length; index += 2) {
-    rows.push(weighted.slice(index, index + 2));
-  }
-
-  return [
-    ...paired,
-    ...rows.flatMap((row) =>
-      [...row]
-        .sort((a, b) => a.index - b.index)
-        .map((entry) => entry.project),
-    ),
-  ];
-};
-
-const ProjectDetailRow = ({
-  icon,
-  label,
-  value,
-  emphasize = false,
-  compact = false,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: string;
-  emphasize?: boolean;
-  compact?: boolean;
-}) => (
-  <div
-    className={`grid h-full w-full items-start gap-2 rounded-2xl border transition-colors ${
-      compact ? "grid-cols-[2.1rem_minmax(0,1fr)] px-2.5 py-2.5" : "grid-cols-[2.5rem_minmax(0,1fr)] px-3 py-3"
-    } ${
-      emphasize ? "border-primary/20 bg-primary/5" : "border-border/70 bg-muted/30"
-    }`}
-  >
-    <div
-      className={`flex items-center justify-center rounded-full bg-background shadow-sm ${
-        compact ? "h-8 w-8" : "h-10 w-10"
-      }`}
-    >
-      {icon}
-    </div>
-    <div className="min-w-0">
-      <p className={detailLabelClassName}>{label}</p>
-      <p className={`${detailValueClassName} ${emphasize ? "line-clamp-3 text-foreground/90" : ""}`}>
-        {value}
-      </p>
-    </div>
-  </div>
-);
+const groupByCity = (projects: typeof luxuryPlaceholderProjects) => ({
+  miami: projects.filter((project) => project.city === "miami"),
+  orlando: projects.filter((project) => project.city === "orlando"),
+});
 
 const ProjectsPage = () => {
-  const { language } = useLanguage();
   const t = useT();
-  const p = projectsTranslations;
-  const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
-  const { data: projects = [], isLoading, error } = usePublishedProjectsQuery();
+  const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const [searchTerm, setSearchTerm] = useState(() => searchParams.get("q") ?? "");
-  const [selectedLocation, setSelectedLocation] = useState(() => searchParams.get("location") ?? "all");
-  const [selectedType, setSelectedType] = useState(() => searchParams.get("type") ?? "all");
-  const [selectedPriceRange, setSelectedPriceRange] = useState(() => searchParams.get("price") ?? "all");
+  const [filters, setFilters] = useState<LuxuryProjectFilters>(() => getFiltersFromParams(searchParams));
+  const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
   useEffect(() => {
-    setSearchTerm(searchParams.get("q") ?? "");
-    setSelectedLocation(searchParams.get("location") ?? "all");
-    setSelectedType(searchParams.get("type") ?? "all");
-    setSelectedPriceRange(searchParams.get("price") ?? "all");
+    setFilters(getFiltersFromParams(searchParams));
   }, [searchParams]);
 
   useEffect(() => {
-    const nextParams = new URLSearchParams();
-
-    if (searchTerm.trim()) nextParams.set("q", searchTerm.trim());
-    if (selectedLocation !== "all") nextParams.set("location", selectedLocation);
-    if (selectedType !== "all") nextParams.set("type", selectedType);
-    if (selectedPriceRange !== "all") nextParams.set("price", selectedPriceRange);
-
+    const nextParams = updateParamsFromFilters(filters);
     if (nextParams.toString() !== searchParams.toString()) {
       setSearchParams(nextParams, { replace: true });
     }
-  }, [searchParams, searchTerm, selectedLocation, selectedType, selectedPriceRange, setSearchParams]);
+  }, [filters, searchParams, setSearchParams]);
 
-  const locationOptions = useMemo(
-    () => dedupeLocalizedOptions(projects, (project) => project.filterLocation),
-    [projects],
+  const filteredProjects = useMemo(
+    () => filterLuxuryProjects(luxuryPlaceholderProjects, filters),
+    [filters],
   );
-  const typeOptions = useMemo(
-    () => dedupeLocalizedOptions(projects, (project) => project.filterType),
-    [projects],
-  );
-  const filteredProjects = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
+  const groupedProjects = useMemo(() => groupByCity(filteredProjects), [filteredProjects]);
+  const showNoResults = filteredProjects.length === 0;
 
-    return projects.filter((project) => {
-      const matchesSearch =
-        term.length === 0 ||
-        project.title.toLowerCase().includes(term) ||
-        project.location.es.toLowerCase().includes(term) ||
-        project.location.en.toLowerCase().includes(term) ||
-        project.type.es.toLowerCase().includes(term) ||
-        project.type.en.toLowerCase().includes(term) ||
-        project.idealFor.es.toLowerCase().includes(term) ||
-        project.idealFor.en.toLowerCase().includes(term) ||
-        project.hook.es.toLowerCase().includes(term) ||
-        project.hook.en.toLowerCase().includes(term) ||
-        project.filterLocation.es.toLowerCase().includes(term) ||
-        project.filterLocation.en.toLowerCase().includes(term) ||
-        project.filterType.es.toLowerCase().includes(term) ||
-        project.filterType.en.toLowerCase().includes(term);
+  const handleFilterChange = <Key extends keyof LuxuryProjectFilters>(
+    key: Key,
+    value: LuxuryProjectFilters[Key],
+  ) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+  };
 
-      const matchesLocation =
-        selectedLocation === "all" || project.filterLocation.es === selectedLocation;
-      const matchesType = selectedType === "all" || project.filterType.es === selectedType;
-      const selectedRange = priceRanges.find((range) => range.value === selectedPriceRange);
-      const matchesPrice =
-        !selectedRange ||
-        (project.priceFrom !== null &&
-          (selectedRange.min === null || project.priceFrom >= selectedRange.min) &&
-          (selectedRange.max === null || project.priceFrom < selectedRange.max));
-
-      return matchesSearch && matchesLocation && matchesType && matchesPrice;
-    });
-  }, [projects, searchTerm, selectedLocation, selectedType, selectedPriceRange]);
-
-  const balancedProjects = useMemo(
-    () => pairProjectsByEstimatedHeight(filteredProjects, t),
-    [filteredProjects, t],
-  );
-
-  const showEmptyCatalog = !isLoading && !error && projects.length === 0;
-  const showNoResults = !isLoading && !error && projects.length > 0 && filteredProjects.length === 0;
+  const handleClearFilters = () => setFilters(defaultProjectFilters);
 
   return (
     <Layout>
-      <section className="bg-muted py-20">
+      <section className="relative isolate overflow-hidden bg-background">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_18%,rgba(138,85,121,0.16),transparent_30%),radial-gradient(circle_at_80%_12%,rgba(42,123,137,0.14),transparent_30%)]" />
+        <div className="container mx-auto grid min-h-[calc(100vh-7rem)] gap-10 px-4 py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-24">
+          <AnimatedSection as="div" className="relative z-10">
+            <p className="type-caption text-primary">{t(copy.heroEyebrow)}</p>
+            <h1 className="mt-5 max-w-4xl font-serif text-[3.05rem] font-medium leading-[0.92] tracking-[-0.055em] text-wine md:text-[5rem] xl:text-[6rem]">
+              {t(copy.heroTitle)}
+            </h1>
+            <p className="type-body mt-6 max-w-2xl text-foreground/70">{t(copy.heroSubtitle)}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button asChild className="bg-primary text-primary-foreground shadow-[0_18px_44px_rgba(42,123,137,0.22)] hover:bg-green-light">
+                <a href="#project-selection">
+                  {t(copy.explore)}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild className="bg-wine text-white shadow-[0_18px_44px_rgba(124,63,99,0.22)] hover:bg-accent">
+                <Link to={contactPath}>
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  {t(copy.whatsapp)}
+                </Link>
+              </Button>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection as="div" delay={120} className="relative min-h-[26rem]">
+            <ProjectImagePlaceholder
+              label={t({ es: "Imagen hero principal", en: "Main hero image" })}
+              tone="teal"
+              className="absolute right-0 top-0 h-[22rem] w-[82%] md:h-[28rem]"
+            />
+            <div className="absolute bottom-0 left-0 max-w-[18rem] border border-gold/35 bg-card/95 p-5 shadow-[0_24px_70px_rgba(26,31,46,0.16)]">
+              <p className="type-caption text-primary">{t(copy.privateAdvisory)}</p>
+              <p className="mt-3 font-serif text-3xl leading-none tracking-[-0.04em] text-wine">
+                {t(copy.maxProjects)}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{t(copy.maxProjectsDescription)}</p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <ProjectsLuxuryFilter
+        filters={filters}
+        onChange={handleFilterChange}
+        onClear={handleClearFilters}
+        resultCount={filteredProjects.length}
+      />
+
+      <div id="project-selection" className="scroll-mt-28">
+        {showNoResults ? (
+          <section className="py-20">
+            <div className="container mx-auto px-4 lg:px-8">
+              <AnimatedSection
+                as="div"
+                className="border border-dashed border-wine/35 bg-card/80 p-10 text-center shadow-[0_24px_70px_rgba(26,31,46,0.08)]"
+              >
+                <Sparkles className="mx-auto h-8 w-8 text-primary" />
+                <h2 className="type-h2 mt-4 text-wine">{t(copy.noResultsTitle)}</h2>
+                <p className="type-body mx-auto mt-4 max-w-2xl">{t(copy.noResultsBody)}</p>
+                <Button
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="mt-6 bg-primary text-primary-foreground hover:bg-green-light"
+                >
+                  {t({ es: "Ver selección completa", en: "View full selection" })}
+                </Button>
+              </AnimatedSection>
+            </div>
+          </section>
+        ) : (
+          <>
+            <ProjectCitySection city="miami" projects={groupedProjects.miami} className="bg-background" />
+            <ProjectCitySection city="orlando" projects={groupedProjects.orlando} className="bg-muted/50" />
+          </>
+        )}
+      </div>
+
+      <section className="relative overflow-hidden bg-card py-20 md:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(42,123,137,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(138,85,121,0.12),transparent_30%)]" />
+        <div className="container relative mx-auto grid gap-10 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
+          <AnimatedSection as="div" className="relative min-h-[20rem]">
+            <ProjectImagePlaceholder
+              label={t({ es: "Iveth / ciudad", en: "Iveth / city" })}
+              tone="sand"
+              className="absolute inset-0 right-8"
+            />
+            <div className="absolute bottom-0 right-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em]">Iveth Coll</p>
+              <p className="mt-2 font-serif text-2xl leading-none tracking-[-0.035em]">
+                {t({ es: "Curaduría primero.", en: "Curation first." })}
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection as="div" delay={120}>
+            <p className="type-caption text-primary">{t(copy.differentiatorEyebrow)}</p>
+            <h2 className="type-h2 mt-3 text-wine">{t(copy.differentiatorTitle)}</h2>
+            <p className="type-body mt-5 max-w-2xl text-foreground/72">{t(copy.differentiatorBody)}</p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Button asChild className="bg-wine text-white hover:bg-accent">
+                <Link to={contactPath}>{t(copy.agenda)}</Link>
+              </Button>
+              <Button asChild className="bg-primary text-primary-foreground hover:bg-green-light">
+                <Link to={contactPath}>{t(copy.whatsapp)}</Link>
+              </Button>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="bg-background py-20 md:py-24">
         <div className="container mx-auto px-4 text-center lg:px-8">
           <AnimatedSection as="div" className="mx-auto max-w-3xl">
-            <p className="type-caption mb-4">{t(p.label)}</p>
-            <h1 className="type-h1 mb-4">{t(p.title)}</h1>
-            <p className="type-body mx-auto max-w-2xl">{t(p.subtitle)}</p>
+            <p className="type-caption text-primary">{t({ es: "Siguiente paso", en: "Next step" })}</p>
+            <h2 className="type-h2 mt-3 text-wine">{t(copy.finalTitle)}</h2>
+            <p className="type-body mx-auto mt-4 max-w-2xl">{t(copy.finalBody)}</p>
+            <Button asChild className="mt-7 bg-primary px-7 text-primary-foreground hover:bg-green-light">
+              <Link to={contactPath}>
+                {t(copy.agenda)}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="py-10">
-        <div className="container mx-auto px-4 lg:px-8">
-          <AnimatedSection as="div" className="border border-border bg-background p-5 md:p-6">
-            <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="type-caption">
-                  {t(labels.filtersTitle)}
-                </p>
-                <p className="type-body-sm mt-2">
-                  {filteredProjects.length} {t(labels.results)}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedLocation("all");
-                  setSelectedType("all");
-                  setSelectedPriceRange("all");
-                }}
-                className="type-body-sm text-primary underline-offset-4 hover:underline"
-              >
-                {t(labels.clearFilters)}
-              </button>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <label className="block">
-                <span className="type-caption mb-2 block text-foreground/65">
-                  {t(labels.search)}
-                </span>
-                <div className="flex items-center gap-2 border border-border bg-background px-3">
-                  <Search className="h-4 w-4 text-muted-foreground" />
-                  <input
-                    name="catalog-search"
-                    value={searchTerm}
-                    onChange={(event) => setSearchTerm(event.target.value)}
-                    placeholder={t(labels.searchPlaceholder)}
-                    autoComplete="off"
-                    className="h-12 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-                  />
-                </div>
-              </label>
-
-              <label className="block">
-                <span className="type-caption mb-2 block text-foreground/65">
-                  {t(labels.location)}
-                </span>
-                <select
-                  value={selectedLocation}
-                  onChange={(event) => setSelectedLocation(event.target.value)}
-                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
-                >
-                  <option value="all">{t(labels.allLocations)}</option>
-                  {locationOptions.map((option) => (
-                    <option key={`${option.es}-${option.en}`} value={option.es}>
-                      {t(option)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="block">
-                <span className="type-caption mb-2 block text-foreground/65">
-                  {t(labels.type)}
-                </span>
-                <select
-                  value={selectedType}
-                  onChange={(event) => setSelectedType(event.target.value)}
-                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
-                >
-                  <option value="all">{t(labels.allTypes)}</option>
-                  {typeOptions.map((option) => (
-                    <option key={`${option.es}-${option.en}`} value={option.es}>
-                      {t(option)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="block">
-                <span className="type-caption mb-2 block text-foreground/65">
-                  {t(labels.price)}
-                </span>
-                <select
-                  value={selectedPriceRange}
-                  onChange={(event) => setSelectedPriceRange(event.target.value)}
-                  className="h-12 w-full border border-border bg-background px-3 text-sm outline-none"
-                >
-                  <option value="all">{t(labels.allPrices)}</option>
-                  {priceRanges.map((range) => (
-                    <option key={range.value} value={range.value}>
-                      {t(priceRangeLabels[range.value])}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="pb-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          {isLoading ? (
-            <AnimatedSection
-              as="div"
-              className="type-body border border-dashed border-border p-10 text-center text-muted-foreground"
-            >
-              {t(labels.loading)}
-            </AnimatedSection>
-          ) : error ? (
-            <AnimatedSection
-              as="div"
-              className="type-body border border-dashed border-border p-10 text-center text-muted-foreground"
-            >
-              {t(labels.unavailable)}
-            </AnimatedSection>
-          ) : showEmptyCatalog ? (
-            <AnimatedSection
-              as="div"
-              className="type-body border border-dashed border-border p-10 text-center text-muted-foreground"
-            >
-              {t(labels.emptyCatalog)}
-            </AnimatedSection>
-          ) : showNoResults ? (
-            <AnimatedSection
-              as="div"
-              className="type-body border border-dashed border-border p-10 text-center text-muted-foreground"
-            >
-              {t(labels.noResults)}
-            </AnimatedSection>
-          ) : (
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-              {balancedProjects.map((project, index) => (
-                <AnimatedSection
-                  as="article"
-                  key={project.id}
-                  delay={index * 70}
-                  className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(26,31,46,0.12)]"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={project.imageUrl}
-                      alt={`${project.title} — ${t(project.location)}`}
-                      className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      width={900}
-                      height={675}
-                    />
-                    <span className="absolute left-4 top-4 bg-primary px-3 py-1 text-xs uppercase tracking-[0.16em] text-primary-foreground">
-                      {t(project.badge)}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-                      <h3 className="font-serif text-[1.65rem] leading-none tracking-tight text-foreground">
-                        {project.title}
-                      </h3>
-                      {project.priceFrom ? (
-                        <div className="type-body-sm shrink-0 whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 font-semibold text-foreground">
-                          {t(labels.priceFrom)} {formatPriceFrom(project.priceFrom, language)}
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className="type-body-sm mt-3 flex items-center gap-2 text-muted-foreground">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      <span>{t(project.location)}</span>
-                    </div>
-
-                    <div className="mt-5 grid auto-rows-fr gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-stretch">
-                      <ProjectDetailRow
-                        icon={<BedDouble className={detailIconClassName} />}
-                        label={t(labels.residences)}
-                        value={t(project.residences)}
-                        compact
-                      />
-                      <ProjectDetailRow
-                        icon={<Bath className={detailIconClassName} />}
-                        label={t(labels.baths)}
-                        value={t(project.baths)}
-                        compact
-                      />
-                      <ProjectDetailRow
-                        icon={<Building2 className={detailIconClassName} />}
-                        label={t(labels.type)}
-                        value={t(project.type)}
-                        compact
-                      />
-                      <ProjectDetailRow
-                        icon={<CalendarClock className={detailIconClassName} />}
-                        label={t(labels.delivery)}
-                        value={t(project.delivery)}
-                        compact
-                      />
-                      <ProjectDetailRow
-                        icon={<Target className={detailIconClassName} />}
-                        label={t(labels.idealFor)}
-                        value={t(project.idealFor)}
-                        compact
-                      />
-                      <ProjectDetailRow
-                        icon={<CarFront className={detailIconClassName} />}
-                        label={t(labels.parking)}
-                        value={project.parking ? t(project.parking) : t(labels.notAvailable)}
-                        compact
-                      />
-                    </div>
-
-                    <div className="mt-2">
-                      <ProjectDetailRow
-                        icon={<Sparkles className={detailIconClassName} />}
-                        label={t(labels.hook)}
-                        value={t(project.hook)}
-                        emphasize
-                      />
-                    </div>
-
-                    <div className="mt-auto flex justify-end pt-5">
-                      <Button
-                        size="sm"
-                        asChild
-                        className="border border-primary bg-primary px-5 text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-green-light hover:shadow-md"
-                      >
-                        <Link to={contactFormHref}>{t(p.info)}</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          )}
         </div>
       </section>
     </Layout>
@@ -539,7 +265,3 @@ const ProjectsPage = () => {
 };
 
 export default ProjectsPage;
-
-
-
-

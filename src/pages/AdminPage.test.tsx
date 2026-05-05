@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { vi } from "vitest";
 
 import AdminPage from "./AdminPage";
@@ -8,6 +9,7 @@ const mockRefetch = vi.fn();
 const mockLogoutMutateAsync = vi.fn();
 const mockUseLeadsQuery = vi.fn();
 const mockUseLogoutMutation = vi.fn();
+const mockRefetchProjects = vi.fn();
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
@@ -25,10 +27,53 @@ vi.mock("@/features/auth/hooks", () => ({
   useLogoutMutation: () => mockUseLogoutMutation(),
 }));
 
+vi.mock("@/components/ui/tabs", () => ({
+  Tabs: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  TabsContent: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  TabsList: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  TabsTrigger: ({ children }: { children: ReactNode }) => (
+    <button type="button" role="tab">
+      {children}
+    </button>
+  ),
+}));
+
+vi.mock("@/features/projects/hooks", () => ({
+  useAdminProjectsQuery: () => ({
+    data: [],
+    isLoading: false,
+    isFetching: false,
+    refetch: mockRefetchProjects,
+    error: null,
+  }),
+  useCreateProjectMutation: () => ({
+    mutateAsync: vi.fn(),
+    isPending: false,
+  }),
+  useUpdateProjectMutation: () => ({
+    mutateAsync: vi.fn(),
+    isPending: false,
+  }),
+  useDeleteProjectMutation: () => ({
+    mutateAsync: vi.fn(),
+    isPending: false,
+  }),
+}));
+
 describe("AdminPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockUseLeadsQuery.mockReset();
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
     mockRefetch.mockResolvedValue(undefined);
+    mockRefetchProjects.mockResolvedValue(undefined);
     mockLogoutMutateAsync.mockResolvedValue(undefined);
     mockUseLogoutMutation.mockReturnValue({
       mutateAsync: mockLogoutMutateAsync,
@@ -36,7 +81,11 @@ describe("AdminPage", () => {
     });
   });
 
-  it("renders leads table when data exists", () => {
+  const openLeadsTab = () => {
+    fireEvent.click(screen.getByRole("tab", { name: /leads/i }));
+  };
+
+  it("renders leads table when data exists", async () => {
     mockUseLeadsQuery.mockReturnValue({
       data: [
         {
@@ -56,15 +105,16 @@ describe("AdminPage", () => {
     });
 
     render(<AdminPage />);
+    openLeadsTab();
 
-    expect(screen.getByText("Jane Doe")).toBeInTheDocument();
+    expect(await screen.findByText("Jane Doe")).toBeInTheDocument();
     expect(screen.getByText("jane@test.com")).toBeInTheDocument();
     expect(screen.getByText("Ecuador")).toBeInTheDocument();
     expect(screen.getByText("Preconstrucción")).toBeInTheDocument();
     expect(screen.getByText(/1 lead recibido/i)).toBeInTheDocument();
   });
 
-  it("renders empty state when there are no leads", () => {
+  it("renders empty state when there are no leads", async () => {
     mockUseLeadsQuery.mockReturnValue({
       data: [],
       isLoading: false,
@@ -73,8 +123,9 @@ describe("AdminPage", () => {
     });
 
     render(<AdminPage />);
+    openLeadsTab();
 
-    expect(screen.getByText(/aún no hay leads registrados/i)).toBeInTheDocument();
+    expect(await screen.findByText(/no hay leads registrados/i)).toBeInTheDocument();
   });
 
   it("calls refetch when refresh button is clicked", async () => {

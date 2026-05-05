@@ -27,4 +27,12 @@ describe("localized routes", () => {
     expect(getLanguageForPath("/contact")).toBe("en");
     expect(getLanguageForPath("/contacto")).toBe("es");
   });
+
+  it("recognizes localized project detail paths", () => {
+    expect(getRouteKeyForPath("/proyectos/edge-house")).toBe("projects");
+    expect(getRouteKeyForPath("/projects/edge-house")).toBe("projects");
+    expect(getLanguageForPath("/proyectos/edge-house")).toBe("es");
+    expect(getLanguageForPath("/projects/edge-house")).toBe("en");
+    expect(getAlternateLocalizedPath("/proyectos/edge-house", "en")).toBe("/projects/edge-house");
+  });
 });

@@ -23,6 +23,10 @@ vi.mock("./pages/ProjectsPage.tsx", () => ({
   default: () => <div>Projects route</div>,
 }));
 
+vi.mock("./pages/ProjectDetailPage.tsx", () => ({
+  default: () => <div>Project detail route</div>,
+}));
+
 vi.mock("./pages/InvestPage.tsx", () => ({
   default: () => <div>Invest route</div>,
 }));
@@ -84,6 +88,14 @@ describe("App routing", () => {
     render(<App />);
 
     expect(await screen.findByText("Contact route")).toBeInTheDocument();
+  });
+
+  it("renders a localized project detail route", async () => {
+    setRoute("/proyectos/edge-house");
+
+    render(<App />);
+
+    expect(await screen.findByText("Project detail route")).toBeInTheDocument();
   });
 
   it("redirects unauthenticated users from /admin to /login", async () => {

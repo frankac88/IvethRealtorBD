@@ -17,6 +17,7 @@ const Index = lazy(() => import("./pages/Index"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TeamPage = lazy(() => import("./pages/TeamPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 const InvestPage = lazy(() => import("./pages/InvestPage"));
 const FinancingPage = lazy(() => import("./pages/FinancingPage"));
 const GuidesPage = lazy(() => import("./pages/GuidesPage"));
@@ -77,6 +78,13 @@ const App = () => (
                   <Route key={`${route.key}-${path}`} path={path} element={route.element} />
                 )),
               )}
+              {getLocalizedPaths("projects").map((path) => (
+                <Route
+                  key={`project-detail-${path}`}
+                  path={`${path}/:slug`}
+                  element={<ProjectDetailPage />}
+                />
+              ))}
               <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/admin"
