@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import AnimatedSection from "@/components/AnimatedSection";
 import { ProjectFeatureCard } from "@/components/projects/ProjectFeatureCard";
 import type { LuxuryProject, ProjectCity } from "@/features/projects/luxuryPlaceholderCatalog";
@@ -46,16 +48,33 @@ export function ProjectCitySection({
   city,
   projects,
   className,
+  selectedProjectSlug,
+  onSelectProject,
 }: {
   city: ProjectCity;
   projects: LuxuryProject[];
   className?: string;
+  selectedProjectSlug?: string;
+  onSelectProject?: (project: LuxuryProject) => void;
 }) {
   const t = useT();
   const content = cityContent[city];
-  const [featured, ...secondaryProjects] = projects;
+  const featuredProjectRef = useRef<HTMLDivElement | null>(null);
+  const fallbackProject = projects[0];
+  const featuredProject = projects.find((project) => project.slug === selectedProjectSlug) ?? fallbackProject;
+  const secondaryProjects = projects.filter((project) => project.slug !== featuredProject?.slug);
+  const handleSelectProject = (project: LuxuryProject) => {
+    onSelectProject?.(project);
+    window.requestAnimationFrame(() => {
+      featuredProjectRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      });
+    });
+  };
 
-  if (!featured) return null;
+  if (!featuredProject) return null;
 
   return (
     <section className={cn("relative overflow-hidden py-20 md:py-24", className)}>
@@ -83,15 +102,26 @@ export function ProjectCitySection({
         </AnimatedSection>
 
         <div className="space-y-5">
-          <AnimatedSection as="div">
-            <ProjectFeatureCard project={featured} index={0} />
-          </AnimatedSection>
+          <div
+            ref={featuredProjectRef}
+            data-testid={`featured-project-${city}`}
+            className="scroll-mt-52"
+          >
+            <AnimatedSection as="div">
+              <ProjectFeatureCard project={featuredProject} index={0} />
+            </AnimatedSection>
+          </div>
 
           {secondaryProjects.length > 0 ? (
             <div className="grid gap-5 lg:grid-cols-2">
               {secondaryProjects.map((project, index) => (
                 <AnimatedSection as="div" key={project.slug} delay={(index + 1) * 60}>
-                  <ProjectFeatureCard project={project} index={index + 1} compact />
+                  <ProjectFeatureCard
+                    project={project}
+                    index={index + 1}
+                    compact
+                    onSelectProject={() => handleSelectProject(project)}
+                  />
                 </AnimatedSection>
               ))}
             </div>

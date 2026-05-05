@@ -33,7 +33,7 @@ export function ProjectImagePlaceholder({
         <img
           src={imageUrl}
           alt={label}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-center"
           loading="lazy"
         />
       ) : null}

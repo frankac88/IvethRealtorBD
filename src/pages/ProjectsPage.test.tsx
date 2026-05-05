@@ -43,6 +43,17 @@ const renderProjectsPage = (route = "/proyectos") => {
 };
 
 describe("ProjectsPage flagship redesign", () => {
+  const scrollIntoView = vi.fn();
+
+  beforeEach(() => {
+    scrollIntoView.mockClear();
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView;
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+      callback(0);
+      return 1;
+    });
+  });
+
   it("renders the flagship private-selection experience with integrated filters", () => {
     renderProjectsPage();
 
@@ -74,5 +85,57 @@ describe("ProjectsPage flagship redesign", () => {
 
     expect(screen.getByText(/no encontramos una coincidencia exacta/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /limpiar filtros/i })).toBeInTheDocument();
+  });
+
+  it("promotes a selected Miami compact card into the featured project view", () => {
+    renderProjectsPage();
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/edge house/i);
+    expect(screen.getByRole("button", { name: /seleccionar bloom/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /seleccionar bloom/i }));
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/bloom/i);
+    expect(screen.getByRole("button", { name: /seleccionar edge house/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /ver si bloom es para ti/i })).toHaveAttribute(
+      "href",
+      "/proyectos/bloom-north-miami",
+    );
+  });
+
+  it("restores a selected project from the project query param", () => {
+    renderProjectsPage("/proyectos?project=bloom-north-miami");
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/bloom/i);
+    expect(screen.getByRole("button", { name: /seleccionar edge house/i })).toBeInTheDocument();
+  });
+
+  it("falls back to the first visible project when the selected project is filtered out", () => {
+    renderProjectsPage("/proyectos?project=bloom-north-miami&goal=primary-home");
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/midtown park/i);
+    expect(screen.queryByText(/bloom/i)).not.toBeInTheDocument();
+  });
+
+  it("keeps Miami and Orlando featured selections independent in the same page", () => {
+    renderProjectsPage();
+
+    fireEvent.click(screen.getByRole("button", { name: /seleccionar bloom/i }));
+    fireEvent.click(screen.getByRole("button", { name: /seleccionar storey lake/i }));
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/bloom/i);
+    expect(screen.getByTestId("featured-project-orlando")).toHaveTextContent(/storey lake/i);
+  });
+
+  it("scrolls to the featured project view after selecting a compact card", () => {
+    renderProjectsPage();
+
+    fireEvent.click(screen.getByRole("button", { name: /seleccionar bloom/i }));
+
+    expect(scrollIntoView).toHaveBeenCalledWith({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
   });
 });

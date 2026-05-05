@@ -16,10 +16,12 @@ export function ProjectFeatureCard({
   project,
   index,
   compact = false,
+  onSelectProject,
 }: {
   project: LuxuryProject;
   index: number;
   compact?: boolean;
+  onSelectProject?: (slug: string) => void;
 }) {
   const t = useT();
   const { language } = useLanguage();
@@ -30,8 +32,8 @@ export function ProjectFeatureCard({
   const imageUrl = project.imageUrl ?? project.gallery[index % project.gallery.length]?.imageUrl;
 
   if (compact) {
-    return (
-      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
+    const cardContent = (
+      <>
         <ProjectImagePlaceholder
           label={t(project.imageHint)}
           tone={tone}
@@ -39,7 +41,7 @@ export function ProjectFeatureCard({
           imageUrl={imageUrl}
           className="min-h-[9rem] rounded-[1.15rem]"
         />
-        <div className="flex min-w-0 flex-col justify-center py-1">
+        <div className="flex min-w-0 flex-col justify-center py-1 text-left">
           <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-primary">
             {t(project.eyebrow)}
           </p>
@@ -51,14 +53,30 @@ export function ProjectFeatureCard({
             {t(project.location)}
           </p>
           <p className="mt-2 text-sm leading-6 text-foreground/78">{t(project.shortDescription)}</p>
-          <Link
-            to={detailPath}
-            className="mt-3 inline-flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-wine transition hover:text-primary"
-          >
+          <span className="mt-3 inline-flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-wine transition group-hover:text-primary">
             {t(project.cardCta)}
             <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          </span>
         </div>
+      </>
+    );
+
+    if (onSelectProject) {
+      return (
+        <button
+          type="button"
+          aria-label={t({ es: `Seleccionar ${project.title}`, en: `Select ${project.title}` })}
+          onClick={() => onSelectProject(project.slug)}
+          className="group grid w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:grid-cols-[9rem_minmax(0,1fr)]"
+        >
+          {cardContent}
+        </button>
+      );
+    }
+
+    return (
+      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
+        {cardContent}
       </article>
     );
   }

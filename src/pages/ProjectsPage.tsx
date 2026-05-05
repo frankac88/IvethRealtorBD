@@ -13,6 +13,7 @@ import {
   defaultProjectFilters,
   filterLuxuryProjects,
   luxuryPlaceholderProjects,
+  type LuxuryProject,
   type LuxuryProjectFilters,
   type ProjectBudgetRange,
   type ProjectCity,
@@ -86,13 +87,20 @@ const getFiltersFromParams = (searchParams: URLSearchParams): LuxuryProjectFilte
   budgetRange: isBudgetRange(searchParams.get("budget")) ? searchParams.get("budget") as ProjectBudgetRange : "all",
 });
 
-const updateParamsFromFilters = (filters: LuxuryProjectFilters) => {
+const getProjectBySlug = (slug: string | null) =>
+  luxuryPlaceholderProjects.find((project) => project.slug === slug) ?? null;
+
+const getSelectionFromProject = (project: LuxuryProject | null): Partial<Record<ProjectCity, string>> =>
+  project ? { [project.city]: project.slug } : {};
+
+const updateParamsFromFilters = (filters: LuxuryProjectFilters, selectedProjectSlug?: string | null) => {
   const params = new URLSearchParams();
 
   if (filters.city !== "all") params.set("city", filters.city);
   if (filters.goal !== "all") params.set("goal", filters.goal);
   if (filters.rentalType !== "all") params.set("rental", filters.rentalType);
   if (filters.budgetRange !== "all") params.set("budget", filters.budgetRange);
+  if (selectedProjectSlug) params.set("project", selectedProjectSlug);
 
   return params;
 };
@@ -107,18 +115,35 @@ const ProjectsPage = () => {
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState<LuxuryProjectFilters>(() => getFiltersFromParams(searchParams));
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string | null>(() => {
+    const selectedProject = getProjectBySlug(searchParams.get("project"));
+    return selectedProject?.slug ?? null;
+  });
+  const [selectedProjectByCity, setSelectedProjectByCity] = useState<Partial<Record<ProjectCity, string>>>(() => {
+    const selectedProject = getProjectBySlug(searchParams.get("project"));
+    return getSelectionFromProject(selectedProject);
+  });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
   useEffect(() => {
     setFilters(getFiltersFromParams(searchParams));
+    const selectedProject = getProjectBySlug(searchParams.get("project"));
+
+    if (selectedProject) {
+      setSelectedProjectSlug(selectedProject.slug);
+      setSelectedProjectByCity((prev) => ({
+        ...prev,
+        [selectedProject.city]: selectedProject.slug,
+      }));
+    }
   }, [searchParams]);
 
   useEffect(() => {
-    const nextParams = updateParamsFromFilters(filters);
+    const nextParams = updateParamsFromFilters(filters, selectedProjectSlug);
     if (nextParams.toString() !== searchParams.toString()) {
       setSearchParams(nextParams, { replace: true });
     }
-  }, [filters, searchParams, setSearchParams]);
+  }, [filters, searchParams, selectedProjectSlug, setSearchParams]);
 
   const filteredProjects = useMemo(
     () => filterLuxuryProjects(luxuryPlaceholderProjects, filters),
@@ -135,6 +160,13 @@ const ProjectsPage = () => {
   };
 
   const handleClearFilters = () => setFilters(defaultProjectFilters);
+  const handleSelectProject = (project: LuxuryProject) => {
+    setSelectedProjectSlug(project.slug);
+    setSelectedProjectByCity((prev) => ({
+      ...prev,
+      [project.city]: project.slug,
+    }));
+  };
 
   return (
     <Layout>
@@ -240,8 +272,20 @@ const ProjectsPage = () => {
           </section>
         ) : (
           <>
-            <ProjectCitySection city="miami" projects={groupedProjects.miami} className="bg-background" />
-            <ProjectCitySection city="orlando" projects={groupedProjects.orlando} className="bg-muted/50" />
+            <ProjectCitySection
+              city="miami"
+              projects={groupedProjects.miami}
+              selectedProjectSlug={selectedProjectByCity.miami}
+              onSelectProject={handleSelectProject}
+              className="bg-background"
+            />
+            <ProjectCitySection
+              city="orlando"
+              projects={groupedProjects.orlando}
+              selectedProjectSlug={selectedProjectByCity.orlando}
+              onSelectProject={handleSelectProject}
+              className="bg-muted/50"
+            />
           </>
         )}
       </div>

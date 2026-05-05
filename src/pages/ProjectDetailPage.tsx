@@ -87,20 +87,20 @@ const ProjectDetailPage = () => {
             {t(labels.back)}
           </Link>
 
-          <div className="mt-8 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-            <AnimatedSection as="div">
+          <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:items-stretch">
+            <AnimatedSection as="div" className="h-full">
               <ProjectImagePlaceholder
                 label={t(project.imageHint)}
                 tone="teal"
                 imageUrl={project.detailImageUrl ?? project.imageUrl}
-                className="min-h-[22rem] md:min-h-[31rem]"
+                className="h-full min-h-[22rem] md:min-h-[31rem]"
               />
             </AnimatedSection>
 
             <AnimatedSection
               as="aside"
               delay={120}
-              className="border border-gold/30 bg-card/95 p-6 shadow-[0_24px_70px_rgba(26,31,46,0.12)] md:p-8"
+              className="h-full border border-gold/30 bg-card/95 p-6 shadow-[0_24px_70px_rgba(26,31,46,0.12)] md:p-8"
             >
               <p className="type-caption text-primary">{t(labels.heroEyebrow)}</p>
               <h1 className="mt-4 font-serif text-[2.65rem] leading-[0.95] tracking-[-0.05em] text-wine md:text-[4rem]">
