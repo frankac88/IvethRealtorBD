@@ -37,12 +37,12 @@ const copy = {
   whatsapp: { es: "WhatsApp", en: "WhatsApp" },
   privateAdvisory: { es: "Criterios de selección", en: "Selection criteria" },
   maxProjects: {
-    es: "Renta · Entrega · Presupuesto",
-    en: "Rental · Delivery · Budget",
+    es: "Renta · Entrega 2029–2030 · Desde $500K",
+    en: "Rental · 2029–2030 delivery · From $500K",
   },
   maxProjectsDescription: {
-    es: "Cada proyecto se evalúa por ciudad, tipo de renta permitida, entrega 20XX, rango $XXXK y objetivo: inversión, vacation rental o vivienda.",
-    en: "Each project is reviewed by city, allowed rental type, 20XX delivery, $XXXK range, and goal: investment, vacation rental, or home.",
+    es: "La selección mantiene 6 oportunidades en Miami y 4 en Orlando. Los proyectos con data real publicados hoy combinan Airbnb o renta mínima de 90 días, entregas 2029–2030 y entrada desde $500K.",
+    en: "The selection keeps 6 Miami opportunities and 4 Orlando opportunities. Currently published real-data projects combine Airbnb or 90-day minimum rentals, 2029–2030 delivery, and entry from $500K.",
   },
   noResultsTitle: {
     es: "No encontramos una coincidencia exacta.",
@@ -223,7 +223,7 @@ const ProjectsPage = () => {
                   {[
                     { value: "MIAMI", label: "6" },
                     { value: "ORLANDO", label: "4" },
-                    { value: "20XX", label: "$XXXK" },
+                    { value: "2029–2030", label: "$500K+" },
                   ].map((item) => (
                     <div
                       key={item.value}
