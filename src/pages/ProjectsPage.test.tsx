@@ -148,4 +148,14 @@ describe("ProjectsPage flagship redesign", () => {
 
     expect(screen.getAllByRole("link", { name: /^whatsapp$/i })[0]).toHaveAttribute("href", expectedHref);
   });
+
+  it("moves the removed detail More information WhatsApp action to the featured Solicitar info CTA", () => {
+    renderProjectsPage();
+
+    const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
+      "Hola Iveth, vengo desde el detalle del proyecto EDGE HOUSE y quiero recibir precios y disponibilidad.",
+    )}`;
+
+    expect(screen.getAllByRole("link", { name: /solicitar info/i })[0]).toHaveAttribute("href", expectedHref);
+  });
 });
