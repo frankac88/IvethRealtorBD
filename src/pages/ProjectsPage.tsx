@@ -9,6 +9,7 @@ import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlace
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
 import heroProjectsImage from "@/assets/hero-projects.webp";
+import { createWhatsAppHref } from "@/config/site";
 import {
   defaultProjectFilters,
   filterLuxuryProjects,
@@ -124,6 +125,9 @@ const ProjectsPage = () => {
     return getSelectionFromProject(selectedProject);
   });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
+  const projectsWhatsappHref = createWhatsAppHref(
+    "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
+  );
 
   useEffect(() => {
     setFilters(getFiltersFromParams(searchParams));
@@ -187,10 +191,10 @@ const ProjectsPage = () => {
                 </a>
               </Button>
               <Button asChild className="bg-primary text-primary-foreground shadow-[0_18px_44px_rgba(42,123,137,0.22)] hover:bg-green-light">
-                <Link to={contactPath}>
+                <a href={projectsWhatsappHref} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-2 h-4 w-4" />
                   {t(copy.whatsapp)}
-                </Link>
+                </a>
               </Button>
             </div>
           </AnimatedSection>
@@ -316,7 +320,7 @@ const ProjectsPage = () => {
                 <Link to={contactPath}>{t(copy.agenda)}</Link>
               </Button>
               <Button asChild className="bg-wine text-white hover:bg-accent">
-                <Link to={contactPath}>{t(copy.whatsapp)}</Link>
+                <a href={projectsWhatsappHref} target="_blank" rel="noopener noreferrer">{t(copy.whatsapp)}</a>
               </Button>
             </div>
           </AnimatedSection>

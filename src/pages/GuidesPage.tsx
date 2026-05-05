@@ -18,7 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref } from "@/config/site";
 import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -192,9 +192,9 @@ const GuidesPage = () => {
 
   const getGuideWhatsAppHref = (guideKey: GuideKey) => {
     const guide = g.guides[guideKey];
-    const message = t(guide.whatsappMessage);
+    const message = `Hola Iveth, vengo desde la guía ${guide.title.es} y quiero recibir orientación.`;
 
-    return `${siteConfig.whatsapp.href}?text=${encodeURIComponent(message)}`;
+    return createWhatsAppHref(message);
   };
 
   return (

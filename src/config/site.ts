@@ -2,6 +2,9 @@
 const whatsappDefaultMessage = "Hola Iveth, quiero conocer oportunidades para invertir en Miami. ¿Podemos conversar?";
 const locationQuery = "7791 NW 46th St STE 308, Doral, FL 33166";
 
+export const createWhatsAppHref = (message: string) =>
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
 export const siteConfig = {
   brand: {
     name: "Iveth Coll",
@@ -26,6 +29,6 @@ export const siteConfig = {
     number: whatsappNumber,
     defaultMessage: whatsappDefaultMessage,
     href: `https://wa.me/${whatsappNumber}`,
-    hrefWithMessage: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappDefaultMessage)}`,
+    hrefWithMessage: createWhatsAppHref(whatsappDefaultMessage),
   },
 } as const;

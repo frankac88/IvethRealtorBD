@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import heroMiami from "@/assets/hero-miami.webp";
@@ -249,9 +249,6 @@ const getOptionLabel = <T extends string>(options: Array<{ value: T; label: Loca
   return typeof option.label === "string" ? option.label : option.label[language];
 };
 
-const createWhatsappHref = (message: string) =>
-  `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(message)}`;
-
 const isOrlandoZone = (zone: ZoneValue | "") =>
   zone === "davenport" || zone === "kissimmee" || zone === "clermont-four-corners";
 
@@ -273,12 +270,9 @@ const InvestPage = () => {
   const [budget, setBudget] = useState<BudgetValue | "">("");
   const [investmentErrors, setInvestmentErrors] = useState<InvestmentFormErrors>({});
 
-  const generalWhatsappMessage = t({
-    es: "Hola Iveth, quiero recibir asesoría para invertir en Florida.",
-    en: "Hi Iveth, I would like guidance to invest in Florida.",
-  });
-
-  const whatsappHref = createWhatsappHref(generalWhatsappMessage);
+  const whatsappHref = createWhatsAppHref(
+    "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
+  );
 
   useEffect(() => {
     document.title = "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando";
@@ -359,15 +353,17 @@ const InvestPage = () => {
   };
 
   const handleInvestmentSuccess = () => {
-    const formWhatsappMessage = isOrlandoZone(zone)
-      ? "Hola Iveth, acabo de completar el formulario y quiero evaluar una inversión en Orlando."
-      : "Hola Iveth, acabo de completar el formulario y quiero recibir asesoría para invertir en Florida.";
+    const zoneLabel = getOptionLabel(zoneOptions, zone, "es");
+    const objectiveLabel = getOptionLabel(objectiveOptions, objective, "es");
+    const budgetLabel = getOptionLabel(budgetOptions, budget, "es");
+    const formWhatsappMessage =
+      `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`;
 
     setObjective("");
     setBudget("");
     setInvestmentErrors({});
     window.setTimeout(() => {
-      window.location.href = createWhatsappHref(formWhatsappMessage);
+      window.location.href = createWhatsAppHref(formWhatsappMessage);
     }, 900);
   };
 

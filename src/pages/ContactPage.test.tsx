@@ -220,4 +220,13 @@ describe("ContactPage", () => {
       });
     });
   });
+
+  it("opens Iveth WhatsApp directly with a contact-page source message", () => {
+    renderContactPage();
+
+    expect(screen.getByRole("link", { name: /abrir whatsapp/i })).toHaveAttribute(
+      "href",
+      `https://wa.me/17868677180?text=${encodeURIComponent("Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.")}`,
+    );
+  });
 });

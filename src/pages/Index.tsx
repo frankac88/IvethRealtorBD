@@ -8,7 +8,7 @@ import { googleReviewsContent } from "@/content/googleReviews";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { homeTranslations } from "@/i18n/translations/home";
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref } from "@/config/site";
 import { useFeaturedProjectsQuery } from "@/features/projects/hooks";
 import heroImg from "@/assets/hero-miami.webp";
 import ivethHomeImg from "@/assets/iveth-home.webp";
@@ -30,6 +30,9 @@ const Index = () => {
   const h = homeTranslations;
   const { data: featuredProjects = [], isLoading: isLoadingFeaturedProjects } = useFeaturedProjectsQuery(3);
   const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
+  const homeWhatsappHref = createWhatsAppHref(
+    "Hola Iveth, vengo desde la página de inicio y quiero hablar sobre oportunidades en Florida.",
+  );
 
   const whyItems = [
     { icon: TrendingUp, ...h.whyItems.appreciation },
@@ -222,7 +225,7 @@ const Index = () => {
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="hero" size="lg" asChild><Link to={contactFormHref}>{t(h.ctaButton1)}</Link></Button>
             <Button variant="outline" size="lg" className="group" asChild>
-              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+              <a href={homeWhatsappHref} target="_blank" rel="noopener noreferrer">
                 <WhatsappChatIcon />
                 {t(h.ctaButton2)}
               </a>

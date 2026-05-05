@@ -6,7 +6,7 @@ import Layout from "@/components/Layout";
 import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCarousel";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
+import { createWhatsAppHref } from "@/config/site";
 import { getLuxuryProjectBySlug } from "@/features/projects/luxuryPlaceholderCatalog";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
@@ -61,13 +61,10 @@ const ProjectDetailPage = () => {
   const projectsPath = getLocalizedPath("projects", language);
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
-  const whatsappHref = project 
-    ? `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(
-        t({
-          es: `Hola Iveth, quiero recibir información sobre el proyecto ${project.title}.`,
-          en: `Hi Iveth, I would like to receive information about the project ${project.title}.`,
-        })
-      )}`
+  const whatsappHref = project
+    ? createWhatsAppHref(
+        `Hola Iveth, vengo desde el detalle del proyecto ${project.title} y quiero recibir precios y disponibilidad.`,
+      )
     : "";
 
   if (!project) {

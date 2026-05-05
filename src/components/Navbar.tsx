@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { brandAssets } from "@/config/brandAssets";
-import { siteConfig } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import {
   getAlternateLocalizedPath,
@@ -33,6 +32,7 @@ const Navbar = () => {
   const t = useT();
   const activeRouteKey = getRouteKeyForPath(location.pathname);
   const preserveScrollOnNextPathChange = useRef(false);
+  const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
 
   useEffect(() => {
     if (preserveScrollOnNextPathChange.current) {
@@ -120,9 +120,9 @@ const Navbar = () => {
               className="w-[6.5rem] shrink-0 justify-center px-2 text-[0.6rem] tracking-[0.06em] min-[1180px]:w-[7.25rem] min-[1180px]:text-[0.66rem] min-[1280px]:w-[8.25rem] min-[1280px]:text-[0.72rem] min-[1440px]:w-[9.25rem] min-[1440px]:px-3 min-[1440px]:text-[0.76rem] min-[1600px]:w-[10.25rem] min-[1600px]:px-5 min-[1600px]:text-[0.8rem]"
               asChild
             >
-              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+              <Link to={contactFormHref}>
                 {t(navTranslations.cta)}
-              </a>
+              </Link>
             </Button>
           </div>
 
@@ -189,9 +189,9 @@ const Navbar = () => {
               </Link>
             ))}
             <Button variant="hero" className="mt-2" asChild>
-              <a href={siteConfig.whatsapp.href} target="_blank" rel="noopener noreferrer">
+              <Link to={contactFormHref} onClick={() => setIsOpen(false)}>
                 {t(navTranslations.ctaMobile)}
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
