@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCarousel";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
 import { getLuxuryProjectBySlug } from "@/features/projects/luxuryPlaceholderCatalog";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
@@ -33,7 +34,7 @@ const labels = {
   phone: { es: "Teléfono", en: "Phone" },
   country: { es: "País", en: "Country" },
   submit: { es: "Solicitar disponibilidad", en: "Request availability" },
-  whatsapp: { es: "WhatsApp", en: "WhatsApp" },
+  whatsapp: { es: "Más información", en: "More information" },
   notFoundTitle: { es: "Proyecto no disponible", en: "Project unavailable" },
   notFoundBody: {
     es: "Esta oportunidad aún no está publicada. Vuelve a la selección principal.",
@@ -43,6 +44,15 @@ const labels = {
 
 const keyDataIcons = [Home, CalendarClock, MessageCircle, KeyRound] as const;
 
+const WhatsappChatIcon = ({ size = 16, tone = "green" }: { size?: number; tone?: "green" | "white" }) => (
+  <MessageCircle
+    size={size}
+    className={tone === "white"
+      ? "fill-none text-white"
+      : "fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white"}
+  />
+);
+
 const ProjectDetailPage = () => {
   const { slug } = useParams();
   const project = getLuxuryProjectBySlug(slug);
@@ -50,6 +60,15 @@ const ProjectDetailPage = () => {
   const { language } = useLanguage();
   const projectsPath = getLocalizedPath("projects", language);
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
+
+  const whatsappHref = project 
+    ? `https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(
+        t({
+          es: `Hola Iveth, quiero recibir información sobre el proyecto ${project.title}.`,
+          en: `Hi Iveth, I would like to receive information about the project ${project.title}.`,
+        })
+      )}`
+    : "";
 
   if (!project) {
     return (
@@ -150,11 +169,11 @@ const ProjectDetailPage = () => {
             <p className="type-caption text-primary">{t(labels.formTitle)}</p>
             <h2 className="type-h2 mt-3 text-wine">{project.title}</h2>
             <p className="type-body mt-4 max-w-xl">{t(labels.formBody)}</p>
-            <Button asChild className="mt-7 bg-wine text-white hover:bg-accent">
-              <Link to={contactPath}>
+            <Button variant="outline" className="group mt-7" asChild>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                <WhatsappChatIcon />
                 {t(labels.whatsapp)}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              </a>
             </Button>
           </AnimatedSection>
 
