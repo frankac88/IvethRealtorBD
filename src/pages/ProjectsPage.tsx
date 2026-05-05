@@ -8,6 +8,7 @@ import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
+import heroProjectsImage from "@/assets/hero-projects.webp";
 import {
   defaultProjectFilters,
   filterLuxuryProjects,
@@ -33,11 +34,14 @@ const copy = {
   },
   explore: { es: "Explorar selección", en: "Explore selection" },
   whatsapp: { es: "WhatsApp", en: "WhatsApp" },
-  privateAdvisory: { es: "Private advisory", en: "Private advisory" },
-  maxProjects: { es: "10 proyectos máximo", en: "10 projects maximum" },
+  privateAdvisory: { es: "Criterios de selección", en: "Selection criteria" },
+  maxProjects: {
+    es: "Renta · Entrega · Presupuesto",
+    en: "Rental · Delivery · Budget",
+  },
   maxProjectsDescription: {
-    es: "Menos ruido, más criterio: 6 Miami + 4 Orlando.",
-    en: "Less noise, more judgment: 6 Miami + 4 Orlando.",
+    es: "Cada proyecto se evalúa por ciudad, tipo de renta permitida, entrega 20XX, rango $XXXK y objetivo: inversión, vacation rental o vivienda.",
+    en: "Each project is reviewed by city, allowed rental type, 20XX delivery, $XXXK range, and goal: investment, vacation rental, or home.",
   },
   noResultsTitle: {
     es: "No encontramos una coincidencia exacta.",
@@ -160,17 +164,47 @@ const ProjectsPage = () => {
           </AnimatedSection>
 
           <AnimatedSection as="div" delay={120} className="relative min-h-[26rem]">
-            <ProjectImagePlaceholder
-              label={t({ es: "Imagen hero principal", en: "Main hero image" })}
-              tone="teal"
-              className="absolute right-0 top-0 h-[22rem] w-[82%] md:h-[28rem]"
-            />
-            <div className="absolute bottom-0 left-0 max-w-[18rem] border border-gold/35 bg-card/95 p-5 shadow-[0_24px_70px_rgba(26,31,46,0.16)]">
-              <p className="type-caption text-primary">{t(copy.privateAdvisory)}</p>
-              <p className="mt-3 font-serif text-3xl leading-none tracking-[-0.04em] text-wine">
-                {t(copy.maxProjects)}
-              </p>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{t(copy.maxProjectsDescription)}</p>
+            <div className="absolute right-0 top-0 h-[22rem] w-[82%] overflow-hidden rounded-[2.5rem] border border-gold/40 bg-muted shadow-[0_28px_80px_rgba(26,31,46,0.18)] md:h-[28rem]">
+              <img
+                src={heroProjectsImage}
+                alt={t({ es: "Selección privada de proyectos en Florida", en: "Private selection of Florida projects" })}
+                className="h-full w-full object-cover"
+                loading="eager"
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 max-w-[22rem] overflow-hidden rounded-[1.75rem] border border-gold/50 bg-card/90 shadow-[0_30px_90px_rgba(26,31,46,0.24)] backdrop-blur-xl">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/80 to-transparent" />
+              <div className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-16 left-8 h-28 w-28 rounded-full bg-primary/10 blur-2xl" />
+              <div className="relative bg-gradient-to-br from-card via-card/96 to-sand/85 p-6">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="type-caption text-primary">{t(copy.privateAdvisory)}</p>
+                  <span className="rounded-full border border-gold/45 bg-gold/15 px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-wine">
+                    2026
+                  </span>
+                </div>
+                <p className="mt-4 font-serif text-[1.85rem] leading-[0.95] tracking-[-0.045em] text-wine">
+                  {t(copy.maxProjects)}
+                </p>
+                <p className="mt-4 text-sm leading-6 text-foreground/70">{t(copy.maxProjectsDescription)}</p>
+                <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+                  {[
+                    { value: "MIAMI", label: "6" },
+                    { value: "ORLANDO", label: "4" },
+                    { value: "20XX", label: "$XXXK" },
+                  ].map((item) => (
+                    <div
+                      key={item.value}
+                      className="rounded-2xl border border-gold/25 bg-background/55 px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
+                    >
+                      <p className="font-serif text-xl leading-none text-wine">{item.label}</p>
+                      <p className="mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-primary">
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </AnimatedSection>
         </div>
@@ -189,7 +223,7 @@ const ProjectsPage = () => {
             <div className="container mx-auto px-4 lg:px-8">
               <AnimatedSection
                 as="div"
-                className="border border-dashed border-wine/35 bg-card/80 p-10 text-center shadow-[0_24px_70px_rgba(26,31,46,0.08)]"
+                className="rounded-[2rem] border border-dashed border-wine/35 bg-card/80 p-10 text-center shadow-[0_24px_70px_rgba(26,31,46,0.08)]"
               >
                 <Sparkles className="mx-auto h-8 w-8 text-primary" />
                 <h2 className="type-h2 mt-4 text-wine">{t(copy.noResultsTitle)}</h2>

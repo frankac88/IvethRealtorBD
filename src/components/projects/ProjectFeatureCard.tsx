@@ -30,8 +30,8 @@ export function ProjectFeatureCard({
 
   if (compact) {
     return (
-      <article className="group grid gap-4 border border-border/80 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
-        <ProjectImagePlaceholder label={t(project.imageHint)} tone={tone} compact className="min-h-[9rem]" />
+      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
+        <ProjectImagePlaceholder label={t(project.imageHint)} tone={tone} compact className="min-h-[9rem] rounded-[1.15rem]" />
         <div className="flex min-w-0 flex-col justify-center py-1">
           <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-primary">
             {t(project.eyebrow)}
@@ -57,7 +57,7 @@ export function ProjectFeatureCard({
   }
 
   return (
-    <article className="group overflow-hidden border border-gold/30 bg-card/95 shadow-[0_28px_80px_rgba(26,31,46,0.10)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_96px_rgba(26,31,46,0.16)] lg:grid lg:grid-cols-[42%_minmax(0,1fr)]">
+    <article className="group overflow-hidden rounded-[2rem] border border-gold/30 bg-card/95 shadow-[0_28px_80px_rgba(26,31,46,0.10)] transition duration-300 hover:-translate-y-1 hover:border-gold/55 hover:shadow-[0_34px_96px_rgba(26,31,46,0.16)] lg:grid lg:grid-cols-[42%_minmax(0,1fr)]">
       <ProjectImagePlaceholder label={t(project.imageHint)} tone={tone} className="min-h-[18rem] lg:min-h-full" />
 
       <div className="flex flex-col justify-center p-6 md:p-8">
@@ -78,7 +78,7 @@ export function ProjectFeatureCard({
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
           {[project.priceLabel, project.rentalLabel, project.deliveryLabel, project.unitsLabel].map((item) => (
-            <div key={t(item)} className="border border-border/80 bg-background/70 px-3 py-2">
+            <div key={t(item)} className="rounded-2xl border border-gold/20 bg-background/70 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-foreground/50">
                 {t(labels.details)}
               </p>
