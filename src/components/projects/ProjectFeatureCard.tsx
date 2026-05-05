@@ -91,11 +91,9 @@ export function ProjectFeatureCard({
       />
 
       <div className="flex flex-col justify-center p-6 md:p-8">
-        <div className="flex flex-wrap items-center gap-3 text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-primary">
-          <span>{t(project.eyebrow)}</span>
-          <span className="h-px w-10 bg-gold" />
-          <span>{String(index + 1).padStart(2, "0")}</span>
-        </div>
+        <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-primary">
+          {t(project.eyebrow)}
+        </p>
 
         <h3 className="mt-3 font-serif text-[2.35rem] leading-[0.94] tracking-[-0.045em] text-wine md:text-[3rem]">
           {project.title}
