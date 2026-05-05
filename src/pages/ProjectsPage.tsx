@@ -316,10 +316,10 @@ const ProjectsPage = () => {
             <h2 className="type-h2 mt-3 text-wine">{t(copy.differentiatorTitle)}</h2>
             <p className="type-body mt-5 max-w-2xl text-foreground/72">{t(copy.differentiatorBody)}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="bg-primary text-primary-foreground hover:bg-green-light">
+              <Button asChild className="bg-wine text-white hover:bg-accent">
                 <Link to={contactPath}>{t(copy.agenda)}</Link>
               </Button>
-              <Button asChild className="bg-wine text-white hover:bg-accent">
+              <Button asChild className="bg-primary text-primary-foreground hover:bg-green-light">
                 <a href={projectsWhatsappHref} target="_blank" rel="noopener noreferrer">{t(copy.whatsapp)}</a>
               </Button>
             </div>

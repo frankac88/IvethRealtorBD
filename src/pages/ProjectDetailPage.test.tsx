@@ -21,7 +21,7 @@ vi.mock("@/components/projects/ProjectGalleryCarousel", () => ({
 }));
 
 describe("ProjectDetailPage", () => {
-  it("uses a project-specific Spanish WhatsApp message", () => {
+  it("does not render the secondary More information CTA in the detail form section", () => {
     render(
       <MemoryRouter initialEntries={["/proyectos/edge-house"]}>
         <LanguageProvider>
@@ -32,11 +32,7 @@ describe("ProjectDetailPage", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("link", { name: /más información/i })).toHaveAttribute(
-      "href",
-      `https://wa.me/17868677180?text=${encodeURIComponent(
-        "Hola Iveth, vengo desde el detalle del proyecto EDGE HOUSE y quiero recibir precios y disponibilidad.",
-      )}`,
-    );
+    expect(screen.queryByRole("link", { name: /más información/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /solicitar disponibilidad/i })).toBeInTheDocument();
   });
 });

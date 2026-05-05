@@ -1,12 +1,11 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, CalendarClock, Home, KeyRound, MapPin, MessageCircle } from "lucide-react";
+import { ArrowLeft, CalendarClock, Home, KeyRound, MapPin, MessageCircle } from "lucide-react";
 
 import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
 import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCarousel";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
-import { createWhatsAppHref } from "@/config/site";
 import { getLuxuryProjectBySlug } from "@/features/projects/luxuryPlaceholderCatalog";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
@@ -34,7 +33,6 @@ const labels = {
   phone: { es: "Teléfono", en: "Phone" },
   country: { es: "País", en: "Country" },
   submit: { es: "Solicitar disponibilidad", en: "Request availability" },
-  whatsapp: { es: "Más información", en: "More information" },
   notFoundTitle: { es: "Proyecto no disponible", en: "Project unavailable" },
   notFoundBody: {
     es: "Esta oportunidad aún no está publicada. Vuelve a la selección principal.",
@@ -44,28 +42,12 @@ const labels = {
 
 const keyDataIcons = [Home, CalendarClock, MessageCircle, KeyRound] as const;
 
-const WhatsappChatIcon = ({ size = 16, tone = "green" }: { size?: number; tone?: "green" | "white" }) => (
-  <MessageCircle
-    size={size}
-    className={tone === "white"
-      ? "fill-none text-white"
-      : "fill-none text-[hsl(var(--whatsapp-green))] transition-colors duration-300 group-hover:text-white"}
-  />
-);
-
 const ProjectDetailPage = () => {
   const { slug } = useParams();
   const project = getLuxuryProjectBySlug(slug);
   const t = useT();
   const { language } = useLanguage();
   const projectsPath = getLocalizedPath("projects", language);
-  const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
-
-  const whatsappHref = project
-    ? createWhatsAppHref(
-        `Hola Iveth, vengo desde el detalle del proyecto ${project.title} y quiero recibir precios y disponibilidad.`,
-      )
-    : "";
 
   if (!project) {
     return (
@@ -166,12 +148,6 @@ const ProjectDetailPage = () => {
             <p className="type-caption text-primary">{t(labels.formTitle)}</p>
             <h2 className="type-h2 mt-3 text-wine">{project.title}</h2>
             <p className="type-body mt-4 max-w-xl">{t(labels.formBody)}</p>
-            <Button variant="outline" className="group mt-7" asChild>
-              <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                <WhatsappChatIcon />
-                {t(labels.whatsapp)}
-              </a>
-            </Button>
           </AnimatedSection>
 
           <AnimatedSection

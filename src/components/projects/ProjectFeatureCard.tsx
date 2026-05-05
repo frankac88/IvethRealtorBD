@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
+import { createWhatsAppHref } from "@/config/site";
 import type { LuxuryProject } from "@/features/projects/luxuryPlaceholderCatalog";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
@@ -26,8 +27,10 @@ export function ProjectFeatureCard({
   const t = useT();
   const { language } = useLanguage();
   const projectsPath = getLocalizedPath("projects", language);
-  const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
   const detailPath = `${projectsPath}/${project.slug}`;
+  const requestInfoHref = createWhatsAppHref(
+    `Hola Iveth, vengo desde el detalle del proyecto ${project.title} y quiero recibir precios y disponibilidad.`,
+  );
   const tone = project.gallery[index % project.gallery.length]?.tone ?? "sand";
   const imageUrl = project.imageUrl ?? project.gallery[index % project.gallery.length]?.imageUrl;
 
@@ -127,10 +130,10 @@ export function ProjectFeatureCard({
             </Link>
           </Button>
           <Button asChild variant="outline" className="border-wine/50 text-wine hover:bg-secondary/50">
-            <Link to={contactPath}>
+            <a href={requestInfoHref} target="_blank" rel="noopener noreferrer">
               <CalendarClock className="mr-2 h-4 w-4" />
               {t(labels.requestInfo)}
-            </Link>
+            </a>
           </Button>
         </div>
       </div>
