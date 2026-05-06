@@ -111,9 +111,9 @@ describe("ProjectsPage flagship redesign", () => {
   });
 
   it("falls back to the first visible project when the selected project is filtered out", () => {
-    renderProjectsPage("/proyectos?project=bloom-north-miami&goal=primary-home");
+    renderProjectsPage("/proyectos?project=bloom-north-miami&budget=2m-plus");
 
-    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/midtown park/i);
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/mandarin oriental/i);
     expect(screen.queryByText(/bloom/i)).not.toBeInTheDocument();
   });
 
