@@ -45,6 +45,7 @@ interface OrlandoZone {
   microZones: LocalizedText;
   quote: LocalizedText;
   cta: LocalizedText;
+  accent: string;
   image: string;
   imageAlt: LocalizedText;
   icon: typeof Home;
@@ -164,6 +165,7 @@ const orlandoZones: OrlandoZone[] = [
     microZones: { es: "ChampionsGate, Solterra Resort, Providence y áreas cercanas a la I-4.", en: "ChampionsGate, Solterra Resort, Providence, and areas near I-4." },
     quote: sharedOrlandoQuote,
     cta: { es: "Evalúa si Davenport es la opción correcta para ti", en: "Evaluate whether Davenport is right for you" },
+    accent: "from-primary/90 via-primary/70 to-accent/70",
     image: "https://images.unsplash.com/photo-1659455857065-956ea7297f66?auto=format&fit=crop&w=1200&q=80",
     imageAlt: { es: "Piscina tipo resort en Orlando", en: "Resort-style pool in Orlando" },
     icon: Home,
@@ -188,6 +190,7 @@ const orlandoZones: OrlandoZone[] = [
     microZones: { es: "Storey Lake, Windsor at Westside, Windsor Hills, Reunion y zonas de Osceola County.", en: "Storey Lake, Windsor at Westside, Windsor Hills, Reunion, and Osceola County areas." },
     quote: sharedOrlandoQuote,
     cta: { es: "Descubre si Kissimmee encaja en tu estrategia", en: "Discover whether Kissimmee fits your strategy" },
+    accent: "from-accent/85 via-wine/70 to-primary/70",
     image: "https://images.unsplash.com/photo-1707505175638-81b09e30cac8?auto=format&fit=crop&w=1200&q=80",
     imageAlt: { es: "Lago con palmeras en el área de Orlando", en: "Lake with palm trees in the Orlando area" },
     icon: Palmtree,
@@ -212,6 +215,7 @@ const orlandoZones: OrlandoZone[] = [
     microZones: { es: "Four Corners, áreas cercanas al corredor de Disney, Clermont y comunidades con permisos claros.", en: "Four Corners, areas near the Disney corridor, Clermont, and communities with clear permits." },
     quote: sharedOrlandoQuote,
     cta: { es: "Explora si esta zona se ajusta a tu perfil", en: "Explore whether this area fits your profile" },
+    accent: "from-green-light/90 via-primary/70 to-gold-light/80",
     image: "https://images.unsplash.com/photo-1647579350413-a6ada4e480ed?auto=format&fit=crop&w=1200&q=80",
     imageAlt: { es: "Casa residencial en Florida Central", en: "Residential home in Central Florida" },
     icon: Compass,
@@ -505,27 +509,29 @@ const InvestPage = () => {
               const Icon = zoneItem.icon;
 
               return (
-                <article key={zoneItem.value} className="grid overflow-hidden rounded-[32px] border border-border/70 bg-background shadow-[0_20px_80px_-58px_rgba(26,31,46,0.45)] lg:grid-cols-[0.72fr_1.28fr]">
-                  <div className="relative bg-gradient-to-br from-primary/12 via-gold-light/70 to-background p-8">
+                <article key={zoneItem.value} className="group grid overflow-hidden rounded-[32px] border border-border/70 bg-background shadow-[0_20px_80px_-58px_rgba(26,31,46,0.45)] lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+                  <div className="relative min-w-0 bg-gradient-to-br from-primary/12 via-gold-light/70 to-background p-8">
                     <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-full bg-background text-primary shadow-sm ring-1 ring-border/80">
                       <Icon size={24} />
                     </div>
                     <p className="type-caption mb-3">{t({ es: "Mercado de Orlando", en: "Orlando market" })}</p>
                     <h3 className="mb-4 font-serif text-4xl font-medium tracking-[-0.035em]">{t(zoneItem.title)}</h3>
                     <p className="type-body-sm text-foreground/78">{t(zoneItem.subtitle)}</p>
-                    <div className="relative mt-8 overflow-hidden rounded-[24px] border border-white/50 bg-background/70 shadow-[0_18px_50px_-34px_rgba(26,31,46,0.55)]">
+                    <div className={`relative mt-8 h-56 overflow-hidden rounded-[24px] border border-white/50 bg-gradient-to-br ${zoneItem.accent} shadow-[0_18px_50px_-34px_rgba(26,31,46,0.55)]`}>
                       <img
                         src={zoneItem.image}
                         alt={t(zoneItem.imageAlt)}
-                        className="h-56 w-full object-cover"
+                        className="absolute inset-0 h-full w-full object-cover opacity-78 mix-blend-overlay transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-br from-foreground/16 via-transparent to-primary/30" />
+                      <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(135deg,rgba(255,255,255,.45)_0_1px,transparent_1px_18px)]" />
                       <div className="absolute bottom-5 left-5 rounded-full border border-white/35 bg-white/20 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur">
                         Orlando
                       </div>
                     </div>
                   </div>
-                  <div className="p-7 lg:p-9">
+                  <div className="min-w-0 p-7 lg:p-9">
                     <p className="type-body-sm mb-6 text-foreground/82">{t(zoneItem.body)}</p>
                     <div className="mb-6 grid gap-3 sm:grid-cols-2">
                       {zoneItem.highlights.map((highlight) => (
