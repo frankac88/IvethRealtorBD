@@ -53,6 +53,7 @@ export type Database = {
           badge_es: string
           baths_en: string
           baths_es: string
+          city: "miami" | "orlando"
           created_at: string
           delivery_en: string
           delivery_es: string
@@ -62,6 +63,7 @@ export type Database = {
           filter_strategy_es: string
           filter_type_en: string
           filter_type_es: string
+          gallery_images: Json
           hook_en: string
           hook_es: string
           id: string
@@ -89,6 +91,7 @@ export type Database = {
           badge_es: string
           baths_en: string
           baths_es: string
+          city?: "miami" | "orlando"
           created_at?: string
           delivery_en: string
           delivery_es: string
@@ -98,6 +101,7 @@ export type Database = {
           filter_strategy_es: string
           filter_type_en: string
           filter_type_es: string
+          gallery_images?: Json
           hook_en: string
           hook_es: string
           id?: string
@@ -125,6 +129,7 @@ export type Database = {
           badge_es?: string
           baths_en?: string
           baths_es?: string
+          city?: "miami" | "orlando"
           created_at?: string
           delivery_en?: string
           delivery_es?: string
@@ -134,6 +139,7 @@ export type Database = {
           filter_strategy_es?: string
           filter_type_en?: string
           filter_type_es?: string
+          gallery_images?: Json
           hook_en?: string
           hook_es?: string
           id?: string

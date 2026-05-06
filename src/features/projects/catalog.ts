@@ -6,6 +6,7 @@ export type LocalizedText = {
 export type ProjectItem = {
   id: string;
   title: string;
+  city: "miami" | "orlando";
   priceFrom: number | null;
   badge: LocalizedText;
   location: LocalizedText;
@@ -21,6 +22,7 @@ export type ProjectItem = {
   filterStrategy: LocalizedText;
   imageUrl: string;
   imagePath: string | null;
+  galleryImages: ProjectGalleryImage[];
   sortOrder: number;
   isPublished: boolean;
   isFeatured: boolean;
@@ -28,8 +30,16 @@ export type ProjectItem = {
   updatedAt: string;
 };
 
+export type ProjectGalleryImage = {
+  url: string;
+  path: string | null;
+  labelEs: string;
+  labelEn: string;
+};
+
 export type ProjectFormValues = {
   title: string;
+  city: "miami" | "orlando";
   priceFrom: string;
   featured: boolean;
   locationEs: string;
@@ -48,6 +58,7 @@ export type ProjectFormValues = {
 
 export const emptyProjectFormValues: ProjectFormValues = {
   title: "",
+  city: "miami",
   priceFrom: "",
   featured: false,
   locationEs: "",
@@ -67,6 +78,7 @@ export const emptyProjectFormValues: ProjectFormValues = {
 export function projectToFormValues(project: ProjectItem): ProjectFormValues {
   return {
     title: project.title,
+    city: project.city,
     priceFrom: project.priceFrom?.toString() ?? "",
     featured: project.isFeatured,
     locationEs: project.location.es,

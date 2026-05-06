@@ -2,7 +2,7 @@ import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase
 
 import { supabase } from "@/integrations/supabase/client";
 
-import type { ProjectFormValues, ProjectItem } from "./catalog";
+import type { ProjectFormValues, ProjectGalleryImage, ProjectItem } from "./catalog";
 
 const PROJECT_IMAGES_BUCKET = "project-images";
 
@@ -13,6 +13,7 @@ export type ProjectUpdate = TablesUpdate<"projects">;
 export interface SaveProjectPayload {
   values: ProjectFormValues;
   imageFile?: File | null;
+  galleryFiles?: File[];
 }
 
 type DerivedProjectMeta = {
@@ -50,6 +51,7 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
   return {
     id: row.id,
     title: row.title,
+    city: row.city,
     priceFrom: row.price_from,
     badge: { es: row.badge_es, en: row.badge_en },
     location: { es: row.location_es, en: row.location_en },
@@ -65,12 +67,31 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
     filterStrategy: { es: row.filter_strategy_es, en: row.filter_strategy_en },
     imageUrl: row.image_url,
     imagePath: row.image_path,
+    galleryImages: parseGalleryImages(row.gallery_images),
     sortOrder: row.sort_order,
     isPublished: row.is_published,
     isFeatured: row.is_featured,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
+}
+
+function parseGalleryImages(value: ProjectRow["gallery_images"]): ProjectGalleryImage[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+
+    const record = item as Record<string, unknown>;
+    if (typeof record.url !== "string") return [];
+
+    return [{
+      url: record.url,
+      path: typeof record.path === "string" ? record.path : null,
+      labelEs: typeof record.labelEs === "string" ? record.labelEs : "Foto del proyecto",
+      labelEn: typeof record.labelEn === "string" ? record.labelEn : "Project photo",
+    }];
+  });
 }
 
 function deriveBadgeText(
@@ -124,7 +145,11 @@ function buildProjectPayload(
     sortOrder,
     isPublished,
   }: {
-    image?: { image_url?: string; image_path?: string | null };
+    image?: {
+      image_url?: string;
+      image_path?: string | null;
+      gallery_images?: ProjectGalleryImage[];
+    };
     meta: DerivedProjectMeta;
     sortOrder: number;
     isPublished: boolean;
@@ -134,6 +159,7 @@ function buildProjectPayload(
 
   return {
     title: values.title.trim(),
+    city: values.city,
     price_from: normalizeOptionalNumber(values.priceFrom),
     is_featured: values.featured,
     badge_es: meta.badge_es,
@@ -162,6 +188,7 @@ function buildProjectPayload(
     filter_strategy_en: meta.filter_strategy_en,
     image_url: image?.image_url ?? "",
     image_path: image?.image_path ?? null,
+    gallery_images: image?.gallery_images ?? [],
     sort_order: safeSortOrder,
     is_published: isPublished,
   };
@@ -198,6 +225,17 @@ async function uploadProjectImage(file: File) {
     image_path: path,
     image_url: data.publicUrl,
   };
+}
+
+async function uploadProjectGallery(files: File[]) {
+  const uploads = await Promise.all(files.map(uploadProjectImage));
+
+  return uploads.map((image, index) => ({
+    url: image.image_url,
+    path: image.image_path,
+    labelEs: `Foto ${index + 1}`,
+    labelEn: `Photo ${index + 1}`,
+  }));
 }
 
 async function removeProjectImage(path: string) {
@@ -238,19 +276,24 @@ export async function fetchProjects({
   return (data ?? []).map(mapProjectRow);
 }
 
-export async function createProject({ values, imageFile }: SaveProjectPayload) {
+export async function createProject({ values, imageFile, galleryFiles = [] }: SaveProjectPayload) {
   if (!imageFile) {
-    throw new Error("Debes seleccionar una imagen para el proyecto.");
+    throw new Error("Debes seleccionar una imagen principal para el proyecto.");
   }
 
   let uploadedImage: { image_url: string; image_path: string } | null = null;
+  let uploadedGallery: ProjectGalleryImage[] = [];
 
   try {
     const meta = deriveProjectMeta(values);
     const sortOrder = await getNextSortOrder();
     uploadedImage = await uploadProjectImage(imageFile);
+    uploadedGallery = await uploadProjectGallery(galleryFiles);
     const payload = buildProjectPayload(values, {
-      image: uploadedImage,
+      image: {
+        ...uploadedImage,
+        gallery_images: uploadedGallery,
+      },
       meta,
       sortOrder,
       isPublished: true,
@@ -266,14 +309,19 @@ export async function createProject({ values, imageFile }: SaveProjectPayload) {
 
     return mapProjectRow(data);
   } catch (error) {
-    if (uploadedImage?.image_path) {
-      await removeProjectImage(uploadedImage.image_path).catch(() => undefined);
+    const paths = [
+      uploadedImage?.image_path,
+      ...uploadedGallery.map((image) => image.path),
+    ].filter((path): path is string => Boolean(path));
+
+    if (paths.length > 0) {
+      await supabase.storage.from(PROJECT_IMAGES_BUCKET).remove(paths).catch(() => undefined);
     }
     throw error;
   }
 }
 
-export async function updateProject(projectId: string, { values, imageFile }: SaveProjectPayload) {
+export async function updateProject(projectId: string, { values, imageFile, galleryFiles = [] }: SaveProjectPayload) {
   const { data: existingProject, error: existingError } = await supabase
     .from("projects")
     .select("*")
@@ -283,6 +331,7 @@ export async function updateProject(projectId: string, { values, imageFile }: Sa
   if (existingError) throw existingError;
 
   let uploadedImage: { image_url: string; image_path: string } | null = null;
+  let uploadedGallery: ProjectGalleryImage[] = [];
 
   try {
     const meta = deriveProjectMeta(values);
@@ -291,10 +340,15 @@ export async function updateProject(projectId: string, { values, imageFile }: Sa
       uploadedImage = await uploadProjectImage(imageFile);
     }
 
+    const existingGallery = parseGalleryImages(existingProject.gallery_images);
+    uploadedGallery = galleryFiles.length > 0 ? await uploadProjectGallery(galleryFiles) : [];
+    const nextGallery = [...existingGallery, ...uploadedGallery];
+
     const payload: ProjectUpdate = buildProjectPayload(values, {
-      image: uploadedImage ?? {
-        image_url: existingProject.image_url,
-        image_path: existingProject.image_path,
+      image: {
+        image_url: uploadedImage?.image_url ?? existingProject.image_url,
+        image_path: uploadedImage?.image_path ?? existingProject.image_path,
+        gallery_images: nextGallery,
       },
       meta,
       sortOrder: existingProject.sort_order,
@@ -318,8 +372,13 @@ export async function updateProject(projectId: string, { values, imageFile }: Sa
 
     return mapProjectRow(data);
   } catch (error) {
-    if (uploadedImage?.image_path) {
-      await removeProjectImage(uploadedImage.image_path).catch(() => undefined);
+    const paths = [
+      uploadedImage?.image_path,
+      ...uploadedGallery.map((image) => image.path),
+    ].filter((path): path is string => Boolean(path));
+
+    if (paths.length > 0) {
+      await supabase.storage.from(PROJECT_IMAGES_BUCKET).remove(paths).catch(() => undefined);
     }
     throw error;
   }

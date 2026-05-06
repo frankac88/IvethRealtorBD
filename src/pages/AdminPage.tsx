@@ -126,6 +126,7 @@ const AdminPage = () => {
   const [editingProject, setEditingProject] = useState<ProjectItem | null>(null);
   const [formValues, setFormValues] = useState<ProjectFormValues>(emptyProjectFormValues);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
 
   const refreshing = isFetchingLeads || isFetchingProjects || logoutMutation.isPending;
@@ -152,6 +153,7 @@ const AdminPage = () => {
     setEditingProject(null);
     setFormValues(emptyProjectFormValues);
     setImageFile(null);
+    setGalleryFiles([]);
   };
 
   const updateField = <K extends keyof ProjectFormValues>(field: K, value: ProjectFormValues[K]) => {
@@ -187,7 +189,7 @@ const AdminPage = () => {
       if (editingProject) {
         await updateProjectMutation.mutateAsync({
           projectId: editingProject.id,
-          payload: { values: formValues, imageFile },
+          payload: { values: formValues, imageFile, galleryFiles },
         });
         toast({
           title: "Proyecto actualizado",
@@ -197,6 +199,7 @@ const AdminPage = () => {
         await createProjectMutation.mutateAsync({
           values: formValues,
           imageFile,
+          galleryFiles,
         });
         toast({
           title: "Proyecto creado",
@@ -221,7 +224,7 @@ const AdminPage = () => {
 
   const handleDeleteProject = async (project: ProjectItem) => {
     const confirmed = window.confirm(
-      `¿Seguro que deseas eliminar "${project.title}"? Esto borrará también su imagen de Supabase.`,
+      `¿Seguro que deseas eliminar "${project.title}"? Esto borrará todos sus datos y todas sus fotos de Supabase.`,
     );
 
     if (!confirmed) return;
@@ -235,7 +238,7 @@ const AdminPage = () => {
 
       toast({
         title: "Proyecto eliminado",
-        description: "El proyecto y su imagen fueron eliminados de Supabase.",
+        description: "El proyecto, sus datos y sus fotos fueron eliminados de Supabase.",
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo eliminar el proyecto.";
@@ -306,6 +309,18 @@ const AdminPage = () => {
                         onChange={(event) => updateField("title", event.target.value)}
                         placeholder="Ej. EDGE HOUSE"
                       />
+                    </label>
+
+                    <label className="space-y-2">
+                      <span className="text-sm font-medium">Ciudad</span>
+                      <select
+                        value={formValues.city}
+                        onChange={(event) => updateField("city", event.target.value as ProjectFormValues["city"])}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      >
+                        <option value="miami">Miami</option>
+                        <option value="orlando">Orlando</option>
+                      </select>
                     </label>
 
                     <label className="space-y-2">
@@ -406,9 +421,26 @@ const AdminPage = () => {
                         <li>• Estado publicado</li>
                       </ul>
                       <p className="mt-3 text-xs">
-                        La foto se guarda en el bucket project-images de Supabase.
+                        La foto principal y la galería se guardan en el bucket project-images de Supabase.
                       </p>
                     </div>
+
+                    <label className="space-y-2">
+                      <span className="text-sm font-medium">Fotos adicionales del proyecto</span>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={(event) => setGalleryFiles(Array.from(event.target.files ?? []))}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        {galleryFiles.length > 0
+                          ? `${galleryFiles.length} foto${galleryFiles.length === 1 ? "" : "s"} adicional${galleryFiles.length === 1 ? "" : "es"} lista${galleryFiles.length === 1 ? "" : "s"} para subir.`
+                          : editingProject?.galleryImages.length
+                            ? `${editingProject.galleryImages.length} foto${editingProject.galleryImages.length === 1 ? "" : "s"} adicional${editingProject.galleryImages.length === 1 ? "" : "es"} guardada${editingProject.galleryImages.length === 1 ? "" : "s"}.`
+                            : "Opcional: sube todas las fotos de galería del proyecto."}
+                      </p>
+                    </label>
                   </div>
                 </div>
 
@@ -447,6 +479,7 @@ const AdminPage = () => {
                       <TableRow>
                         <TableHead>Proyecto</TableHead>
                         <TableHead>Ubicación</TableHead>
+                        <TableHead>Ciudad</TableHead>
                         <TableHead>Renta</TableHead>
                         <TableHead>Entrega</TableHead>
                         <TableHead>Unidades</TableHead>
@@ -477,6 +510,7 @@ const AdminPage = () => {
                             </div>
                           </TableCell>
                           <TableCell>{project.location.es}</TableCell>
+                          <TableCell className="capitalize">{project.city}</TableCell>
                           <TableCell>{project.type.es}</TableCell>
                           <TableCell>{project.delivery.es}</TableCell>
                           <TableCell>{project.residences.es}</TableCell>

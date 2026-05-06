@@ -70,7 +70,7 @@ Deno.serve(async (req) => {
 
     const { data: project, error: projectError } = await adminClient
       .from("projects")
-      .select("id, image_path")
+      .select("id, image_path, gallery_images")
       .eq("id", parsed.data.projectId)
       .single();
 
@@ -78,11 +78,23 @@ Deno.serve(async (req) => {
       throw projectError;
     }
 
-    if (project.image_path) {
+    const galleryImages = Array.isArray(project.gallery_images) ? project.gallery_images : [];
+    const galleryPaths = galleryImages
+      .map((image) => {
+        if (!image || typeof image !== "object" || Array.isArray(image)) return null;
+        return typeof image.path === "string" ? image.path : null;
+      })
+      .filter((path): path is string => Boolean(path));
+    const imagePaths = [
+      project.image_path,
+      ...galleryPaths,
+    ].filter((path): path is string => Boolean(path));
+
+    if (imagePaths.length > 0) {
       const { error: storageError } = await adminClient
         .storage
         .from("project-images")
-        .remove([project.image_path]);
+        .remove(imagePaths);
 
       if (storageError) {
         throw storageError;
