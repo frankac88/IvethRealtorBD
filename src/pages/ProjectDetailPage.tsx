@@ -1,3 +1,4 @@
+import { useState, type FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, CalendarClock, Home, KeyRound, MapPin, MessageCircle } from "lucide-react";
 
@@ -6,9 +7,12 @@ import Layout from "@/components/Layout";
 import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCarousel";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
+import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { getLuxuryProjectBySlug } from "@/features/projects/luxuryPlaceholderCatalog";
+import { useToast } from "@/hooks/use-toast";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
+import { contactTranslations } from "@/i18n/translations/contact";
 
 const labels = {
   back: { es: "Volver a proyectos", en: "Back to projects" },
@@ -41,13 +45,47 @@ const labels = {
 } as const;
 
 const keyDataIcons = [Home, CalendarClock, MessageCircle, KeyRound] as const;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^\+?[0-9\s().-]{7,20}$/;
+const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
+const COUNTRY_REGEX = /^[\p{L}\s'.-]{2,60}$/u;
+
+type AvailabilityField = "name" | "email" | "phone" | "country";
+type AvailabilityFormErrors = Partial<Record<AvailabilityField, string>>;
+
+const availabilityFields: {
+  name: AvailabilityField;
+  label: typeof labels.name | typeof labels.email | typeof labels.phone | typeof labels.country;
+  type: "text" | "email" | "tel";
+  maxLength: number;
+}[] = [
+  { name: "name", label: labels.name, type: "text", maxLength: 100 },
+  { name: "email", label: labels.email, type: "email", maxLength: 255 },
+  { name: "phone", label: labels.phone, type: "tel", maxLength: 20 },
+  { name: "country", label: labels.country, type: "text", maxLength: 60 },
+];
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
   const project = getLuxuryProjectBySlug(slug);
   const t = useT();
   const { language } = useLanguage();
+  const { toast } = useToast();
+  const createLeadMutation = useCreateLeadMutation();
+  const [availabilityErrors, setAvailabilityErrors] = useState<AvailabilityFormErrors>({});
+  const [startedAt, setStartedAt] = useState(() => Date.now());
   const projectsPath = getLocalizedPath("projects", language);
+  const c = contactTranslations;
+
+  const clearAvailabilityError = (field: AvailabilityField) => {
+    setAvailabilityErrors((prev) => {
+      if (!prev[field]) return prev;
+
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
 
   if (!project) {
     return (
@@ -71,6 +109,78 @@ const ProjectDetailPage = () => {
     { label: labels.rental, value: project.rentalLabel },
     { label: labels.units, value: project.unitsLabel },
   ];
+
+  const handleAvailabilitySubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const leadData = {
+      name: (formData.get("name") as string).trim(),
+      email: (formData.get("email") as string).trim(),
+      phone: (formData.get("phone") as string).trim(),
+      country: (formData.get("country") as string).trim(),
+      interest: project.city,
+      message: `Solicitud de disponibilidad para el proyecto: ${project.title}`,
+      honeypot: ((formData.get("company") as string) ?? "").trim(),
+      startedAt,
+    };
+    const nextErrors: AvailabilityFormErrors = {};
+
+    if (!leadData.name) {
+      nextErrors.name = t(c.validation.nameRequired);
+    } else if (!NAME_REGEX.test(leadData.name)) {
+      nextErrors.name = t(c.validation.nameInvalid);
+    }
+
+    if (!leadData.email) {
+      nextErrors.email = t(c.validation.emailRequired);
+    } else if (!EMAIL_REGEX.test(leadData.email)) {
+      nextErrors.email = t(c.validation.emailInvalid);
+    }
+
+    if (!leadData.phone) {
+      nextErrors.phone = t(c.validation.phoneRequired);
+    } else if (!PHONE_REGEX.test(leadData.phone)) {
+      nextErrors.phone = t(c.validation.phoneInvalid);
+    }
+
+    if (!leadData.country) {
+      nextErrors.country = t(c.validation.countryRequired);
+    } else if (!COUNTRY_REGEX.test(leadData.country)) {
+      nextErrors.country = t(c.validation.countryInvalid);
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setAvailabilityErrors(nextErrors);
+      toast({
+        title: "Error",
+        description: Object.values(nextErrors)[0],
+        variant: "destructive",
+      });
+
+      setTimeout(() => {
+        const firstInvalidField = form.querySelector('[aria-invalid="true"]');
+        if (firstInvalidField instanceof HTMLElement) {
+          firstInvalidField.focus();
+        }
+      }, 0);
+
+      return;
+    }
+
+    setAvailabilityErrors({});
+
+    try {
+      await createLeadMutation.mutateAsync(leadData);
+      toast({ title: t(c.toastTitle), description: t(c.toastDesc) });
+      form.reset();
+      setStartedAt(Date.now());
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "No se pudo enviar el formulario.";
+      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+    }
+  };
 
   return (
     <Layout>
@@ -161,31 +271,64 @@ const ProjectDetailPage = () => {
           <AnimatedSection
             as="form"
             delay={120}
-            onSubmit={(event) => event.preventDefault()}
+            onSubmit={handleAvailabilitySubmit}
             className="relative overflow-hidden rounded-[1.75rem] border border-gold/30 bg-card/80 p-5 shadow-[0_28px_90px_rgba(26,31,46,0.12)] backdrop-blur md:p-7"
+            noValidate
           >
             <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/55 to-transparent" />
             <div className="absolute -right-14 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
             <div className="absolute -bottom-16 -left-12 h-36 w-36 rounded-full bg-wine/10 blur-3xl" />
+            <div
+              className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0 pointer-events-none"
+              aria-hidden="true"
+            >
+              <label htmlFor="project-availability-company">Company</label>
+              <input
+                id="project-availability-company"
+                name="company"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+              />
+            </div>
 
             <div className="relative grid gap-4 sm:grid-cols-2">
-              {[labels.name, labels.email, labels.phone, labels.country].map((label) => (
-                <label key={t(label)} className="block">
+              {availabilityFields.map((field) => (
+                <label key={field.name} className="block" htmlFor={`project-availability-${field.name}`}>
                   <span className="mb-2 block text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-foreground/55">
-                    {t(label)}
+                    {t(field.label)}
                   </span>
                   <input
+                    id={`project-availability-${field.name}`}
+                    name={field.name}
                     className="h-12 w-full rounded-sm border border-border/90 bg-background/70 px-3 text-sm outline-none transition focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/15"
-                    type={label === labels.email ? "email" : "text"}
+                    type={field.type}
+                    required
+                    maxLength={field.maxLength}
+                    aria-invalid={Boolean(availabilityErrors[field.name])}
+                    aria-describedby={
+                      availabilityErrors[field.name] ? `project-availability-${field.name}-error` : undefined
+                    }
+                    onChange={() => clearAvailabilityError(field.name)}
                   />
+                  {availabilityErrors[field.name] ? (
+                    <p
+                      id={`project-availability-${field.name}-error`}
+                      className="mt-2 text-sm leading-6 text-destructive"
+                    >
+                      {availabilityErrors[field.name]}
+                    </p>
+                  ) : null}
                 </label>
               ))}
             </div>
             <Button
               type="submit"
               className="relative mt-5 h-12 w-full rounded-full bg-primary text-primary-foreground shadow-[0_16px_36px_rgba(42,123,137,0.22)] hover:bg-green-light"
+              disabled={createLeadMutation.isPending}
             >
-              {t(labels.submit)}
+              {createLeadMutation.isPending ? t(c.sending) : t(labels.submit)}
             </Button>
           </AnimatedSection>
         </div>
