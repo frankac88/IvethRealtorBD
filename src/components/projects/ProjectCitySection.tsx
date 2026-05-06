@@ -113,9 +113,9 @@ export function ProjectCitySection({
           </div>
 
           {secondaryProjects.length > 0 ? (
-            <div className="grid gap-5 lg:grid-cols-2">
+            <div className="grid items-stretch gap-5 lg:grid-cols-2">
               {secondaryProjects.map((project, index) => (
-                <AnimatedSection as="div" key={project.slug} delay={(index + 1) * 60}>
+                <AnimatedSection as="div" key={project.slug} delay={(index + 1) * 60} className="w-full">
                   <ProjectFeatureCard
                     project={project}
                     index={index + 1}

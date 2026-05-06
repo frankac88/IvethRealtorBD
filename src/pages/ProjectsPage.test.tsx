@@ -114,6 +114,13 @@ describe("ProjectsPage flagship redesign", () => {
     expect(within(bloomCompactCard).queryByText(/fachada \/ skyline/i)).not.toBeInTheDocument();
   });
 
+  it("stretches Miami and Orlando compact card wrappers to the same grid width", () => {
+    renderProjectsPage();
+
+    expect(screen.getByRole("button", { name: /seleccionar bloom/i }).parentElement).toHaveClass("w-full");
+    expect(screen.getByRole("button", { name: /seleccionar storey lake/i }).parentElement).toHaveClass("w-full");
+  });
+
   it("restores a selected project from the project query param", () => {
     renderProjectsPage("/proyectos?project=bloom-north-miami");
 

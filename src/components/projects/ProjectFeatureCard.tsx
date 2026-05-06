@@ -71,7 +71,7 @@ export function ProjectFeatureCard({
           type="button"
           aria-label={t({ es: `Seleccionar ${project.title}`, en: `Select ${project.title}` })}
           onClick={() => onSelectProject(project.slug)}
-          className="group grid w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:grid-cols-[9rem_minmax(0,1fr)]"
+          className="group grid h-full w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:grid-cols-[9rem_minmax(0,1fr)]"
         >
           {cardContent}
         </button>
@@ -79,7 +79,7 @@ export function ProjectFeatureCard({
     }
 
     return (
-      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
+      <article className="group grid h-full w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
         {cardContent}
       </article>
     );
