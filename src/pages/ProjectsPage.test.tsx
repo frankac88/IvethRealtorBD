@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
@@ -101,6 +101,16 @@ describe("ProjectsPage flagship redesign", () => {
       "href",
       "/proyectos/bloom-north-miami",
     );
+  });
+
+  it("removes image placeholders from compact project cards while keeping the featured image label", () => {
+    renderProjectsPage();
+
+    expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/fachada \/ skyline/i);
+
+    const bloomCompactCard = screen.getByRole("button", { name: /seleccionar bloom/i });
+
+    expect(within(bloomCompactCard).queryByText(/fachada \/ skyline/i)).not.toBeInTheDocument();
   });
 
   it("restores a selected project from the project query param", () => {

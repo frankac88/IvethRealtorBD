@@ -14,6 +14,7 @@ export interface SaveProjectPayload {
   values: ProjectFormValues;
   imageFile?: File | null;
   galleryFiles?: File[];
+  galleryImages?: ProjectGalleryImage[];
 }
 
 type DerivedProjectMeta = {
@@ -227,14 +228,14 @@ async function uploadProjectImage(file: File) {
   };
 }
 
-async function uploadProjectGallery(files: File[]) {
+async function uploadProjectGallery(files: File[], startIndex = 0) {
   const uploads = await Promise.all(files.map(uploadProjectImage));
 
   return uploads.map((image, index) => ({
     url: image.image_url,
     path: image.image_path,
-    labelEs: `Foto ${index + 1}`,
-    labelEn: `Photo ${index + 1}`,
+    labelEs: `Foto ${startIndex + index + 1}`,
+    labelEn: `Photo ${startIndex + index + 1}`,
   }));
 }
 
@@ -321,7 +322,10 @@ export async function createProject({ values, imageFile, galleryFiles = [] }: Sa
   }
 }
 
-export async function updateProject(projectId: string, { values, imageFile, galleryFiles = [] }: SaveProjectPayload) {
+export async function updateProject(
+  projectId: string,
+  { values, imageFile, galleryFiles = [], galleryImages }: SaveProjectPayload,
+) {
   const { data: existingProject, error: existingError } = await supabase
     .from("projects")
     .select("*")
@@ -340,8 +344,8 @@ export async function updateProject(projectId: string, { values, imageFile, gall
       uploadedImage = await uploadProjectImage(imageFile);
     }
 
-    const existingGallery = parseGalleryImages(existingProject.gallery_images);
-    uploadedGallery = galleryFiles.length > 0 ? await uploadProjectGallery(galleryFiles) : [];
+    const existingGallery = galleryImages ?? parseGalleryImages(existingProject.gallery_images);
+    uploadedGallery = galleryFiles.length > 0 ? await uploadProjectGallery(galleryFiles, existingGallery.length) : [];
     const nextGallery = [...existingGallery, ...uploadedGallery];
 
     const payload: ProjectUpdate = buildProjectPayload(values, {

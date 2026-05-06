@@ -33,6 +33,7 @@ import {
   emptyProjectFormValues,
   projectToFormValues,
   type ProjectFormValues,
+  type ProjectGalleryImage,
   type ProjectItem,
 } from "@/features/projects/catalog";
 import {
@@ -70,6 +71,20 @@ const interestLabels: Record<string, string> = {
   financing: "Financiamiento",
   other: "Otro",
 };
+
+const galleryTagPresets: Array<{ labelEs: string; labelEn: string }> = [
+  { labelEs: "Fachada", labelEn: "Facade" },
+  { labelEs: "Amenidad", labelEn: "Amenity" },
+  { labelEs: "Interior", labelEn: "Interior" },
+  { labelEs: "Vista", labelEn: "View" },
+  { labelEs: "Lobby", labelEn: "Lobby" },
+  { labelEs: "Piscina", labelEn: "Pool" },
+  { labelEs: "Rooftop", labelEn: "Rooftop" },
+  { labelEs: "Terraza", labelEn: "Terrace" },
+  { labelEs: "Cocina", labelEn: "Kitchen" },
+  { labelEs: "Habitación", labelEn: "Bedroom" },
+  { labelEs: "Baño", labelEn: "Bathroom" },
+];
 
 const bilingualFieldRows: Array<{
   labelEs: string;
@@ -127,6 +142,7 @@ const AdminPage = () => {
   const [formValues, setFormValues] = useState<ProjectFormValues>(emptyProjectFormValues);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  const [galleryImageTags, setGalleryImageTags] = useState<ProjectGalleryImage[]>([]);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
 
   const refreshing = isFetchingLeads || isFetchingProjects || logoutMutation.isPending;
@@ -148,17 +164,58 @@ const AdminPage = () => {
     () => [...projects].sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title)),
     [projects],
   );
+  const availableGalleryTags = useMemo(() => {
+    const tags = [...galleryTagPresets, ...galleryImageTags]
+      .map((item) => ({ labelEs: item.labelEs.trim(), labelEn: item.labelEn.trim() }))
+      .filter((item) => item.labelEs || item.labelEn);
+    const seen = new Set<string>();
+
+    return tags.filter((item) => {
+      const key = `${item.labelEs.toLowerCase()}|${item.labelEn.toLowerCase()}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [galleryImageTags]);
 
   const resetProjectForm = () => {
     setEditingProject(null);
     setFormValues(emptyProjectFormValues);
     setImageFile(null);
     setGalleryFiles([]);
+    setGalleryImageTags([]);
   };
 
   const updateField = <K extends keyof ProjectFormValues>(field: K, value: ProjectFormValues[K]) => {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   };
+
+  const updateGalleryTag = (index: number, field: "labelEs" | "labelEn", value: string) => {
+    setGalleryImageTags((prev) =>
+      prev.map((image, imageIndex) => (imageIndex === index ? { ...image, [field]: value } : image)),
+    );
+  };
+
+  const applyGalleryTag = (index: number, tag: { labelEs: string; labelEn: string }) => {
+    setGalleryImageTags((prev) =>
+      prev.map((image, imageIndex) =>
+        imageIndex === index ? { ...image, labelEs: tag.labelEs, labelEn: tag.labelEn } : image,
+      ),
+    );
+  };
+
+  const clearGalleryTag = (index: number) => {
+    setGalleryImageTags((prev) =>
+      prev.map((image, imageIndex) => (imageIndex === index ? { ...image, labelEs: "", labelEn: "" } : image)),
+    );
+  };
+
+  const sanitizeGalleryImageTags = () =>
+    galleryImageTags.map((image) => ({
+      ...image,
+      labelEs: image.labelEs.trim(),
+      labelEn: image.labelEn.trim(),
+    }));
 
   const validateProjectForm = () => {
     const missingField = REQUIRED_PROJECT_FIELDS.find(([field]) => formValues[field].trim().length === 0);
@@ -189,7 +246,7 @@ const AdminPage = () => {
       if (editingProject) {
         await updateProjectMutation.mutateAsync({
           projectId: editingProject.id,
-          payload: { values: formValues, imageFile, galleryFiles },
+          payload: { values: formValues, imageFile, galleryFiles, galleryImages: sanitizeGalleryImageTags() },
         });
         toast({
           title: "Proyecto actualizado",
@@ -217,7 +274,9 @@ const AdminPage = () => {
   const handleEditProject = (project: ProjectItem) => {
     setEditingProject(project);
     setFormValues(projectToFormValues(project));
+    setGalleryImageTags(project.galleryImages);
     setImageFile(null);
+    setGalleryFiles([]);
     setActiveTab("projects");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -441,6 +500,76 @@ const AdminPage = () => {
                             : "Opcional: sube todas las fotos de galería del proyecto."}
                       </p>
                     </label>
+
+                    {editingProject && galleryImageTags.length > 0 ? (
+                      <div className="space-y-3 rounded-lg border bg-background p-4">
+                        <div>
+                          <p className="text-sm font-medium">Tags de fotos secundarias</p>
+                          <p className="text-xs text-muted-foreground">
+                            Edita el texto visible sobre cada foto, usa un tag existente o elimínalo dejando la foto sin etiqueta.
+                          </p>
+                        </div>
+
+                        <div className="space-y-4">
+                          {galleryImageTags.map((image, index) => (
+                            <div key={`${image.path ?? image.url}-${index}`} className="space-y-3 rounded-md border border-border/70 p-3">
+                              <div className="flex gap-3">
+                                <img
+                                  src={image.url}
+                                  alt={image.labelEs || image.labelEn || `Foto secundaria ${index + 1}`}
+                                  className="h-16 w-20 rounded object-cover"
+                                />
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-xs font-medium text-muted-foreground">Foto {index + 1}</p>
+                                  <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                                    <label className="space-y-1">
+                                      <span className="text-xs font-medium">Tag ES</span>
+                                      <Input
+                                        value={image.labelEs}
+                                        onChange={(event) => updateGalleryTag(index, "labelEs", event.target.value)}
+                                        placeholder="Ej. Fachada"
+                                      />
+                                    </label>
+                                    <label className="space-y-1">
+                                      <span className="text-xs font-medium">Tag EN</span>
+                                      <Input
+                                        value={image.labelEn}
+                                        onChange={(event) => updateGalleryTag(index, "labelEn", event.target.value)}
+                                        placeholder="Ej. Facade"
+                                      />
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex flex-wrap gap-2">
+                                {availableGalleryTags.map((tag) => (
+                                  <Button
+                                    key={`${index}-${tag.labelEs}-${tag.labelEn}`}
+                                    type="button"
+                                    size="sm"
+                                    variant="outline"
+                                    className="h-7 px-2 text-xs"
+                                    onClick={() => applyGalleryTag(index, tag)}
+                                  >
+                                    {tag.labelEs || tag.labelEn}
+                                  </Button>
+                                ))}
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-7 px-2 text-xs text-destructive hover:text-destructive"
+                                  onClick={() => clearGalleryTag(index)}
+                                >
+                                  Eliminar tag
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
