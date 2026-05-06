@@ -110,6 +110,17 @@ const theWilliamImages = {
   terrace: `${projectImagesBaseUrl}/the-william-terrace.webp`,
 } as const;
 
+const mandarinOrientalImages = {
+  hero: `${projectImagesBaseUrl}/mandarin-oriental-residences/hero.webp`,
+  hotelArrival: `${projectImagesBaseUrl}/mandarin-oriental-residences/hotel-arrival.webp`,
+  diningSkyline: `${projectImagesBaseUrl}/mandarin-oriental-residences/all-day-dining-skyline-seating.webp`,
+  gardenCabanas: `${projectImagesBaseUrl}/mandarin-oriental-residences/garden-cabanas.webp`,
+  kitchenResidence: `${projectImagesBaseUrl}/mandarin-oriental-residences/kitchen-residence-warm-palette.webp`,
+  privateLobby: `${projectImagesBaseUrl}/mandarin-oriental-residences/private-residential-lobby.webp`,
+  privateResidence: `${projectImagesBaseUrl}/mandarin-oriental-residences/private-residence.webp`,
+  residenceBathroom: `${projectImagesBaseUrl}/mandarin-oriental-residences/residence-bathroom.webp`,
+} as const;
+
 export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "edge-house",
@@ -178,29 +189,43 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     ],
   },
   {
-    slug: "flow-house",
+    slug: "mandarin-oriental-residences",
     city: "miami",
-    title: "FLOW HOUSE",
-    location: { es: "Downtown Miami", en: "Downtown Miami" },
-    eyebrow: { es: "Conectividad urbana", en: "Urban connectivity" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
-    rentalLabel: { es: "Renta flexible", en: "Flexible rental" },
-    unitsLabel: { es: "Studios – 2BR", en: "Studios – 2BR" },
+    title: "MANDARIN ORIENTAL RESIDENCES",
+    location: { es: "Brickell Key, Miami", en: "Brickell Key, Miami" },
+    eyebrow: { es: "Ultra lujo frente al agua", en: "Waterfront ultra-luxury" },
+    priceLabel: { es: "Desde $6M", en: "From $6M" },
+    deliveryLabel: { es: "Entrega 2030", en: "Delivery 2030" },
+    rentalLabel: { es: "Restricciones de renta", en: "Rental restrictions" },
+    unitsLabel: {
+      es: "2, 3, 4 & 5 habitaciones",
+      en: "2, 3, 4 & 5 bedrooms",
+    },
     shortDescription: {
-      es: "Cerca de centros financieros, servicios y movilidad para una estrategia urbana conveniente.",
-      en: "Near financial centers, services, and mobility for a convenient urban strategy.",
+      es: "Residencias icónicas en Brickell Key con vistas panorámicas, vida de resort cosmopolita y servicio Mandarin Oriental.",
+      en: "Iconic residences on Brickell Key with panoramic views, cosmopolitan resort living, and Mandarin Oriental service.",
     },
     strategicSummary: {
-      es: "Enfocado en conveniencia, valorización urbana y demanda constante en el corazón de Miami.",
-      en: "Focused on convenience, urban appreciation, and consistent demand in the heart of Miami.",
+      es: "The Residences at Mandarin Oriental, Miami se elevan sobre la costa de Brickell Key con 66 pisos y 228 residencias. Desarrolladas por Swire Properties, combinan glamour, vistas panorámicas y servicio cinco estrellas para compradores de alto patrimonio que buscan preservar capital en una propiedad icónica frente al agua.",
+      en: "The Residences at Mandarin Oriental, Miami rise above the Brickell Key waterfront with 66 floors and 228 residences. Developed by Swire Properties, they combine glamour, panoramic views, and five-star service for high-net-worth buyers seeking to preserve capital in an iconic waterfront property.",
     },
-    cardCta: { es: "Explora Flow House", en: "Explore Flow House" },
-    imageHint: { es: "Downtown / lifestyle", en: "Downtown / lifestyle" },
+    cardCta: { es: "Descubre Mandarin Oriental", en: "Discover Mandarin Oriental" },
+    imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
+    imageUrl: mandarinOrientalImages.hero,
+    detailImageUrl: mandarinOrientalImages.hero,
     goal: "investment",
-    rentalType: "flexible",
-    budgetRange: "500k-1m",
-    gallery: baseGallery,
+    rentalType: "long-term",
+    budgetRange: "2m-plus",
+    gallery: [
+      { label: { es: "Fachada", en: "Facade" }, tone: "sand", imageUrl: mandarinOrientalImages.hero },
+      { label: { es: "Llegada hotel", en: "Hotel arrival" }, tone: "teal", imageUrl: mandarinOrientalImages.hotelArrival },
+      { label: { es: "Dining skyline", en: "Skyline dining" }, tone: "wine", imageUrl: mandarinOrientalImages.diningSkyline },
+      { label: { es: "Cabanas jardín", en: "Garden cabanas" }, tone: "sage", imageUrl: mandarinOrientalImages.gardenCabanas },
+      { label: { es: "Cocina residencia", en: "Residence kitchen" }, tone: "teal", imageUrl: mandarinOrientalImages.kitchenResidence },
+      { label: { es: "Lobby privado", en: "Private lobby" }, tone: "sand", imageUrl: mandarinOrientalImages.privateLobby },
+      { label: { es: "Residencia privada", en: "Private residence" }, tone: "wine", imageUrl: mandarinOrientalImages.privateResidence },
+      { label: { es: "Baño residencia", en: "Residence bathroom" }, tone: "sage", imageUrl: mandarinOrientalImages.residenceBathroom },
+    ],
   },
   {
     slug: "midtown-park",
