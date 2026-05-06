@@ -21,6 +21,8 @@ import {
   type ProjectGoal,
   type ProjectRentalType,
 } from "@/features/projects/luxuryPlaceholderCatalog";
+import { projectItemsToLuxuryProjects } from "@/features/projects/luxuryProjectAdapter";
+import { usePublishedProjectsQuery } from "@/features/projects/hooks";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 
@@ -88,8 +90,8 @@ const getFiltersFromParams = (searchParams: URLSearchParams): LuxuryProjectFilte
   budgetRange: isBudgetRange(searchParams.get("budget")) ? searchParams.get("budget") as ProjectBudgetRange : "all",
 });
 
-const getProjectBySlug = (slug: string | null) =>
-  luxuryPlaceholderProjects.find((project) => project.slug === slug) ?? null;
+const getProjectBySlug = (projects: LuxuryProject[], slug: string | null) =>
+  projects.find((project) => project.slug === slug) ?? null;
 
 const getSelectionFromProject = (project: LuxuryProject | null): Partial<Record<ProjectCity, string>> =>
   project ? { [project.city]: project.slug } : {};
@@ -106,7 +108,7 @@ const updateParamsFromFilters = (filters: LuxuryProjectFilters, selectedProjectS
   return params;
 };
 
-const groupByCity = (projects: typeof luxuryPlaceholderProjects) => ({
+const groupByCity = (projects: LuxuryProject[]) => ({
   miami: projects.filter((project) => project.city === "miami"),
   orlando: projects.filter((project) => project.city === "orlando"),
 });
@@ -115,13 +117,18 @@ const ProjectsPage = () => {
   const t = useT();
   const { language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { data: publishedProjects = [] } = usePublishedProjectsQuery();
+  const catalogProjects = useMemo(() => {
+    const supabaseProjects = projectItemsToLuxuryProjects(publishedProjects);
+    return supabaseProjects.length > 0 ? supabaseProjects : luxuryPlaceholderProjects;
+  }, [publishedProjects]);
   const [filters, setFilters] = useState<LuxuryProjectFilters>(() => getFiltersFromParams(searchParams));
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string | null>(() => {
-    const selectedProject = getProjectBySlug(searchParams.get("project"));
+    const selectedProject = getProjectBySlug(luxuryPlaceholderProjects, searchParams.get("project"));
     return selectedProject?.slug ?? null;
   });
   const [selectedProjectByCity, setSelectedProjectByCity] = useState<Partial<Record<ProjectCity, string>>>(() => {
-    const selectedProject = getProjectBySlug(searchParams.get("project"));
+    const selectedProject = getProjectBySlug(luxuryPlaceholderProjects, searchParams.get("project"));
     return getSelectionFromProject(selectedProject);
   });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
@@ -131,7 +138,7 @@ const ProjectsPage = () => {
 
   useEffect(() => {
     setFilters(getFiltersFromParams(searchParams));
-    const selectedProject = getProjectBySlug(searchParams.get("project"));
+    const selectedProject = getProjectBySlug(catalogProjects, searchParams.get("project"));
 
     if (selectedProject) {
       setSelectedProjectSlug(selectedProject.slug);
@@ -140,7 +147,7 @@ const ProjectsPage = () => {
         [selectedProject.city]: selectedProject.slug,
       }));
     }
-  }, [searchParams]);
+  }, [catalogProjects, searchParams]);
 
   useEffect(() => {
     const nextParams = updateParamsFromFilters(filters, selectedProjectSlug);
@@ -150,8 +157,8 @@ const ProjectsPage = () => {
   }, [filters, searchParams, selectedProjectSlug, setSearchParams]);
 
   const filteredProjects = useMemo(
-    () => filterLuxuryProjects(luxuryPlaceholderProjects, filters),
-    [filters],
+    () => filterLuxuryProjects(catalogProjects, filters),
+    [catalogProjects, filters],
   );
   const groupedProjects = useMemo(() => groupByCity(filteredProjects), [filteredProjects]);
   const showNoResults = filteredProjects.length === 0;

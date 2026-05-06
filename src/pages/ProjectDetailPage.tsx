@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, CalendarClock, Home, KeyRound, MapPin, MessageCircle } from "lucide-react";
 
@@ -8,7 +8,9 @@ import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCaro
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
 import { useCreateLeadMutation } from "@/features/leads/hooks";
-import { getLuxuryProjectBySlug } from "@/features/projects/luxuryPlaceholderCatalog";
+import { luxuryPlaceholderProjects } from "@/features/projects/luxuryPlaceholderCatalog";
+import { projectItemsToLuxuryProjects } from "@/features/projects/luxuryProjectAdapter";
+import { usePublishedProjectsQuery } from "@/features/projects/hooks";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
@@ -67,7 +69,12 @@ const availabilityFields: {
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
-  const project = getLuxuryProjectBySlug(slug);
+  const { data: publishedProjects = [], isLoading: isLoadingProjects } = usePublishedProjectsQuery();
+  const catalogProjects = useMemo(() => {
+    const supabaseProjects = projectItemsToLuxuryProjects(publishedProjects);
+    return supabaseProjects.length > 0 ? supabaseProjects : luxuryPlaceholderProjects;
+  }, [publishedProjects]);
+  const project = catalogProjects.find((item) => item.slug === slug) ?? null;
   const t = useT();
   const { language } = useLanguage();
   const { toast } = useToast();
@@ -86,6 +93,18 @@ const ProjectDetailPage = () => {
       return next;
     });
   };
+
+  if (!project && isLoadingProjects) {
+    return (
+      <Layout>
+        <section className="bg-background py-24">
+          <div className="container mx-auto px-4 text-center lg:px-8">
+            <p className="type-caption text-primary">{t({ es: "Cargando proyecto", en: "Loading project" })}</p>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 
   if (!project) {
     return (

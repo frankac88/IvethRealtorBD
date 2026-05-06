@@ -31,6 +31,10 @@ vi.mock("@/features/leads/hooks", () => ({
   useCreateLeadMutation: () => leadMutation,
 }));
 
+vi.mock("@/features/projects/hooks", () => ({
+  usePublishedProjectsQuery: () => ({ data: [], isLoading: false, error: null }),
+}));
+
 vi.mock("@/hooks/use-toast", () => ({
   useToast: () => ({ toast }),
 }));
