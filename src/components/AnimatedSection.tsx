@@ -2,11 +2,10 @@ import React from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 
-interface AnimatedSectionProps extends React.HTMLAttributes<HTMLElement> {
+interface AnimatedSectionProps extends React.AllHTMLAttributes<HTMLElement> {
   as?: "section" | "div" | "article" | "aside" | "form";
   delay?: number;
   children: React.ReactNode;
-  className?: string;
 }
 
 const usePrefersReducedMotion = () => {
