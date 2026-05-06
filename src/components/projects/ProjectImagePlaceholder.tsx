@@ -15,6 +15,7 @@ export function ProjectImagePlaceholder({
   compact = false,
   imageUrl,
   interactive = false,
+  showLabel = true,
 }: {
   label: string;
   tone?: LuxuryProject["gallery"][number]["tone"];
@@ -22,8 +23,9 @@ export function ProjectImagePlaceholder({
   compact?: boolean;
   imageUrl?: string;
   interactive?: boolean;
+  showLabel?: boolean;
 }) {
-  const visibleLabel = label.trim();
+  const visibleLabel = showLabel ? label.trim() : "";
 
   return (
     <div

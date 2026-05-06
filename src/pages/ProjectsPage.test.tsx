@@ -103,13 +103,14 @@ describe("ProjectsPage flagship redesign", () => {
     );
   });
 
-  it("removes image placeholders from compact project cards while keeping the featured image label", () => {
+  it("keeps compact project photos but removes their visible image label", () => {
     renderProjectsPage();
 
     expect(screen.getByTestId("featured-project-miami")).toHaveTextContent(/fachada \/ skyline/i);
 
     const bloomCompactCard = screen.getByRole("button", { name: /seleccionar bloom/i });
 
+    expect(within(bloomCompactCard).getByRole("img", { name: /fachada \/ skyline/i })).toBeInTheDocument();
     expect(within(bloomCompactCard).queryByText(/fachada \/ skyline/i)).not.toBeInTheDocument();
   });
 

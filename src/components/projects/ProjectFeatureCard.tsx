@@ -36,23 +36,33 @@ export function ProjectFeatureCard({
 
   if (compact) {
     const cardContent = (
-      <div className="flex min-w-0 flex-col justify-center text-left">
-        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-primary">
-          {t(project.eyebrow)}
-        </p>
-        <h3 className="mt-2 font-serif text-2xl leading-none tracking-[-0.03em] text-wine">
-          {project.title}
-        </h3>
-        <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <MapPin className="h-3.5 w-3.5 text-primary" />
-          {t(project.location)}
-        </p>
-        <p className="mt-2 text-sm leading-6 text-foreground/78">{t(project.shortDescription)}</p>
-        <span className="mt-3 inline-flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-wine transition group-hover:text-primary">
-          {t(project.cardCta)}
-          <ArrowRight className="h-3.5 w-3.5" />
-        </span>
-      </div>
+      <>
+        <ProjectImagePlaceholder
+          label={t(project.imageHint)}
+          tone={tone}
+          compact
+          imageUrl={imageUrl}
+          showLabel={false}
+          className="min-h-[9rem] rounded-[1.15rem]"
+        />
+        <div className="flex min-w-0 flex-col justify-center py-1 text-left">
+          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-primary">
+            {t(project.eyebrow)}
+          </p>
+          <h3 className="mt-2 font-serif text-2xl leading-none tracking-[-0.03em] text-wine">
+            {project.title}
+          </h3>
+          <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+            <MapPin className="h-3.5 w-3.5 text-primary" />
+            {t(project.location)}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-foreground/78">{t(project.shortDescription)}</p>
+          <span className="mt-3 inline-flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-wine transition group-hover:text-primary">
+            {t(project.cardCta)}
+            <ArrowRight className="h-3.5 w-3.5" />
+          </span>
+        </div>
+      </>
     );
 
     if (onSelectProject) {
@@ -61,7 +71,7 @@ export function ProjectFeatureCard({
           type="button"
           aria-label={t({ es: `Seleccionar ${project.title}`, en: `Select ${project.title}` })}
           onClick={() => onSelectProject(project.slug)}
-          className="group grid w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-5 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+          className="group grid w-full gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 sm:grid-cols-[9rem_minmax(0,1fr)]"
         >
           {cardContent}
         </button>
@@ -69,7 +79,7 @@ export function ProjectFeatureCard({
     }
 
     return (
-      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-5 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)]">
+      <article className="group grid gap-4 overflow-hidden rounded-[1.5rem] border border-gold/25 bg-card/95 p-3 shadow-[0_18px_48px_rgba(26,31,46,0.08)] transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.13)] sm:grid-cols-[9rem_minmax(0,1fr)]">
         {cardContent}
       </article>
     );
