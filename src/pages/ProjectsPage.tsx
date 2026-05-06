@@ -5,10 +5,10 @@ import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
 import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
-import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
 import heroProjectsImage from "@/assets/hero-projects.webp";
+import differentiatorImage from "@/assets/iveth-differentiator.webp";
 import { createWhatsAppHref } from "@/config/site";
 import {
   defaultProjectFilters,
@@ -305,12 +305,14 @@ const ProjectsPage = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(42,123,137,0.12),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(138,85,121,0.12),transparent_30%)]" />
         <div className="container relative mx-auto grid gap-10 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
           <AnimatedSection as="div" className="relative min-h-[20rem]">
-            <ProjectImagePlaceholder
-              label={t({ es: "Iveth / ciudad", en: "Iveth / city" })}
-              tone="sand"
-              className="absolute inset-0 right-8"
-            />
-            <div className="absolute bottom-0 right-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">
+            <div className="absolute inset-0 left-8 overflow-hidden rounded-[2rem] border border-gold/30 shadow-2xl">
+              <img
+                src={differentiatorImage}
+                alt={t({ es: "Curaduría Iveth Coll", en: "Iveth Coll Curation" })}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em]">Iveth Coll</p>
               <p className="mt-2 font-serif text-2xl leading-none tracking-[-0.035em]">
                 {t({ es: "Curaduría primero.", en: "Curation first." })}
