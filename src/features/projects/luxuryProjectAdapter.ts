@@ -81,7 +81,7 @@ export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject 
     shortDescription: project.hook,
     strategicSummary: project.idealFor,
     cardCta: { es: `Ver ${project.title}`, en: `View ${project.title}` },
-    imageHint: { es: "Foto del proyecto", en: "Project photo" },
+    imageHint: { es: "Visual del Proyecto", en: "Project Visual" },
     imageUrl: project.imageUrl,
     detailImageUrl: project.imageUrl,
     goal: inferGoal(project),
@@ -90,7 +90,7 @@ export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject 
     featured: project.isFeatured,
     gallery: gallery.length > 0
       ? gallery
-      : [{ label: { es: "Foto principal", en: "Main photo" }, tone: "sand", imageUrl: project.imageUrl }],
+      : [{ label: { es: "Visual principal", en: "Main Visual" }, tone: "sand", imageUrl: project.imageUrl }],
   };
 }
 

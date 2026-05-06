@@ -89,8 +89,8 @@ function parseGalleryImages(value: ProjectRow["gallery_images"]): ProjectGallery
     return [{
       url: record.url,
       path: typeof record.path === "string" ? record.path : null,
-      labelEs: typeof record.labelEs === "string" ? record.labelEs : "Foto del proyecto",
-      labelEn: typeof record.labelEn === "string" ? record.labelEn : "Project photo",
+      labelEs: typeof record.labelEs === "string" ? record.labelEs : "Visual del Proyecto",
+      labelEn: typeof record.labelEn === "string" ? record.labelEn : "Project Visual",
     }];
   });
 }
@@ -234,8 +234,8 @@ async function uploadProjectGallery(files: File[], startIndex = 0) {
   return uploads.map((image, index) => ({
     url: image.image_url,
     path: image.image_path,
-    labelEs: `Foto ${startIndex + index + 1}`,
-    labelEn: `Photo ${startIndex + index + 1}`,
+    labelEs: `Vista ${startIndex + index + 1}`,
+    labelEn: `View ${startIndex + index + 1}`,
   }));
 }
 

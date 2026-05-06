@@ -283,7 +283,7 @@ const AdminPage = () => {
 
   const handleDeleteProject = async (project: ProjectItem) => {
     const confirmed = window.confirm(
-      `¿Seguro que deseas eliminar "${project.title}"? Esto borrará todos sus datos y todas sus fotos de Supabase.`,
+      `¿Seguro que deseas eliminar "${project.title}"? Esto borrará todos sus datos y todos sus visuales de Supabase.`,
     );
 
     if (!confirmed) return;
@@ -297,7 +297,7 @@ const AdminPage = () => {
 
       toast({
         title: "Proyecto eliminado",
-        description: "El proyecto, sus datos y sus fotos fueron eliminados de Supabase.",
+        description: "El proyecto, sus datos y sus visuales fueron eliminados de Supabase.",
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo eliminar el proyecto.";
@@ -346,7 +346,7 @@ const AdminPage = () => {
                   <div>
                     <h2 className="text-2xl font-serif">{editingProject ? "Editar proyecto" : "Nuevo proyecto"}</h2>
                     <p className="text-sm text-muted-foreground">
-                      Completa solo los datos que corresponden a los placeholders actuales del diseño: precio, renta, entrega, unidades, descripción, resumen y foto principal.
+                      Completa solo los datos que corresponden a los placeholders actuales del diseño: precio, renta, entrega, unidades, descripción, resumen y visual principal.
                     </p>
                   </div>
 
@@ -443,7 +443,7 @@ const AdminPage = () => {
 
                   <div className="space-y-4">
                     <label className="space-y-2">
-                      <span className="text-sm font-medium">Foto del proyecto</span>
+                      <span className="text-sm font-medium">Visual del proyecto</span>
                       <Input
                         type="file"
                         accept="image/*"
@@ -480,12 +480,12 @@ const AdminPage = () => {
                         <li>• Estado publicado</li>
                       </ul>
                       <p className="mt-3 text-xs">
-                        La foto principal y la galería se guardan en el bucket project-images de Supabase.
+                        La visual principal y la galería se guardan en el bucket project-images de Supabase.
                       </p>
                     </div>
 
                     <label className="space-y-2">
-                      <span className="text-sm font-medium">Fotos adicionales del proyecto</span>
+                      <span className="text-sm font-medium">Vistas adicionales del proyecto</span>
                       <Input
                         type="file"
                         accept="image/*"
@@ -494,19 +494,19 @@ const AdminPage = () => {
                       />
                       <p className="text-xs text-muted-foreground">
                         {galleryFiles.length > 0
-                          ? `${galleryFiles.length} foto${galleryFiles.length === 1 ? "" : "s"} adicional${galleryFiles.length === 1 ? "" : "es"} lista${galleryFiles.length === 1 ? "" : "s"} para subir.`
+                          ? `${galleryFiles.length} vista${galleryFiles.length === 1 ? "" : "s"} adicional${galleryFiles.length === 1 ? "" : "es"} lista${galleryFiles.length === 1 ? "" : "s"} para subir.`
                           : editingProject?.galleryImages.length
-                            ? `${editingProject.galleryImages.length} foto${editingProject.galleryImages.length === 1 ? "" : "s"} adicional${editingProject.galleryImages.length === 1 ? "" : "es"} guardada${editingProject.galleryImages.length === 1 ? "" : "s"}.`
-                            : "Opcional: sube todas las fotos de galería del proyecto."}
+                            ? `${editingProject.galleryImages.length} vista${editingProject.galleryImages.length === 1 ? "" : "s"} adicional${editingProject.galleryImages.length === 1 ? "" : "es"} guardada${editingProject.galleryImages.length === 1 ? "" : "s"}.`
+                            : "Opcional: sube todas las vistas de galería del proyecto."}
                       </p>
                     </label>
 
                     {editingProject && galleryImageTags.length > 0 ? (
                       <div className="space-y-3 rounded-lg border bg-background p-4">
                         <div>
-                          <p className="text-sm font-medium">Tags de fotos secundarias</p>
+                          <p className="text-sm font-medium">Tags de vistas secundarias</p>
                           <p className="text-xs text-muted-foreground">
-                            Edita el texto visible sobre cada foto, usa un tag existente o elimínalo dejando la foto sin etiqueta.
+                            Edita el texto visible sobre cada vista, usa un tag existente o elimínalo dejando la vista sin etiqueta.
                           </p>
                         </div>
 
@@ -516,11 +516,11 @@ const AdminPage = () => {
                               <div className="flex gap-3">
                                 <img
                                   src={image.url}
-                                  alt={image.labelEs || image.labelEn || `Foto secundaria ${index + 1}`}
+                                  alt={image.labelEs || image.labelEn || `Vista secundaria ${index + 1}`}
                                   className="h-16 w-20 rounded object-cover"
                                 />
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-xs font-medium text-muted-foreground">Foto {index + 1}</p>
+                                  <p className="text-xs font-medium text-muted-foreground">Vista {index + 1}</p>
                                   <div className="mt-2 grid gap-2 sm:grid-cols-2">
                                     <label className="space-y-1">
                                       <span className="text-xs font-medium">Tag ES</span>
