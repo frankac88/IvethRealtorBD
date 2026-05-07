@@ -92,6 +92,9 @@ describe("AdminPage", () => {
   };
 
   it("renders leads table when data exists", async () => {
+    const fullMessage =
+      "Solicitud desde página para revisar opciones de inversión y detalles completos del proceso.";
+
     mockUseLeadsQuery.mockReturnValue({
       data: [
         {
@@ -101,7 +104,7 @@ describe("AdminPage", () => {
           phone: "+593999999999",
           country: "Ecuador",
           interest: "precon",
-          message: "Quiero invertir",
+          message: fullMessage,
           created_at: "2026-04-07T12:00:00.000Z",
         },
       ],
@@ -117,6 +120,9 @@ describe("AdminPage", () => {
     expect(screen.getByText("jane@test.com")).toBeInTheDocument();
     expect(screen.getByText("Ecuador")).toBeInTheDocument();
     expect(screen.getByText("Preconstrucción")).toBeInTheDocument();
+    const messageCell = screen.getByText(fullMessage).closest("td");
+    expect(messageCell).toHaveTextContent(fullMessage);
+    expect(messageCell).not.toHaveClass("truncate");
     expect(screen.getByText(/1 lead recibido/i)).toBeInTheDocument();
   });
 
