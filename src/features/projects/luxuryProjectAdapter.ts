@@ -23,6 +23,13 @@ const knownProjectSlugs: Record<string, string> = {
   "EVERBE": "everbe",
 };
 
+export function getProjectSlug(project: Pick<ProjectItem, "id" | "title">) {
+  const titleSlug = slugify(project.title);
+  const fallbackSlug = project.id ? `${titleSlug}-${project.id.slice(0, 8)}` : titleSlug;
+
+  return knownProjectSlugs[project.title.toUpperCase()] ?? (titleSlug || fallbackSlug);
+}
+
 const formatPriceLabel = (priceFrom: number | null): LocalizedText => {
   if (!priceFrom) return { es: "Precio a consultar", en: "Price upon request" };
 
@@ -65,11 +72,9 @@ const mapGalleryImage = (image: ProjectGalleryImage, index: number): LuxuryProje
 
 export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject {
   const gallery = project.galleryImages.map(mapGalleryImage);
-  const titleSlug = slugify(project.title);
-  const fallbackSlug = project.id ? `${titleSlug}-${project.id.slice(0, 8)}` : titleSlug;
 
   return {
-    slug: knownProjectSlugs[project.title.toUpperCase()] ?? (titleSlug || fallbackSlug),
+    slug: getProjectSlug(project),
     city: project.city,
     title: project.title,
     location: project.location,
