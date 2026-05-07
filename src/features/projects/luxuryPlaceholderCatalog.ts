@@ -377,8 +377,8 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     title: "REUNION VILLAGE",
     location: { es: "Reunion / Kissimmee", en: "Reunion / Kissimmee" },
     eyebrow: { es: "Comunidad vacacional", en: "Vacation community" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
+    priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
+    deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
     rentalLabel: { es: "Short-term rental", en: "Short-term rental" },
     unitsLabel: { es: "Casas / townhomes", en: "Homes / townhomes" },
     shortDescription: {
@@ -403,8 +403,8 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     title: "STOREY LAKE",
     location: { es: "Kissimmee", en: "Kissimmee" },
     eyebrow: { es: "Cercanía a parques", en: "Near theme parks" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
+    priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
+    deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
     rentalLabel: { es: "Renta vacacional", en: "Vacation rental" },
     unitsLabel: { es: "Townhomes / casas", en: "Townhomes / homes" },
     shortDescription: {
@@ -428,8 +428,8 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     title: "WINDSOR CAY",
     location: { es: "Área Orlando", en: "Orlando area" },
     eyebrow: { es: "Resort rental", en: "Resort rental" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
+    priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
+    deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
     rentalLabel: { es: "Renta corta", en: "Short-term rental" },
     unitsLabel: { es: "Casas familiares", en: "Family homes" },
     shortDescription: {
@@ -453,8 +453,8 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     title: "EVERBE",
     location: { es: "Orlando", en: "Orlando" },
     eyebrow: { es: "Alternativa local", en: "Local alternative" },
-    priceLabel: { es: "Desde $XXXK", en: "From $XXXK" },
-    deliveryLabel: { es: "Entrega 20XX", en: "Delivery 20XX" },
+    priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
+    deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
     rentalLabel: { es: "Vivienda / largo plazo", en: "Primary home / long-term" },
     unitsLabel: { es: "Casas modernas", en: "Modern homes" },
     shortDescription: {

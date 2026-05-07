@@ -41,7 +41,7 @@ const Footer = () => {
                 src={brandAssets.footerLogo}
                 alt="Iveth Coll logo"
                 className="mb-6 h-auto w-[150px] object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] group-focus-within:scale-[1.04] group-focus-within:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] md:w-[205px]"
-              />
+               loading="lazy" />
             </div>
             <p className="type-body-sm mb-6 text-primary-foreground">
               {t(ft.subtitle)}
@@ -56,7 +56,7 @@ const Footer = () => {
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
-                  className="type-body-sm text-primary-foreground transition-colors hover:text-primary-foreground"
+                  className="type-body-sm text-primary-foreground transition-colors hover:text-primary-foreground/70"
                 >
                   {link.label}
                 </Link>
@@ -69,13 +69,13 @@ const Footer = () => {
             <div className="flex flex-col gap-3 text-primary-foreground">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="self-start break-all transition-colors hover:text-primary-foreground"
+                className="self-start break-all transition-colors hover:text-primary-foreground/70"
               >
                 {siteConfig.contact.email}
               </a>
               <a
                 href={`tel:${siteConfig.contact.phoneHref}`}
-                className="self-start transition-colors hover:text-primary-foreground"
+                className="self-start transition-colors hover:text-primary-foreground/70"
               >
                 {siteConfig.contact.phoneDisplay}
               </a>

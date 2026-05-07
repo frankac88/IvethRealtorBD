@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
-import { afterEach } from "vitest";
+import { afterEach, beforeAll, vi } from "vitest";
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
@@ -33,6 +33,34 @@ Object.defineProperty(window, "IntersectionObserver", {
 Object.defineProperty(globalThis, "IntersectionObserver", {
   writable: true,
   value: IntersectionObserverMock,
+});
+
+Object.defineProperty(window, "scrollTo", {
+  writable: true,
+  value: vi.fn(),
+});
+
+Object.defineProperty(window, "requestAnimationFrame", {
+  writable: true,
+  value: (callback: FrameRequestCallback) => {
+    callback(0);
+    return 1;
+  },
+});
+
+beforeAll(() => {
+  const originalWarn = console.warn;
+
+  vi.spyOn(console, "warn").mockImplementation((message?: unknown, ...args: unknown[]) => {
+    if (
+      typeof message === "string"
+      && message.includes("React Router Future Flag Warning")
+    ) {
+      return;
+    }
+
+    originalWarn(message, ...args);
+  });
 });
 
 afterEach(() => {

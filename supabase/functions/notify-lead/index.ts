@@ -1,16 +1,12 @@
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
-
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { getCorsHeaders } from "../_shared/cors.ts";
 
 const BodySchema = z.object({
   name: z.string().min(1).max(100),
   email: z.string().email().max(255),
   phone: z.string().max(20).nullable().optional(),
   country: z.string().max(60).nullable().optional(),
-  interest: z.string().max(50).nullable().optional(),
+  interest: z.string().max(160).nullable().optional(),
   message: z.string().max(1000).nullable().optional(),
 });
 
@@ -24,7 +20,7 @@ const escapeHtml = (value: string) =>
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response("ok", { headers: getCorsHeaders(req) });
   }
 
   try {
@@ -42,7 +38,7 @@ Deno.serve(async (req) => {
     if (bearerToken !== NOTIFY_LEAD_SECRET && notifySecret !== NOTIFY_LEAD_SECRET) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
@@ -59,7 +55,7 @@ Deno.serve(async (req) => {
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: parsed.error.flatten().fieldErrors }), {
         status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
@@ -124,6 +120,8 @@ Deno.serve(async (req) => {
       </div>
     `;
 
+    const safeSubjectName = name.replace(/[\r\n]/g, "").slice(0, 100);
+
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -133,7 +131,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: NOTIFY_FROM_EMAIL,
         to: NOTIFY_TO_EMAIL.split(",").map((value) => value.trim()).filter(Boolean),
-        subject: `Nuevo contacto desde la web: ${name}`,
+        subject: `Nuevo contacto desde la web: ${safeSubjectName}`,
         html,
       }),
     });
@@ -145,14 +143,14 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   } catch (error: unknown) {
     console.error("Error sending notification:", error);
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(JSON.stringify({ success: false, error: errorMessage }), {
       status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   }
 });

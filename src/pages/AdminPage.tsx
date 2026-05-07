@@ -458,7 +458,7 @@ const AdminPage = () => {
                             src={imagePreviewUrl}
                             alt="Vista previa del proyecto"
                             className="aspect-[4/3] w-full rounded-md object-cover"
-                          />
+                           loading="lazy" />
                           <p className="text-xs text-muted-foreground">
                             {imageFile ? "Vista previa de la nueva imagen" : "Imagen actual del proyecto"}
                           </p>
@@ -518,7 +518,7 @@ const AdminPage = () => {
                                   src={image.url}
                                   alt={image.labelEs || image.labelEn || `Vista secundaria ${index + 1}`}
                                   className="h-16 w-20 rounded object-cover"
-                                />
+                                 loading="lazy" />
                                 <div className="min-w-0 flex-1">
                                   <p className="text-xs font-medium text-muted-foreground">Vista {index + 1}</p>
                                   <div className="mt-2 grid gap-2 sm:grid-cols-2">
@@ -626,7 +626,7 @@ const AdminPage = () => {
                                 src={project.imageUrl}
                                 alt={project.title}
                                 className="h-12 w-16 rounded object-cover"
-                              />
+                               loading="lazy" />
                               <div>
                                 <p className="font-medium">{project.title}</p>
                                 <p className="text-xs text-muted-foreground">

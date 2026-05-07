@@ -27,7 +27,13 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutos
+    },
+  },
+});
 
 const RouteFallback = () => (
   <div className="min-h-screen bg-background flex items-center justify-center px-4">

@@ -88,9 +88,11 @@ vi.mock("@/components/ui/select", () => {
   };
 });
 
-const renderContactPage = () => {
+const renderContactPage = (route = "/contacto") => {
+  window.history.pushState({}, "", route);
+
   render(
-    <MemoryRouter future={ROUTER_FUTURE_FLAGS}>
+    <MemoryRouter initialEntries={[route]} future={ROUTER_FUTURE_FLAGS}>
       <LanguageProvider>
         <ContactPage />
       </LanguageProvider>
@@ -227,6 +229,15 @@ describe("ContactPage", () => {
     expect(screen.getByRole("link", { name: /abrir whatsapp/i })).toHaveAttribute(
       "href",
       `https://wa.me/17868677180?text=${encodeURIComponent("Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.")}`,
+    );
+  });
+
+  it("localizes the direct WhatsApp message on English routes", () => {
+    renderContactPage("/contact");
+
+    expect(screen.getByRole("link", { name: /open whatsapp/i })).toHaveAttribute(
+      "href",
+      `https://wa.me/17868677180?text=${encodeURIComponent("Hi Iveth, I am coming from the contact page and I would like to get in touch with you.")}`,
     );
   });
 });

@@ -1,4 +1,5 @@
 ﻿import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import { getLanguageForPath } from "./routes";
 import { type Language } from "./translations/types";
 
 interface LanguageContextType {
@@ -14,6 +15,11 @@ const isLanguage = (value: string | null): value is Language => value === "es" |
 const getInitialLanguage = (): Language => {
   if (typeof window === "undefined") {
     return "es";
+  }
+
+  const routeLanguage = getLanguageForPath(window.location.pathname);
+  if (routeLanguage) {
+    return routeLanguage;
   }
 
   const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);

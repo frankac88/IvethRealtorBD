@@ -22,10 +22,26 @@ const TestConsumer = () => {
 describe("LanguageContext", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    window.history.pushState({}, "", "/");
+    document.documentElement.lang = "es";
   });
 
   it("restores saved language from localStorage", () => {
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, "en");
+
+    render(
+      <LanguageProvider>
+        <TestConsumer />
+      </LanguageProvider>,
+    );
+
+    expect(screen.getByTestId("language-value")).toHaveTextContent("en");
+    expect(screen.getByTestId("translated-value")).toHaveTextContent("Hello");
+  });
+
+  it("prefers the localized route language over localStorage on first render", () => {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, "es");
+    window.history.pushState({}, "", "/contact");
 
     render(
       <LanguageProvider>

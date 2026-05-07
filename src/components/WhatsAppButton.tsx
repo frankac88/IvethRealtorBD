@@ -1,5 +1,5 @@
-import { createWhatsAppHref } from "@/config/site";
-import { useT } from "@/i18n/LanguageContext";
+import { createWhatsAppHref, getWhatsAppMessage, whatsappMessages } from "@/config/site";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
 import whatsappFloatingButton from "@/assets/whatsapp-floating.webp";
 
 const whatsappButtonTranslations = {
@@ -7,15 +7,12 @@ const whatsappButtonTranslations = {
     es: "Habla con Iveth por WhatsApp",
     en: "Chat with Iveth on WhatsApp",
   },
-  message: {
-    es: "Hola Iveth, quiero conocer oportunidades para invertir en Miami. \u00bfPodemos conversar?",
-    en: "Hi Iveth, I'd like to learn about investment opportunities in Miami. Can we chat?",
-  },
 } as const;
 
 const WhatsAppButton = () => {
   const t = useT();
-  const whatsappHref = createWhatsAppHref("Hola Iveth, vengo desde el botón flotante de WhatsApp y quiero conversar.");
+  const { language } = useLanguage();
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.floatingButton, language));
 
   return (
     <div className="pointer-events-none fixed bottom-8 left-0 z-50 flex w-[100dvw] max-w-[100dvw] justify-end px-8 sm:bottom-10 sm:px-10">
@@ -31,7 +28,7 @@ const WhatsAppButton = () => {
             src={whatsappFloatingButton}
             alt=""
             className="h-full w-full scale-[1.62] rounded-full object-cover brightness-[1.42] contrast-[0.92] saturate-[1.22] drop-shadow-[0_18px_24px_rgba(26,31,46,0.28)]"
-          />
+           loading="lazy" />
         </span>
       </a>
     </div>
