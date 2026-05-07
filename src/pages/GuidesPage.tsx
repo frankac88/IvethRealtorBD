@@ -248,9 +248,9 @@ const GuidesPage = () => {
     }
 
     toast({
-      title: t(g.form.errorTitle),
+      title: t(g.unavailableGuideTitle),
       description: t(g.unavailableGuideMessage),
-      variant: "destructive",
+      variant: "info",
     });
   };
 

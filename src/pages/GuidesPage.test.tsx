@@ -202,9 +202,9 @@ describe("GuidesPage", () => {
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: "Error",
+        title: "Información",
         description: "Esta guía aún no está disponible. La subiremos pronto.",
-        variant: "destructive",
+        variant: "info",
       });
     });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -232,9 +232,9 @@ describe("GuidesPage", () => {
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: "Error",
+        title: "Información",
         description: "Esta guía aún no está disponible. La subiremos pronto.",
-        variant: "destructive",
+        variant: "info",
       });
     });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

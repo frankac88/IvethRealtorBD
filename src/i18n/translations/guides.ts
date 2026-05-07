@@ -19,6 +19,10 @@ export const guidesTranslations = {
     es: "Esta guía aún no está disponible. La subiremos pronto.",
     en: "This guide is not available yet. We will upload it soon.",
   },
+  unavailableGuideTitle: {
+    es: "Información",
+    en: "Information",
+  },
   downloadCta: { es: "Descargar Guía", en: "Download Guide" },
   whatsappCta: { es: "WhatsApp Directo", en: "Direct WhatsApp" },
   leadCountry: { es: "Guías Florida", en: "Florida Guides" },
