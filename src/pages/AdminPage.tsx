@@ -734,7 +734,9 @@ const AdminPage = () => {
                             )}
                           </TableCell>
                           <TableCell>{interestLabels[lead.interest || ""] || lead.interest || "—"}</TableCell>
-                          <TableCell className="max-w-[200px] truncate text-sm">{lead.message || "—"}</TableCell>
+                          <TableCell className="min-w-[240px] max-w-[320px] whitespace-normal break-words text-sm leading-6">
+                            {lead.message || "—"}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
