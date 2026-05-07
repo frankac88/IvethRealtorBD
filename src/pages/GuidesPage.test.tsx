@@ -86,7 +86,29 @@ describe("GuidesPage", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockFetch.mockResolvedValue({ ok: true });
+    mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+      if (url.includes("/availability")) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            guides: {
+              investor: true,
+              preconstruction: false,
+              financing: false,
+              buyer: false,
+            },
+          }),
+        });
+      }
+
+      if (init?.method === "HEAD") {
+        return Promise.resolve({ ok: true });
+      }
+
+      return Promise.resolve({ ok: true });
+    });
   });
 
   it("renders the exact Spanish conversion copy and redesigned editorial guide cards without inline images", () => {
@@ -125,6 +147,13 @@ describe("GuidesPage", () => {
     const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
     mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
     renderGuidesPage();
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
 
     fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
 
@@ -166,11 +195,86 @@ describe("GuidesPage", () => {
     }, { timeout: 1500 });
   });
 
+  it("shows a coming soon message and does not open the form when the guide is not available", async () => {
+    renderGuidesPage();
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[1]);
+
+    await waitFor(() => {
+      expect(mockToast).toHaveBeenCalledWith({
+        title: "Error",
+        description: "Esta guía aún no está disponible. La subiremos pronto.",
+        variant: "destructive",
+      });
+    });
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(mockMutateAsync).not.toHaveBeenCalled();
+  });
+
+  it("shows the same message when availability cannot be confirmed", async () => {
+    mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+      if (url.includes("/availability")) {
+        return Promise.reject(new Error("network error"));
+      }
+
+      if (init?.method === "HEAD") {
+        return Promise.resolve({ ok: true });
+      }
+
+      return Promise.resolve({ ok: true });
+    });
+
+    renderGuidesPage();
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
+
+    await waitFor(() => {
+      expect(mockToast).toHaveBeenCalledWith({
+        title: "Error",
+        description: "Esta guía aún no está disponible. La subiremos pronto.",
+        variant: "destructive",
+      });
+    });
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(mockMutateAsync).not.toHaveBeenCalled();
+  });
+
   it("shows a fallback modal when the automatic download cannot be validated", async () => {
     const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
     mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
-    mockFetch.mockResolvedValueOnce({ ok: false });
+    mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+      if (url.includes("/availability")) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            guides: {
+              investor: true,
+              preconstruction: false,
+              financing: false,
+              buyer: false,
+            },
+          }),
+        });
+      }
+
+      if (init?.method === "HEAD") {
+        return Promise.resolve({ ok: false });
+      }
+
+      return Promise.resolve({ ok: true });
+    });
     renderGuidesPage();
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
 
     fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[0]);
     fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Jane Doe" } });

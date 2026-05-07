@@ -15,6 +15,10 @@ export const guidesTranslations = {
     es: "Te orientan para invertir con mayor claridad, evitar errores costosos y tomar decisiones más seguras en compra, financiamiento y preconstrucción.",
     en: "They help you invest with greater clarity, avoid costly mistakes, and make safer decisions in buying, financing, and pre-construction.",
   },
+  unavailableGuideMessage: {
+    es: "Esta guía aún no está disponible. La subiremos pronto.",
+    en: "This guide is not available yet. We will upload it soon.",
+  },
   downloadCta: { es: "Descargar Guía", en: "Download Guide" },
   whatsappCta: { es: "WhatsApp Directo", en: "Direct WhatsApp" },
   leadCountry: { es: "Guías Florida", en: "Florida Guides" },

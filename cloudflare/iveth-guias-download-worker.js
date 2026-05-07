@@ -5,6 +5,7 @@ const corsHeaders = {
 };
 
 const GUIDE_KEYS = new Set(["investor", "preconstruction", "financing", "buyer"]);
+const GUIDE_KEY_LIST = ["investor", "preconstruction", "financing", "buyer"];
 const DEFAULT_MAX_AGE_SECONDS = 60 * 20;
 const textEncoder = new TextEncoder();
 
@@ -54,14 +55,25 @@ function parseObjectMap(env) {
   }
 }
 
-async function resolveObjectKey(env, guide) {
+function resolveObjectKey(env, guide) {
   const objectMap = parseObjectMap(env);
-  const mappedKey = objectMap[guide] || env.GUIDE_OBJECT_KEY;
+  return objectMap[guide] || null;
+}
 
-  if (mappedKey) return mappedKey;
+async function hasGuideObject(env, guide) {
+  const objectKey = resolveObjectKey(env, guide);
+  if (!objectKey) return false;
 
-  const listed = await env.GUIAS_BUCKET.list({ limit: 1 });
-  return listed.objects[0]?.key || null;
+  const object = await env.GUIAS_BUCKET.head(objectKey);
+  return Boolean(object);
+}
+
+async function buildAvailabilityMap(env) {
+  const entries = await Promise.all(
+    GUIDE_KEY_LIST.map(async (guide) => [guide, await hasGuideObject(env, guide)]),
+  );
+
+  return Object.fromEntries(entries);
 }
 
 function getContentType(key) {
@@ -83,13 +95,17 @@ export default {
       return jsonResponse({ error: "Method not allowed" }, 405);
     }
 
-    if (!env.DOWNLOAD_SIGNING_SECRET) {
-      return jsonResponse({ error: "Download service is not configured" }, 500);
+    const url = new URL(request.url);
+    if (url.pathname === "/availability") {
+      return jsonResponse({ guides: await buildAvailabilityMap(env) });
     }
 
-    const url = new URL(request.url);
     if (url.pathname !== "/download") {
       return jsonResponse({ ok: true });
+    }
+
+    if (!env.DOWNLOAD_SIGNING_SECRET) {
+      return jsonResponse({ error: "Download service is not configured" }, 500);
     }
 
     const guide = url.searchParams.get("guide") || "investor";
@@ -110,7 +126,7 @@ export default {
       return jsonResponse({ error: "Invalid link" }, 403);
     }
 
-    const objectKey = await resolveObjectKey(env, guide);
+    const objectKey = resolveObjectKey(env, guide);
     if (!objectKey) {
       return jsonResponse({ error: "Guide file not found" }, 404);
     }

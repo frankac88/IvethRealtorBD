@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BadgeDollarSign, Building2, FileSearch, Landmark } from "lucide-react";
 
 import guideBuyerIa from "@/assets/guide-buyer-ia.webp";
@@ -92,6 +92,9 @@ const guideVisuals = {
 const guideOrder = ["investor", "preconstruction", "financing", "buyer"] as const;
 type GuideKey = typeof guideOrder[number];
 const DOWNLOAD_REDIRECT_DELAY_MS = 900;
+const GUIDE_DOWNLOAD_BASE_URL =
+  import.meta.env.VITE_GUIDE_DOWNLOAD_BASE_URL || "https://iveth-guias-download.iveth-guias.workers.dev";
+type GuideAvailability = Record<GuideKey, boolean>;
 
 async function canStartDownload(downloadUrl: string) {
   try {
@@ -106,6 +109,26 @@ async function canStartDownload(downloadUrl: string) {
   }
 }
 
+async function fetchGuideAvailability(): Promise<GuideAvailability> {
+  const response = await fetch(new URL("/availability", GUIDE_DOWNLOAD_BASE_URL).toString(), {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Guide availability check failed");
+  }
+
+  const data = await response.json() as { guides?: Partial<Record<GuideKey, boolean>> };
+
+  return {
+    investor: data.guides?.investor === true,
+    preconstruction: data.guides?.preconstruction === true,
+    financing: data.guides?.financing === true,
+    buyer: data.guides?.buyer === true,
+  };
+}
+
 const GuidesPage = () => {
   const { language } = useLanguage();
   const t = useT();
@@ -117,6 +140,7 @@ const GuidesPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [fallbackDownloadHref, setFallbackDownloadHref] = useState<string | null>(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [guideAvailability, setGuideAvailability] = useState<GuideAvailability | null>(null);
 
   const activeGuide = activeGuideKey ? g.guides[activeGuideKey] : null;
 
@@ -124,6 +148,26 @@ const GuidesPage = () => {
     () => `${getLocalizedPath("contact", language)}#contact-form-view`,
     [language],
   );
+
+  useEffect(() => {
+    let isMounted = true;
+
+    void fetchGuideAvailability()
+      .then((availability) => {
+        if (isMounted) {
+          setGuideAvailability(availability);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setGuideAvailability(null);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const openGuideDialog = (guideKey: GuideKey) => {
     setActiveGuideKey(guideKey);
@@ -195,6 +239,19 @@ const GuidesPage = () => {
     const message = `Hola Iveth, vengo desde la guía ${guide.title.es} y quiero recibir orientación.`;
 
     return createWhatsAppHref(message);
+  };
+
+  const handleDownload = (guideKey: GuideKey) => {
+    if (guideAvailability?.[guideKey] === true) {
+      openGuideDialog(guideKey);
+      return;
+    }
+
+    toast({
+      title: t(g.form.errorTitle),
+      description: t(g.unavailableGuideMessage),
+      variant: "destructive",
+    });
   };
 
   return (
@@ -270,7 +327,7 @@ const GuidesPage = () => {
                     backgroundImageClassName={
                       "backgroundImageClassName" in visual ? visual.backgroundImageClassName : undefined
                     }
-                    onDownload={() => openGuideDialog(guideKey)}
+                    onDownload={() => handleDownload(guideKey)}
                     downloadLabel={t(g.downloadCta)}
                     whatsappLabel={t(g.whatsappCta)}
                     whatsappHref={getGuideWhatsAppHref(guideKey)}

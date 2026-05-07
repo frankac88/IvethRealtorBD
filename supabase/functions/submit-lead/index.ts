@@ -1,9 +1,19 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+const ALLOWED_ORIGINS = [
+  "https://ivethcollrealtor.com",
+  "https://www.ivethcollrealtor.com",
+  "http://localhost:5173",
+  "http://localhost:8080",
+];
+
+const getCorsHeaders = (req: Request) => {
+  const origin = req.headers.get("Origin") ?? "";
+  return {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
 };
 
 const MIN_FORM_FILL_MS = 750;
@@ -27,11 +37,11 @@ const BodySchema = z.object({
   guideKey: z.enum(GUIDE_KEYS).optional(),
 });
 
-const suspiciousSuccessResponse = () => new Response(
+const suspiciousSuccessResponse = (req: Request) => new Response(
   JSON.stringify({ success: true }),
   {
     status: 200,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
+    headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
   },
 );
 
@@ -73,13 +83,13 @@ async function createGuideDownloadUrl(guideKey: typeof GUIDE_KEYS[number]) {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response("ok", { headers: getCorsHeaders(req) });
   }
 
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   }
 
@@ -96,21 +106,21 @@ Deno.serve(async (req) => {
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: parsed.error.flatten().fieldErrors }), {
         status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
     const { guideKey, honeypot, startedAt, ...leadData } = parsed.data;
 
     if (honeypot.trim() !== "") {
-      return suspiciousSuccessResponse();
+      return suspiciousSuccessResponse(req);
     }
 
     const minFormFillMs = guideKey ? GUIDE_MIN_FORM_FILL_MS : MIN_FORM_FILL_MS;
     const elapsedMs = Date.now() - startedAt;
 
     if (minFormFillMs > 0 && elapsedMs >= 0 && elapsedMs < minFormFillMs) {
-      return suspiciousSuccessResponse();
+      return suspiciousSuccessResponse(req);
     }
 
     const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
@@ -148,14 +158,14 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify({ success: true, lead: data, guideDownloadUrl }), {
       status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   } catch (error: unknown) {
     console.error("submit-lead failed:", error);
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(JSON.stringify({ success: false, error: errorMessage }), {
       status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
   }
 });
