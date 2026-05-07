@@ -11,10 +11,11 @@
   },
   cta: { es: "Agendar Consulta", en: "Book Consultation" },
   whyTitle: { es: "¿Por qué trabajar con Iveth?", en: "Why work with Iveth?" },
+  whyEyebrow: { es: "Asesoría Signature Iveth Coll", en: "Iveth Coll Signature Advisory" },
   values: {
-    international: { title: { es: "Enfoque Internacional", en: "International Focus" }, desc: { es: "Experiencia con clientes de más de 15 países de Latinoamérica y el Caribe.", en: "Experience with clients from over 15 countries in Latin America and the Caribbean." } },
-    precon: { title: { es: "Experta en Preconstrucción", en: "Pre-Construction Expert" }, desc: { es: "Acceso a oportunidades de pre-construcción.", en: "Access to pre-construction opportunities." } },
-    track: { title: { es: "ASESORÍA PERSONALIZADA", en: "PERSONALIZED ADVISORY" }, desc: { es: "Cada cliente recibe una estrategia clara según sus metas, presupuesto y visión de inversión.", en: "Each client receives a clear strategy based on their goals, budget, and investment vision." } },
-    team: { title: { es: "Equipo Integral", en: "Comprehensive Team" }, desc: { es: "Real Estate + Finance Guidance", en: "Real Estate + Finance Guidance" } },
+    international: { title: { es: "Enfoque internacional", en: "International focus" }, desc: { es: "Experiencia con clientes de más de 15 países de Latinoamérica y el Caribe.", en: "Experience working with clients from more than 15 countries across Latin America and the Caribbean." } },
+    precon: { title: { es: "Experta en preconstrucción", en: "Pre-construction expert" }, desc: { es: "Acceso a oportunidades de preconstrucción con visión estratégica.", en: "Access to pre-construction opportunities with strategic insight." } },
+    track: { title: { es: "Asesoría personalizada", en: "Personalized advisory" }, desc: { es: "Cada cliente recibe una estrategia clara según sus metas, presupuesto y visión de inversión.", en: "Each client receives a clear strategy aligned with their goals, budget, and investment vision." } },
+    team: { title: { es: "Equipo integral", en: "Integrated team" }, desc: { es: "Real Estate + Finance Guidance en una sola experiencia de asesoría.", en: "Real Estate + Finance Guidance in one advisory experience." } },
   },
 } as const;
