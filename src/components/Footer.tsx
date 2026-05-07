@@ -41,7 +41,7 @@ const Footer = () => {
                 src={brandAssets.footerLogo}
                 alt="Iveth Coll logo"
                 className="mb-6 h-auto w-[150px] object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] group-focus-within:scale-[1.04] group-focus-within:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] md:w-[205px]"
-              />
+               loading="lazy" />
             </div>
             <p className="type-body-sm mb-6 text-primary-foreground">
               {t(ft.subtitle)}

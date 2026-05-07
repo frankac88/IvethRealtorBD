@@ -13,6 +13,11 @@ const labels = {
   details: { es: "Datos clave", en: "Key details" },
 } as const;
 
+const getProjectInquiryMessage = (projectTitle: string, language: "es" | "en") =>
+  language === "es"
+    ? `Hola Iveth, vengo desde el detalle del proyecto ${projectTitle} y quiero recibir precios y disponibilidad.`
+    : `Hi Iveth, I am coming from the ${projectTitle} project detail and I would like pricing and availability.`;
+
 export function ProjectFeatureCard({
   project,
   index,
@@ -28,9 +33,7 @@ export function ProjectFeatureCard({
   const { language } = useLanguage();
   const projectsPath = getLocalizedPath("projects", language);
   const detailPath = `${projectsPath}/${project.slug}`;
-  const requestInfoHref = createWhatsAppHref(
-    `Hola Iveth, vengo desde el detalle del proyecto ${project.title} y quiero recibir precios y disponibilidad.`,
-  );
+  const requestInfoHref = createWhatsAppHref(getProjectInquiryMessage(project.title, language));
   const tone = project.gallery[index % project.gallery.length]?.tone ?? "sand";
   const imageUrl = project.imageUrl ?? project.gallery[index % project.gallery.length]?.imageUrl;
 

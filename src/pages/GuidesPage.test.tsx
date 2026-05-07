@@ -111,8 +111,15 @@ describe("GuidesPage", () => {
     });
   });
 
-  it("renders the exact Spanish conversion copy and redesigned editorial guide cards without inline images", () => {
+  it("renders the exact Spanish conversion copy and redesigned editorial guide cards without inline images", async () => {
     renderGuidesPage();
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
 
     expect(
       screen.getByRole("heading", { name: "GUÍAS ESTRATÉGICAS PARA INVERTIR EN FLORIDA" }),
@@ -289,8 +296,15 @@ describe("GuidesPage", () => {
     expect(mockLocationAssign).not.toHaveBeenCalled();
   });
 
-  it("uses a guide-specific WhatsApp message", () => {
+  it("uses a guide-specific WhatsApp message", async () => {
     renderGuidesPage();
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
 
     const whatsappLinks = screen.getAllByRole("link", { name: "WhatsApp Directo" });
 

@@ -4,19 +4,18 @@ import AnimatedSection from "@/components/AnimatedSection";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
-import { createWhatsAppHref, siteConfig } from "@/config/site";
-import { useT } from "@/i18n/LanguageContext";
+import { createWhatsAppHref, getWhatsAppMessage, siteConfig, whatsappMessages } from "@/config/site";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { contactTranslations } from "@/i18n/translations/contact";
 import { useLocation } from "react-router-dom";
 
 const ContactPage = () => {
   const location = useLocation();
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const { language } = useLanguage();
   const t = useT();
   const c = contactTranslations;
-  const whatsappHref = createWhatsAppHref(
-    "Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.",
-  );
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.contactPage, language));
 
   useEffect(() => {
     if (location.hash !== "#contact-form-view") return;
@@ -83,7 +82,7 @@ const ContactPage = () => {
                     <div className="min-w-0 flex-1 pt-0.5">
                       <p className="type-body-sm leading-none tracking-[0.01em] text-muted-foreground">{t(c.locationLabel)}</p>
                       <p className="type-body mt-2 leading-snug text-foreground">
-                        {siteConfig.contact.locationFull}
+                        {siteConfig.contact.location}
                       </p>
                       <button
                         type="button"
@@ -109,7 +108,7 @@ const ContactPage = () => {
                             </a>
                           </div>
                           <iframe
-                            title={siteConfig.contact.locationFull}
+                            title={siteConfig.contact.location}
                             src={siteConfig.contact.locationEmbedSrc}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"

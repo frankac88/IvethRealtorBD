@@ -1,26 +1,12 @@
-const ALLOWED_ORIGINS = [
-  "https://ivethcollrealtor.com",
-  "https://www.ivethcollrealtor.com",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
-
-const getCorsHeaders = (req: Request) => {
-  const origin = req.headers.get("Origin") ?? "";
-  return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  };
-};
-
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { getCorsHeaders } from "../_shared/cors.ts";
 
 const BodySchema = z.object({
   name: z.string().min(1).max(100),
   email: z.string().email().max(255),
   phone: z.string().max(20).nullable().optional(),
   country: z.string().max(60).nullable().optional(),
-  interest: z.string().max(50).nullable().optional(),
+  interest: z.string().max(160).nullable().optional(),
   message: z.string().max(1000).nullable().optional(),
 });
 

@@ -310,6 +310,7 @@ const ProjectsPage = () => {
                 src={differentiatorImage}
                 alt={t({ es: "Curaduría Iveth Coll", en: "Iveth Coll Curation" })}
                 className="h-full w-full object-cover"
+                loading="lazy"
               />
             </div>
             <div className="absolute bottom-0 left-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">

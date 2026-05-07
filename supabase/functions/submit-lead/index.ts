@@ -1,24 +1,12 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-
-const ALLOWED_ORIGINS = [
-  "https://ivethcollrealtor.com",
-  "https://www.ivethcollrealtor.com",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
-
-const getCorsHeaders = (req: Request) => {
-  const origin = req.headers.get("Origin") ?? "";
-  return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  };
-};
+import { getCorsHeaders } from "../_shared/cors.ts";
 
 const MIN_FORM_FILL_MS = 750;
 const GUIDE_MIN_FORM_FILL_MS = 150;
 const GUIDE_DOWNLOAD_LINK_TTL_SECONDS = 15 * 60;
+const EMAIL_RATE_LIMIT_WINDOW_MINUTES = 30;
+const MAX_SUBMISSIONS_PER_EMAIL_WINDOW = 3;
 const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
 const PHONE_REGEX = /^\+?[0-9\s().-]{7,20}$/;
 const COUNTRY_REGEX = /^[\p{L}\s'.-]{2,60}$/u;
@@ -81,6 +69,38 @@ async function createGuideDownloadUrl(guideKey: typeof GUIDE_KEYS[number]) {
   return url.toString();
 }
 
+async function enforceLeadRateLimit(
+  supabaseAdmin: Pick<ReturnType<typeof createClient>, "from">,
+  email: string,
+  req: Request,
+) {
+  const windowStartIso = new Date(
+    Date.now() - EMAIL_RATE_LIMIT_WINDOW_MINUTES * 60 * 1000,
+  ).toISOString();
+
+  const { count, error } = await supabaseAdmin
+    .from("leads")
+    .select("id", { count: "exact", head: true })
+    .eq("email", email)
+    .gte("created_at", windowStartIso);
+
+  if (error) {
+    throw error;
+  }
+
+  if ((count ?? 0) >= MAX_SUBMISSIONS_PER_EMAIL_WINDOW) {
+    return new Response(JSON.stringify({
+      success: false,
+      error: "Too many requests. Please wait before trying again.",
+    }), {
+      status: 429,
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
+    });
+  }
+
+  return null;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: getCorsHeaders(req) });
@@ -126,6 +146,11 @@ Deno.serve(async (req) => {
     const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
+
+    const rateLimitResponse = await enforceLeadRateLimit(supabaseAdmin, leadData.email, req);
+    if (rateLimitResponse) {
+      return rateLimitResponse;
+    }
 
     const { data, error } = await supabaseAdmin
       .from("leads")

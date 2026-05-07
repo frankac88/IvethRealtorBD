@@ -262,7 +262,7 @@ const GuidesPage = () => {
             src={guidesHeroMiami}
             alt=""
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             className="h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(26,31,46,0.46)_0%,rgba(26,31,46,0.24)_20%,rgba(242,237,232,0.38)_58%,rgba(242,237,232,0.68)_100%)]" />

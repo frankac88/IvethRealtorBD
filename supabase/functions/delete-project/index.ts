@@ -1,20 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
-
-const ALLOWED_ORIGINS = [
-  "https://ivethcollrealtor.com",
-  "https://www.ivethcollrealtor.com",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
-
-const getCorsHeaders = (req: Request) => {
-  const origin = req.headers.get("Origin") ?? "";
-  return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  };
-};
+import { getCorsHeaders } from "../_shared/cors.ts";
 
 const BodySchema = z.object({
   projectId: z.string().uuid(),

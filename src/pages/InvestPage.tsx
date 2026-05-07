@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createWhatsAppHref } from "@/config/site";
+import { createWhatsAppHref, getWhatsAppMessage, whatsappMessages } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import heroMiami from "@/assets/hero-miami.webp";
@@ -274,17 +274,19 @@ const InvestPage = () => {
   const [budget, setBudget] = useState<BudgetValue | "">("");
   const [investmentErrors, setInvestmentErrors] = useState<InvestmentFormErrors>({});
 
-  const whatsappHref = createWhatsAppHref(
-    "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
-  );
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.investPage, language));
 
   useEffect(() => {
-    document.title = "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando";
+    document.title = language === "es"
+      ? "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando"
+      : "Invest in Florida | Real Estate Investment in Miami and Orlando";
 
-    const description =
-      "Descubre cómo invertir estratégicamente en Florida. Compara oportunidades en Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee y Clermont con asesoría personalizada.";
-    const keywords =
-      "invertir en Florida, invertir en Miami, invertir en Orlando, realtor en Miami, inversión inmobiliaria en Florida, propiedades de inversión en Orlando, rentas cortas Orlando, preconstrucción Miami, asesoría inmobiliaria Florida";
+    const description = language === "es"
+      ? "Descubre cómo invertir estratégicamente en Florida. Compara oportunidades en Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee y Clermont con asesoría personalizada."
+      : "Discover how to invest strategically in Florida. Compare opportunities in Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee, and Clermont with personalized guidance.";
+    const keywords = language === "es"
+      ? "invertir en Florida, invertir en Miami, invertir en Orlando, realtor en Miami, inversión inmobiliaria en Florida, propiedades de inversión en Orlando, rentas cortas Orlando, preconstrucción Miami, asesoría inmobiliaria Florida"
+      : "invest in Florida, invest in Miami, invest in Orlando, Miami realtor, Florida real estate investment, Orlando investment properties, Orlando short-term rentals, Miami pre-construction, Florida real estate advisory";
 
     const setMeta = (name: string, content: string) => {
       let meta = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
@@ -298,7 +300,7 @@ const InvestPage = () => {
 
     setMeta("description", description);
     setMeta("keywords", keywords);
-  }, []);
+  }, [language]);
 
   const labels = useMemo(
     () => ({
@@ -360,8 +362,9 @@ const InvestPage = () => {
     const zoneLabel = getOptionLabel(zoneOptions, zone, "es");
     const objectiveLabel = getOptionLabel(objectiveOptions, objective, "es");
     const budgetLabel = getOptionLabel(budgetOptions, budget, "es");
-    const formWhatsappMessage =
-      `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`;
+    const formWhatsappMessage = language === "es"
+      ? `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`
+      : `Hi Iveth, I completed the Invest in Florida form. Area: ${zoneLabel}. Goal: ${objectiveLabel}. Budget: ${budgetLabel}.`;
 
     setObjective("");
     setBudget("");
@@ -382,7 +385,7 @@ const InvestPage = () => {
           })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 8%" }}
-        />
+         loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/48 to-background/24" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
@@ -424,7 +427,7 @@ const InvestPage = () => {
                   src={heroMiami}
                   alt={t({ es: "Panorama urbano de Miami", en: "Miami skyline" })}
                   className="absolute inset-0 h-full w-full object-cover opacity-82 mix-blend-overlay"
-                />
+                 loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-br from-foreground/20 via-transparent to-primary/30" />
                 <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(135deg,rgba(255,255,255,.45)_0_1px,transparent_1px_18px)]" />
                 <div className="absolute bottom-5 left-5 rounded-full border border-white/35 bg-white/20 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur">

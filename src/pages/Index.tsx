@@ -8,7 +8,7 @@ import { googleReviewsContent } from "@/content/googleReviews";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { homeTranslations } from "@/i18n/translations/home";
-import { createWhatsAppHref } from "@/config/site";
+import { createWhatsAppHref, getWhatsAppMessage, whatsappMessages } from "@/config/site";
 import { useFeaturedProjectsQuery } from "@/features/projects/hooks";
 import { getProjectSlug } from "@/features/projects/luxuryProjectAdapter";
 import heroImg from "@/assets/hero-miami.webp";
@@ -31,9 +31,7 @@ const Index = () => {
   const h = homeTranslations;
   const { data: featuredProjects = [], isLoading: isLoadingFeaturedProjects } = useFeaturedProjectsQuery(3);
   const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
-  const homeWhatsappHref = createWhatsAppHref(
-    "Hola Iveth, vengo desde la página de inicio y quiero hablar sobre oportunidades en Florida.",
-  );
+  const homeWhatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.homePage, language));
 
   const whyItems = [
     { icon: TrendingUp, ...h.whyItems.appreciation },
@@ -54,6 +52,8 @@ const Index = () => {
           playsInline
           preload="metadata"
           poster={heroImg}
+          width={1920}
+          height={1080}
           aria-hidden="true"
           onLoadedMetadata={(event) => {
             event.currentTarget.defaultPlaybackRate = 0.5;

@@ -33,6 +33,8 @@ const ROUTER_FUTURE_FLAGS = {
 } as const;
 
 const renderProjectsPage = (route = "/proyectos") => {
+  window.history.pushState({}, "", route);
+
   render(
     <MemoryRouter initialEntries={[route]} future={ROUTER_FUTURE_FLAGS}>
       <LanguageProvider>
@@ -167,6 +169,16 @@ describe("ProjectsPage flagship redesign", () => {
     expect(screen.getAllByRole("link", { name: /^whatsapp$/i })[0]).toHaveAttribute("href", expectedHref);
   });
 
+  it("localizes the project WhatsApp CTA on English routes", () => {
+    renderProjectsPage("/projects");
+
+    const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
+      "Hi Iveth, I am coming from the projects page and I want help choosing an opportunity.",
+    )}`;
+
+    expect(screen.getAllByRole("link", { name: /^whatsapp$/i })[0]).toHaveAttribute("href", expectedHref);
+  });
+
   it("moves the removed detail More information WhatsApp action to the featured Solicitar info CTA", () => {
     renderProjectsPage();
 
@@ -175,5 +187,15 @@ describe("ProjectsPage flagship redesign", () => {
     )}`;
 
     expect(screen.getAllByRole("link", { name: /solicitar info/i })[0]).toHaveAttribute("href", expectedHref);
+  });
+
+  it("localizes the featured project inquiry CTA on English routes", () => {
+    renderProjectsPage("/projects");
+
+    const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
+      "Hi Iveth, I am coming from the EDGE HOUSE project detail and I would like pricing and availability.",
+    )}`;
+
+    expect(screen.getAllByRole("link", { name: /request info/i })[0]).toHaveAttribute("href", expectedHref);
   });
 });
