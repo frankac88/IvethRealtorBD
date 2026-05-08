@@ -18,13 +18,7 @@ import { contactTranslations } from "@/i18n/translations/contact";
 
 const labels = {
   back: { es: "Volver a proyectos", en: "Back to projects" },
-  heroEyebrow: { es: "Project concierge", en: "Project concierge" },
-  question: {
-    es: "¿Buscas invertir en una zona con alta demanda y una tesis clara?",
-    en: "Are you looking to invest in an area with high demand and a clear thesis?",
-  },
   summary: { es: "Visión y potencial", en: "Vision and potential" },
-  keyData: { es: "Datos clave", en: "Key data" },
   price: { es: "Precio desde", en: "Price from" },
   delivery: { es: "Entrega", en: "Delivery" },
   rental: { es: "Renta", en: "Rental" },
@@ -230,7 +224,6 @@ const ProjectDetailPage = () => {
               delay={120}
               className="h-full border border-gold/30 bg-card/95 p-6 shadow-[0_24px_70px_rgba(26,31,46,0.12)] md:p-8"
             >
-              <p className="type-caption text-primary">{t(labels.heroEyebrow)}</p>
               <h1 className="mt-4 font-serif text-[2.65rem] leading-[0.95] tracking-[-0.05em] text-wine md:text-[4rem]">
                 {project.title}
               </h1>
@@ -238,7 +231,9 @@ const ProjectDetailPage = () => {
                 <MapPin className="h-4 w-4 text-primary" />
                 {t(project.location)}
               </p>
-              <p className="mt-5 text-lg leading-8 text-foreground/78">{t(labels.question)}</p>
+              {project.detailQuestion ? (
+                <p className="mt-5 text-lg leading-8 text-foreground/78">{t(project.detailQuestion)}</p>
+              ) : null}
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {keyData.map((item, index) => {
