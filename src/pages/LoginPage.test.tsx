@@ -63,9 +63,9 @@ describe("LoginPage", () => {
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: "Error",
+        title: "Acceso no autorizado",
         description: "Credenciales inválidas",
-        variant: "destructive",
+        variant: "warning",
       });
     });
   });

@@ -179,14 +179,14 @@ describe("ContactPage", () => {
     fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
 
     await waitFor(() => {
-      expect(document.getElementById("contact-interest-error")).toHaveTextContent(/selecciona tu inter/i);
+      expect(document.getElementById("contact-interest-error")).toHaveTextContent(/selecciona el/i);
     });
 
     expect(mockMutateAsync).not.toHaveBeenCalled();
     expect(mockToast).toHaveBeenCalledWith(
       expect.objectContaining({
-        title: "Error",
-        variant: "destructive",
+        title: "Revisa tu información",
+        variant: "warning",
       }),
     );
   });
@@ -216,9 +216,9 @@ describe("ContactPage", () => {
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: "Error",
+        title: "Revisa tu información",
         description: "Insert failed",
-        variant: "destructive",
+        variant: "warning",
       });
     });
   });

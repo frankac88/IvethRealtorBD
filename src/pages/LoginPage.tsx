@@ -21,7 +21,7 @@ const LoginPage = () => {
       navigate("/admin");
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "No se pudo iniciar sesión.";
-      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      toast({ title: "Acceso no autorizado", description: errorMessage, variant: "warning" });
     }
   };
 

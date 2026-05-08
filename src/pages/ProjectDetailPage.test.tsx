@@ -111,7 +111,7 @@ describe("ProjectDetailPage", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /solicitar disponibilidad/i }));
 
-    expect(await screen.findByText(/el nombre es obligatorio/i)).toBeInTheDocument();
+    expect(await screen.findByText(/por favor, ingresa tu nombre/i)).toBeInTheDocument();
     expect(leadMutation.mutateAsync).not.toHaveBeenCalled();
   });
 

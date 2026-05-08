@@ -57,6 +57,7 @@ export default {
           light: "hsl(var(--gold-light))",
         },
         wine: "hsl(var(--wine))",
+        "field-error": "hsl(var(--field-error))",
         "green-light": "hsl(var(--green-light))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

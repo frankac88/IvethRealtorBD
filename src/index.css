@@ -38,6 +38,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
+    --field-error: 321 24% 40%;
+
     --border: 30 17% 82%;
     --input: 30 17% 82%;
     --ring: 188 53% 35%;

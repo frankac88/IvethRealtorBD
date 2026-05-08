@@ -193,10 +193,10 @@ const GuideLeadDialog = ({
                       id="guide-name"
                       value={values.name}
                       onChange={(event) => handleValueChange("name", event.target.value)}
-                      className={cn(errors.name && "border-destructive focus-visible:ring-destructive")}
+                      className={cn(errors.name && "border-field-error focus-visible:ring-field-error")}
                     />
                     {errors.name ? (
-                      <p className="text-sm text-destructive">{errors.name}</p>
+                      <p className="text-sm text-field-error">{errors.name}</p>
                     ) : null}
                   </div>
 
@@ -207,10 +207,10 @@ const GuideLeadDialog = ({
                       type="email"
                       value={values.email}
                       onChange={(event) => handleValueChange("email", event.target.value)}
-                      className={cn(errors.email && "border-destructive focus-visible:ring-destructive")}
+                      className={cn(errors.email && "border-field-error focus-visible:ring-field-error")}
                     />
                     {errors.email ? (
-                      <p className="text-sm text-destructive">{errors.email}</p>
+                      <p className="text-sm text-field-error">{errors.email}</p>
                     ) : null}
                   </div>
 
@@ -220,10 +220,10 @@ const GuideLeadDialog = ({
                       id="guide-whatsapp"
                       value={values.whatsapp}
                       onChange={(event) => handleValueChange("whatsapp", event.target.value)}
-                      className={cn(errors.whatsapp && "border-destructive focus-visible:ring-destructive")}
+                      className={cn(errors.whatsapp && "border-field-error focus-visible:ring-field-error")}
                     />
                     {errors.whatsapp ? (
-                      <p className="text-sm text-destructive">{errors.whatsapp}</p>
+                      <p className="text-sm text-field-error">{errors.whatsapp}</p>
                     ) : null}
                   </div>
 
