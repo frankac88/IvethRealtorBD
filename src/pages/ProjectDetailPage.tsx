@@ -167,9 +167,9 @@ const ProjectDetailPage = () => {
     if (Object.keys(nextErrors).length > 0) {
       setAvailabilityErrors(nextErrors);
       toast({
-        title: "Error",
+        title: t(c.toastErrorTitle),
         description: Object.values(nextErrors)[0],
-        variant: "destructive",
+        variant: "warning",
       });
 
       setTimeout(() => {
@@ -190,8 +190,8 @@ const ProjectDetailPage = () => {
       form.reset();
       setStartedAt(Date.now());
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "No se pudo enviar el formulario.";
-      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      const errorMessage = error instanceof Error ? error.message : t(c.toastErrorDesc);
+      toast({ title: t(c.toastErrorTitle), description: errorMessage, variant: "warning" });
     }
   };
 
@@ -329,7 +329,7 @@ const ProjectDetailPage = () => {
                   {availabilityErrors[field.name] ? (
                     <p
                       id={`project-availability-${field.name}-error`}
-                      className="mt-2 text-sm leading-6 text-destructive"
+                      className="mt-2 text-sm leading-6 text-field-error"
                     >
                       {availabilityErrors[field.name]}
                     </p>

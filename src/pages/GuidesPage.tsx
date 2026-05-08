@@ -229,7 +229,7 @@ const GuidesPage = () => {
       toast({
         title: t(g.form.errorTitle),
         description,
-        variant: "destructive",
+        variant: "warning",
       });
     }
   };

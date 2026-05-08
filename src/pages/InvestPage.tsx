@@ -630,7 +630,7 @@ const InvestPage = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  {investmentErrors.zone && <p className="mt-2 text-sm text-destructive">{investmentErrors.zone}</p>}
+                  {investmentErrors.zone && <p className="mt-2 text-sm text-field-error">{investmentErrors.zone}</p>}
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -650,7 +650,7 @@ const InvestPage = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                    {investmentErrors.objective && <p className="mt-2 text-sm text-destructive">{investmentErrors.objective}</p>}
+                    {investmentErrors.objective && <p className="mt-2 text-sm text-field-error">{investmentErrors.objective}</p>}
                   </div>
                   <div>
                     <label htmlFor="invest-budget" className="type-body-sm mb-2 block font-medium text-foreground">
@@ -668,7 +668,7 @@ const InvestPage = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                    {investmentErrors.budget && <p className="mt-2 text-sm text-destructive">{investmentErrors.budget}</p>}
+                    {investmentErrors.budget && <p className="mt-2 text-sm text-field-error">{investmentErrors.budget}</p>}
                   </div>
                 </div>
               </>

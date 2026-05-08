@@ -282,7 +282,7 @@ const AdminPage = () => {
       resetProjectForm();
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo guardar el proyecto.";
-      toast({ title: "Error", description: message, variant: "destructive" });
+      toast({ title: "No se pudo guardar", description: message, variant: "warning" });
     }
   };
 
@@ -316,7 +316,7 @@ const AdminPage = () => {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo eliminar el proyecto.";
-      toast({ title: "Error", description: message, variant: "destructive" });
+      toast({ title: "No se pudo eliminar", description: message, variant: "warning" });
     }
   };
 
@@ -341,7 +341,7 @@ const AdminPage = () => {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo eliminar la foto secundaria.";
-      toast({ title: "Error", description: message, variant: "destructive" });
+      toast({ title: "No se pudo eliminar", description: message, variant: "warning" });
     }
   };
 
@@ -643,7 +643,7 @@ const AdminPage = () => {
                   {projects.length} proyecto{projects.length !== 1 ? "s" : ""} en Supabase
                 </p>
                 {projectsError ? (
-                  <p className="mt-2 text-sm text-destructive">
+                  <p className="mt-2 text-sm text-field-error">
                     No se pudieron cargar los proyectos de Supabase. Verifica la configuración antes de usar este panel.
                   </p>
                 ) : null}

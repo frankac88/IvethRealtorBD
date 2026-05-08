@@ -152,9 +152,9 @@ const LeadCaptureForm = ({
     if (Object.keys(nextErrors).length > 0 || extraError) {
       setErrors(nextErrors);
       toast({
-        title: "Error",
+        title: t(c.toastErrorTitle),
         description: Object.values(nextErrors)[0] ?? extraError,
-        variant: "destructive",
+        variant: "warning",
       });
 
       setTimeout(() => {
@@ -177,8 +177,8 @@ const LeadCaptureForm = ({
       setStartedAt(Date.now());
       onSuccess?.(context);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "No se pudo enviar el formulario.";
-      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      const errorMessage = error instanceof Error ? error.message : t(c.toastErrorDesc);
+      toast({ title: t(c.toastErrorTitle), description: errorMessage, variant: "warning" });
     }
   };
 
@@ -216,7 +216,7 @@ const LeadCaptureForm = ({
             aria-describedby={errors.name ? `${idPrefix}-name-error` : undefined}
             onChange={() => clearFieldError("name")}
           />
-          {errors.name && <p id={`${idPrefix}-name-error`} className="type-body-sm mt-2 text-destructive">{errors.name}</p>}
+          {errors.name && <p id={`${idPrefix}-name-error`} className="type-body-sm mt-2 text-field-error">{errors.name}</p>}
         </div>
         <div>
           <label htmlFor={`${idPrefix}-email`} className="type-body-sm mb-2 block font-medium text-foreground">{t(c.email)} *</label>
@@ -231,7 +231,7 @@ const LeadCaptureForm = ({
             aria-describedby={errors.email ? `${idPrefix}-email-error` : undefined}
             onChange={() => clearFieldError("email")}
           />
-          {errors.email && <p id={`${idPrefix}-email-error`} className="type-body-sm mt-2 text-destructive">{errors.email}</p>}
+          {errors.email && <p id={`${idPrefix}-email-error`} className="type-body-sm mt-2 text-field-error">{errors.email}</p>}
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -248,7 +248,7 @@ const LeadCaptureForm = ({
             aria-describedby={errors.phone ? `${idPrefix}-phone-error` : undefined}
             onChange={() => clearFieldError("phone")}
           />
-          {errors.phone && <p id={`${idPrefix}-phone-error`} className="type-body-sm mt-2 text-destructive">{errors.phone}</p>}
+          {errors.phone && <p id={`${idPrefix}-phone-error`} className="type-body-sm mt-2 text-field-error">{errors.phone}</p>}
         </div>
         <div>
           <label htmlFor={`${idPrefix}-country`} className="type-body-sm mb-2 block font-medium text-foreground">{t(c.country)} *</label>
@@ -262,7 +262,7 @@ const LeadCaptureForm = ({
             aria-describedby={errors.country ? `${idPrefix}-country-error` : undefined}
             onChange={() => clearFieldError("country")}
           />
-          {errors.country && <p id={`${idPrefix}-country-error`} className="type-body-sm mt-2 text-destructive">{errors.country}</p>}
+          {errors.country && <p id={`${idPrefix}-country-error`} className="type-body-sm mt-2 text-field-error">{errors.country}</p>}
         </div>
       </div>
       {showInterestField && (
@@ -288,7 +288,7 @@ const LeadCaptureForm = ({
               ))}
             </SelectContent>
           </Select>
-          {errors.interest && <p id={`${idPrefix}-interest-error`} className="type-body-sm mt-2 text-destructive">{errors.interest}</p>}
+          {errors.interest && <p id={`${idPrefix}-interest-error`} className="type-body-sm mt-2 text-field-error">{errors.interest}</p>}
         </div>
       )}
       {extraFields}
