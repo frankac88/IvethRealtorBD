@@ -9,7 +9,7 @@ import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter
 import { Button } from "@/components/ui/button";
 import projectsHeroMiami from "@/assets/hero-projects-florida-wide.webp";
 import differentiatorImage from "@/assets/iveth-differentiator.webp";
-import { createWhatsAppHref } from "@/config/site";
+import { createWhatsAppHref, getWhatsAppMessage, whatsappMessages } from "@/config/site";
 import {
   defaultProjectFilters,
   filterLuxuryProjects,
@@ -178,7 +178,7 @@ const ProjectsPage = () => {
   });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
   const projectsWhatsappHref = createWhatsAppHref(
-    "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
+    getWhatsAppMessage(whatsappMessages.projectsPage, language),
   );
 
   useEffect(() => {

@@ -40,6 +40,7 @@ import {
   useAdminProjectsQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
+  useDeleteProjectGalleryImageMutation,
   useUpdateProjectMutation,
 } from "@/features/projects/hooks";
 import { useToast } from "@/hooks/use-toast";
@@ -136,6 +137,7 @@ const AdminPage = () => {
   const createProjectMutation = useCreateProjectMutation();
   const updateProjectMutation = useUpdateProjectMutation();
   const deleteProjectMutation = useDeleteProjectMutation();
+  const deleteProjectGalleryImageMutation = useDeleteProjectGalleryImageMutation();
 
   const [activeTab, setActiveTab] = useState("projects");
   const [editingProject, setEditingProject] = useState<ProjectItem | null>(null);
@@ -147,6 +149,7 @@ const AdminPage = () => {
 
   const refreshing = isFetchingLeads || isFetchingProjects || logoutMutation.isPending;
   const projectsSubmitting = createProjectMutation.isPending || updateProjectMutation.isPending;
+  const galleryImageDeleting = deleteProjectGalleryImageMutation.isPending;
 
   useEffect(() => {
     if (!imageFile) {
@@ -207,6 +210,18 @@ const AdminPage = () => {
   const clearGalleryTag = (index: number) => {
     setGalleryImageTags((prev) =>
       prev.map((image, imageIndex) => (imageIndex === index ? { ...image, labelEs: "", labelEn: "" } : image)),
+    );
+  };
+
+  const removeGalleryImageFromState = (imagePath: string) => {
+    setGalleryImageTags((prev) => prev.filter((image) => image.path !== imagePath));
+    setEditingProject((prev) =>
+      prev
+        ? {
+            ...prev,
+            galleryImages: prev.galleryImages.filter((image) => image.path !== imagePath),
+          }
+        : prev,
     );
   };
 
@@ -301,6 +316,31 @@ const AdminPage = () => {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "No se pudo eliminar el proyecto.";
+      toast({ title: "Error", description: message, variant: "destructive" });
+    }
+  };
+
+  const handleDeleteGalleryImage = async (image: ProjectGalleryImage, index: number) => {
+    if (!editingProject || !image.path) return;
+
+    const confirmed = window.confirm(
+      `¿Seguro que deseas eliminar la foto secundaria ${index + 1}? Esto borrará el archivo de Supabase Storage.`,
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await deleteProjectGalleryImageMutation.mutateAsync({
+        projectId: editingProject.id,
+        imagePath: image.path,
+      });
+      removeGalleryImageFromState(image.path);
+      toast({
+        title: "Foto eliminada",
+        description: "La foto secundaria fue eliminada del proyecto y de Supabase Storage.",
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "No se pudo eliminar la foto secundaria.";
       toast({ title: "Error", description: message, variant: "destructive" });
     }
   };
@@ -561,8 +601,21 @@ const AdminPage = () => {
                                   variant="ghost"
                                   className="h-7 px-2 text-xs text-destructive hover:text-destructive"
                                   onClick={() => clearGalleryTag(index)}
+                                  disabled={galleryImageDeleting}
                                 >
                                   Eliminar tag
+                                </Button>
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="destructive"
+                                  className="h-7 px-2 text-xs"
+                                  onClick={() => handleDeleteGalleryImage(image, index)}
+                                  disabled={galleryImageDeleting || !image.path}
+                                  aria-label={`Eliminar foto secundaria ${index + 1}`}
+                                >
+                                  <Trash2 className="mr-1 h-3 w-3" />
+                                  Eliminar foto
                                 </Button>
                               </div>
                             </div>

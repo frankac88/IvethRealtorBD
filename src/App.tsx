@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config/site";
 import { LanguageProvider, useLanguage } from "@/i18n/LanguageContext";
 import { getLanguageForPath, getLocalizedPaths, type LocalizedRouteKey } from "@/i18n/routes";
 
@@ -70,44 +71,50 @@ const LanguageRouteSync = () => {
   return null;
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
-        <LanguageProvider>
-          <Toaster />
-          <LanguageRouteSync />
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              {publicRoutes.flatMap((route) =>
-                getLocalizedPaths(route.key).map((path) => (
-                  <Route key={`${route.key}-${path}`} path={path} element={route.element} />
-                )),
-              )}
-              {getLocalizedPaths("projects").map((path) => (
-                <Route
-                  key={`project-detail-${path}`}
-                  path={`${path}/:slug`}
-                  element={<ProjectDetailPage />}
-                />
-              ))}
-              <Route path="/login" element={<LoginPage />} />
-              <Route
-                path="/admin"
-                element={(
-                  <ProtectedRoute>
-                    <AdminPage />
-                  </ProtectedRoute>
+const App = () => {
+  useEffect(() => {
+    document.title = `${siteConfig.brand.name} | ${siteConfig.brand.descriptor} — Miami & Orlando`;
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <BrowserRouter future={ROUTER_FUTURE_FLAGS}>
+          <LanguageProvider>
+            <Toaster />
+            <LanguageRouteSync />
+            <Suspense fallback={<RouteFallback />}>
+              <Routes>
+                {publicRoutes.flatMap((route) =>
+                  getLocalizedPaths(route.key).map((path) => (
+                    <Route key={`${route.key}-${path}`} path={path} element={route.element} />
+                  )),
                 )}
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </LanguageProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+                {getLocalizedPaths("projects").map((path) => (
+                  <Route
+                    key={`project-detail-${path}`}
+                    path={`${path}/:slug`}
+                    element={<ProjectDetailPage />}
+                  />
+                ))}
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path="/admin"
+                  element={(
+                    <ProtectedRoute>
+                      <AdminPage />
+                    </ProtectedRoute>
+                  )}
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </LanguageProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
 

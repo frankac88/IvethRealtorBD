@@ -60,7 +60,7 @@ describe("ProjectsPage flagship redesign", () => {
     renderProjectsPage();
 
     expect(screen.getByRole("heading", {
-      name: /oportunidades que no se eligen por catálogo/i,
+      name: /proyectos seleccionados con visión de inversión/i,
     })).toBeInTheDocument();
     expect(screen.getByLabelText(/ciudad/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/objetivo/i)).toBeInTheDocument();

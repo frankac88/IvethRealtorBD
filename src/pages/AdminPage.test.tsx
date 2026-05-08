@@ -12,6 +12,7 @@ const mockUseLogoutMutation = vi.fn();
 const mockRefetchProjects = vi.fn();
 const mockUseAdminProjectsQuery = vi.fn();
 const mockUpdateProjectMutateAsync = vi.fn();
+const mockDeleteProjectGalleryImageMutateAsync = vi.fn();
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
@@ -54,7 +55,45 @@ vi.mock("@/features/projects/hooks", () => ({
     mutateAsync: vi.fn(),
     isPending: false,
   }),
+  useDeleteProjectGalleryImageMutation: () => ({
+    mutateAsync: mockDeleteProjectGalleryImageMutateAsync,
+    isPending: false,
+  }),
 }));
+
+const mockProjectWithGallery = {
+  id: "project-1",
+  title: "EDGE HOUSE",
+  city: "miami",
+  priceFrom: 540000,
+  badge: { es: "Preconstrucción", en: "Pre-construction" },
+  location: { es: "Edgewater, Miami", en: "Edgewater, Miami" },
+  residences: { es: "Studios – 3 habitaciones", en: "Studios – 3 bedrooms" },
+  baths: { es: "—", en: "—" },
+  type: { es: "Airbnb permitido", en: "Airbnb allowed" },
+  delivery: { es: "Entrega 2030", en: "Delivery 2030" },
+  idealFor: { es: "Inversión urbana premium", en: "Premium urban investment" },
+  parking: null,
+  hook: { es: "Descripción corta", en: "Short description" },
+  filterLocation: { es: "Edgewater, Miami", en: "Edgewater, Miami" },
+  filterType: { es: "Airbnb permitido", en: "Airbnb allowed" },
+  filterStrategy: { es: "Inversión urbana premium", en: "Premium urban investment" },
+  imageUrl: "https://example.com/hero.webp",
+  imagePath: "projects/hero.webp",
+  galleryImages: [
+    {
+      url: "https://example.com/gallery.webp",
+      path: "projects/gallery.webp",
+      labelEs: "Foto 1",
+      labelEn: "Photo 1",
+    },
+  ],
+  sortOrder: 10,
+  isPublished: true,
+  isFeatured: true,
+  createdAt: "2026-04-07T12:00:00.000Z",
+  updatedAt: "2026-04-07T12:00:00.000Z",
+} as const;
 
 describe("AdminPage", () => {
   beforeEach(() => {
@@ -62,6 +101,7 @@ describe("AdminPage", () => {
     mockUseLeadsQuery.mockReset();
     mockUseAdminProjectsQuery.mockReset();
     mockUpdateProjectMutateAsync.mockResolvedValue(undefined);
+    mockDeleteProjectGalleryImageMutateAsync.mockResolvedValue(undefined);
     vi.stubGlobal(
       "ResizeObserver",
       class {
@@ -184,41 +224,7 @@ describe("AdminPage", () => {
       refetch: mockRefetch,
     });
     mockUseAdminProjectsQuery.mockReturnValue({
-      data: [
-        {
-          id: "project-1",
-          title: "EDGE HOUSE",
-          city: "miami",
-          priceFrom: 540000,
-          badge: { es: "Preconstrucción", en: "Pre-construction" },
-          location: { es: "Edgewater, Miami", en: "Edgewater, Miami" },
-          residences: { es: "Studios – 3 habitaciones", en: "Studios – 3 bedrooms" },
-          baths: { es: "—", en: "—" },
-          type: { es: "Airbnb permitido", en: "Airbnb allowed" },
-          delivery: { es: "Entrega 2030", en: "Delivery 2030" },
-          idealFor: { es: "Inversión urbana premium", en: "Premium urban investment" },
-          parking: null,
-          hook: { es: "Descripción corta", en: "Short description" },
-          filterLocation: { es: "Edgewater, Miami", en: "Edgewater, Miami" },
-          filterType: { es: "Airbnb permitido", en: "Airbnb allowed" },
-          filterStrategy: { es: "Inversión urbana premium", en: "Premium urban investment" },
-          imageUrl: "https://example.com/hero.webp",
-          imagePath: "projects/hero.webp",
-          galleryImages: [
-            {
-              url: "https://example.com/gallery.webp",
-              path: "projects/gallery.webp",
-              labelEs: "Foto 1",
-              labelEn: "Photo 1",
-            },
-          ],
-          sortOrder: 10,
-          isPublished: true,
-          isFeatured: true,
-          createdAt: "2026-04-07T12:00:00.000Z",
-          updatedAt: "2026-04-07T12:00:00.000Z",
-        },
-      ],
+      data: [mockProjectWithGallery],
       isLoading: false,
       isFetching: false,
       refetch: mockRefetchProjects,
@@ -249,5 +255,62 @@ describe("AdminPage", () => {
         }),
       );
     });
+  });
+
+  it("deletes a secondary photo after confirmation", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    mockUseLeadsQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      isFetching: false,
+      refetch: mockRefetch,
+    });
+    mockUseAdminProjectsQuery.mockReturnValue({
+      data: [mockProjectWithGallery],
+      isLoading: false,
+      isFetching: false,
+      refetch: mockRefetchProjects,
+      error: null,
+    });
+
+    render(<AdminPage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /editar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /eliminar foto secundaria 1/i }));
+
+    await waitFor(() => {
+      expect(mockDeleteProjectGalleryImageMutateAsync).toHaveBeenCalledWith({
+        projectId: "project-1",
+        imagePath: "projects/gallery.webp",
+      });
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole("button", { name: /eliminar foto secundaria 1/i })).not.toBeInTheDocument();
+    });
+  });
+
+  it("does not delete a secondary photo when confirmation is cancelled", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(false);
+    mockUseLeadsQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      isFetching: false,
+      refetch: mockRefetch,
+    });
+    mockUseAdminProjectsQuery.mockReturnValue({
+      data: [mockProjectWithGallery],
+      isLoading: false,
+      isFetching: false,
+      refetch: mockRefetchProjects,
+      error: null,
+    });
+
+    render(<AdminPage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /editar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /eliminar foto secundaria 1/i }));
+
+    expect(mockDeleteProjectGalleryImageMutateAsync).not.toHaveBeenCalled();
   });
 });
