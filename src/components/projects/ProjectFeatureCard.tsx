@@ -10,7 +10,10 @@ import { getLocalizedPath } from "@/i18n/routes";
 
 const labels = {
   requestInfo: { es: "Solicitar info", en: "Request info" },
-  details: { es: "Datos clave", en: "Key details" },
+  price: { es: "Precio desde", en: "Price from" },
+  rental: { es: "Renta", en: "Rental" },
+  delivery: { es: "Entrega", en: "Delivery" },
+  units: { es: "Residencias", en: "Residences" },
 } as const;
 
 const getProjectInquiryMessage = (projectTitle: string, language: "es" | "en") =>
@@ -49,9 +52,6 @@ export function ProjectFeatureCard({
           className="min-h-[9rem] rounded-[1.15rem]"
         />
         <div className="flex min-w-0 flex-col justify-center py-1 text-left">
-          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-primary">
-            {t(project.eyebrow)}
-          </p>
           <h3 className="mt-2 font-serif text-2xl leading-none tracking-[-0.03em] text-wine">
             {project.title}
           </h3>
@@ -98,10 +98,6 @@ export function ProjectFeatureCard({
       />
 
       <div className="flex flex-col justify-center p-6 md:p-8">
-        <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-primary">
-          {t(project.eyebrow)}
-        </p>
-
         <h3 className="mt-3 font-serif text-[2.35rem] leading-[0.94] tracking-[-0.045em] text-wine md:text-[3rem]">
           {project.title}
         </h3>
@@ -112,12 +108,17 @@ export function ProjectFeatureCard({
         </p>
 
         <div className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-          {[project.priceLabel, project.rentalLabel, project.deliveryLabel, project.unitsLabel].map((item) => (
-            <div key={t(item)} className="rounded-2xl border border-gold/20 bg-background/70 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
+          {[
+            { label: labels.price, value: project.priceLabel },
+            { label: labels.rental, value: project.rentalLabel },
+            { label: labels.delivery, value: project.deliveryLabel },
+            { label: labels.units, value: project.unitsLabel },
+          ].map((item) => (
+            <div key={t(item.label)} className="rounded-2xl border border-gold/20 bg-background/70 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-foreground/50">
-                {t(labels.details)}
+                {t(item.label)}
               </p>
-              <p className="mt-1 text-sm font-medium text-foreground">{t(item)}</p>
+              <p className="mt-1 text-sm font-medium text-foreground">{t(item.value)}</p>
             </div>
           ))}
         </div>

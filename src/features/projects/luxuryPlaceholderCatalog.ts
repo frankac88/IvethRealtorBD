@@ -17,6 +17,7 @@ export type LuxuryProject = {
   unitsLabel: LocalizedText;
   shortDescription: LocalizedText;
   strategicSummary: LocalizedText;
+  detailQuestion?: LocalizedText;
   cardCta: LocalizedText;
   imageHint: LocalizedText;
   imageUrl?: string;
@@ -123,8 +124,6 @@ const mandarinOrientalImages = {
 
 const houseOfWellnessImages = {
   hero: `${projectImagesBaseUrl}/house-of-wellness/building-hero-closeup.webp`,
-  cityHeroSunset: `${projectImagesBaseUrl}/house-of-wellness/exterior-city-hero-sunset.webp`,
-  cityHeroSunsetAlt: `${projectImagesBaseUrl}/house-of-wellness/exterior-city-hero-sunset-alt.webp`,
   facadeGroundView: `${projectImagesBaseUrl}/house-of-wellness/exterior-facade-groundview.webp`,
   heroDaytime: `${projectImagesBaseUrl}/house-of-wellness/exterior-hero-daytime.webp`,
   poolCityView: `${projectImagesBaseUrl}/house-of-wellness/exterior-pool-city-view.webp`,
@@ -163,12 +162,12 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     rentalLabel: { es: "Airbnb permitido", en: "Airbnb allowed" },
     unitsLabel: { es: "Studios – 3 habitaciones", en: "Studios – 3 bedrooms" },
     shortDescription: {
-      es: "Invierte en Airbnb en el corazón de Edgewater, una de las zonas con mayor crecimiento y demanda.",
-      en: "Invest in Airbnb in the heart of Edgewater, one of Miami's highest-growth, high-demand areas.",
+      es: "Invierte en el corazón de Edgewater, una de las zonas con mayor crecimiento y demanda.",
+      en: "Invest in the heart of Edgewater, one of Miami's highest-growth, high-demand areas.",
     },
     strategicSummary: {
-      es: "Edge House está ubicado en Edgewater, con una posición estratégica entre Downtown Miami y Design District, cerca de la bahía de Biscayne y con potencial de renta y apreciación a largo plazo.",
-      en: "Edge House is located in Edgewater, strategically positioned between Downtown Miami and the Design District, near Biscayne Bay, with rental potential and long-term appreciation.",
+      es: "Ubicado en el vibrante vecindario de Edgewater de Miami, Edge House goza de una ubicación céntrica cerca de la costa de la bahía de Biscayne. Situado entre Downtown Miami y el Design District, ofrece la máxima cercanía a puntos de entretenimiento, restaurantes de alta cocina, compras, parques y experiencias culturales.",
+      en: "Located in Miami's vibrant Edgewater neighborhood, Edge House enjoys a central location near the Biscayne Bay waterfront. Situated between Downtown Miami and the Design District, it offers maximum proximity to entertainment, fine dining, shopping, parks, and cultural experiences.",
     },
     cardCta: { es: "Descubre Edge House", en: "Discover Edge House" },
     imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
@@ -194,7 +193,7 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     priceLabel: { es: "Desde $500K+", en: "From $500K+" },
     deliveryLabel: { es: "Entrega 2029", en: "Delivery 2029" },
     rentalLabel: { es: "Mínimo 90 días", en: "90-day minimum" },
-    unitsLabel: { es: "2 habitaciones + den", en: "2 bedrooms + den" },
+    unitsLabel: { es: "2 habitaciones, 2 baños + den y medio baño", en: "2 bedrooms, 2 baths + den & half bath" },
     shortDescription: {
       es: "Donde el crecimiento de North Miami se convierte en oportunidad para construir patrimonio.",
       en: "Where North Miami's growth becomes an opportunity to build long-term wealth.",
@@ -236,8 +235,12 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
       en: "Iconic residences on Brickell Key with panoramic views, cosmopolitan resort living, and Mandarin Oriental service.",
     },
     strategicSummary: {
-      es: "The Residences at Mandarin Oriental, Miami se elevan sobre la costa de Brickell Key con 66 pisos y 228 residencias. Desarrolladas por Swire Properties, combinan glamour, vistas panorámicas y servicio cinco estrellas para compradores de alto patrimonio que buscan preservar capital en una propiedad icónica frente al agua.",
-      en: "The Residences at Mandarin Oriental, Miami rise above the Brickell Key waterfront with 66 floors and 228 residences. Developed by Swire Properties, they combine glamour, panoramic views, and five-star service for high-net-worth buyers seeking to preserve capital in an iconic waterfront property.",
+      es: "Elevándose sobre la costa de Miami desde Brickell Key, The Residences at Mandarin Oriental ofrece una elevada expresión de la vida en la isla. Con 66 pisos y 228 residencias exclusivas, estas ilustres viviendas aportan toques distintivos de glamour, impresionantes vistas panorámicas y un estilo de vida de resort cosmopolita, junto con el legendario servicio de Mandarin Oriental.",
+      en: "Rising above Miami's coastline from Brickell Key, The Residences at Mandarin Oriental offers an elevated expression of island living. With 66 floors and 228 exclusive residences, these distinguished homes bring distinctive touches of glamour, stunning panoramic views, and a cosmopolitan resort lifestyle, alongside the legendary service of Mandarin Oriental.",
+    },
+    detailQuestion: {
+      es: "Compradores de alto patrimonio que buscan preservar capital en una propiedad icónica, con servicio cinco estrellas y ubicación irrepetible en Miami.",
+      en: "High-net-worth buyers seeking to preserve capital in an iconic property with five-star service and an unrepeatable Miami location.",
     },
     cardCta: { es: "Descubre Mandarin Oriental", en: "Discover Mandarin Oriental" },
     imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
@@ -272,8 +275,12 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
       en: "A lifestyle designed for wellness, inside and outside the home, in a privileged Miami location.",
     },
     strategicSummary: {
-      es: "House of Wellness Residences es una torre contemporánea de 34 plantas con 656 viviendas, centrada en una vida elevada y el bienestar integral. El edificio ofrece piscina en la azotea, espacios de coworking, sistemas de aire y agua purificados y áreas comunes enfocadas en bienestar, con vistas panorámicas de Brickell y la bahía de Biscayne.",
-      en: "House of Wellness Residences is a contemporary 34-story tower with 656 residences focused on elevated living and holistic wellness. The building offers a rooftop pool, coworking spaces, purified air and water systems, and wellness-focused common areas, with panoramic views of Brickell and Biscayne Bay.",
+      es: "House of Wellness Residences es una torre contemporánea de 34 plantas y 656 viviendas centrada en una vida elevada y el bienestar integral. Las residencias disfrutan de vistas panorámicas de Brickell y la bahía de Biscayne, en una ubicación privilegiada del centro de Miami, cerca de los principales destinos de la ciudad.",
+      en: "House of Wellness Residences is a contemporary 34-story tower with 656 residences focused on elevated living and holistic wellness. The residences enjoy panoramic views of Brickell and Biscayne Bay, in a privileged downtown Miami location near the city's top destinations.",
+    },
+    detailQuestion: {
+      es: "Una experiencia residencial enfocada en bienestar y valorización",
+      en: "A residential experience focused on wellness and appreciation",
     },
     cardCta: { es: "Descubre House of Wellness", en: "Discover House of Wellness" },
     imageHint: { es: "Fachada / skyline", en: "Facade / skyline" },
@@ -284,8 +291,6 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     budgetRange: "under-500k",
     gallery: [
       { label: { es: "Fachada", en: "Facade" }, tone: "sand", imageUrl: houseOfWellnessImages.hero },
-      { label: { es: "Skyline atardecer", en: "Sunset skyline" }, tone: "wine", imageUrl: houseOfWellnessImages.cityHeroSunset },
-      { label: { es: "Vista ciudad", en: "City view" }, tone: "teal", imageUrl: houseOfWellnessImages.cityHeroSunsetAlt },
       { label: { es: "Acceso", en: "Ground view" }, tone: "sage", imageUrl: houseOfWellnessImages.facadeGroundView },
       { label: { es: "Fachada diurna", en: "Daytime facade" }, tone: "sand", imageUrl: houseOfWellnessImages.heroDaytime },
       { label: { es: "Piscina", en: "Pool" }, tone: "teal", imageUrl: houseOfWellnessImages.poolCityView },
@@ -314,6 +319,10 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
       es: "The William Residences es una torre refinada de 26 pisos y 374 residencias en North Miami Beach, cerca de playas, tiendas, restaurantes, aeropuertos, centros de negocios y espacios culturales. Su ubicación conectada y renta mínima de 90 días lo posicionan como una alternativa para diversificar capital en una zona con proyección real.",
       en: "The William Residences is a refined 26-story tower with 374 residences in North Miami Beach, close to beaches, shopping, restaurants, airports, business centers, and cultural venues. Its connected location and 90-day minimum rental policy position it as an alternative for diversifying capital in an area with real growth potential.",
     },
+    detailQuestion: {
+      es: "Ubicación estratégica con alta demanda de renta.",
+      en: "Strategic location with high rental demand.",
+    },
     cardCta: { es: "Ver The William", en: "View The William" },
     imageHint: { es: "Fachada / lifestyle", en: "Facade / lifestyle" },
     imageUrl: theWilliamImages.hero,
@@ -341,12 +350,16 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     rentalLabel: { es: "Airbnb permitido", en: "Airbnb allowed" },
     unitsLabel: { es: "1–3 habitaciones amuebladas", en: "1–3 furnished bedrooms" },
     shortDescription: {
-      es: "Residencias turn-key amuebladas por RH, a pasos de Merrick Park, con renta corta permitida desde el día 1.",
-      en: "Turn-key residences furnished by RH, steps from Merrick Park, with short-term rentals allowed from day one.",
+      es: "Vive en la joya más exclusiva del Coral Gables. Residencias turn-key amuebladas por RH, a pasos del Merrick Park. Donde el lujo mediterráneo se encuentra con la vida urbana perfecta.",
+      en: "Live in Coral Gables' most exclusive gem. Turn-key residences furnished by RH, steps from Merrick Park. Where Mediterranean luxury meets perfect urban living.",
     },
     strategicSummary: {
-      es: "Cassia Residences at Coral Gables es una torre de 12 pisos y 174 residencias turn-key totalmente amuebladas en el exclusivo Merrick Park District. Combina interiores curados por RH Contract, cocinas italianas, electrodomésticos Bosch, smart-home integrado y más de 1 acre de amenidades resort, incluyendo rooftop pool climatizada, spa wellness, sauna, yoga studio, fitness center, business center, sala de cine y lobby de doble altura.",
-      en: "Cassia Residences at Coral Gables is a 12-story tower with 174 fully furnished turn-key residences in the exclusive Merrick Park District. It combines interiors curated by RH Contract, Italian kitchens, Bosch appliances, integrated smart-home features, and over 1 acre of resort-style amenities, including a heated rooftop pool, wellness spa, sauna, yoga studio, fitness center, business center, cinema room, and double-height lobby.",
+      es: "Inversionistas que buscan una propiedad tipo turnkey en una de las zonas más estables y exclusivas de Miami, con un enfoque en renta más estructurada y un perfil de inquilino de alto nivel, priorizando seguridad patrimonial y valorización a largo plazo.",
+      en: "Investors seeking a turnkey property in one of Miami's most stable and exclusive areas, with a focus on structured rental income and a high-level tenant profile, prioritizing asset security and long-term appreciation.",
+    },
+    detailQuestion: {
+      es: "Una propuesta residencial en una de las zonas más sólidas de Miami.",
+      en: "A residential proposition in one of Miami's most solid areas.",
     },
     cardCta: { es: "Explora Cassia", en: "Explore Cassia" },
     imageHint: { es: "Fachada / Coral Gables", en: "Facade / Coral Gables" },

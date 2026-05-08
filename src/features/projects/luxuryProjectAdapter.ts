@@ -85,6 +85,7 @@ export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject 
     unitsLabel: project.residences,
     shortDescription: project.hook,
     strategicSummary: project.idealFor,
+    detailQuestion: project.badge,
     cardCta: { es: `Ver ${project.title}`, en: `View ${project.title}` },
     imageHint: { es: "Visual del Proyecto", en: "Project Visual" },
     imageUrl: project.imageUrl,

@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
-import heroProjectsImage from "@/assets/hero-projects.webp";
+import investHeroFlorida from "@/assets/invest-hero-florida.webp";
 import differentiatorImage from "@/assets/iveth-differentiator.webp";
 import { createWhatsAppHref } from "@/config/site";
 import {
@@ -29,12 +29,12 @@ import { getLocalizedPath } from "@/i18n/routes";
 const copy = {
   heroEyebrow: { es: "Selección privada · Florida", en: "Private selection · Florida" },
   heroTitle: {
-    es: "Oportunidades que no se eligen por catálogo.",
-    en: "Opportunities you do not choose from a catalog.",
+    es: "Proyectos seleccionados con visión de inversión.",
+    en: "Projects selected with an investment vision.",
   },
   heroSubtitle: {
-    es: "Una curaduría de proyectos en Miami y Orlando filtrada por ubicación, renta, valorización y perfil del comprador.",
-    en: "A curated selection of Miami and Orlando projects filtered by location, rental demand, appreciation, and buyer profile.",
+    es: "Ubicación, demanda de renta y potencial de valorización en Miami y Orlando.",
+    en: "Location, rental demand, and appreciation potential in Miami and Orlando.",
   },
   explore: { es: "Explorar selección", en: "Explore selection" },
   whatsapp: { es: "WhatsApp", en: "WhatsApp" },
@@ -182,9 +182,17 @@ const ProjectsPage = () => {
   return (
     <Layout>
       <section className="relative isolate overflow-hidden bg-background">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_18%,rgba(138,85,121,0.16),transparent_30%),radial-gradient(circle_at_80%_12%,rgba(42,123,137,0.14),transparent_30%)]" />
-        <div className="container mx-auto grid min-h-[calc(100vh-7rem)] gap-10 px-4 py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-8 lg:py-24">
-          <AnimatedSection as="div" className="relative z-10">
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={investHeroFlorida}
+            alt={t({ es: "Vista panorámica de Miami", en: "Panoramic view of Miami" })}
+            className="h-full w-full object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/70 to-background/40" />
+        </div>
+        <div className="container mx-auto flex min-h-[calc(100vh-7rem)] items-center px-4 py-20 lg:px-8 lg:py-24">
+          <AnimatedSection as="div" className="relative z-10 max-w-3xl">
             <p className="type-caption text-primary">{t(copy.heroEyebrow)}</p>
             <h1 className="mt-5 max-w-4xl font-serif text-[3.05rem] font-medium leading-[0.92] tracking-[-0.055em] text-wine md:text-[5rem] xl:text-[6rem]">
               {t(copy.heroTitle)}
@@ -203,51 +211,6 @@ const ProjectsPage = () => {
                   {t(copy.whatsapp)}
                 </a>
               </Button>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection as="div" delay={120} className="relative min-h-[26rem]">
-            <div className="absolute right-0 top-0 h-[22rem] w-[82%] overflow-hidden rounded-[2.5rem] border border-gold/40 bg-muted shadow-[0_28px_80px_rgba(26,31,46,0.18)] md:h-[28rem]">
-              <img
-                src={heroProjectsImage}
-                alt={t({ es: "Selección privada de proyectos en Florida", en: "Private selection of Florida projects" })}
-                className="h-full w-full object-cover"
-                loading="eager"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 max-w-[22rem] overflow-hidden rounded-[1.75rem] border border-gold/50 bg-card/90 shadow-[0_30px_90px_rgba(26,31,46,0.24)] backdrop-blur-xl">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/80 to-transparent" />
-              <div className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
-              <div className="pointer-events-none absolute -bottom-16 left-8 h-28 w-28 rounded-full bg-primary/10 blur-2xl" />
-              <div className="relative bg-gradient-to-br from-card via-card/96 to-sand/85 p-6">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="type-caption text-primary">{t(copy.privateAdvisory)}</p>
-                  <span className="rounded-full border border-gold/45 bg-gold/15 px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-wine">
-                    2026
-                  </span>
-                </div>
-                <p className="mt-4 font-serif text-[1.85rem] leading-[0.95] tracking-[-0.045em] text-wine">
-                  {t(copy.maxProjects)}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-foreground/70">{t(copy.maxProjectsDescription)}</p>
-                <div className="mt-5 grid grid-cols-3 gap-2 text-center">
-                  {[
-                    { value: "MIAMI", label: "6" },
-                    { value: "ORLANDO", label: "4" },
-                    { value: "2029–2030", label: "$380K+" },
-                  ].map((item) => (
-                    <div
-                      key={item.value}
-                      className="rounded-2xl border border-gold/25 bg-background/55 px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
-                    >
-                      <p className="font-serif text-xl leading-none text-wine">{item.label}</p>
-                      <p className="mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-primary">
-                        {item.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </AnimatedSection>
         </div>
@@ -308,7 +271,7 @@ const ProjectsPage = () => {
             <div className="absolute inset-0 left-8 overflow-hidden rounded-[2rem] border border-gold/30 shadow-2xl">
               <img
                 src={differentiatorImage}
-                alt={t({ es: "Curaduría Iveth Coll", en: "Iveth Coll Curation" })}
+                alt={t({ es: "Selección Iveth Coll", en: "Iveth Coll Selection" })}
                 className="h-full w-full object-cover"
                 loading="lazy"
               />
@@ -316,7 +279,7 @@ const ProjectsPage = () => {
             <div className="absolute bottom-0 left-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">
               <p className="text-[0.62rem] font-semibold uppercase tracking-[0.22em]">Iveth Coll</p>
               <p className="mt-2 font-serif text-2xl leading-none tracking-[-0.035em]">
-                {t({ es: "Curaduría primero.", en: "Curation first." })}
+                {t({ es: "Selección primero.", en: "Selection first." })}
               </p>
             </div>
           </AnimatedSection>

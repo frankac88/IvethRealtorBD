@@ -7,13 +7,10 @@ import { useT } from "@/i18n/LanguageContext";
 import { cn } from "@/lib/utils";
 
 const cityContent: Record<ProjectCity, {
-  eyebrow: { es: string; en: string };
   title: { es: string; en: string };
   subtitle: { es: string; en: string };
-  note: { es: string; en: string };
 }> = {
   miami: {
-    eyebrow: { es: "Miami · selección urbana", en: "Miami · urban selection" },
     title: {
       es: "Ubicación, demanda internacional y valorización.",
       en: "Location, international demand, and appreciation.",
@@ -22,13 +19,8 @@ const cityContent: Record<ProjectCity, {
       es: "Proyectos presentados como oportunidades estratégicas, no como inventario.",
       en: "Projects presented as strategic opportunities, not inventory.",
     },
-    note: {
-      es: "Máximo 6 proyectos para mantener claridad y curaduría.",
-      en: "Maximum 6 projects to preserve clarity and curation.",
-    },
   },
   orlando: {
-    eyebrow: { es: "Orlando · experiencia resort", en: "Orlando · resort experience" },
     title: {
       es: "Renta vacacional, turismo y flujo con narrativa visual.",
       en: "Vacation rental, tourism, and cash-flow with visual storytelling.",
@@ -36,10 +28,6 @@ const cityContent: Record<ProjectCity, {
     subtitle: {
       es: "Aquí la imagen vende experiencia: comunidad, amenidades, piscina y casa modelo.",
       en: "Here the image sells the experience: community, amenities, pool, and model home.",
-    },
-    note: {
-      es: "4 oportunidades enfocadas en perfiles de inversión claros.",
-      en: "4 opportunities focused on clear investment profiles.",
     },
   },
 };
@@ -85,8 +73,7 @@ export function ProjectCitySection({
           className="mb-9 grid gap-6 md:grid-cols-[14rem_minmax(0,1fr)] md:items-end"
         >
           <div className="border-l-2 border-gold pl-5">
-            <p className="type-caption text-primary">{t(content.eyebrow)}</p>
-            <p className="mt-3 font-serif text-5xl leading-none tracking-[-0.05em] text-wine">
+            <p className="font-serif text-5xl leading-none tracking-[-0.05em] text-wine">
               {city === "miami" ? "01" : "02"}
             </p>
           </div>
@@ -95,9 +82,6 @@ export function ProjectCitySection({
               {city === "miami" ? "Miami" : "Orlando"} · {t(content.title)}
             </h2>
             <p className="type-body mt-4 max-w-2xl">{t(content.subtitle)}</p>
-            <p className="mt-4 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-foreground/45">
-              {t(content.note)}
-            </p>
           </div>
         </AnimatedSection>
 
