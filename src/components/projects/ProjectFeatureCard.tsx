@@ -110,8 +110,8 @@ export function ProjectFeatureCard({
         <div className="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
           {[
             { label: labels.price, value: project.priceLabel },
-            { label: labels.rental, value: project.rentalLabel },
             { label: labels.delivery, value: project.deliveryLabel },
+            { label: labels.rental, value: project.rentalLabel },
             { label: labels.units, value: project.unitsLabel },
           ].map((item) => (
             <div key={t(item.label)} className="rounded-2xl border border-gold/20 bg-background/70 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
