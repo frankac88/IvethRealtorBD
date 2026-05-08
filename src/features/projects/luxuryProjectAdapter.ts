@@ -13,6 +13,7 @@ const slugify = (value: string) =>
 const knownProjectSlugs: Record<string, string> = {
   "EDGE HOUSE": "edge-house",
   "BLOOM NORTH MIAMI": "bloom-north-miami",
+  "MIDTOWN PARK": "midtown-park",
   "MANDARIN ORIENTAL RESIDENCES": "mandarin-oriental-residences",
   "HOUSE OF WELLNESS": "house-of-wellness",
   "THE WILLIAM RESIDENCES": "the-william",

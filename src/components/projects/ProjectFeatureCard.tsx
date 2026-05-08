@@ -13,7 +13,7 @@ const labels = {
   price: { es: "Precio desde", en: "Price from" },
   rental: { es: "Renta", en: "Rental" },
   delivery: { es: "Entrega", en: "Delivery" },
-  units: { es: "Residencias", en: "Residences" },
+  units: { es: "Unidades", en: "Units" },
 } as const;
 
 const getProjectInquiryMessage = (projectTitle: string, language: "es" | "en") =>
