@@ -40,6 +40,9 @@ export function ProjectImagePlaceholder({
         <img
           src={imageUrl}
           alt={label}
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+          }}
           className={cn(
             "absolute inset-0 h-full w-full object-cover object-center",
             interactive && "transition duration-700 ease-luxury group-hover:scale-[1.045] group-hover:saturate-[1.08]",

@@ -47,8 +47,8 @@ const copy = {
     en: "Rental · 2029–2030 delivery · From $380K",
   },
   maxProjectsDescription: {
-    es: "Entrada curada a Florida: ubicaciones con demanda, renta flexible y potencial de valorización desde $380K.",
-    en: "Curated entry into Florida: demand-driven locations, flexible rental options, and appreciation potential from $380K.",
+    es: "Entrada seleccionada a Florida: ubicaciones con demanda, renta flexible y potencial de valorización desde $380K.",
+    en: "Selected entry into Florida: demand-driven locations, flexible rental options, and appreciation potential from $380K.",
   },
   noResultsTitle: {
     es: "No encontramos una coincidencia exacta.",
