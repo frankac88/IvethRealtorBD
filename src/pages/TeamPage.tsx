@@ -146,7 +146,11 @@ const TeamPage = () => {
                       <img
                         src={member.image}
                         alt={member.imageAlt}
-                        className="aspect-square h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        className={cn(
+                          "aspect-square h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]",
+                          member.name === "Ricardo Suarez" &&
+                            "object-[center_10%]",
+                        )}
                         loading="lazy"
                       />
                     </div>
@@ -209,7 +213,14 @@ const TeamPage = () => {
                       loading="lazy"
                     />
                   </div>
-                  <h3 className={cn("mt-6 min-h-[2.75rem] font-serif text-[2rem] leading-tight tracking-[-0.02em] text-primary", company.titleClassName)}>{company.name}</h3>
+                  <h3
+                    className={cn(
+                      "mt-6 min-h-[2.75rem] font-serif text-[2rem] leading-tight tracking-[-0.02em] text-primary",
+                      company.titleClassName,
+                    )}
+                  >
+                    {company.name}
+                  </h3>
                   <p
                     className="type-body-sm mt-1 text-muted-foreground"
                     style={{
@@ -228,14 +239,22 @@ const TeamPage = () => {
                   <div className="mt-auto pt-3">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline" size="sm" className="px-3 py-1.5 text-xs">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="px-3 py-1.5 text-xs"
+                        >
                           {t(tm.viewMore)}
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[640px]">
                         <DialogHeader>
-                          <DialogTitle className="font-serif text-[2rem] tracking-[-0.02em] text-primary">{company.name}</DialogTitle>
-                          <DialogDescription>{t(company.badge)}</DialogDescription>
+                          <DialogTitle className="font-serif text-[2rem] tracking-[-0.02em] text-primary">
+                            {company.name}
+                          </DialogTitle>
+                          <DialogDescription>
+                            {t(company.badge)}
+                          </DialogDescription>
                         </DialogHeader>
                         <div className="flex items-center justify-center py-2">
                           <img
@@ -245,7 +264,9 @@ const TeamPage = () => {
                             loading="lazy"
                           />
                         </div>
-                        <p className="type-body-sm text-muted-foreground [text-align:justify] [hyphens:auto] [overflow-wrap:break-word]">{t(company.description)}</p>
+                        <p className="type-body-sm text-muted-foreground [text-align:justify] [hyphens:auto] [overflow-wrap:break-word]">
+                          {t(company.description)}
+                        </p>
                       </DialogContent>
                     </Dialog>
                   </div>
@@ -260,11 +281,3 @@ const TeamPage = () => {
 };
 
 export default TeamPage;
-
-
-
-
-
-
-
-
