@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
-import investHeroFlorida from "@/assets/invest-hero-florida.webp";
+import projectsHeroMiami from "@/assets/hero-projects-miami.webp";
 import differentiatorImage from "@/assets/iveth-differentiator.webp";
 import { createWhatsAppHref } from "@/config/site";
 import {
@@ -184,12 +184,12 @@ const ProjectsPage = () => {
       <section className="relative isolate overflow-hidden bg-background">
         <div className="absolute inset-0 -z-10">
           <img
-            src={investHeroFlorida}
+            src={projectsHeroMiami}
             alt={t({ es: "Vista panorámica de Miami", en: "Panoramic view of Miami" })}
             className="h-full w-full object-cover"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/70 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/45" />
         </div>
         <div className="container mx-auto flex min-h-[calc(100vh-7rem)] items-center px-4 py-20 lg:px-8 lg:py-24">
           <AnimatedSection as="div" className="relative z-10 max-w-3xl">

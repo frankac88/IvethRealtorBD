@@ -16,8 +16,8 @@ const cityContent: Record<ProjectCity, {
       en: "Location, international demand, and appreciation.",
     },
     subtitle: {
-      es: "Proyectos presentados como oportunidades estratégicas, no como inventario.",
-      en: "Projects presented as strategic opportunities, not inventory.",
+      es: "Una selección pensada para quienes buscan invertir con visión, estilo y proyección internacional.",
+      en: "A curated selection for those investing with vision, style, and international upside.",
     },
   },
   orlando: {
@@ -26,8 +26,8 @@ const cityContent: Record<ProjectCity, {
       en: "Vacation rental, tourism, and cash-flow with visual storytelling.",
     },
     subtitle: {
-      es: "Aquí la imagen vende experiencia: comunidad, amenidades, piscina y casa modelo.",
-      en: "Here the image sells the experience: community, amenities, pool, and model home.",
+      es: "Espacios diseñados para disfrutar, rentabilizar y vivir la experiencia de Florida desde el primer día.",
+      en: "Spaces designed to enjoy, monetize, and experience Florida living from day one.",
     },
   },
 };
