@@ -201,9 +201,6 @@ const Index = () => {
                         height={600}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-foreground/48 via-foreground/6 to-transparent" />
-                      <span className="absolute left-4 top-4 border border-white/20 bg-primary/90 px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-[0_12px_26px_rgba(26,31,46,0.18)] backdrop-blur">
-                        {t(project.badge)}
-                      </span>
                       <span className="absolute bottom-4 left-4 h-px w-14 bg-gold/80" aria-hidden="true" />
                     </div>
                     <div className="flex flex-1 flex-col px-3 pb-4 pt-5">

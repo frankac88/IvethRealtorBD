@@ -61,6 +61,9 @@ function mapProjectRow(row: ProjectRow): ProjectItem {
     type: { es: row.type_es, en: row.type_en },
     delivery: { es: row.delivery_es, en: row.delivery_en },
     idealFor: { es: row.ideal_for_es, en: row.ideal_for_en },
+    detailQuestion: row.detail_question_es || row.detail_question_en
+      ? { es: row.detail_question_es ?? "", en: row.detail_question_en ?? "" }
+      : null,
     parking: row.parking_es || row.parking_en ? { es: row.parking_es ?? "", en: row.parking_en ?? "" } : null,
     hook: { es: row.hook_es, en: row.hook_en },
     filterLocation: { es: row.filter_location_es, en: row.filter_location_en },

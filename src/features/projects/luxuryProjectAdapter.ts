@@ -29,55 +29,6 @@ const knownProjectSlugs: Record<string, string> = {
   "EVERBE": "everbe",
 };
 
-const projectOverrides: Record<string, Partial<LuxuryProject>> = {
-  "CHAMPIONS GATE": {
-    location: { es: "Davenport, Florida", en: "Davenport, Florida" },
-    detailQuestion: {
-      es: "Donde Disney es tu vecino y tu dinero trabaja solo.",
-      en: "Where Disney is your neighbor and your money works on its own.",
-    },
-  },
-  "REUNION VILLAGE": {
-    location: { es: "Kissimmee", en: "Kissimmee" },
-    detailQuestion: {
-      es: "Donde el turismo no descansa — y tu inversión tampoco.",
-      en: "Where tourism never rests — and neither does your investment.",
-    },
-  },
-  "STOREY LAKE": {
-    detailQuestion: {
-      es: "Ideal para inversionistas enfocados en renta corta con alta ocupación en el mercado turístico de Orlando.",
-      en: "Ideal for investors focused on short-term rentals with high occupancy in Orlando's tourism market.",
-    },
-  },
-  "STOREY LAKE RESORT": {
-    detailQuestion: {
-      es: "Ideal para inversionistas enfocados en renta corta con alta ocupación en el mercado turístico de Orlando.",
-      en: "Ideal for investors focused on short-term rentals with high occupancy in Orlando's tourism market.",
-    },
-  },
-  "STORY LAKE": {
-    detailQuestion: {
-      es: "Ideal para inversionistas enfocados en renta corta con alta ocupación en el mercado turístico de Orlando.",
-      en: "Ideal for investors focused on short-term rentals with high occupancy in Orlando's tourism market.",
-    },
-  },
-  "LAKE WILSON RESERVE": {
-    location: { es: "Kissimmee, FL", en: "Kissimmee, FL" },
-    detailQuestion: {
-      es: "Vive o invierte donde el mundo entero quiere estar.",
-      en: "Live or invest where the whole world wants to be.",
-    },
-  },
-  "WELLNESS RIDGE": {
-    location: { es: "Clermont, Florida", en: "Clermont, Florida" },
-    detailQuestion: {
-      es: "Donde la vida activa y la naturaleza son tu vecindario.",
-      en: "Where active living and nature are your neighborhood.",
-    },
-  },
-};
-
 export function getProjectSlug(project: Pick<ProjectItem, "id" | "title">) {
   const titleSlug = slugify(project.title);
   const fallbackSlug = project.id ? `${titleSlug}-${project.id.slice(0, 8)}` : titleSlug;
@@ -127,10 +78,8 @@ const mapGalleryImage = (image: ProjectGalleryImage, index: number): LuxuryProje
 
 export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject {
   const gallery = project.galleryImages.map(mapGalleryImage);
-  const titleKey = project.title.toUpperCase();
-  const override = projectOverrides[titleKey] ?? {};
 
-  const mappedProject: LuxuryProject = {
+  return {
     slug: getProjectSlug(project),
     city: project.city,
     title: project.title,
@@ -142,7 +91,7 @@ export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject 
     unitsLabel: project.residences,
     shortDescription: project.hook,
     strategicSummary: project.idealFor,
-    detailQuestion: undefined,
+    detailQuestion: project.detailQuestion ?? undefined,
     cardCta: { es: `Ver ${project.title}`, en: `View ${project.title}` },
     imageHint: { es: "Visual del Proyecto", en: "Project Visual" },
     imageUrl: project.imageUrl,
@@ -154,11 +103,6 @@ export function projectItemToLuxuryProject(project: ProjectItem): LuxuryProject 
     gallery: gallery.length > 0
       ? gallery
       : [{ label: { es: "Visual principal", en: "Main Visual" }, tone: "sand", imageUrl: project.imageUrl }],
-  };
-
-  return {
-    ...mappedProject,
-    ...override,
   };
 }
 

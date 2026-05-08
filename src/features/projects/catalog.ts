@@ -15,6 +15,7 @@ export type ProjectItem = {
   type: LocalizedText;
   delivery: LocalizedText;
   idealFor: LocalizedText;
+  detailQuestion: LocalizedText | null;
   parking: LocalizedText | null;
   hook: LocalizedText;
   filterLocation: LocalizedText;
