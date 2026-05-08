@@ -253,7 +253,7 @@ const ProjectsPage = () => {
             <h1 className="mt-5 max-w-4xl font-serif text-[3.05rem] font-medium leading-[0.92] tracking-[-0.055em] text-wine md:text-[5rem] xl:text-[6rem]">
               {t(copy.heroTitle)}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 tracking-[-0.01em] text-primary drop-shadow-[0_2px_10px_rgba(255,255,255,0.72)] md:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-8 tracking-[-0.01em] text-foreground drop-shadow-[0_2px_10px_rgba(255,255,255,0.72)] md:text-xl">
               {t(copy.heroSubtitle)}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
