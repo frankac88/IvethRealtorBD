@@ -21,7 +21,7 @@ const FinancingPage = () => {
             alt=""
             aria-hidden="true"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover object-[center_80%]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,31,46,0.84)_0%,rgba(26,31,46,0.7)_38%,rgba(26,31,46,0.42)_65%,rgba(26,31,46,0.56)_100%)]" />
