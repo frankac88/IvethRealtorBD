@@ -152,6 +152,8 @@ const TeamPage = () => {
                             "object-[center_10%]",
                         )}
                         loading="lazy"
+                        width={400}
+                        height={400}
                       />
                     </div>
                   </div>
@@ -211,6 +213,8 @@ const TeamPage = () => {
                       alt={company.alt}
                       className={company.logoClassName}
                       loading="lazy"
+                      width={200}
+                      height={100}
                     />
                   </div>
                   <h3
@@ -262,6 +266,8 @@ const TeamPage = () => {
                             alt={company.alt}
                             className={company.logoClassName}
                             loading="lazy"
+                            width={400}
+                            height={200}
                           />
                         </div>
                         <p className="type-body-sm text-muted-foreground [text-align:justify] [hyphens:auto] [overflow-wrap:break-word]">

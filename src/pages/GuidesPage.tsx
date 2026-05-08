@@ -264,6 +264,8 @@ const GuidesPage = () => {
             loading="eager"
             fetchPriority="high"
             className="h-full w-full object-cover object-center"
+            width={1920}
+            height={1080}
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(26,31,46,0.46)_0%,rgba(26,31,46,0.24)_20%,rgba(242,237,232,0.38)_58%,rgba(242,237,232,0.68)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(155,107,138,0.18),transparent_22%),radial-gradient(circle_at_left_center,rgba(42,123,136,0.12),transparent_24%)]" />

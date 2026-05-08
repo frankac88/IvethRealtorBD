@@ -385,7 +385,10 @@ const InvestPage = () => {
           })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 8%" }}
-         loading="lazy" />
+          fetchPriority="high"
+          width={1920}
+          height={1080}
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/48 to-background/24" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
@@ -427,7 +430,10 @@ const InvestPage = () => {
                   src={heroMiami}
                   alt={t({ es: "Panorama urbano de Miami", en: "Miami skyline" })}
                   className="absolute inset-0 h-full w-full object-cover opacity-82 mix-blend-overlay"
-                 loading="lazy" />
+                  loading="lazy"
+                  width={800}
+                  height={600}
+                />
                 <div className="absolute inset-0 bg-gradient-to-br from-foreground/20 via-transparent to-primary/30" />
                 <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(135deg,rgba(255,255,255,.45)_0_1px,transparent_1px_18px)]" />
                 <div className="absolute bottom-5 left-5 rounded-full border border-white/35 bg-white/20 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur">
@@ -446,6 +452,8 @@ const InvestPage = () => {
                     alt={t(zoneItem.imageAlt)}
                     className="absolute inset-0 h-full w-full object-cover opacity-78 mix-blend-overlay transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
+                    width={600}
+                    height={400}
                   />
                   <div className="absolute inset-0 bg-gradient-to-br from-foreground/16 via-transparent to-primary/30" />
                   <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(135deg,rgba(255,255,255,.45)_0_1px,transparent_1px_18px)]" />
@@ -526,6 +534,8 @@ const InvestPage = () => {
                         alt={t(zoneItem.imageAlt)}
                         className="absolute inset-0 h-full w-full object-cover opacity-78 mix-blend-overlay transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
+                        width={600}
+                        height={400}
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-foreground/16 via-transparent to-primary/30" />
                       <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(135deg,rgba(255,255,255,.45)_0_1px,transparent_1px_18px)]" />

@@ -11,12 +11,9 @@
     <link rel="apple-touch-icon" href="/iveth-social.webp" />
 
     <!-- LCP Preload -->
-    <link rel="preload" as="image" href="/src/assets/hero-miami.webp" />
+    <link rel="preload" as="image" href="/src/assets/hero-miami.webp" fetchpriority="high" />
     
-    <!-- Fonts Preload -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts are now self-hosted via @fontsource in src/main.tsx for performance -->
 
     <meta property="og:title" content="Iveth Coll — International Real Estate Advisor" />
     <meta property="og:description" content="Invierte en Miami con confianza. Asesoría exclusiva para inversionistas internacionales." />

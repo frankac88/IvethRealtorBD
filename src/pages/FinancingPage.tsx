@@ -23,6 +23,8 @@ const FinancingPage = () => {
             loading="eager"
             fetchPriority="high"
             className="h-full w-full object-cover object-[center_80%]"
+            width={1920}
+            height={1080}
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,31,46,0.84)_0%,rgba(26,31,46,0.7)_38%,rgba(26,31,46,0.42)_65%,rgba(26,31,46,0.56)_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(155,107,138,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(42,123,136,0.24),transparent_34%)]" />

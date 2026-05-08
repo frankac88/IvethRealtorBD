@@ -28,7 +28,7 @@ const WhatsAppButton = () => {
             src={whatsappFloatingButton}
             alt=""
             className="h-full w-full scale-[1.62] rounded-full object-cover brightness-[1.42] contrast-[0.92] saturate-[1.22] drop-shadow-[0_18px_24px_rgba(26,31,46,0.28)]"
-           loading="lazy" />
+           loading="lazy" width={56} height={56} />
         </span>
       </a>
     </div>

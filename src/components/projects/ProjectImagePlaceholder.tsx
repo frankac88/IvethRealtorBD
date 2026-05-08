@@ -48,6 +48,8 @@ export function ProjectImagePlaceholder({
             interactive && "transition duration-700 ease-luxury group-hover:scale-[1.045] group-hover:saturate-[1.08]",
           )}
           loading="lazy"
+          width={800}
+          height={600}
         />
       ) : null}
       <div

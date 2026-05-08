@@ -41,7 +41,10 @@ const Footer = () => {
                 src={brandAssets.footerLogo}
                 alt="Iveth Coll logo"
                 className="mb-6 h-auto w-[150px] object-contain transition duration-300 ease-out group-hover:scale-[1.04] group-hover:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] group-focus-within:scale-[1.04] group-focus-within:drop-shadow-[0_10px_18px_rgba(255,255,255,0.18)] md:w-[205px]"
-               loading="lazy" />
+                loading="lazy"
+                width={800}
+                height={800}
+              />
             </div>
             <p className="type-body-sm mb-6 text-primary-foreground">
               {t(ft.subtitle)}
@@ -109,12 +112,16 @@ const Footer = () => {
               alt="National Association of REALTORS logo"
               className="h-9 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-10"
               loading="lazy"
+              width={200}
+              height={60}
             />
             <img
               src={equalHousingLogo}
               alt="Equal Housing Opportunity logo"
               className="h-9 w-auto object-contain opacity-95 drop-shadow-[0_1px_4px_rgba(247,244,239,0.18)] md:h-10"
               loading="lazy"
+              width={200}
+              height={60}
             />
           </div>
           <p className="mb-3 text-center text-xs uppercase tracking-[0.12em] text-primary-foreground/70 md:tracking-[0.22em]">

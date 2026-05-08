@@ -242,6 +242,9 @@ const ProjectsPage = () => {
             })}
             className="h-full w-full object-cover object-[center_60%]"
             loading="eager"
+            fetchPriority="high"
+            width={1920}
+            height={1080}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/40 to-transparent" />
         </div>
@@ -352,6 +355,8 @@ const ProjectsPage = () => {
                 })}
                 className="h-full w-full object-cover"
                 loading="lazy"
+                width={800}
+                height={1000}
               />
             </div>
             <div className="absolute bottom-0 left-0 max-w-[13rem] bg-wine p-5 text-white shadow-[0_22px_55px_rgba(124,63,99,0.28)]">
