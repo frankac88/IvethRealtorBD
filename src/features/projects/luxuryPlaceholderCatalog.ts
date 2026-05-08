@@ -388,7 +388,7 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     slug: "reunion-village",
     city: "orlando",
     title: "REUNION VILLAGE",
-    location: { es: "Reunion / Kissimmee", en: "Reunion / Kissimmee" },
+    location: { es: "Kissimmee", en: "Kissimmee" },
     eyebrow: { es: "Comunidad vacacional", en: "Vacation community" },
     priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
     deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
@@ -401,6 +401,10 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     strategicSummary: {
       es: "Para inversionistas que buscan exposición al mercado turístico de Orlando y una experiencia tipo resort.",
       en: "For investors seeking Orlando tourism exposure and a resort-style experience.",
+    },
+    detailQuestion: {
+      es: "Donde el turismo no descansa — y tu inversión tampoco.",
+      en: "Where tourism never rests — and neither does your investment.",
     },
     cardCta: { es: "Ver Reunion", en: "View Reunion" },
     imageHint: { es: "Resort / comunidad", en: "Resort / community" },
@@ -427,6 +431,10 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
     strategicSummary: {
       es: "Fácil de explicar a compradores internacionales por ubicación, uso y experiencia.",
       en: "Easy to explain to international buyers thanks to location, use case, and experience.",
+    },
+    detailQuestion: {
+      es: "Ideal para inversionistas enfocados en renta corta con alta ocupación en el mercado turístico de Orlando.",
+      en: "Ideal for investors focused on short-term rentals with high occupancy in the Orlando tourism market.",
     },
     cardCta: { es: "Explora Storey Lake", en: "Explore Storey Lake" },
     imageHint: { es: "Piscina / casa modelo", en: "Pool / model home" },

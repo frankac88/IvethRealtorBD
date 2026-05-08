@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
-import projectsHeroMiami from "@/assets/hero-projects-miami.webp";
+import projectsHeroMiami from "@/assets/hero-projects-florida-wide.webp";
 import differentiatorImage from "@/assets/iveth-differentiator.webp";
 import { createWhatsAppHref } from "@/config/site";
 import {
@@ -59,16 +59,16 @@ const copy = {
     en: "I can help you filter private opportunities by budget, expected rental profile, and goal.",
   },
   differentiatorEyebrow: {
-    es: "Diferencial Iveth Coll",
-    en: "Iveth Coll difference",
+    es: "Método Iveth Coll",
+    en: "Iveth Coll method",
   },
   differentiatorTitle: {
     es: "No todos los proyectos merecen tu atención.",
     en: "Not every project deserves your attention.",
   },
   differentiatorBody: {
-    es: "Selecciono oportunidades considerando ubicación, demanda de renta, perfil del comprador y potencial de valorización. Mi trabajo no es mostrarte todo: es ayudarte a filtrar mejor.",
-    en: "I select opportunities by weighing location, rental demand, buyer profile, and appreciation potential. My job is not to show everything; it is to help you filter better.",
+    es: "Selecciono oportunidades considerando ubicación, demanda de renta, perfil del comprador y potencial de valorización. Mas que mostrar opciones, mi trabajo es ayudarte a tomar decisiones estrategicas.",
+    en: "I select opportunities by weighing location, rental demand, buyer profile, and appreciation potential. My job is not to show everything; it is to help you make strategic decisions.",
   },
   finalTitle: {
     es: "¿Cuál proyecto encaja con tu estrategia?",
@@ -240,18 +240,20 @@ const ProjectsPage = () => {
               es: "Vista panorámica de Miami",
               en: "Panoramic view of Miami",
             })}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-[center_60%]"
             loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/40 to-transparent" />
         </div>
         <div className="container mx-auto flex min-h-[calc(100vh-7rem)] items-center px-4 py-20 lg:px-8 lg:py-24">
           <AnimatedSection as="div" className="relative z-10 max-w-3xl">
-            <p className="type-caption text-primary">{t(copy.heroEyebrow)}</p>
+            <p className="type-caption font-bold text-primary drop-shadow-[0_2px_10px_rgba(255,255,255,0.72)]">
+              {t(copy.heroEyebrow)}
+            </p>
             <h1 className="mt-5 max-w-4xl font-serif text-[3.05rem] font-medium leading-[0.92] tracking-[-0.055em] text-wine md:text-[5rem] xl:text-[6rem]">
               {t(copy.heroTitle)}
             </h1>
-            <p className="type-body mt-6 max-w-2xl text-foreground/70">
+            <p className="mt-6 max-w-2xl text-lg leading-8 tracking-[-0.01em] text-primary drop-shadow-[0_2px_10px_rgba(255,255,255,0.72)] md:text-xl">
               {t(copy.heroSubtitle)}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -357,7 +359,7 @@ const ProjectsPage = () => {
                 Iveth Coll
               </p>
               <p className="mt-2 font-serif text-2xl leading-none tracking-[-0.035em]">
-                {t({ es: "Selección primero.", en: "Selection first." })}
+                {t({ es: "Internacional Real Estate Advisor", en: "International Real Estate Advisor" })}
               </p>
             </div>
           </AnimatedSection>
