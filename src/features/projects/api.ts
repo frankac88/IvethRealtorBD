@@ -401,3 +401,14 @@ export async function deleteProject(projectId: string) {
 
   return true;
 }
+
+export async function deleteProjectGalleryImage(projectId: string, imagePath: string) {
+  const { data, error } = await supabase.functions.invoke("delete-project-gallery-image", {
+    body: { projectId, imagePath },
+  });
+
+  if (error) throw error;
+  if (data?.error) throw new Error(data.error);
+
+  return true;
+}

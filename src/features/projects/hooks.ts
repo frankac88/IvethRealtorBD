@@ -1,6 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { createProject, deleteProject, fetchProjects, updateProject, type SaveProjectPayload } from "./api";
+import {
+  createProject,
+  deleteProject,
+  deleteProjectGalleryImage,
+  fetchProjects,
+  updateProject,
+  type SaveProjectPayload,
+} from "./api";
 
 export const projectsQueryKeys = {
   all: ["projects"] as const,
@@ -62,6 +69,18 @@ export function useDeleteProjectMutation() {
 
   return useMutation({
     mutationFn: (projectId: string) => deleteProject(projectId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: projectsQueryKeys.all });
+    },
+  });
+}
+
+export function useDeleteProjectGalleryImageMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ projectId, imagePath }: { projectId: string; imagePath: string }) =>
+      deleteProjectGalleryImage(projectId, imagePath),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: projectsQueryKeys.all });
     },
