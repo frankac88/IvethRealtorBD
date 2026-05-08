@@ -57,6 +57,8 @@ export type Database = {
           created_at: string
           delivery_en: string
           delivery_es: string
+          detail_question_en: string | null
+          detail_question_es: string | null
           filter_location_en: string
           filter_location_es: string
           filter_strategy_en: string
@@ -95,6 +97,8 @@ export type Database = {
           created_at?: string
           delivery_en: string
           delivery_es: string
+          detail_question_en?: string | null
+          detail_question_es?: string | null
           filter_location_en: string
           filter_location_es: string
           filter_strategy_en: string
@@ -133,6 +137,8 @@ export type Database = {
           created_at?: string
           delivery_en?: string
           delivery_es?: string
+          detail_question_en?: string | null
+          detail_question_es?: string | null
           filter_location_en?: string
           filter_location_es?: string
           filter_strategy_en?: string

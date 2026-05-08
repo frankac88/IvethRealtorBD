@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 const filterLabels = {
   title: { es: "Encuentra tu oportunidad", en: "Find your opportunity" },
   subtitle: {
-    es: "Filtra sin perder la experiencia curada.",
-    en: "Filter without losing the curated experience.",
+    es: "Filtra sin perder la selección estratégica.",
+    en: "Filter without losing the strategic selection.",
   },
   city: { es: "Ciudad", en: "City" },
   goal: { es: "Objetivo", en: "Goal" },

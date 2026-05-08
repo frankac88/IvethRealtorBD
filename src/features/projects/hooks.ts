@@ -9,10 +9,10 @@ export const projectsQueryKeys = {
   admin: ["projects", "admin"] as const,
 };
 
-export function usePublishedProjectsQuery() {
+export function usePublishedProjectsQuery(limit?: number) {
   return useQuery({
-    queryKey: projectsQueryKeys.published,
-    queryFn: () => fetchProjects(),
+    queryKey: typeof limit === "number" ? [...projectsQueryKeys.published, limit] : projectsQueryKeys.published,
+    queryFn: () => fetchProjects({ limit }),
     retry: false,
   });
 }

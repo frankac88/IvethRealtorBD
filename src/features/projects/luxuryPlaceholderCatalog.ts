@@ -1,3 +1,5 @@
+import projectsHeroFloridaWide from "@/assets/hero-projects-florida-wide.webp";
+
 import type { LocalizedText } from "./catalog";
 
 export type ProjectCity = "miami" | "orlando";
@@ -150,6 +152,10 @@ const cassiaImages = {
   primaryCloset: `${projectImagesBaseUrl}/cassia/closet-primary-bedroom.webp`,
 } as const;
 
+const midtownParkImages = {
+  hero: projectsHeroFloridaWide,
+} as const;
+
 export const luxuryPlaceholderProjects: LuxuryProject[] = [
   {
     slug: "edge-house",
@@ -215,6 +221,41 @@ export const luxuryPlaceholderProjects: LuxuryProject[] = [
       { label: { es: "Lobby", en: "Lobby" }, tone: "sage", imageUrl: bloomImages.lobby },
       { label: { es: "Rooftop", en: "Rooftop" }, tone: "wine", imageUrl: bloomImages.rooftopBbq },
       { label: { es: "Vista del proyecto", en: "Project view" }, tone: "teal", imageUrl: bloomImages.projectView },
+    ],
+  },
+  {
+    slug: "midtown-park",
+    city: "miami",
+    title: "MIDTOWN PARK",
+    location: { es: "Midtown", en: "Midtown" },
+    eyebrow: { es: "Distrito cultural de Miami", en: "Miami cultural district" },
+    priceLabel: { es: "Precio por confirmar", en: "Price to be confirmed" },
+    deliveryLabel: { es: "Entrega por confirmar", en: "Delivery timeline to confirm" },
+    rentalLabel: { es: "Renta flexible", en: "Flexible rental" },
+    unitsLabel: {
+      es: "Studios, 1, 2 y 3 habitaciones y penthouses",
+      en: "Studios, 1, 2 and 3 bedrooms, and penthouses",
+    },
+    shortDescription: {
+      es: "Donde vivir es una experiencia de autor.",
+      en: "Where living becomes a signature experience.",
+    },
+    strategicSummary: {
+      es: "Donde el arte de Wynwood se funde con el diseño del Design District. Vive en el epicentro cultural de Miami. La inversión más visionaria de Midtown.",
+      en: "Where Wynwood art meets Design District design. Live in Miami's cultural epicenter. Midtown's most visionary investment.",
+    },
+    cardCta: { es: "Descubre Midtown Park", en: "Discover Midtown Park" },
+    imageHint: { es: "Midtown / ciudad", en: "Midtown / city" },
+    imageUrl: midtownParkImages.hero,
+    detailImageUrl: midtownParkImages.hero,
+    goal: "investment",
+    rentalType: "flexible",
+    budgetRange: "500k-1m",
+    gallery: [
+      { label: { es: "Midtown", en: "Midtown" }, tone: "sand", imageUrl: midtownParkImages.hero },
+      { label: { es: "Diseño", en: "Design" }, tone: "teal", imageUrl: midtownParkImages.hero },
+      { label: { es: "Experiencia", en: "Experience" }, tone: "wine", imageUrl: midtownParkImages.hero },
+      { label: { es: "Ciudad", en: "City" }, tone: "sage", imageUrl: midtownParkImages.hero },
     ],
   },
   {
