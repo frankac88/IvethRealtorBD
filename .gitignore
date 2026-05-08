@@ -20,6 +20,7 @@ dist-ssr
 playwright-report/
 test-results/
 coverage/
+.vercel/
 
 # Editor directories and files
 .vscode/*
