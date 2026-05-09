@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { localizedRoutes } from "@/i18n/routes";
 
-const SITE_URL = "https://ivethcoll.com";
+const SITE_URL = "https://www.ivethcollrealtor.com";
 
 const publicFile = (fileName: string) => resolve(process.cwd(), "public", fileName);
 

@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ivethcoll.com/sitemap.xml
+Sitemap: https://www.ivethcollrealtor.com/sitemap.xml
