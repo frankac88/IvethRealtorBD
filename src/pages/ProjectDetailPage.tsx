@@ -4,6 +4,7 @@ import { ArrowLeft, CalendarClock, Home, KeyRound, MapPin, MessageCircle } from 
 
 import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import { ProjectGalleryCarousel } from "@/components/projects/ProjectGalleryCarousel";
 import { ProjectImagePlaceholder } from "@/components/projects/ProjectImagePlaceholder";
 import { Button } from "@/components/ui/button";
@@ -91,6 +92,7 @@ const ProjectDetailPage = () => {
   if (!project && isLoadingProjects) {
     return (
       <Layout>
+        <SEO title={t({ es: "Cargando proyecto", en: "Loading project" })} />
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 text-center lg:px-8">
             <p className="type-caption text-primary">{t({ es: "Cargando proyecto", en: "Loading project" })}</p>
@@ -103,6 +105,10 @@ const ProjectDetailPage = () => {
   if (!project) {
     return (
       <Layout>
+        <SEO 
+          title={t(labels.notFoundTitle)} 
+          description={t(labels.notFoundBody)} 
+        />
         <section className="bg-background py-24">
           <div className="container mx-auto px-4 text-center lg:px-8">
             <h1 className="type-h1 text-wine">{t(labels.notFoundTitle)}</h1>
@@ -197,6 +203,20 @@ const ProjectDetailPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={`${project.title} - ${t(project.location)}`}
+        description={t(project.strategicSummary).substring(0, 160)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("projects", language)}/${project.slug}`}
+        ogImage={project.detailImageUrl ?? project.imageUrl}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "RealEstateListing",
+          name: project.title,
+          description: t(project.strategicSummary),
+          image: project.detailImageUrl ?? project.imageUrl,
+          url: `https://www.ivethcollrealtor.com${getLocalizedPath("projects", language)}/${project.slug}`
+        }}
+      />
       <section className="relative overflow-hidden bg-background py-16 md:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_12%,rgba(138,85,121,0.13),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(42,123,137,0.13),transparent_30%)]" />
         <div className="container relative mx-auto px-4 lg:px-8">

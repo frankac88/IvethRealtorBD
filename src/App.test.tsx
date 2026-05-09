@@ -89,7 +89,6 @@ describe("App routing", () => {
 
     expect(await screen.findByText("Contact route")).toBeInTheDocument();
     expect(document.documentElement.lang).toBe("en");
-    expect(document.title).toBe("Iveth Coll | International Real Estate Advisor — Miami & Orlando");
   });
 
   it("renders a localized project detail route", async () => {

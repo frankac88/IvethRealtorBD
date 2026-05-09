@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
+import SEO from "@/components/SEO";
 
 const NotFound = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const NotFound = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
+      <SEO title="404 - Page Not Found" noindex={true} />
       <div className="text-center">
         <h2 className="mb-4 text-4xl font-bold">404</h2>
         <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>

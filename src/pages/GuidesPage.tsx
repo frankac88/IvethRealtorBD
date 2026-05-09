@@ -24,6 +24,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { guidesTranslations } from "@/i18n/translations/guides";
+import SEO from "@/components/SEO";
 
 const guideVisuals = {
   investor: {
@@ -256,6 +257,11 @@ const GuidesPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(g.title)}
+        description={t(g.subtitle)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("guides", language)}`}
+      />
       <section className="relative isolate overflow-hidden bg-[#F2EDE8]">
         <div className="absolute inset-0">
           <img

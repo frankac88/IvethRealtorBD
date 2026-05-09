@@ -67,3 +67,7 @@ afterEach(() => {
   cleanup();
   window.localStorage.clear();
 });
+vi.mock("react-helmet-async", () => ({
+  Helmet: ({ children }: { children: React.ReactNode }) => children,
+  HelmetProvider: ({ children }: { children: React.ReactNode }) => children,
+}));

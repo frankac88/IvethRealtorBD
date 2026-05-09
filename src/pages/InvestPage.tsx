@@ -12,6 +12,7 @@ import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import heroMiami from "@/assets/hero-miami.webp";
 import investHeroFlorida from "@/assets/invest-hero-florida.webp";
+import SEO from "@/components/SEO";
 
 type LocalizedText = { es: string; en: string };
 type ZoneValue =
@@ -276,32 +277,6 @@ const InvestPage = () => {
 
   const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.investPage, language));
 
-  useEffect(() => {
-    document.title = language === "es"
-      ? "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando"
-      : "Invest in Florida | Real Estate Investment in Miami and Orlando";
-
-    const description = language === "es"
-      ? "Descubre cómo invertir estratégicamente en Florida. Compara oportunidades en Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee y Clermont con asesoría personalizada."
-      : "Discover how to invest strategically in Florida. Compare opportunities in Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee, and Clermont with personalized guidance.";
-    const keywords = language === "es"
-      ? "invertir en Florida, invertir en Miami, invertir en Orlando, realtor en Miami, inversión inmobiliaria en Florida, propiedades de inversión en Orlando, rentas cortas Orlando, preconstrucción Miami, asesoría inmobiliaria Florida"
-      : "invest in Florida, invest in Miami, invest in Orlando, Miami realtor, Florida real estate investment, Orlando investment properties, Orlando short-term rentals, Miami pre-construction, Florida real estate advisory";
-
-    const setMeta = (name: string, content: string) => {
-      let meta = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = name;
-        document.head.appendChild(meta);
-      }
-      meta.content = content;
-    };
-
-    setMeta("description", description);
-    setMeta("keywords", keywords);
-  }, [language]);
-
   const labels = useMemo(
     () => ({
       zone: language === "es" ? "Zona de interés" : "Area of interest",
@@ -376,6 +351,15 @@ const InvestPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={language === "es"
+          ? "Invertir en Florida | Inversión inmobiliaria en Miami y Orlando"
+          : "Invest in Florida | Real Estate Investment in Miami and Orlando"}
+        description={language === "es"
+          ? "Descubre cómo invertir estratégicamente en Florida. Compara oportunidades en Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee y Clermont con asesoría personalizada."
+          : "Discover how to invest strategically in Florida. Compare opportunities in Miami, Orlando, Brickell, Miami Beach, Fort Lauderdale, Davenport, Kissimmee, and Clermont with personalized guidance."}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("invest", language)}`}
+      />
       <section className="relative isolate overflow-hidden bg-background">
         <img
           src={investHeroFlorida}

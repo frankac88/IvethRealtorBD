@@ -44,6 +44,7 @@ import {
   useUpdateProjectMutation,
 } from "@/features/projects/hooks";
 import { useToast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
 
 type RequiredProjectField = Exclude<keyof ProjectFormValues, "featured">;
 type BilingualProjectFieldKey = Exclude<keyof ProjectFormValues, "title" | "priceFrom" | "featured">;
@@ -347,6 +348,7 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen bg-muted">
+      <SEO title="Admin Panel" noindex={true} />
       <header className="sticky top-0 z-10 border-b bg-background">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div>

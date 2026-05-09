@@ -4,6 +4,7 @@ import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 
 import AnimatedSection from "@/components/AnimatedSection";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import { ProjectCitySection } from "@/components/projects/ProjectCitySection";
 import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter";
 import { Button } from "@/components/ui/button";
@@ -232,6 +233,11 @@ const ProjectsPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(copy.heroTitle)}
+        description={t(copy.heroSubtitle).substring(0, 160)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("projects", language)}`}
+      />
       <section className="relative isolate overflow-hidden bg-background">
         <div className="absolute inset-0 -z-10">
           <img

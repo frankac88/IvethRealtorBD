@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, Shield, Building2, ArrowRight, ExternalLink, MessageCircle } from "lucide-react";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
+import SEO from "@/components/SEO";
 import HomeTestimonialsCarousel from "@/components/home/HomeTestimonialsCarousel";
 import { googleReviewsContent } from "@/content/googleReviews";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
@@ -42,6 +43,11 @@ const Index = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(h.heroTitle1)}
+        description={t(h.heroDesc).substring(0, 160)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("home", language) === "/" ? "" : getLocalizedPath("home", language)}`}
+      />
       {/* Hero */}
       <section className="relative flex h-[90vh] min-h-[600px] items-center justify-center overflow-hidden">
         <video

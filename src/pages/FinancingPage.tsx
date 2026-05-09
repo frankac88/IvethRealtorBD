@@ -6,6 +6,7 @@ import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
 import { financingTranslations } from "@/i18n/translations/financing";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 
 const FinancingPage = () => {
   const { language } = useLanguage();
@@ -14,6 +15,11 @@ const FinancingPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(f.title)}
+        description={t(f.subtitle)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("financing", language)}`}
+      />
       <section className="relative isolate overflow-hidden bg-foreground">
         <div className="absolute inset-0">
           <img

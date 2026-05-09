@@ -5,14 +5,23 @@ import { Button } from "@/components/ui/button";
 import { googleReviewsContent } from "@/content/googleReviews";
 import { useT } from "@/i18n/LanguageContext";
 import { testimonialsTranslations } from "@/i18n/translations/testimonials";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getLocalizedPath } from "@/i18n/routes";
+import SEO from "@/components/SEO";
 
 const TestimonialsPage = () => {
+  const { language } = useLanguage();
   const t = useT();
   const tp = testimonialsTranslations;
   const reviews = googleReviewsContent.reviews.slice(0, 6);
 
   return (
     <Layout>
+      <SEO 
+        title={t(tp.title)}
+        description={t(tp.subtitle)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("testimonials", language)}`}
+      />
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <p className="type-caption mb-4">{t(tp.label)}</p>

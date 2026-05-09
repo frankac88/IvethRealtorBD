@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useLoginMutation } from "@/features/auth/hooks";
 import { useToast } from "@/hooks/use-toast";
 import { Lock } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted px-4">
+      <SEO title="Admin Login" noindex={true} />
       <div className="w-full max-w-sm bg-background rounded-lg shadow-lg p-8 space-y-6">
         <div className="text-center space-y-2">
           <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">

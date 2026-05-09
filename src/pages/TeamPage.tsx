@@ -22,6 +22,7 @@ import { getLocalizedPath } from "@/i18n/routes";
 import { teamTranslations } from "@/i18n/translations/team";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import SEO from "@/components/SEO";
 
 const TeamPage = () => {
   const { language } = useLanguage();
@@ -111,6 +112,11 @@ const TeamPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(tm.title)}
+        description={t(tm.subtitle)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("team", language)}`}
+      />
       <section className="bg-muted py-20">
         <div className="container mx-auto px-4 text-center lg:px-8">
           <p className="type-caption mb-4">{t(tm.label)}</p>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
+import SEO from "@/components/SEO";
 import AnimatedSection from "@/components/AnimatedSection";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { ExternalLink, MapPin, Phone, Mail } from "lucide-react";
 import { createWhatsAppHref, getWhatsAppMessage, siteConfig, whatsappMessages } from "@/config/site";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { contactTranslations } from "@/i18n/translations/contact";
+import { getLocalizedPath } from "@/i18n/routes";
 import { useLocation } from "react-router-dom";
 
 const ContactPage = () => {
@@ -31,6 +33,11 @@ const ContactPage = () => {
 
   return (
     <Layout>
+      <SEO 
+        title={t(c.title)}
+        description={t(c.subtitle).substring(0, 160)}
+        canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("contact", language)}`}
+      />
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <p className="type-caption mb-4">{t(c.label)}</p>
