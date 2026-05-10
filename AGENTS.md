@@ -31,17 +31,6 @@ You are a coding agent working on my projects. Follow these principles:
 - If something is ambiguous, ask before proceeding.
 - Respect existing project structure and patterns.
 
-## Model routing
-
-- Treat model selection as a global standing rule for this project.
-- Choose the model automatically according to task complexity.
-- Always state which model will be used for the task before proceeding.
-- Use GPT-5.4-mini for simple or fast tasks.
-- Use GPT-5.4 for normal coding, routine edits, and standard implementation work.
-- Use GPT-5.5 for complex debugging, architecture, critical analysis, or high-risk changes.
-- If the task complexity changes during execution, explicitly announce the model change before continuing.
-- If the recommended model cannot be switched or applied in the current context, do not continue with the task; ask the user to consider changing to the recommended model first.
-
 ## Output expectations
 
 - Return only the necessary code or changes.
