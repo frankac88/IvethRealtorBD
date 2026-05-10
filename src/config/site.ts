@@ -40,6 +40,7 @@ export const siteConfig = {
   brand: {
     name: "Iveth Coll",
     descriptor: "International Real Estate Advisor",
+    description: "Iveth Coll is an International Real Estate Advisor specializing in luxury properties and investment opportunities in Miami and Orlando, Florida.",
   },
   contact: {
     email: "iveth@ivethcollrealtor.com",
