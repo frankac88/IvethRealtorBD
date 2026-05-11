@@ -15,7 +15,7 @@ const FinancingPage = () => {
 
   return (
     <Layout>
-      <SEO 
+      <SEO
         title={t(f.title)}
         description={t(f.subtitle)}
         canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("financing", language)}`}
@@ -27,7 +27,7 @@ const FinancingPage = () => {
             alt=""
             aria-hidden="true"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover object-[center_80%]"
             width={1920}
             height={1080}
@@ -57,7 +57,12 @@ const FinancingPage = () => {
               <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.foreignerItems[language].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <span aria-hidden="true" className="mt-[0.2em] shrink-0 text-[0.95em] leading-none">•</span>
+                    <span
+                      aria-hidden="true"
+                      className="mt-[0.2em] shrink-0 text-[0.95em] leading-none"
+                    >
+                      •
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -68,7 +73,12 @@ const FinancingPage = () => {
               <ul className="type-body-sm space-y-3 text-muted-foreground">
                 {f.residentItems[language].map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <span aria-hidden="true" className="mt-[0.2em] shrink-0 text-[0.95em] leading-none">•</span>
+                    <span
+                      aria-hidden="true"
+                      className="mt-[0.2em] shrink-0 text-[0.95em] leading-none"
+                    >
+                      •
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -90,7 +100,11 @@ const FinancingPage = () => {
 
           <div className="text-center">
             <Button variant="hero" size="lg" asChild>
-              <Link to={`${getLocalizedPath("contact", language)}#contact-form-view`}>{t(f.cta)}</Link>
+              <Link
+                to={`${getLocalizedPath("contact", language)}#contact-form-view`}
+              >
+                {t(f.cta)}
+              </Link>
             </Button>
           </div>
         </div>
@@ -100,5 +114,3 @@ const FinancingPage = () => {
 };
 
 export default FinancingPage;
-
-

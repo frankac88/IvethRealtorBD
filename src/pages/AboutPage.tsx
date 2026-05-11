@@ -24,7 +24,7 @@ const AboutPage = () => {
 
   return (
     <Layout>
-      <SEO 
+      <SEO
         title={t(a.title)}
         description={t(a.desc1).substring(0, 160)}
         canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("about", language)}`}
@@ -37,10 +37,20 @@ const AboutPage = () => {
               <h1 className="type-h1 mb-6">{t(a.title)}</h1>
               <p className="type-body mb-8 text-justify">{t(a.desc1)}</p>
               <Button variant="default" asChild>
-                <Link to={contactFormHref}>{t(a.cta)} <ArrowRight size={16} /></Link>
+                <Link to={contactFormHref}>
+                  {t(a.cta)} <ArrowRight size={16} />
+                </Link>
               </Button>
             </div>
-            <img src={ivethImg} alt="Iveth Coll - International Real Estate Advisor" className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm" loading="eager" fetchpriority="high" width={800} height={1000} />
+            <img
+              src={ivethImg}
+              alt="Iveth Coll - International Real Estate Advisor"
+              className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm"
+              loading="eager"
+              fetchPriority="high"
+              width={800}
+              height={1000}
+            />
           </div>
         </div>
       </section>
@@ -63,27 +73,32 @@ const AboutPage = () => {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
               {values.map((item, i) => (
-              <AnimatedSection
-                as="article"
-                key={t(item.title)}
-                delay={i * 100}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[1.7rem] border border-border/80 bg-background/90 p-7 text-center shadow-[0_18px_46px_rgba(26,31,46,0.06)] transition-all duration-500 ease-luxury hover:-translate-y-2 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.14)] md:p-8"
-              >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 bg-[radial-gradient(circle,rgba(124,63,99,0.10),transparent_68%)] opacity-80 transition-transform duration-500 group-hover:scale-110" />
-                <span className="mb-5 font-serif text-[0.9rem] tracking-[0.2em] text-wine/55">
-                  0{i + 1}
-                </span>
-                <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-card shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_10px_30px_rgba(26,31,46,0.06)] transition-transform duration-500 group-hover:scale-105">
-                  <item.icon size={28} className="text-primary" />
-                </span>
-                <h3 className="mb-4 font-serif text-[1.35rem] leading-[1.08] tracking-[-0.02em] text-wine md:text-[1.45rem]">
-                  {t(item.title)}
-                </h3>
-                <p className="type-body-sm text-muted-foreground">{t(item.desc)}</p>
-                <span className="mx-auto mt-6 h-px w-12 bg-gradient-to-r from-transparent via-gold/70 to-transparent transition-all duration-500 group-hover:w-16" aria-hidden="true" />
-              </AnimatedSection>
-            ))}
+                <AnimatedSection
+                  as="article"
+                  key={t(item.title)}
+                  delay={i * 100}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-[1.7rem] border border-border/80 bg-background/90 p-7 text-center shadow-[0_18px_46px_rgba(26,31,46,0.06)] transition-all duration-500 ease-luxury hover:-translate-y-2 hover:border-gold/50 hover:shadow-[0_28px_70px_rgba(26,31,46,0.14)] md:p-8"
+                >
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 bg-[radial-gradient(circle,rgba(124,63,99,0.10),transparent_68%)] opacity-80 transition-transform duration-500 group-hover:scale-110" />
+                  <span className="mb-5 font-serif text-[0.9rem] tracking-[0.2em] text-wine/55">
+                    0{i + 1}
+                  </span>
+                  <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-card shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_10px_30px_rgba(26,31,46,0.06)] transition-transform duration-500 group-hover:scale-105">
+                    <item.icon size={28} className="text-primary" />
+                  </span>
+                  <h3 className="mb-4 font-serif text-[1.35rem] leading-[1.08] tracking-[-0.02em] text-wine md:text-[1.45rem]">
+                    {t(item.title)}
+                  </h3>
+                  <p className="type-body-sm text-muted-foreground">
+                    {t(item.desc)}
+                  </p>
+                  <span
+                    className="mx-auto mt-6 h-px w-12 bg-gradient-to-r from-transparent via-gold/70 to-transparent transition-all duration-500 group-hover:w-16"
+                    aria-hidden="true"
+                  />
+                </AnimatedSection>
+              ))}
             </div>
           </div>
         </div>
@@ -93,7 +108,3 @@ const AboutPage = () => {
 };
 
 export default AboutPage;
-
-
-
-

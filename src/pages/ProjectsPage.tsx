@@ -10,7 +10,11 @@ import { ProjectsLuxuryFilter } from "@/components/projects/ProjectsLuxuryFilter
 import { Button } from "@/components/ui/button";
 import projectsHeroMiami from "@/assets/hero-projects-florida-wide.webp";
 import differentiatorImage from "@/assets/iveth-differentiator.webp";
-import { createWhatsAppHref, getWhatsAppMessage, whatsappMessages } from "@/config/site";
+import {
+  createWhatsAppHref,
+  getWhatsAppMessage,
+  whatsappMessages,
+} from "@/config/site";
 import {
   defaultProjectFilters,
   filterLuxuryProjects,
@@ -233,7 +237,7 @@ const ProjectsPage = () => {
 
   return (
     <Layout>
-      <SEO 
+      <SEO
         title={t(copy.heroTitle)}
         description={t(copy.heroSubtitle).substring(0, 160)}
         canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("projects", language)}`}
@@ -248,7 +252,7 @@ const ProjectsPage = () => {
             })}
             className="h-full w-full object-cover object-[center_60%]"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             width={1920}
             height={1080}
           />
@@ -370,7 +374,10 @@ const ProjectsPage = () => {
                 Iveth Coll
               </p>
               <p className="mt-2 font-serif text-2xl leading-none tracking-[-0.035em]">
-                {t({ es: "Internacional Real Estate Advisor", en: "International Real Estate Advisor" })}
+                {t({
+                  es: "Internacional Real Estate Advisor",
+                  en: "International Real Estate Advisor",
+                })}
               </p>
             </div>
           </AnimatedSection>

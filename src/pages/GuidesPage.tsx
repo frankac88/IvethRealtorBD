@@ -8,7 +8,9 @@ import guidePreconstructionIa from "@/assets/guide-preconstruction-ia.webp";
 import guidesHeroMiami from "@/assets/guides-hero-miami.webp";
 import AnimatedSection from "@/components/AnimatedSection";
 import GuideCard from "@/components/guides/GuideCard";
-import GuideLeadDialog, { type GuideLeadFormValues } from "@/components/guides/GuideLeadDialog";
+import GuideLeadDialog, {
+  type GuideLeadFormValues,
+} from "@/components/guides/GuideLeadDialog";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +39,8 @@ const guideVisuals = {
       es: "Inversionistas\nInternacionales",
       en: "International\nInvestors",
     },
-    cardClassName: "bg-[linear-gradient(180deg,#1A1F2E_0%,#171C29_58%,#141926_100%)]",
+    cardClassName:
+      "bg-[linear-gradient(180deg,#1A1F2E_0%,#171C29_58%,#141926_100%)]",
     iconClassName: "text-[#9B6B8A]",
     backgroundImage: guideInvestorIa,
     backgroundImageClassName: "bg-center opacity-42",
@@ -52,7 +55,8 @@ const guideVisuals = {
       es: "Preconstrucción\nen Florida",
       en: "Pre-Construction\nin Florida",
     },
-    cardClassName: "bg-[linear-gradient(180deg,#2A7B88_0%,#256E79_54%,#205F69_100%)]",
+    cardClassName:
+      "bg-[linear-gradient(180deg,#2A7B88_0%,#256E79_54%,#205F69_100%)]",
     iconClassName: "text-[#F2EDE8]",
     backgroundImage: guidePreconstructionIa,
     backgroundImageClassName: "bg-center opacity-46",
@@ -68,7 +72,8 @@ const guideVisuals = {
       en: "Smart\nFinancing",
     },
     isLight: true,
-    cardClassName: "bg-[linear-gradient(180deg,#F2EDE8_0%,#ECE4DD_55%,#E4D8D2_100%)]",
+    cardClassName:
+      "bg-[linear-gradient(180deg,#F2EDE8_0%,#ECE4DD_55%,#E4D8D2_100%)]",
     iconClassName: "text-[#2A7B88]",
     backgroundImage: guideFinancingIa,
     backgroundImageClassName: "bg-center opacity-34",
@@ -83,18 +88,25 @@ const guideVisuals = {
       es: "Comprador\nEstratégico",
       en: "Strategic\nBuyer",
     },
-    cardClassName: "bg-[linear-gradient(180deg,#1A1F2E_0%,#171C29_55%,#141926_100%)]",
+    cardClassName:
+      "bg-[linear-gradient(180deg,#1A1F2E_0%,#171C29_55%,#141926_100%)]",
     iconClassName: "text-[#9B6B8A]",
     backgroundImage: guideBuyerIa,
     backgroundImageClassName: "bg-center opacity-44",
   },
 } as const;
 
-const guideOrder = ["investor", "preconstruction", "financing", "buyer"] as const;
-type GuideKey = typeof guideOrder[number];
+const guideOrder = [
+  "investor",
+  "preconstruction",
+  "financing",
+  "buyer",
+] as const;
+type GuideKey = (typeof guideOrder)[number];
 const DOWNLOAD_REDIRECT_DELAY_MS = 900;
 const GUIDE_DOWNLOAD_BASE_URL =
-  import.meta.env.VITE_GUIDE_DOWNLOAD_BASE_URL || "https://iveth-guias-download.iveth-guias.workers.dev";
+  import.meta.env.VITE_GUIDE_DOWNLOAD_BASE_URL ||
+  "https://iveth-guias-download.iveth-guias.workers.dev";
 type GuideAvailability = Record<GuideKey, boolean>;
 
 async function canStartDownload(downloadUrl: string) {
@@ -111,16 +123,21 @@ async function canStartDownload(downloadUrl: string) {
 }
 
 async function fetchGuideAvailability(): Promise<GuideAvailability> {
-  const response = await fetch(new URL("/availability", GUIDE_DOWNLOAD_BASE_URL).toString(), {
-    method: "GET",
-    cache: "no-store",
-  });
+  const response = await fetch(
+    new URL("/availability", GUIDE_DOWNLOAD_BASE_URL).toString(),
+    {
+      method: "GET",
+      cache: "no-store",
+    },
+  );
 
   if (!response.ok) {
     throw new Error("Guide availability check failed");
   }
 
-  const data = await response.json() as { guides?: Partial<Record<GuideKey, boolean>> };
+  const data = (await response.json()) as {
+    guides?: Partial<Record<GuideKey, boolean>>;
+  };
 
   return {
     investor: data.guides?.investor === true,
@@ -139,9 +156,12 @@ const GuidesPage = () => {
   const [activeGuideKey, setActiveGuideKey] = useState<GuideKey | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [fallbackDownloadHref, setFallbackDownloadHref] = useState<string | null>(null);
+  const [fallbackDownloadHref, setFallbackDownloadHref] = useState<
+    string | null
+  >(null);
   const [startedAt, setStartedAt] = useState(() => Date.now());
-  const [guideAvailability, setGuideAvailability] = useState<GuideAvailability | null>(null);
+  const [guideAvailability, setGuideAvailability] =
+    useState<GuideAvailability | null>(null);
 
   const activeGuide = activeGuideKey ? g.guides[activeGuideKey] : null;
 
@@ -215,7 +235,9 @@ const GuidesPage = () => {
       setIsDialogOpen(false);
 
       window.setTimeout(async () => {
-        const isDownloadReady = await canStartDownload(response.guideDownloadUrl);
+        const isDownloadReady = await canStartDownload(
+          response.guideDownloadUrl,
+        );
 
         if (!isDownloadReady) {
           setFallbackDownloadHref(response.guideDownloadUrl);
@@ -225,7 +247,10 @@ const GuidesPage = () => {
         window.location.assign(response.guideDownloadUrl);
       }, DOWNLOAD_REDIRECT_DELAY_MS);
     } catch (error) {
-      const description = error instanceof Error ? error.message : t(g.form.fallbackErrorDescription);
+      const description =
+        error instanceof Error
+          ? error.message
+          : t(g.form.fallbackErrorDescription);
 
       toast({
         title: t(g.form.errorTitle),
@@ -257,7 +282,7 @@ const GuidesPage = () => {
 
   return (
     <Layout>
-      <SEO 
+      <SEO
         title={t(g.title)}
         description={t(g.subtitle)}
         canonicalUrl={`https://www.ivethcollrealtor.com${getLocalizedPath("guides", language)}`}
@@ -268,7 +293,7 @@ const GuidesPage = () => {
             src={guidesHeroMiami}
             alt=""
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover object-center"
             width={1920}
             height={1080}
@@ -284,16 +309,18 @@ const GuidesPage = () => {
             <AnimatedSection as="div">
               <div className="inline-block rounded-[32px] border border-white/40 bg-[linear-gradient(180deg,rgba(242,237,232,0.64)_0%,rgba(242,237,232,0.4)_100%)] px-6 py-6 shadow-[0_24px_70px_rgba(26,31,46,0.12)] backdrop-blur-[4px] md:px-8 md:py-7">
                 <div className="mb-5 h-px w-24 bg-[linear-gradient(90deg,rgba(155,107,138,0.95)_0%,rgba(155,107,138,0.18)_100%)]" />
-                <h1 className="type-h2 text-[#1A1F2E]">
-                  {t(g.title)}
-                </h1>
+                <h1 className="type-h2 text-[#1A1F2E]">{t(g.title)}</h1>
                 <p className="mt-6 max-w-[560px] text-[1.02rem] leading-[1.8] text-[#1A1F2E]/82 md:text-[1.1rem]">
                   {t(g.subtitle)}
                 </p>
               </div>
             </AnimatedSection>
 
-            <AnimatedSection as="div" delay={90} className="mt-12 max-w-[760px] rounded-[34px] border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(242,237,232,0.58)_100%)] p-8 shadow-[0_30px_90px_rgba(26,31,46,0.12)] backdrop-blur-xl md:p-10">
+            <AnimatedSection
+              as="div"
+              delay={90}
+              className="mt-12 max-w-[760px] rounded-[34px] border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(242,237,232,0.58)_100%)] p-8 shadow-[0_30px_90px_rgba(26,31,46,0.12)] backdrop-blur-xl md:p-10"
+            >
               <div className="mb-5 h-px w-20 bg-[linear-gradient(90deg,rgba(155,107,138,0.9)_0%,rgba(155,107,138,0.18)_100%)]" />
               <h2 className="font-serif text-[1.95rem] leading-[1.02] tracking-[-0.035em] text-[#1A1F2E] md:text-[2.55rem]">
                 {t(g.helpTitle)}
@@ -312,12 +339,14 @@ const GuidesPage = () => {
             {guideOrder.map((guideKey, index) => {
               const guide = g.guides[guideKey];
               const visual = guideVisuals[guideKey];
-              const displayTitle = visual.displayTitle[language].split("\n").map((line, lineIndex, lines) => (
-                <span key={`${guideKey}-line-${lineIndex}`}>
-                  {line}
-                  {lineIndex < lines.length - 1 ? <br /> : null}
-                </span>
-              ));
+              const displayTitle = visual.displayTitle[language]
+                .split("\n")
+                .map((line, lineIndex, lines) => (
+                  <span key={`${guideKey}-line-${lineIndex}`}>
+                    {line}
+                    {lineIndex < lines.length - 1 ? <br /> : null}
+                  </span>
+                ));
 
               return (
                 <AnimatedSection as="div" key={guideKey} delay={index * 90}>
@@ -331,9 +360,15 @@ const GuidesPage = () => {
                     isLight={"isLight" in visual ? visual.isLight : false}
                     cardClassName={visual.cardClassName}
                     iconClassName={visual.iconClassName}
-                    backgroundImage={"backgroundImage" in visual ? visual.backgroundImage : undefined}
+                    backgroundImage={
+                      "backgroundImage" in visual
+                        ? visual.backgroundImage
+                        : undefined
+                    }
                     backgroundImageClassName={
-                      "backgroundImageClassName" in visual ? visual.backgroundImageClassName : undefined
+                      "backgroundImageClassName" in visual
+                        ? visual.backgroundImageClassName
+                        : undefined
                     }
                     onDownload={() => handleDownload(guideKey)}
                     downloadLabel={t(g.downloadCta)}
@@ -380,7 +415,10 @@ const GuidesPage = () => {
         />
       ) : null}
 
-      <Dialog open={Boolean(fallbackDownloadHref)} onOpenChange={(open) => !open && setFallbackDownloadHref(null)}>
+      <Dialog
+        open={Boolean(fallbackDownloadHref)}
+        onOpenChange={(open) => !open && setFallbackDownloadHref(null)}
+      >
         <DialogContent className="border-white/70 bg-[#F2EDE8] text-foreground shadow-[0_30px_90px_rgba(26,31,46,0.18)] sm:max-w-md">
           <DialogHeader className="text-left">
             <DialogTitle className="font-serif text-3xl tracking-[-0.03em]">
@@ -393,7 +431,10 @@ const GuidesPage = () => {
 
           {fallbackDownloadHref ? (
             <Button variant="gold" size="lg" asChild className="mt-2 w-full">
-              <a href={fallbackDownloadHref} onClick={() => setFallbackDownloadHref(null)}>
+              <a
+                href={fallbackDownloadHref}
+                onClick={() => setFallbackDownloadHref(null)}
+              >
                 {t(g.form.downloadFallbackButton)}
               </a>
             </Button>
@@ -405,11 +446,3 @@ const GuidesPage = () => {
 };
 
 export default GuidesPage;
-
-
-
-
-
-
-
-
