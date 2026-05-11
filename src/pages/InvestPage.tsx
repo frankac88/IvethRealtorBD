@@ -96,11 +96,11 @@ const copy = {
     en: "Each property must validate HOA rules, rental permits, and local regulations before investing. The information presented is educational and does not represent a promise of returns.",
   },
   successDesc: {
-    es: "Gracias. Te llevaremos a WhatsApp para continuar la conversación con Iveth.",
-    en: "Thank you. We will take you to WhatsApp to continue the conversation with Iveth.",
+    es: "Gracias. Hemos recibido tu información y te contactaremos pronto.",
+    en: "Thank you. We have received your information and will contact you soon.",
   },
   sending: { es: "Enviando...", en: "Sending..." },
-  submit: { es: "Enviar y continuar por WhatsApp", en: "Send and continue on WhatsApp" },
+  submit: { es: "Enviar consulta", en: "Send inquiry" },
   required: { es: "Completa los campos requeridos.", en: "Complete the required fields." },
 } as const;
 
@@ -328,23 +328,21 @@ const InvestPage = () => {
     const zoneLabel = getOptionLabel(zoneOptions, zone, language);
     const objectiveLabel = getOptionLabel(objectiveOptions, objective, language);
     const budgetLabel = getOptionLabel(budgetOptions, budget, language);
-    const details = `Formulario Invertir en Florida | Zona: ${zoneLabel} | Objetivo: ${objectiveLabel} | Rango: ${budgetLabel}`;
-
-    return baseMessage ? `${details} | Mensaje: ${baseMessage}` : details;
+    const lines = [
+      `[Origen: Formulario Invertir en Florida]`,
+      `Zona de interés: ${zoneLabel}`,
+      `Objetivo: ${objectiveLabel}`,
+      `Rango aproximado de inversión: ${budgetLabel}`,
+    ];
+    if (baseMessage) lines.push(`Nota adicional: ${baseMessage}`);
+    return lines.join(" | ");
   };
 
   const handleInvestmentSuccess = () => {
-    const zoneLabel = getOptionLabel(zoneOptions, zone, "es");
-    const objectiveLabel = getOptionLabel(objectiveOptions, objective, "es");
-    const budgetLabel = getOptionLabel(budgetOptions, budget, "es");
-    const formWhatsappMessage = `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`;
-
     setObjective("");
     setBudget("");
     setInvestmentErrors({});
-    window.setTimeout(() => {
-      window.location.href = createWhatsAppHref(formWhatsappMessage);
-    }, 900);
+    setIsFormOpen(false);
   };
 
   return (
@@ -597,7 +595,6 @@ const InvestPage = () => {
             className="mt-2 space-y-5"
             showInterestField={false}
             showMessageField={false}
-            defaultInterest="other"
             submitLabel={t(copy.submit)}
             sendingLabel={t(copy.sending)}
             validateExtra={validateInvestmentFields}
