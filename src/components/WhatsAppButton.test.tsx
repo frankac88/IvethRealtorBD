@@ -26,7 +26,9 @@ describe("WhatsAppButton", () => {
     );
   });
 
-  it("opens Iveth WhatsApp with an English floating-button source message on English routes", () => {
+  it("opens Iveth WhatsApp with a Spanish floating-button source message on English routes", () => {
+    // Note: The path must match a real route in src/i18n/routes.ts for LanguageProvider to pick it up.
+    // /contact is the English path for routeKey "contact"
     window.history.pushState({}, "", "/contact");
 
     render(
@@ -37,10 +39,11 @@ describe("WhatsAppButton", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("link", { name: /chat with iveth on whatsapp/i })).toHaveAttribute(
+    // The aria-label is translated, so we look for the English version
+    expect(screen.getByLabelText(/chat with iveth on whatsapp/i)).toHaveAttribute(
       "href",
       `https://wa.me/17868677180?text=${encodeURIComponent(
-        "Hi Iveth, I am coming from the floating WhatsApp button and I would like to chat.",
+        "Hola Iveth, vengo desde el botón flotante de WhatsApp y quiero conversar.",
       )}`,
     );
   });

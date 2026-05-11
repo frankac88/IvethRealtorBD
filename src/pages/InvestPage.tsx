@@ -275,7 +275,7 @@ const InvestPage = () => {
   const [budget, setBudget] = useState<BudgetValue | "">("");
   const [investmentErrors, setInvestmentErrors] = useState<InvestmentFormErrors>({});
 
-  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.investPage, language));
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.investPage));
 
   const labels = useMemo(
     () => ({
@@ -337,9 +337,7 @@ const InvestPage = () => {
     const zoneLabel = getOptionLabel(zoneOptions, zone, "es");
     const objectiveLabel = getOptionLabel(objectiveOptions, objective, "es");
     const budgetLabel = getOptionLabel(budgetOptions, budget, "es");
-    const formWhatsappMessage = language === "es"
-      ? `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`
-      : `Hi Iveth, I completed the Invest in Florida form. Area: ${zoneLabel}. Goal: ${objectiveLabel}. Budget: ${budgetLabel}.`;
+    const formWhatsappMessage = `Hola Iveth, completé el formulario de Invertir en Florida. Zona: ${zoneLabel}. Objetivo: ${objectiveLabel}. Presupuesto: ${budgetLabel}.`;
 
     setObjective("");
     setBudget("");
@@ -369,7 +367,7 @@ const InvestPage = () => {
           })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 8%" }}
-          fetchPriority="high"
+          fetchpriority="high"
           width={1920}
           height={1080}
         />

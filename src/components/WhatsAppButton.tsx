@@ -12,7 +12,7 @@ const whatsappButtonTranslations = {
 const WhatsAppButton = () => {
   const t = useT();
   const { language } = useLanguage();
-  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.floatingButton, language));
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.floatingButton));
 
   return (
     <div className="pointer-events-none fixed bottom-8 left-0 z-50 flex w-[100dvw] max-w-[100dvw] justify-end px-8 sm:bottom-10 sm:px-10">

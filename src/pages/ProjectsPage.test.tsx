@@ -173,7 +173,7 @@ describe("ProjectsPage flagship redesign", () => {
     renderProjectsPage("/projects");
 
     const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
-      "Hi Iveth, I am coming from the projects page and I want help choosing an opportunity.",
+      "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
     )}`;
 
     expect(screen.getAllByRole("link", { name: /^whatsapp$/i })[0]).toHaveAttribute("href", expectedHref);
@@ -193,7 +193,7 @@ describe("ProjectsPage flagship redesign", () => {
     renderProjectsPage("/projects");
 
     const expectedHref = `https://wa.me/17868677180?text=${encodeURIComponent(
-      "Hi Iveth, I am coming from the EDGE HOUSE project detail and I would like pricing and availability.",
+      "Hola Iveth, vengo desde el detalle del proyecto EDGE HOUSE y quiero recibir precios y disponibilidad.",
     )}`;
 
     expect(screen.getAllByRole("link", { name: /request info/i })[0]).toHaveAttribute("href", expectedHref);

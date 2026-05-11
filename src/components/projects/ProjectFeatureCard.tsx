@@ -16,10 +16,8 @@ const labels = {
   units: { es: "Unidades", en: "Units" },
 } as const;
 
-const getProjectInquiryMessage = (projectTitle: string, language: "es" | "en") =>
-  language === "es"
-    ? `Hola Iveth, vengo desde el detalle del proyecto ${projectTitle} y quiero recibir precios y disponibilidad.`
-    : `Hi Iveth, I am coming from the ${projectTitle} project detail and I would like pricing and availability.`;
+const getProjectInquiryMessage = (projectTitle: string, _language?: string) =>
+  `Hola Iveth, vengo desde el detalle del proyecto ${projectTitle} y quiero recibir precios y disponibilidad.`;
 
 export function ProjectFeatureCard({
   project,

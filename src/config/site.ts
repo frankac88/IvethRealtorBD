@@ -7,34 +7,15 @@ export const createWhatsAppHref = (message: string) =>
   `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
 export const whatsappMessages = {
-  default: {
-    es: "Hola Iveth, quiero conocer oportunidades para invertir en Miami. ¿Podemos conversar?",
-    en: "Hi Iveth, I would like to learn about investment opportunities in Miami. Can we chat?",
-  },
-  floatingButton: {
-    es: "Hola Iveth, vengo desde el botón flotante de WhatsApp y quiero conversar.",
-    en: "Hi Iveth, I am coming from the floating WhatsApp button and I would like to chat.",
-  },
-  homePage: {
-    es: "Hola Iveth, vengo desde la página de inicio y quiero hablar sobre oportunidades en Florida.",
-    en: "Hi Iveth, I am coming from the home page and I want to talk about opportunities in Florida.",
-  },
-  contactPage: {
-    es: "Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.",
-    en: "Hi Iveth, I am coming from the contact page and I would like to get in touch with you.",
-  },
-  investPage: {
-    es: "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
-    en: "Hi Iveth, I am coming from the Invest in Florida page and I would like investment guidance.",
-  },
-  projectsPage: {
-    es: "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
-    en: "Hi Iveth, I am coming from the projects page and I want help choosing an opportunity.",
-  },
+  default: "Hola Iveth, quiero conocer oportunidades para invertir en Miami. ¿Podemos conversar?",
+  floatingButton: "Hola Iveth, vengo desde el botón flotante de WhatsApp y quiero conversar.",
+  homePage: "Hola Iveth, vengo desde la página de inicio y quiero hablar sobre oportunidades en Florida.",
+  contactPage: "Hola Iveth, vengo desde la página de contacto y quiero comunicarme contigo.",
+  investPage: "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
+  projectsPage: "Hola Iveth, vengo desde la página de proyectos y quiero ayuda para elegir una oportunidad.",
 } as const;
 
-export const getWhatsAppMessage = (message: { es: string; en: string }, language: Language) =>
-  message[language];
+export const getWhatsAppMessage = (message: string, _language?: Language) => message;
 
 export const siteConfig = {
   brand: {
@@ -60,9 +41,6 @@ export const siteConfig = {
     number: whatsappNumber,
     defaultMessage: whatsappMessages.default,
     href: `https://wa.me/${whatsappNumber}`,
-    hrefWithMessage: {
-      es: createWhatsAppHref(whatsappMessages.default.es),
-      en: createWhatsAppHref(whatsappMessages.default.en),
-    },
+    hrefWithMessage: createWhatsAppHref(whatsappMessages.default),
   },
 } as const;

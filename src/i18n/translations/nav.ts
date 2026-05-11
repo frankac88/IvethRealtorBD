@@ -1,7 +1,7 @@
 export const navTranslations = {
   home: { es: "Inicio", en: "Home" },
   about: { es: "Sobre Iveth", en: "About Iveth" },
-  team: { es: "Equipo", en: "Team" },
+  team: { es: "Equipos", en: "Team" },
   projects: { es: "Proyectos", en: "Projects" },
   invest: { es: "Invertir", en: "Invest" },
   financing: { es: "Financiamiento", en: "Financing" },

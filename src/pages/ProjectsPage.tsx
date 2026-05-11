@@ -179,7 +179,7 @@ const ProjectsPage = () => {
   });
   const contactPath = `${getLocalizedPath("contact", language)}#contact-form-view`;
   const projectsWhatsappHref = createWhatsAppHref(
-    getWhatsAppMessage(whatsappMessages.projectsPage, language),
+    getWhatsAppMessage(whatsappMessages.projectsPage),
   );
 
   useEffect(() => {
@@ -248,7 +248,7 @@ const ProjectsPage = () => {
             })}
             className="h-full w-full object-cover object-[center_60%]"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             width={1920}
             height={1080}
           />

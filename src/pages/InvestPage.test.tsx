@@ -69,7 +69,7 @@ describe("InvestPage", () => {
     expect(screen.getAllByRole("link", { name: /direct whatsapp/i })[0]).toHaveAttribute(
       "href",
       `https://wa.me/17868677180?text=${encodeURIComponent(
-        "Hi Iveth, I am coming from the Invest in Florida page and I would like investment guidance.",
+        "Hola Iveth, vengo desde la página Invertir en Florida y quiero asesoría de inversión.",
       )}`,
     );
   });

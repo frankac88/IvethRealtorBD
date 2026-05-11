@@ -32,7 +32,7 @@ const Index = () => {
   const h = homeTranslations;
   const { data: featuredProjects = [], isLoading: isLoadingFeaturedProjects } = useFeaturedProjectsQuery(3);
   const contactFormHref = `${getLocalizedPath("contact", language)}#contact-form-view`;
-  const homeWhatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.homePage, language));
+  const homeWhatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.homePage));
 
   const whyItems = [
     { icon: TrendingUp, ...h.whyItems.appreciation },

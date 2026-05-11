@@ -40,7 +40,7 @@ const AboutPage = () => {
                 <Link to={contactFormHref}>{t(a.cta)} <ArrowRight size={16} /></Link>
               </Button>
             </div>
-            <img src={ivethImg} alt="Iveth Coll - International Real Estate Advisor" className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm" loading="eager" fetchPriority="high" width={800} height={1000} />
+            <img src={ivethImg} alt="Iveth Coll - International Real Estate Advisor" className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm" loading="eager" fetchpriority="high" width={800} height={1000} />
           </div>
         </div>
       </section>

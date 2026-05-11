@@ -17,7 +17,7 @@ const ContactPage = () => {
   const { language } = useLanguage();
   const t = useT();
   const c = contactTranslations;
-  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.contactPage, language));
+  const whatsappHref = createWhatsAppHref(getWhatsAppMessage(whatsappMessages.contactPage));
 
   useEffect(() => {
     if (location.hash !== "#contact-form-view") return;

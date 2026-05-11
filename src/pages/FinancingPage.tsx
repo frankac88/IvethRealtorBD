@@ -27,7 +27,7 @@ const FinancingPage = () => {
             alt=""
             aria-hidden="true"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             className="h-full w-full object-cover object-[center_80%]"
             width={1920}
             height={1080}

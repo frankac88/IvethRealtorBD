@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import equalHousingLogo from "@/assets/equal-housing-logo-light.png";
@@ -11,6 +11,7 @@ import { footerTranslations } from "@/i18n/translations/footer";
 
 const Footer = () => {
   const { language } = useLanguage();
+  const location = useLocation();
   const t = useT();
   const ft = footerTranslations;
 
@@ -37,7 +38,16 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <div>
-            <div className="group inline-block">
+            <Link
+              to={getLocalizedPath("home", language)}
+              onClick={(e) => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (location.pathname === getLocalizedPath("home", language)) {
+                  e.preventDefault();
+                }
+              }}
+              className="group inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/40 focus-visible:ring-offset-2 focus-visible:ring-offset-foreground rounded-lg"
+            >
               <img
                 src={brandAssets.footerLogo}
                 alt="Iveth Coll logo"
@@ -46,7 +56,7 @@ const Footer = () => {
                 width={800}
                 height={800}
               />
-            </div>
+            </Link>
             <p className="type-body-sm mb-6 text-primary-foreground">
               {t(ft.subtitle)}
             </p>
@@ -60,9 +70,12 @@ const Footer = () => {
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
-                  onClick={() => {
+                  onClick={(e) => {
                     if (link.routeKey === "home") {
                       window.scrollTo({ top: 0, behavior: "smooth" });
+                      if (location.pathname === getLocalizedPath("home", language)) {
+                        e.preventDefault();
+                      }
                     }
                   }}
                   className="type-body-sm text-primary-foreground transition-colors hover:text-primary-foreground/70"
