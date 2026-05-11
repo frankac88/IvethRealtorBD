@@ -17,6 +17,7 @@ const Footer = () => {
   const links = [
     { label: t(ft.navLinks.home), routeKey: "home" as LocalizedRouteKey },
     { label: t(ft.navLinks.about), routeKey: "about" as LocalizedRouteKey },
+    { label: t(ft.navLinks.team), routeKey: "team" as LocalizedRouteKey },
     { label: t(ft.navLinks.projects), routeKey: "projects" as LocalizedRouteKey },
     { label: t(ft.navLinks.invest), routeKey: "invest" as LocalizedRouteKey },
     { label: t(ft.navLinks.financing), routeKey: "financing" as LocalizedRouteKey },
@@ -59,6 +60,11 @@ const Footer = () => {
                 <Link
                   key={link.routeKey}
                   to={getLocalizedPath(link.routeKey, language)}
+                  onClick={() => {
+                    if (link.routeKey === "home") {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
                   className="type-body-sm text-primary-foreground transition-colors hover:text-primary-foreground/70"
                 >
                   {link.label}

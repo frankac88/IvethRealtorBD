@@ -10,6 +10,7 @@ export const footerTranslations = {
   navLinks: {
     home: { es: "Inicio", en: "Home" },
     about: { es: "Sobre Iveth", en: "About Iveth" },
+    team: { es: "Equipo", en: "Team" },
     projects: { es: "Proyectos", en: "Projects" },
     invest: { es: "Invertir en Florida", en: "Invest in Florida" },
     financing: { es: "Financiamiento", en: "Financing" },
