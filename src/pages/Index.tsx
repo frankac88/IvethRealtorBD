@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, TrendingUp, Shield, Building2, ArrowRight, ExternalLink, MessageCircle } from "lucide-react";
@@ -27,6 +28,8 @@ const WhatsappChatIcon = () => (
 );
 
 const Index = () => {
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
   const { language } = useLanguage();
   const t = useT();
   const h = homeTranslations;
@@ -41,6 +44,33 @@ const Index = () => {
     { icon: MapPin, ...h.whyItems.location },
   ];
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(loadHeroVideo, { timeout: 1200 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(loadHeroVideo, 800);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoadHeroVideo || !heroVideoRef.current) {
+      return;
+    }
+
+    heroVideoRef.current.load();
+    void heroVideoRef.current.play().catch(() => {
+      // Autoplay can be blocked by browser policies; the poster preserves the hero visual.
+    });
+  }, [shouldLoadHeroVideo]);
+
   return (
     <Layout>
       <SEO 
@@ -51,6 +81,7 @@ const Index = () => {
       {/* Hero */}
       <section className="relative flex h-[90vh] min-h-[600px] items-center justify-center overflow-hidden">
         <video
+          ref={heroVideoRef}
           className="absolute inset-0 h-full w-full object-cover"
           autoPlay
           muted
@@ -66,7 +97,7 @@ const Index = () => {
             event.currentTarget.playbackRate = 0.5;
           }}
         >
-          <source src="/videos/hero-video.mp4" type="video/mp4" />
+          {shouldLoadHeroVideo ? <source src="/videos/hero-video.mp4" type="video/mp4" /> : null}
         </video>
         <div className="absolute inset-0 bg-foreground/50" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center text-primary-foreground">
