@@ -16,7 +16,7 @@ export const SEO = ({
   title,
   description = siteConfig.brand.description,
   canonicalUrl,
-  ogImage = "https://www.ivethcollrealtor.com/iveth-og.webp",
+  ogImage = "https://www.ivethcollrealtor.com/iveth-social-share.jpg",
   ogType = "website",
   noindex = false,
   structuredData,
