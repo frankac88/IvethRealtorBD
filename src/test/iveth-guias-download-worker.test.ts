@@ -83,4 +83,30 @@ describe("iveth-guias-download-worker", () => {
     expect(bucket.get).not.toHaveBeenCalled();
     expect(bucket.list).not.toHaveBeenCalled();
   });
+
+  it("returns UTF-8 content disposition with the original PDF filename", async () => {
+    const objectKey = "Guía de Preconstrucción en Florida.pdf";
+    const bucket = createBucket([objectKey]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        preconstruction: objectKey,
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const expires = Math.floor(Date.now() / 1000) + 300;
+    const signature = await signDownload(env.DOWNLOAD_SIGNING_SECRET, `preconstruction.${expires}`);
+    const response = await worker.fetch(
+      new Request(`https://example.com/download?guide=preconstruction&expires=${expires}&signature=${signature}`),
+      env,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Type")).toBe("application/pdf");
+    expect(response.headers.get("Content-Disposition")).toBe(
+      "attachment; filename=\"Guia de Preconstruccion en Florida.pdf\"; filename*=UTF-8''Gu%C3%ADa%20de%20Preconstrucci%C3%B3n%20en%20Florida.pdf",
+    );
+    expect(bucket.get).toHaveBeenCalledWith(objectKey);
+  });
 });

@@ -85,6 +85,23 @@ function getDownloadName(key) {
   return parts[parts.length - 1] || "guia.pdf";
 }
 
+function toAsciiFilename(filename) {
+  return filename
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\x20-\x7E]/g, "")
+    .replace(/["\\]/g, "")
+    .trim() || "guia.pdf";
+}
+
+function getContentDisposition(key) {
+  const filename = getDownloadName(key);
+  const fallbackFilename = toAsciiFilename(filename);
+  const encodedFilename = encodeURIComponent(filename);
+
+  return `attachment; filename="${fallbackFilename}"; filename*=UTF-8''${encodedFilename}`;
+}
+
 export default {
   async fetch(request, env) {
     if (request.method === "OPTIONS") {
@@ -156,7 +173,7 @@ export default {
     return new Response(object.body, {
       headers: {
         "Content-Type": object.httpMetadata?.contentType || getContentType(objectKey),
-        "Content-Disposition": `attachment; filename="${getDownloadName(objectKey).replace(/"/g, "")}"`,
+        "Content-Disposition": getContentDisposition(objectKey),
         "Cache-Control": "private, no-store",
       },
     });
