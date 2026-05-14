@@ -371,4 +371,84 @@ describe("GuidesPage", () => {
       expect(mockLocationAssign).toHaveBeenCalledWith(guideDownloadUrl);
     }, { timeout: 1500 });
   });
+
+  it("allows the english guides page to download when only the spanish version is available", async () => {
+    mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+      if (url.includes("/availability")) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            guides: {
+              investor: true,
+              preconstruction: false,
+              financing: false,
+              buyer: false,
+            },
+          }),
+        });
+      }
+
+      if (init?.method === "HEAD") {
+        return Promise.resolve({ ok: true });
+      }
+
+      return Promise.resolve({ ok: true });
+    });
+
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor&language=en";
+    mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
+    renderGuidesPage("/guides");
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability?language=en"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Download Guide" })[0]);
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("allows the spanish guides page to download when only the english version is available", async () => {
+    mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
+
+      if (url.includes("/availability")) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            guides: {
+              investor: false,
+              preconstruction: false,
+              financing: true,
+              buyer: false,
+            },
+          }),
+        });
+      }
+
+      if (init?.method === "HEAD") {
+        return Promise.resolve({ ok: true });
+      }
+
+      return Promise.resolve({ ok: true });
+    });
+
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=financing&language=es";
+    mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
+    renderGuidesPage("/guias");
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability?language=es"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[2]);
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
 });

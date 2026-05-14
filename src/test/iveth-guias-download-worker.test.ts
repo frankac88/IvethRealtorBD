@@ -86,7 +86,59 @@ describe("iveth-guias-download-worker", () => {
     });
     expect(bucket.head).toHaveBeenCalledWith("guides/investor-en.pdf");
     expect(bucket.head).toHaveBeenCalledWith("guides/financing-en.pdf");
-    expect(bucket.head).not.toHaveBeenCalledWith("guides/preconstruction-es.pdf");
+    expect(bucket.head).toHaveBeenCalledWith("guides/preconstruction-es.pdf");
+  });
+
+  it("reports english availability as true when only the spanish guide exists", async () => {
+    const bucket = createBucket(["guides/investor-es.pdf"]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        investor: {
+          es: "guides/investor-es.pdf",
+        },
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const response = await worker.fetch(new Request("https://example.com/availability?language=en"), env);
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      guides: {
+        investor: true,
+        preconstruction: false,
+        financing: false,
+        buyer: false,
+      },
+    });
+    expect(bucket.head).toHaveBeenCalledWith("guides/investor-es.pdf");
+  });
+
+  it("reports spanish availability as true when only the english guide exists", async () => {
+    const bucket = createBucket(["guides/buyer-en.pdf"]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        buyer: {
+          en: "guides/buyer-en.pdf",
+        },
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const response = await worker.fetch(new Request("https://example.com/availability?language=es"), env);
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      guides: {
+        investor: false,
+        preconstruction: false,
+        financing: false,
+        buyer: true,
+      },
+    });
+    expect(bucket.head).toHaveBeenCalledWith("guides/buyer-en.pdf");
   });
 
   it("returns 404 for download requests without a mapped object", async () => {
@@ -137,6 +189,54 @@ describe("iveth-guias-download-worker", () => {
     expect(response.headers.get("Content-Disposition")).toBe(
       "attachment; filename=\"Guia para Inversionistas Internacionales EN.pdf\"; filename*=UTF-8''Gu%C3%ADa%20para%20Inversionistas%20Internacionales%20EN.pdf",
     );
+    expect(bucket.get).toHaveBeenCalledWith(objectKey);
+  });
+
+  it("falls back to the spanish guide when english is requested and only spanish exists", async () => {
+    const objectKey = "Guía para Inversionistas Internacionales ES.pdf";
+    const bucket = createBucket([objectKey]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        investor: {
+          es: objectKey,
+        },
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const expires = Math.floor(Date.now() / 1000) + 300;
+    const signature = await signDownload(env.DOWNLOAD_SIGNING_SECRET, `investor.en.${expires}`);
+    const response = await worker.fetch(
+      new Request(`https://example.com/download?guide=investor&language=en&expires=${expires}&signature=${signature}`),
+      env,
+    );
+
+    expect(response.status).toBe(200);
+    expect(bucket.get).toHaveBeenCalledWith(objectKey);
+  });
+
+  it("falls back to the english guide when spanish is requested and only english exists", async () => {
+    const objectKey = "Strategic Buyer Guide EN.pdf";
+    const bucket = createBucket([objectKey]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        buyer: {
+          en: objectKey,
+        },
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const expires = Math.floor(Date.now() / 1000) + 300;
+    const signature = await signDownload(env.DOWNLOAD_SIGNING_SECRET, `buyer.es.${expires}`);
+    const response = await worker.fetch(
+      new Request(`https://example.com/download?guide=buyer&language=es&expires=${expires}&signature=${signature}`),
+      env,
+    );
+
+    expect(response.status).toBe(200);
     expect(bucket.get).toHaveBeenCalledWith(objectKey);
   });
 

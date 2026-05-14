@@ -61,20 +61,47 @@ function parseLanguage(value) {
   return LANGUAGE_KEYS.has(value) ? value : DEFAULT_LANGUAGE;
 }
 
-function resolveObjectKey(env, guide, language = DEFAULT_LANGUAGE) {
+function getConfiguredObjectKeys(env, guide) {
   const objectMap = parseObjectMap(env);
   const entry = objectMap[guide];
 
   if (typeof entry === "string") {
-    return language === DEFAULT_LANGUAGE ? entry : null;
+    return {
+      es: entry,
+      en: null,
+    };
   }
 
   if (!entry || typeof entry !== "object") {
-    return null;
+    return {
+      es: null,
+      en: null,
+    };
   }
 
-  const localizedKey = entry[language];
-  return typeof localizedKey === "string" && localizedKey.trim() ? localizedKey : null;
+  return {
+    es: typeof entry.es === "string" && entry.es.trim() ? entry.es : null,
+    en: typeof entry.en === "string" && entry.en.trim() ? entry.en : null,
+  };
+}
+
+function resolveObjectKey(env, guide, language = DEFAULT_LANGUAGE) {
+  const configuredKeys = getConfiguredObjectKeys(env, guide);
+  const requestedKey = configuredKeys[language];
+
+  if (requestedKey) {
+    return requestedKey;
+  }
+
+  const alternateLanguage = language === "es" ? "en" : "es";
+  const alternateKey = configuredKeys[alternateLanguage];
+  const configuredCount = [configuredKeys.es, configuredKeys.en].filter(Boolean).length;
+
+  if (configuredCount === 1 && alternateKey) {
+    return alternateKey;
+  }
+
+  return null;
 }
 
 async function hasGuideObject(env, guide, language) {
