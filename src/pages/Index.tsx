@@ -56,8 +56,8 @@ const Index = () => {
       return () => window.cancelIdleCallback(idleId);
     }
 
-    const timeoutId = window.setTimeout(loadHeroVideo, 800);
-    return () => window.clearTimeout(timeoutId);
+    const timeoutId = setTimeout(loadHeroVideo, 800);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
