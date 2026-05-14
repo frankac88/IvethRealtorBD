@@ -10,6 +10,7 @@ const mockMutateAsync = vi.fn();
 const mockToast = vi.fn();
 const mockLocationAssign = vi.fn();
 const mockFetch = vi.fn();
+const LANGUAGE_STORAGE_KEY = "miami-lux-advisor:language";
 const ROUTER_FUTURE_FLAGS = {
   v7_startTransition: true,
   v7_relativeSplatPath: true,
@@ -45,9 +46,12 @@ vi.mock("@/hooks/use-toast", () => ({
   }),
 }));
 
-const renderGuidesPage = () => {
+const renderGuidesPage = (initialEntry = "/guias") => {
+  window.history.pushState({}, "", initialEntry);
+  window.localStorage.setItem(LANGUAGE_STORAGE_KEY, initialEntry === "/guides" ? "en" : "es");
+
   render(
-    <MemoryRouter future={ROUTER_FUTURE_FLAGS}>
+    <MemoryRouter future={ROUTER_FUTURE_FLAGS} initialEntries={[initialEntry]}>
       <LanguageProvider>
         <GuidesPage />
       </LanguageProvider>
@@ -90,13 +94,15 @@ describe("GuidesPage", () => {
       const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 
       if (url.includes("/availability")) {
+        const language = new URL(url).searchParams.get("language");
+
         return Promise.resolve({
           ok: true,
           json: async () => ({
             guides: {
-              investor: true,
+              investor: language === "en" ? false : true,
               preconstruction: false,
-              financing: false,
+              financing: language === "en" ? true : false,
               buyer: false,
             },
           }),
@@ -116,7 +122,7 @@ describe("GuidesPage", () => {
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining("/availability"),
+        expect.stringContaining("/availability?language=es"),
         expect.objectContaining({ method: "GET", cache: "no-store" }),
       );
     });
@@ -151,13 +157,13 @@ describe("GuidesPage", () => {
   });
 
   it("captures a lead from the selected guide and redirects to the temporary download link", async () => {
-    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor&language=es";
     mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
     renderGuidesPage();
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining("/availability"),
+        expect.stringContaining("/availability?language=es"),
         expect.objectContaining({ method: "GET", cache: "no-store" }),
       );
     });
@@ -188,6 +194,7 @@ describe("GuidesPage", () => {
         honeypot: "",
         startedAt: expect.any(Number),
         guideKey: "investor",
+        language: "es",
       });
     });
 
@@ -203,14 +210,14 @@ describe("GuidesPage", () => {
   });
 
   it("shows a coming soon message and does not open the form when the guide is not available", async () => {
-    renderGuidesPage();
+    renderGuidesPage("/guides");
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Descargar Guía" })[1]);
+    fireEvent.click(screen.getAllByRole("button", { name: "Download Guide" })[0]);
 
     await waitFor(() => {
       expect(mockToast).toHaveBeenCalledWith({
-        title: "Información",
-        description: "Esta guía aún no está disponible. La subiremos pronto.",
+        title: "Information",
+        description: "This guide is not available yet. We will upload it soon.",
         variant: "info",
       });
     });
@@ -249,19 +256,21 @@ describe("GuidesPage", () => {
   });
 
   it("shows a fallback modal when the automatic download cannot be validated", async () => {
-    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor";
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=investor&language=es";
     mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
     mockFetch.mockImplementation((input: RequestInfo | URL, init?: RequestInit) => {
       const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 
       if (url.includes("/availability")) {
+        const language = new URL(url).searchParams.get("language");
+
         return Promise.resolve({
           ok: true,
           json: async () => ({
             guides: {
-              investor: true,
+              investor: language === "en" ? false : true,
               preconstruction: false,
-              financing: false,
+              financing: language === "en" ? true : false,
               buyer: false,
             },
           }),
@@ -278,7 +287,7 @@ describe("GuidesPage", () => {
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining("/availability"),
+        expect.stringContaining("/availability?language=es"),
         expect.objectContaining({ method: "GET", cache: "no-store" }),
       );
     });
@@ -301,7 +310,7 @@ describe("GuidesPage", () => {
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining("/availability"),
+        expect.stringContaining("/availability?language=es"),
         expect.objectContaining({ method: "GET", cache: "no-store" }),
       );
     });
@@ -317,5 +326,49 @@ describe("GuidesPage", () => {
       ),
     );
     expect(whatsappLinks[0]).toHaveAttribute("href", expect.stringContaining("wa.me/17868677180"));
+  });
+
+  it("submits english guide leads with english availability and localized download urls", async () => {
+    const guideDownloadUrl = "https://iveth-guias-download.iveth-guias.workers.dev/download?guide=financing&language=en";
+    mockMutateAsync.mockResolvedValueOnce({ guideDownloadUrl });
+    renderGuidesPage("/guides");
+
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.stringContaining("/availability?language=en"),
+        expect.objectContaining({ method: "GET", cache: "no-store" }),
+      );
+    });
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Download Guide" })[2]);
+
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "Jane Doe" },
+    });
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "jane@test.com" },
+    });
+
+    const dialog = screen.getByRole("dialog");
+    fireEvent.submit(within(dialog).getByRole("button", { name: "Download Guide" }).closest("form")!);
+
+    await waitFor(() => {
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: "Jane Doe",
+        email: "jane@test.com",
+        phone: "",
+        country: "Florida Guides",
+        interest: "Guide · SMART FINANCING",
+        message: expect.stringContaining("SMART FINANCING"),
+        honeypot: "",
+        startedAt: expect.any(Number),
+        guideKey: "financing",
+        language: "en",
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockLocationAssign).toHaveBeenCalledWith(guideDownloadUrl);
+    }, { timeout: 1500 });
   });
 });

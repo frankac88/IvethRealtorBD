@@ -11,6 +11,8 @@ const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
 const PHONE_REGEX = /^\+?[0-9\s().-]{7,20}$/;
 const COUNTRY_REGEX = /^[\p{L}\s'.-]{2,60}$/u;
 const GUIDE_KEYS = ["investor", "preconstruction", "financing", "buyer"] as const;
+const GUIDE_LANGUAGE_KEYS = ["es", "en"] as const;
+const DEFAULT_GUIDE_LANGUAGE = "es";
 const textEncoder = new TextEncoder();
 
 const BodySchema = z.object({
@@ -23,6 +25,7 @@ const BodySchema = z.object({
   honeypot: z.string().max(255).optional().default(""),
   startedAt: z.number().int().positive(),
   guideKey: z.enum(GUIDE_KEYS).optional(),
+  language: z.enum(GUIDE_LANGUAGE_KEYS).optional(),
 });
 
 const suspiciousSuccessResponse = (req: Request) => new Response(
@@ -50,7 +53,10 @@ async function signGuideDownloadToken(secret: string, payload: string) {
   return toHex(await crypto.subtle.sign("HMAC", key, textEncoder.encode(payload)));
 }
 
-async function createGuideDownloadUrl(guideKey: typeof GUIDE_KEYS[number]) {
+async function createGuideDownloadUrl(
+  guideKey: typeof GUIDE_KEYS[number],
+  language: typeof GUIDE_LANGUAGE_KEYS[number] = DEFAULT_GUIDE_LANGUAGE,
+) {
   const baseUrl = Deno.env.get("GUIDE_DOWNLOAD_BASE_URL");
   const signingSecret = Deno.env.get("GUIDE_DOWNLOAD_SIGNING_SECRET");
 
@@ -59,10 +65,11 @@ async function createGuideDownloadUrl(guideKey: typeof GUIDE_KEYS[number]) {
   }
 
   const expires = Math.floor(Date.now() / 1000) + GUIDE_DOWNLOAD_LINK_TTL_SECONDS;
-  const signature = await signGuideDownloadToken(signingSecret, `${guideKey}.${expires}`);
+  const signature = await signGuideDownloadToken(signingSecret, `${guideKey}.${language}.${expires}`);
   const url = new URL("/download", baseUrl);
 
   url.searchParams.set("guide", guideKey);
+  url.searchParams.set("language", language);
   url.searchParams.set("expires", String(expires));
   url.searchParams.set("signature", signature);
 
@@ -130,7 +137,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { guideKey, honeypot, startedAt, ...leadData } = parsed.data;
+    const { guideKey, honeypot, startedAt, language, ...leadData } = parsed.data;
 
     if (honeypot.trim() !== "") {
       return suspiciousSuccessResponse(req);
@@ -179,7 +186,9 @@ Deno.serve(async (req) => {
       console.error("notify-lead failed:", notifyError);
     }
 
-    const guideDownloadUrl = guideKey ? await createGuideDownloadUrl(guideKey) : null;
+    const guideDownloadUrl = guideKey
+      ? await createGuideDownloadUrl(guideKey, language ?? DEFAULT_GUIDE_LANGUAGE)
+      : null;
 
     return new Response(JSON.stringify({ success: true, lead: data, guideDownloadUrl }), {
       status: 200,

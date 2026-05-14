@@ -34,18 +34,18 @@ async function signDownload(secret: string, payload: string) {
 }
 
 describe("iveth-guias-download-worker", () => {
-  it("reports real availability by guide key", async () => {
-    const bucket = createBucket(["guides/investor.pdf"]);
+  it("reports real availability by guide key for spanish", async () => {
+    const bucket = createBucket(["guides/investor-es.pdf"]);
     const env = {
       DOWNLOAD_SIGNING_SECRET: "secret",
       GUIDE_OBJECT_KEYS: JSON.stringify({
-        investor: "guides/investor.pdf",
-        preconstruction: "guides/missing.pdf",
+        investor: "guides/investor-es.pdf",
+        preconstruction: "guides/missing-es.pdf",
       }),
       GUIAS_BUCKET: bucket,
     };
 
-    const response = await worker.fetch(new Request("https://example.com/availability"), env);
+    const response = await worker.fetch(new Request("https://example.com/availability?language=es"), env);
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({
@@ -56,17 +56,45 @@ describe("iveth-guias-download-worker", () => {
         buyer: false,
       },
     });
-    expect(bucket.head).toHaveBeenCalledWith("guides/investor.pdf");
-    expect(bucket.head).toHaveBeenCalledWith("guides/missing.pdf");
+    expect(bucket.head).toHaveBeenCalledWith("guides/investor-es.pdf");
+    expect(bucket.head).toHaveBeenCalledWith("guides/missing-es.pdf");
     expect(bucket.list).not.toHaveBeenCalled();
   });
 
-  it("returns 404 for download requests without a mapped object", async () => {
-    const bucket = createBucket(["guides/investor.pdf"]);
+  it("reports real availability by guide key for english", async () => {
+    const bucket = createBucket(["guides/investor-en.pdf", "guides/financing-en.pdf"]);
     const env = {
       DOWNLOAD_SIGNING_SECRET: "secret",
       GUIDE_OBJECT_KEYS: JSON.stringify({
-        investor: "guides/investor.pdf",
+        investor: { es: "guides/investor-es.pdf", en: "guides/investor-en.pdf" },
+        financing: { es: "guides/financing-es.pdf", en: "guides/financing-en.pdf" },
+        preconstruction: "guides/preconstruction-es.pdf",
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const response = await worker.fetch(new Request("https://example.com/availability?language=en"), env);
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      guides: {
+        investor: true,
+        preconstruction: false,
+        financing: true,
+        buyer: false,
+      },
+    });
+    expect(bucket.head).toHaveBeenCalledWith("guides/investor-en.pdf");
+    expect(bucket.head).toHaveBeenCalledWith("guides/financing-en.pdf");
+    expect(bucket.head).not.toHaveBeenCalledWith("guides/preconstruction-es.pdf");
+  });
+
+  it("returns 404 for download requests without a mapped object", async () => {
+    const bucket = createBucket(["guides/investor-es.pdf"]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        investor: "guides/investor-es.pdf",
       }),
       GUIAS_BUCKET: bucket,
     };
@@ -82,6 +110,34 @@ describe("iveth-guias-download-worker", () => {
     await expect(response.json()).resolves.toEqual({ error: "Guide file not found" });
     expect(bucket.get).not.toHaveBeenCalled();
     expect(bucket.list).not.toHaveBeenCalled();
+  });
+
+  it("downloads the localized english guide when the signed language is en", async () => {
+    const objectKey = "Guía para Inversionistas Internacionales EN.pdf";
+    const bucket = createBucket([objectKey]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        investor: {
+          es: "Guía para Inversionistas Internacionales ES.pdf",
+          en: objectKey,
+        },
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const expires = Math.floor(Date.now() / 1000) + 300;
+    const signature = await signDownload(env.DOWNLOAD_SIGNING_SECRET, `investor.en.${expires}`);
+    const response = await worker.fetch(
+      new Request(`https://example.com/download?guide=investor&language=en&expires=${expires}&signature=${signature}`),
+      env,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Disposition")).toBe(
+      "attachment; filename=\"Guia para Inversionistas Internacionales EN.pdf\"; filename*=UTF-8''Gu%C3%ADa%20para%20Inversionistas%20Internacionales%20EN.pdf",
+    );
+    expect(bucket.get).toHaveBeenCalledWith(objectKey);
   });
 
   it("returns UTF-8 content disposition with the original PDF filename", async () => {
@@ -107,6 +163,28 @@ describe("iveth-guias-download-worker", () => {
     expect(response.headers.get("Content-Disposition")).toBe(
       "attachment; filename=\"Guia de Preconstruccion en Florida.pdf\"; filename*=UTF-8''Gu%C3%ADa%20de%20Preconstrucci%C3%B3n%20en%20Florida.pdf",
     );
+    expect(bucket.get).toHaveBeenCalledWith(objectKey);
+  });
+
+  it("accepts legacy spanish signatures without a language query param", async () => {
+    const objectKey = "Guía de Financiamiento Inteligente ES.pdf";
+    const bucket = createBucket([objectKey]);
+    const env = {
+      DOWNLOAD_SIGNING_SECRET: "secret",
+      GUIDE_OBJECT_KEYS: JSON.stringify({
+        financing: "Guía de Financiamiento Inteligente ES.pdf",
+      }),
+      GUIAS_BUCKET: bucket,
+    };
+
+    const expires = Math.floor(Date.now() / 1000) + 300;
+    const signature = await signDownload(env.DOWNLOAD_SIGNING_SECRET, `financing.${expires}`);
+    const response = await worker.fetch(
+      new Request(`https://example.com/download?guide=financing&expires=${expires}&signature=${signature}`),
+      env,
+    );
+
+    expect(response.status).toBe(200);
     expect(bucket.get).toHaveBeenCalledWith(objectKey);
   });
 });

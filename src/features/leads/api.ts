@@ -1,4 +1,5 @@
 import type { Tables, TablesInsert } from "@/integrations/supabase/types";
+import type { Language } from "@/i18n/translations/types";
 
 import { supabase } from "@/integrations/supabase/client";
 
@@ -14,6 +15,7 @@ export interface LeadSubmissionPayload {
   honeypot: string;
   startedAt: number;
   guideKey?: string;
+  language?: Language;
 }
 
 export async function fetchLeads() {

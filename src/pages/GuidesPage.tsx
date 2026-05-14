@@ -25,6 +25,7 @@ import { useCreateLeadMutation } from "@/features/leads/hooks";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage, useT } from "@/i18n/LanguageContext";
 import { getLocalizedPath } from "@/i18n/routes";
+import type { Language } from "@/i18n/translations/types";
 import { guidesTranslations } from "@/i18n/translations/guides";
 import SEO from "@/components/SEO";
 
@@ -122,14 +123,14 @@ async function canStartDownload(downloadUrl: string) {
   }
 }
 
-async function fetchGuideAvailability(): Promise<GuideAvailability> {
-  const response = await fetch(
-    new URL("/availability", GUIDE_DOWNLOAD_BASE_URL).toString(),
-    {
-      method: "GET",
-      cache: "no-store",
-    },
-  );
+async function fetchGuideAvailability(language: Language): Promise<GuideAvailability> {
+  const url = new URL("/availability", GUIDE_DOWNLOAD_BASE_URL);
+  url.searchParams.set("language", language);
+
+  const response = await fetch(url.toString(), {
+    method: "GET",
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     throw new Error("Guide availability check failed");
@@ -173,7 +174,7 @@ const GuidesPage = () => {
   useEffect(() => {
     let isMounted = true;
 
-    void fetchGuideAvailability()
+    void fetchGuideAvailability(language)
       .then((availability) => {
         if (isMounted) {
           setGuideAvailability(availability);
@@ -188,7 +189,7 @@ const GuidesPage = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [language]);
 
   const openGuideDialog = (guideKey: GuideKey) => {
     setActiveGuideKey(guideKey);
@@ -221,6 +222,7 @@ const GuidesPage = () => {
         honeypot: "",
         startedAt,
         guideKey: activeGuideKey,
+        language,
       });
 
       if (!response?.guideDownloadUrl) {

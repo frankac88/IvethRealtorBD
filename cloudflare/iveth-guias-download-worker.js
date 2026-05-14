@@ -6,6 +6,8 @@ const corsHeaders = {
 
 const GUIDE_KEYS = new Set(["investor", "preconstruction", "financing", "buyer"]);
 const GUIDE_KEY_LIST = ["investor", "preconstruction", "financing", "buyer"];
+const LANGUAGE_KEYS = new Set(["es", "en"]);
+const DEFAULT_LANGUAGE = "es";
 const DEFAULT_MAX_AGE_SECONDS = 60 * 20;
 const textEncoder = new TextEncoder();
 
@@ -55,22 +57,37 @@ function parseObjectMap(env) {
   }
 }
 
-function resolveObjectKey(env, guide) {
-  const objectMap = parseObjectMap(env);
-  return objectMap[guide] || null;
+function parseLanguage(value) {
+  return LANGUAGE_KEYS.has(value) ? value : DEFAULT_LANGUAGE;
 }
 
-async function hasGuideObject(env, guide) {
-  const objectKey = resolveObjectKey(env, guide);
+function resolveObjectKey(env, guide, language = DEFAULT_LANGUAGE) {
+  const objectMap = parseObjectMap(env);
+  const entry = objectMap[guide];
+
+  if (typeof entry === "string") {
+    return language === DEFAULT_LANGUAGE ? entry : null;
+  }
+
+  if (!entry || typeof entry !== "object") {
+    return null;
+  }
+
+  const localizedKey = entry[language];
+  return typeof localizedKey === "string" && localizedKey.trim() ? localizedKey : null;
+}
+
+async function hasGuideObject(env, guide, language) {
+  const objectKey = resolveObjectKey(env, guide, language);
   if (!objectKey) return false;
 
   const object = await env.GUIAS_BUCKET.head(objectKey);
   return Boolean(object);
 }
 
-async function buildAvailabilityMap(env) {
+async function buildAvailabilityMap(env, language) {
   const entries = await Promise.all(
-    GUIDE_KEY_LIST.map(async (guide) => [guide, await hasGuideObject(env, guide)]),
+    GUIDE_KEY_LIST.map(async (guide) => [guide, await hasGuideObject(env, guide, language)]),
   );
 
   return Object.fromEntries(entries);
@@ -114,7 +131,8 @@ export default {
 
     const url = new URL(request.url);
     if (url.pathname === "/availability") {
-      return jsonResponse({ guides: await buildAvailabilityMap(env) });
+      const language = parseLanguage(url.searchParams.get("language"));
+      return jsonResponse({ guides: await buildAvailabilityMap(env, language) });
     }
 
     if (url.pathname !== "/download") {
@@ -126,6 +144,7 @@ export default {
     }
 
     const guide = url.searchParams.get("guide") || "investor";
+    const language = parseLanguage(url.searchParams.get("language"));
     const expires = Number(url.searchParams.get("expires") || 0);
     const signature = url.searchParams.get("signature") || "";
 
@@ -138,12 +157,22 @@ export default {
       return jsonResponse({ error: "Expired link" }, 403);
     }
 
-    const expectedSignature = await signToken(env.DOWNLOAD_SIGNING_SECRET, `${guide}.${expires}`);
-    if (!signature || !timingSafeEqual(signature, expectedSignature)) {
+    const expectedSignature = await signToken(env.DOWNLOAD_SIGNING_SECRET, `${guide}.${language}.${expires}`);
+    const legacyExpectedSignature = language === DEFAULT_LANGUAGE
+      ? await signToken(env.DOWNLOAD_SIGNING_SECRET, `${guide}.${expires}`)
+      : null;
+
+    const hasValidSignature = signature
+      && (
+        timingSafeEqual(signature, expectedSignature)
+        || (legacyExpectedSignature && timingSafeEqual(signature, legacyExpectedSignature))
+      );
+
+    if (!hasValidSignature) {
       return jsonResponse({ error: "Invalid link" }, 403);
     }
 
-    const objectKey = resolveObjectKey(env, guide);
+    const objectKey = resolveObjectKey(env, guide, language);
     if (!objectKey) {
       return jsonResponse({ error: "Guide file not found" }, 404);
     }

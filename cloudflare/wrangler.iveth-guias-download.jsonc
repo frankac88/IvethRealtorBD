@@ -1,0 +1,15 @@
+{
+  "name": "iveth-guias-download",
+  "main": "iveth-guias-download-worker.js",
+  "compatibility_date": "2026-05-14",
+  "workers_dev": true,
+  "r2_buckets": [
+    {
+      "binding": "GUIAS_BUCKET",
+      "bucket_name": "iveth-guias"
+    }
+  ],
+  "vars": {
+    "GUIDE_OBJECT_KEYS": "{\"investor\":{\"es\":\"Guía para Inversionistas Internacionales ES.pdf\",\"en\":\"Guía para Inversionistas Internacionales EN.pdf\"},\"financing\":{\"es\":\"Guía de Financiamiento Inteligente ES.pdf\",\"en\":\"Guía de Financiamiento Inteligente EN.pdf\"}}"
+  }
+}
