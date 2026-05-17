@@ -47,7 +47,7 @@ const AboutPage = () => {
               alt="Iveth Coll - International Real Estate Advisor"
               className="w-full max-w-md mx-auto object-cover aspect-[3/4] rounded-sm"
               loading="eager"
-              fetchPriority="high"
+                  fetchpriority="high"
               width={800}
               height={1000}
             />

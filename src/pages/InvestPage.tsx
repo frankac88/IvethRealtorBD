@@ -541,7 +541,7 @@ const InvestPage = () => {
           })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "center 8%" }}
-          fetchPriority="high"
+              fetchpriority="high"
           width={1920}
           height={1080}
         />

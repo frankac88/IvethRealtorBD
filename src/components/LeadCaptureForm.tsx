@@ -45,6 +45,11 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^\+?[0-9\s().-]{7,20}$/;
 const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
 const COUNTRY_REGEX = /^[\p{L}\s'.-]{2,60}$/u;
+const normalizeField = (value: FormDataEntryValue | null) => (typeof value === "string" ? value.trim() : "");
+const normalizeOptionalField = (value: FormDataEntryValue | null) => {
+  const normalized = normalizeField(value);
+  return normalized.length > 0 ? normalized : null;
+};
 
 const defaultInterestOptions: InterestOption[] = [
   { value: "precon", label: contactTranslations.interestOptions.precon },
@@ -98,7 +103,7 @@ const LeadCaptureForm = ({
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const baseMessage = (formData.get("message") as string)?.trim() || null;
+    const baseMessage = normalizeOptionalField(formData.get("message"));
     const context: LeadCaptureFormContext = {
       form,
       baseMessage,
@@ -107,13 +112,13 @@ const LeadCaptureForm = ({
 
     const leadInterest = getLeadInterest?.(context) ?? interest;
     const leadData = {
-      name: (formData.get("name") as string).trim(),
-      email: (formData.get("email") as string).trim(),
-      phone: (formData.get("phone") as string).trim(),
-      country: (formData.get("country") as string).trim(),
+      name: normalizeField(formData.get("name")),
+      email: normalizeField(formData.get("email")).toLowerCase(),
+      phone: normalizeField(formData.get("phone")),
+      country: normalizeField(formData.get("country")),
       interest: leadInterest,
       message: getLeadMessage?.(context) ?? baseMessage,
-      honeypot: ((formData.get("company") as string) ?? "").trim(),
+      honeypot: normalizeField(formData.get("company")),
       startedAt,
     };
 

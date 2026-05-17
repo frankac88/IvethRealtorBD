@@ -168,6 +168,20 @@ describe("ContactPage", () => {
     });
   });
 
+  it("normalizes email casing before submit", async () => {
+    mockMutateAsync.mockResolvedValueOnce({});
+    renderContactPage();
+
+    await fillRequiredFields({ email: "  Jane.Doe@Example.COM  " });
+    fireEvent.submit(screen.getByRole("button", { name: /enviar/i }).closest("form")!);
+
+    await waitFor(() => {
+      expect(mockMutateAsync).toHaveBeenCalledWith(expect.objectContaining({
+        email: "jane.doe@example.com",
+      }));
+    });
+  });
+
   it("blocks submit when a required field is missing", async () => {
     renderContactPage();
 

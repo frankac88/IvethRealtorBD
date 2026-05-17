@@ -1,10 +1,20 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.4";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { getCorsHeaders } from "../_shared/cors.ts";
+import {
+  createSourceFingerprint,
+  createSubmissionFingerprint,
+  extractClientIp,
+  LEAD_INTEREST_VALUES,
+  normalizeLeadSubmission,
+} from "../_shared/leadProtection.ts";
 
 const MIN_FORM_FILL_MS = 750;
 const GUIDE_MIN_FORM_FILL_MS = 150;
 const GUIDE_DOWNLOAD_LINK_TTL_SECONDS = 15 * 60;
+const DEDUPE_WINDOW_MINUTES = 15;
+const SOURCE_RATE_LIMIT_WINDOW_MINUTES = 10;
+const MAX_SUBMISSIONS_PER_SOURCE_WINDOW = 5;
 const EMAIL_RATE_LIMIT_WINDOW_MINUTES = 30;
 const MAX_SUBMISSIONS_PER_EMAIL_WINDOW = 3;
 const NAME_REGEX = /^[\p{L}\s'.-]{2,100}$/u;
@@ -14,13 +24,14 @@ const GUIDE_KEYS = ["investor", "preconstruction", "financing", "buyer"] as cons
 const GUIDE_LANGUAGE_KEYS = ["es", "en"] as const;
 const DEFAULT_GUIDE_LANGUAGE = "es";
 const textEncoder = new TextEncoder();
+const RATE_LIMIT_ERROR = "Too many requests. Please wait before trying again.";
 
 const BodySchema = z.object({
   name: z.string().trim().min(2).max(100).regex(NAME_REGEX),
   email: z.string().trim().email().max(255),
   phone: z.string().trim().max(20).refine((value) => value === "" || PHONE_REGEX.test(value)),
   country: z.string().trim().min(2).max(60).regex(COUNTRY_REGEX),
-  interest: z.string().trim().min(2).max(160),
+  interest: z.enum(LEAD_INTEREST_VALUES),
   message: z.string().trim().max(1000).nullable().optional(),
   honeypot: z.string().max(255).optional().default(""),
   startedAt: z.number().int().positive(),
@@ -36,11 +47,6 @@ const suspiciousSuccessResponse = (req: Request) => new Response(
   },
 );
 
-const toHex = (buffer: ArrayBuffer) =>
-  Array.from(new Uint8Array(buffer))
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-
 async function signGuideDownloadToken(secret: string, payload: string) {
   const key = await crypto.subtle.importKey(
     "raw",
@@ -50,7 +56,9 @@ async function signGuideDownloadToken(secret: string, payload: string) {
     ["sign"],
   );
 
-  return toHex(await crypto.subtle.sign("HMAC", key, textEncoder.encode(payload)));
+  return Array.from(new Uint8Array(await crypto.subtle.sign("HMAC", key, textEncoder.encode(payload))))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function createGuideDownloadUrl(
@@ -98,7 +106,7 @@ async function enforceLeadRateLimit(
   if ((count ?? 0) >= MAX_SUBMISSIONS_PER_EMAIL_WINDOW) {
     return new Response(JSON.stringify({
       success: false,
-      error: "Too many requests. Please wait before trying again.",
+      error: RATE_LIMIT_ERROR,
     }), {
       status: 429,
       headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
@@ -106,6 +114,63 @@ async function enforceLeadRateLimit(
   }
 
   return null;
+}
+
+async function enforceSourceRateLimit(
+  supabaseAdmin: Pick<ReturnType<typeof createClient>, "from">,
+  sourceFingerprint: string | null,
+  req: Request,
+) {
+  if (!sourceFingerprint) {
+    return null;
+  }
+
+  const windowStartIso = new Date(
+    Date.now() - SOURCE_RATE_LIMIT_WINDOW_MINUTES * 60 * 1000,
+  ).toISOString();
+
+  const { count, error } = await supabaseAdmin
+    .from("leads")
+    .select("id", { count: "exact", head: true })
+    .eq("source_fingerprint", sourceFingerprint)
+    .gte("created_at", windowStartIso);
+
+  if (error) {
+    throw error;
+  }
+
+  if ((count ?? 0) >= MAX_SUBMISSIONS_PER_SOURCE_WINDOW) {
+    return new Response(JSON.stringify({
+      success: false,
+      error: RATE_LIMIT_ERROR,
+    }), {
+      status: 429,
+      headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
+    });
+  }
+
+  return null;
+}
+
+async function hasRecentDuplicateLead(
+  supabaseAdmin: Pick<ReturnType<typeof createClient>, "from">,
+  submissionFingerprint: string,
+) {
+  const windowStartIso = new Date(
+    Date.now() - DEDUPE_WINDOW_MINUTES * 60 * 1000,
+  ).toISOString();
+
+  const { count, error } = await supabaseAdmin
+    .from("leads")
+    .select("id", { count: "exact", head: true })
+    .eq("submission_fingerprint", submissionFingerprint)
+    .gte("created_at", windowStartIso);
+
+  if (error) {
+    throw error;
+  }
+
+  return (count ?? 0) > 0;
 }
 
 Deno.serve(async (req) => {
@@ -154,7 +219,23 @@ Deno.serve(async (req) => {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const rateLimitResponse = await enforceLeadRateLimit(supabaseAdmin, leadData.email, req);
+    const normalizedLeadData = normalizeLeadSubmission(leadData);
+    const submissionFingerprint = await createSubmissionFingerprint(normalizedLeadData);
+    const sourceFingerprint = await createSourceFingerprint(
+      extractClientIp(req.headers),
+      req.headers.get("user-agent"),
+    );
+
+    if (await hasRecentDuplicateLead(supabaseAdmin, submissionFingerprint)) {
+      return suspiciousSuccessResponse(req);
+    }
+
+    const sourceRateLimitResponse = await enforceSourceRateLimit(supabaseAdmin, sourceFingerprint, req);
+    if (sourceRateLimitResponse) {
+      return sourceRateLimitResponse;
+    }
+
+    const rateLimitResponse = await enforceLeadRateLimit(supabaseAdmin, normalizedLeadData.email, req);
     if (rateLimitResponse) {
       return rateLimitResponse;
     }
@@ -162,8 +243,10 @@ Deno.serve(async (req) => {
     const { data, error } = await supabaseAdmin
       .from("leads")
       .insert({
-        ...leadData,
-        message: leadData.message || null,
+        ...normalizedLeadData,
+        message: normalizedLeadData.message,
+        source_fingerprint: sourceFingerprint,
+        submission_fingerprint: submissionFingerprint,
       })
       .select()
       .single();
@@ -180,7 +263,7 @@ Deno.serve(async (req) => {
           Authorization: `Bearer ${NOTIFY_LEAD_SECRET || SUPABASE_SERVICE_ROLE_KEY}`,
           ...(NOTIFY_LEAD_SECRET ? { "x-notify-secret": NOTIFY_LEAD_SECRET } : { apikey: SUPABASE_SERVICE_ROLE_KEY }),
         },
-        body: JSON.stringify(leadData),
+        body: JSON.stringify(normalizedLeadData),
       });
     } catch (notifyError) {
       console.error("notify-lead failed:", notifyError);

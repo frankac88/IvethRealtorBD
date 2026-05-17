@@ -295,7 +295,7 @@ const GuidesPage = () => {
             src={guidesHeroMiami}
             alt=""
             loading="eager"
-            fetchPriority="high"
+                fetchpriority="high"
             className="h-full w-full object-cover object-center"
             width={1920}
             height={1080}

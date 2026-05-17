@@ -252,7 +252,7 @@ const ProjectsPage = () => {
             })}
             className="h-full w-full object-cover object-[center_60%]"
             loading="eager"
-            fetchPriority="high"
+                fetchpriority="high"
             width={1920}
             height={1080}
           />

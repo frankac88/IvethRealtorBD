@@ -24,6 +24,8 @@ export type Database = {
           message: string | null
           name: string
           phone: string | null
+          source_fingerprint: string | null
+          submission_fingerprint: string | null
         }
         Insert: {
           country?: string | null
@@ -34,6 +36,8 @@ export type Database = {
           message?: string | null
           name: string
           phone?: string | null
+          source_fingerprint?: string | null
+          submission_fingerprint?: string | null
         }
         Update: {
           country?: string | null
@@ -44,6 +48,8 @@ export type Database = {
           message?: string | null
           name?: string
           phone?: string | null
+          source_fingerprint?: string | null
+          submission_fingerprint?: string | null
         }
         Relationships: []
       }
