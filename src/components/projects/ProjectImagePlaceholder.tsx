@@ -1,5 +1,5 @@
 import type { LuxuryProject } from "@/features/projects/luxuryPlaceholderCatalog";
-import { cn } from "@/lib/utils";
+import { cn, getSupabaseOptimizedUrl } from "@/lib/utils";
 
 const toneClassNames: Record<LuxuryProject["gallery"][number]["tone"], string> = {
   sand: "from-[#d8c2a3] via-[#c8b18d] to-[#8a5579]",
@@ -16,6 +16,7 @@ export function ProjectImagePlaceholder({
   imageUrl,
   interactive = false,
   showLabel = true,
+  imageWidth,
 }: {
   label: string;
   tone?: LuxuryProject["gallery"][number]["tone"];
@@ -24,8 +25,17 @@ export function ProjectImagePlaceholder({
   imageUrl?: string;
   interactive?: boolean;
   showLabel?: boolean;
+  imageWidth?: number;
 }) {
   const visibleLabel = showLabel ? label.trim() : "";
+
+  // Optimize Supabase images to match the component context (compact vs detailed layout)
+  const optimizedUrl = imageUrl
+    ? getSupabaseOptimizedUrl(imageUrl, {
+        width: imageWidth ?? (compact ? 400 : 800),
+        quality: 80,
+      })
+    : undefined;
 
   return (
     <div
@@ -36,9 +46,9 @@ export function ProjectImagePlaceholder({
         className,
       )}
     >
-      {imageUrl ? (
+      {optimizedUrl ? (
         <img
-          src={imageUrl}
+          src={optimizedUrl}
           alt={label}
           onError={(event) => {
             event.currentTarget.style.display = "none";
@@ -48,8 +58,8 @@ export function ProjectImagePlaceholder({
             interactive && "transition duration-700 ease-luxury group-hover:scale-[1.045] group-hover:saturate-[1.08]",
           )}
           loading="lazy"
-          width={800}
-          height={600}
+          width={compact ? 400 : 800}
+          height={compact ? 300 : 600}
         />
       ) : null}
       <div
