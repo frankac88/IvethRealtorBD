@@ -46,6 +46,10 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [react(), inlineCssPlugin()],
   build: {
+    modulePreload: {
+      resolveDependencies: (_filename, dependencies) =>
+        dependencies.filter((dependency) => !dependency.includes("supabase-vendor")),
+    },
     rollupOptions: {
       output: {
         manualChunks: {

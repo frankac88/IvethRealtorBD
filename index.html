@@ -22,7 +22,8 @@
     <link rel="apple-touch-icon" href="/iveth-social.webp" />
 
     <!-- LCP Preload -->
-    <link rel="preload" as="image" href="/src/assets/hero-miami.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/src/assets/hero-miami-mobile.webp" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/src/assets/hero-miami.webp" media="(min-width: 768px)" fetchpriority="high" />
     
     <!-- Fonts are now self-hosted via @fontsource in src/main.tsx for performance -->
 

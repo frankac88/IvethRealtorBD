@@ -50,7 +50,12 @@ const ROUTER_FUTURE_FLAGS = {
 } as const;
 
 describe("Index featured projects", () => {
-  it("links each featured project card to its detail page", () => {
+  it("links each featured project card to its detail page", async () => {
+    Object.defineProperty(window, "IntersectionObserver", {
+      writable: true,
+      value: undefined,
+    });
+
     render(
       <MemoryRouter initialEntries={["/"]} future={ROUTER_FUTURE_FLAGS}>
         <LanguageProvider>
@@ -59,7 +64,7 @@ describe("Index featured projects", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("link", { name: /ver proyecto/i })).toHaveAttribute(
+    expect(await screen.findByRole("link", { name: /ver proyecto/i })).toHaveAttribute(
       "href",
       "/proyectos/edge-house",
     );
