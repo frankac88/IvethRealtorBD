@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.navigation)}</h4>
+            <h3 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.navigation)}</h3>
             <div className="flex flex-col gap-2">
               {links.map((link) => (
                 <Link
@@ -87,7 +87,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.contact)}</h4>
+            <h3 className="type-body-sm mb-4 font-medium text-primary-foreground">{t(ft.contact)}</h3>
             <div className="flex flex-col gap-3 text-primary-foreground">
               <a
                 href={`mailto:${siteConfig.contact.email}`}

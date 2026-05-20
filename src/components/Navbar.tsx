@@ -91,7 +91,7 @@ const Navbar = () => {
                     to={href}
                     className={`type-nav whitespace-nowrap rounded-full px-1 py-1.5 text-[0.58rem] tracking-[0.08em] transition-colors hover:bg-primary/6 hover:text-primary focus-visible:bg-primary/6 focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[1180px]:text-[0.62rem] min-[1280px]:px-1.5 min-[1280px]:text-[0.7rem] min-[1440px]:text-[0.76rem] min-[1600px]:px-2.5 min-[1600px]:text-[0.8rem] ${
                       activeRouteKey === link.routeKey
-                        ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
+                        ? "bg-primary/20 font-semibold text-[hsl(188_53%_20%)] shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
                         : "text-muted-foreground"
                     }`}
                   >
@@ -184,7 +184,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className={`rounded-full px-3 py-2 text-sm tracking-widest uppercase transition-all hover:bg-primary/6 hover:text-primary ${
                   activeRouteKey === link.routeKey
-                    ? "bg-primary/20 font-semibold text-primary shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
+                    ? "bg-primary/20 font-semibold text-[hsl(188_53%_20%)] shadow-[0_6px_16px_rgba(42,123,136,0.18)]"
                     : "text-muted-foreground"
                 }`}
               >
