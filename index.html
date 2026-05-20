@@ -21,6 +21,10 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/iveth-social.webp" />
 
+    <!-- Critical font preloads: start fetching above-the-fold fonts in parallel with CSS -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/playfair-display-latin-400.woff2" crossorigin />
+
     <!-- LCP Preload -->
     <link rel="preload" as="image" href="/src/assets/hero-miami.webp" fetchpriority="high" />
     
