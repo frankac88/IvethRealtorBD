@@ -1,5 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ivethcollrealtor.com"
+        }
+      ],
+      "destination": "https://www.ivethcollrealtor.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/((?!assets/|fonts/|videos/|.*\\.(?:webp|png|jpg|jpeg|gif|svg|ico|woff2|woff|js|css|map|json|xml|txt)$).*)",
