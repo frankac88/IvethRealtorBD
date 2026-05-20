@@ -191,6 +191,8 @@ const GuideLeadDialog = ({
                     <Label htmlFor="guide-name">{texts.nameLabel}</Label>
                     <Input
                       id="guide-name"
+                      name="name"
+                      autoComplete="name"
                       value={values.name}
                       onChange={(event) => handleValueChange("name", event.target.value)}
                       className={cn(errors.name && "border-field-error focus-visible:ring-field-error")}
@@ -204,7 +206,9 @@ const GuideLeadDialog = ({
                     <Label htmlFor="guide-email">{texts.emailLabel}</Label>
                     <Input
                       id="guide-email"
+                      name="email"
                       type="email"
+                      autoComplete="email"
                       value={values.email}
                       onChange={(event) => handleValueChange("email", event.target.value)}
                       className={cn(errors.email && "border-field-error focus-visible:ring-field-error")}
@@ -218,6 +222,9 @@ const GuideLeadDialog = ({
                     <Label htmlFor="guide-whatsapp">{texts.whatsappLabel}</Label>
                     <Input
                       id="guide-whatsapp"
+                      name="whatsapp"
+                      type="tel"
+                      autoComplete="tel"
                       value={values.whatsapp}
                       onChange={(event) => handleValueChange("whatsapp", event.target.value)}
                       className={cn(errors.whatsapp && "border-field-error focus-visible:ring-field-error")}

@@ -55,11 +55,12 @@ const availabilityFields: {
   label: typeof labels.name | typeof labels.email | typeof labels.phone | typeof labels.country;
   type: "text" | "email" | "tel";
   maxLength: number;
+  autoComplete: string;
 }[] = [
-  { name: "name", label: labels.name, type: "text", maxLength: 100 },
-  { name: "email", label: labels.email, type: "email", maxLength: 255 },
-  { name: "phone", label: labels.phone, type: "tel", maxLength: 20 },
-  { name: "country", label: labels.country, type: "text", maxLength: 60 },
+  { name: "name", label: labels.name, type: "text", maxLength: 100, autoComplete: "name" },
+  { name: "email", label: labels.email, type: "email", maxLength: 255, autoComplete: "email" },
+  { name: "phone", label: labels.phone, type: "tel", maxLength: 20, autoComplete: "tel" },
+  { name: "country", label: labels.country, type: "text", maxLength: 60, autoComplete: "country-name" },
 ];
 
 const ProjectDetailPage = () => {
@@ -338,6 +339,7 @@ const ProjectDetailPage = () => {
                     name={field.name}
                     className="h-12 w-full rounded-sm border border-border/90 bg-background/70 px-3 text-sm outline-none transition focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/15"
                     type={field.type}
+                    autoComplete={field.autoComplete}
                     required
                     maxLength={field.maxLength}
                     aria-invalid={Boolean(availabilityErrors[field.name])}

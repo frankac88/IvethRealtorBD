@@ -39,14 +39,20 @@ const LoginPage = () => {
         </div>
         <form onSubmit={handleLogin} className="space-y-4">
           <Input
+            id="admin-email"
+            name="email"
             type="email"
+            autoComplete="username"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input
+            id="admin-password"
+            name="password"
             type="password"
+            autoComplete="current-password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

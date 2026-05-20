@@ -214,6 +214,7 @@ const LeadCaptureForm = ({
           <Input
             id={`${idPrefix}-name`}
             name="name"
+            autoComplete="name"
             placeholder={t(c.namePlaceholder)}
             required
             maxLength={100}
@@ -229,6 +230,7 @@ const LeadCaptureForm = ({
             id={`${idPrefix}-email`}
             name="email"
             type="email"
+            autoComplete="email"
             placeholder="tu@email.com..."
             required
             maxLength={255}
@@ -246,6 +248,7 @@ const LeadCaptureForm = ({
             id={`${idPrefix}-phone`}
             name="phone"
             type="tel"
+            autoComplete="tel"
             placeholder="+1 234 567 890..."
             required
             maxLength={20}
@@ -260,6 +263,7 @@ const LeadCaptureForm = ({
           <Input
             id={`${idPrefix}-country`}
             name="country"
+            autoComplete="country-name"
             placeholder={t(c.countryPlaceholder)}
             required
             maxLength={60}
@@ -274,6 +278,7 @@ const LeadCaptureForm = ({
         <div>
           <label htmlFor={`${idPrefix}-interest`} className="type-body-sm mb-2 block font-medium text-foreground">{t(c.interest)} *</label>
           <Select
+            name="interest"
             value={interest}
             onValueChange={(value) => {
               setInterest(value as LeadInterest);
@@ -303,6 +308,7 @@ const LeadCaptureForm = ({
           <Textarea
             id={`${idPrefix}-message`}
             name="message"
+            autoComplete="off"
             placeholder={messagePlaceholder ?? t(c.messagePlaceholder)}
             rows={5}
           />

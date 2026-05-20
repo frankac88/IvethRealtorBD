@@ -871,6 +871,7 @@ const InvestPage = () => {
                     {labels.zone} *
                   </label>
                   <Select
+                    name="invest-zone"
                     value={zone}
                     onValueChange={(value) => {
                       setZone(value as ZoneValue);
@@ -907,6 +908,7 @@ const InvestPage = () => {
                       {labels.objective} *
                     </label>
                     <Select
+                      name="invest-objective"
                       value={objective}
                       onValueChange={(value) => {
                         setObjective(value as ObjectiveValue);
@@ -941,6 +943,7 @@ const InvestPage = () => {
                       {labels.budget} *
                     </label>
                     <Select
+                      name="invest-budget"
                       value={budget}
                       onValueChange={(value) => {
                         setBudget(value as BudgetValue);

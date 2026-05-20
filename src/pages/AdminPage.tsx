@@ -406,6 +406,9 @@ const AdminPage = () => {
                     <label className="space-y-2">
                       <span className="text-sm font-medium">Nombre del proyecto</span>
                       <Input
+                        id="admin-project-title"
+                        name="title"
+                        autoComplete="off"
                         value={formValues.title}
                         onChange={(event) => updateField("title", event.target.value)}
                         placeholder="Ej. EDGE HOUSE"
@@ -415,6 +418,9 @@ const AdminPage = () => {
                     <label className="space-y-2">
                       <span className="text-sm font-medium">Ciudad</span>
                       <select
+                        id="admin-project-city"
+                        name="city"
+                        autoComplete="off"
                         value={formValues.city}
                         onChange={(event) => updateField("city", event.target.value as ProjectFormValues["city"])}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -427,6 +433,9 @@ const AdminPage = () => {
                     <label className="space-y-2">
                       <span className="text-sm font-medium">Precio desde (USD)</span>
                       <Input
+                        id="admin-project-price"
+                        name="priceFrom"
+                        autoComplete="off"
                         type="number"
                         min="0"
                         step="1000"
@@ -462,6 +471,9 @@ const AdminPage = () => {
                               {field.labelEs} ES{field.optional ? " (opcional)" : ""}
                             </span>
                             <FieldComponent
+                              id={`admin-project-${field.esKey}`}
+                              name={field.esKey}
+                              autoComplete="off"
                               value={formValues[field.esKey]}
                               onChange={(event) => updateField(field.esKey, event.target.value)}
                               className={field.textarea ? "min-h-[110px]" : undefined}
@@ -473,6 +485,9 @@ const AdminPage = () => {
                               {field.labelEn} EN{field.optional ? " (optional)" : ""}
                             </span>
                             <FieldComponent
+                              id={`admin-project-${field.enKey}`}
+                              name={field.enKey}
+                              autoComplete="off"
                               value={formValues[field.enKey]}
                               onChange={(event) => updateField(field.enKey, event.target.value)}
                               className={field.textarea ? "min-h-[110px]" : undefined}
@@ -487,6 +502,8 @@ const AdminPage = () => {
                     <label className="space-y-2">
                       <span className="text-sm font-medium">Visual del proyecto</span>
                       <Input
+                        id="admin-project-main-image"
+                        name="mainImage"
                         type="file"
                         accept="image/*"
                         onChange={(event) => setImageFile(event.target.files?.[0] ?? null)}
@@ -532,6 +549,8 @@ const AdminPage = () => {
                     <label className="space-y-2">
                       <span className="text-sm font-medium">Vistas adicionales del proyecto</span>
                       <Input
+                        id="admin-project-gallery-images"
+                        name="galleryImages"
                         type="file"
                         accept="image/*"
                         multiple
@@ -573,6 +592,9 @@ const AdminPage = () => {
                                     <label className="space-y-1">
                                       <span className="text-xs font-medium">Tag ES</span>
                                       <Input
+                                        id={`admin-project-gallery-${index}-label-es`}
+                                        name={`galleryImages[${index}].labelEs`}
+                                        autoComplete="off"
                                         value={image.labelEs}
                                         onChange={(event) => updateGalleryTag(index, "labelEs", event.target.value)}
                                         placeholder="Ej. Fachada"
@@ -581,6 +603,9 @@ const AdminPage = () => {
                                     <label className="space-y-1">
                                       <span className="text-xs font-medium">Tag EN</span>
                                       <Input
+                                        id={`admin-project-gallery-${index}-label-en`}
+                                        name={`galleryImages[${index}].labelEn`}
+                                        autoComplete="off"
                                         value={image.labelEn}
                                         onChange={(event) => updateGalleryTag(index, "labelEn", event.target.value)}
                                         placeholder="Ej. Facade"
